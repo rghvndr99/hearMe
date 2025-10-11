@@ -12,7 +12,7 @@ const Chat = () => {
       align="center"
       justify="center"
       h="100vh"
-      bg="#0A0A0F"
+      bg="var(--hm-color-bg)"
       position="relative"
       overflow="hidden"
       color="white"
@@ -90,8 +90,8 @@ const Chat = () => {
             I have a question.
           </Button>
           <Button
-            bgGradient="linear(to-r, #6750A4, #F76B1C)"
-            _hover={{ bgGradient: "linear(to-r, #F76B1C, #6750A4)" }}
+            bgGradient="var(--hm-gradient-cta)"
+            _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
             color="white"
             borderRadius="full"
             px={3}

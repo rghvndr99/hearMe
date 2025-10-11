@@ -19,7 +19,7 @@ const MotionBox = motion(Box);
 const Home = () => {
   return (
     <Box
-      bg="#0A0A0F"
+      bg="var(--hm-color-bg)"
       color="white"
       minH="100vh"
       position="relative"
@@ -63,9 +63,9 @@ const Home = () => {
         <HStack spacing={4}>
           <Button
             size="lg"
-            bgGradient="linear(to-r, #6750A4, #F76B1C)"
+            bgGradient="var(--hm-gradient-cta)"
             color="white"
-            _hover={{ bgGradient: "linear(to-r, #F76B1C, #6750A4)" }}
+            _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
             borderRadius="full"
           >
             Start Building
@@ -110,9 +110,9 @@ const Home = () => {
             border="1px solid rgba(255,255,255,0.1)"
             backdropFilter="blur(10px)"
             transition="0.3s"
-            _hover={{ transform: "translateY(-5px)", borderColor: "#F76B1C" }}
+            _hover={{ transform: "translateY(-5px)", borderColor: "var(--hm-color-brand)" }}
           >
-            <Box fontSize="3xl" mb={4} color="#F76B1C">
+            <Box fontSize="3xl" mb={4} color="var(--hm-color-brand)">
               <f.icon />
             </Box>
             <Text fontSize="xl" fontWeight="600" mb={2}>
@@ -145,14 +145,14 @@ const Home = () => {
               border="1px solid rgba(255,255,255,0.08)"
               backdropFilter="blur(8px)"
               transition="0.3s"
-              _hover={{ borderColor: "#F76B1C" }}
+              _hover={{ borderColor: "var(--hm-color-brand)" }}
             >
               <HStack spacing={3} mb={3}>
                 <Avatar name={item.name} size="sm" />
                 <Text fontWeight="500">{item.name}</Text>
               </HStack>
               <HStack spacing={2}>
-                <FaHeart color="#F76B1C" />
+                <FaHeart color="var(--hm-color-brand)" />
                 <Text>{item.likes}</Text>
               </HStack>
             </Box>
@@ -168,10 +168,10 @@ const Home = () => {
         <Text fontSize="xl">Start creating today.</Text>
         <HStack spacing={4}>
           <Button
-            bgGradient="linear(to-r, #6750A4, #F76B1C)"
+            bgGradient="var(--hm-gradient-cta)"
             color="white"
             borderRadius="full"
-            _hover={{ bgGradient: "linear(to-r, #F76B1C, #6750A4)" }}
+            _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
           >
             Join Free
           </Button>

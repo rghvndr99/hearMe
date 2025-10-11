@@ -38,59 +38,59 @@ const Header= () => {
           <Text
             fontSize="2xl"
             fontWeight="800"
-            color="#FFF8E7"
+            color="var(--hm-color-text-primary)"
             letterSpacing="tight"
           >
-            Hear<span style={{ color: "#F76B1C" }}>Me</span>
+            Hear<span className="hm-brand">Me</span>
           </Text>
         </Link>
 
         {/* Navigation Links */}
         <HStack spacing={[4, 8]} display={["none", "flex"]}>
           <Link as={RouterLink} to="/about"
-            _hover={{ color: "#F76B1C" }}
-            color="#E0DFF5"
+            _hover={{ color: "var(--hm-color-brand)" }}
+            color="var(--hm-color-text-muted)"
             fontWeight="500"
           >
             About
           </Link>
           <Link as={RouterLink} to="/resources"
-            _hover={{ color: "#F76B1C" }}
-            color="#E0DFF5"
+            _hover={{ color: "var(--hm-color-brand)" }}
+            color="var(--hm-color-text-muted)"
             fontWeight="500"
           >
             Resources
           </Link>
                     <Link as={RouterLink} to="/chat"
-            _hover={{ color: "#F76B1C" }}
-            color="#E0DFF5"
+            _hover={{ color: "var(--hm-color-brand)" }}
+            color="var(--hm-color-text-muted)"
             fontWeight="500"
           >
             Chat
           </Link>
           <Link as={RouterLink} to="/stories"
-            _hover={{ color: "#F76B1C" }}
-            color="#E0DFF5"
+            _hover={{ color: "var(--hm-color-brand)" }}
+            color="var(--hm-color-text-muted)"
             fontWeight="500"
           >
             Success Stories
           </Link>
           <Link as={RouterLink} to="/contact"
-            _hover={{ color: "#F76B1C" }}
-            color="#E0DFF5"
+            _hover={{ color: "var(--hm-color-brand)" }}
+            color="var(--hm-color-text-muted)"
             fontWeight="500"
           >
             Contact
           </Link>
-          <Link as={RouterLink} to="/volunteer" _hover={{ color: "#F76B1C" }} color="#E0DFF5" fontWeight="500">
+          <Link as={RouterLink} to="/volunteer" _hover={{ color: "var(--hm-color-brand)" }} color="var(--hm-color-text-muted)" fontWeight="500">
             Volunteer
           </Link>
         </HStack>
 
         {/* CTA Button */}
         <Button
-          bgGradient="linear(to-r, #6750A4, #F76B1C)"
-          _hover={{ bgGradient: "linear(to-r, #F76B1C, #6750A4)" }}
+          bgGradient="var(--hm-gradient-cta)"
+          _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
           color="white"
           borderRadius="full"
           size="sm"
