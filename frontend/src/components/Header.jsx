@@ -12,7 +12,7 @@ import { motion } from "framer-motion";
 
 const MotionBox = motion(Box);
 
-const Header: React.FC = () => {
+const Header= () => {
   return (
     <Box
       as="header"
@@ -45,14 +45,6 @@ const Header: React.FC = () => {
         {/* Navigation Links */}
         <HStack spacing={[4, 8]} display={["none", "flex"]}>
           <Link
-            href="/"
-            _hover={{ color: "#F76B1C" }}
-            color="#E0DFF5"
-            fontWeight="500"
-          >
-            Home
-          </Link>
-          <Link
             href="/about"
             _hover={{ color: "#F76B1C" }}
             color="#E0DFF5"
@@ -68,8 +60,16 @@ const Header: React.FC = () => {
           >
             Resources
           </Link>
+                    <Link
+            href="/chat"
+            _hover={{ color: "#F76B1C" }}
+            color="#E0DFF5"
+            fontWeight="500"
+          >
+            Chat
+          </Link>
           <Link
-            href="/success-stories"
+            href="/stories"
             _hover={{ color: "#F76B1C" }}
             color="#E0DFF5"
             fontWeight="500"

@@ -5,6 +5,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import './styles.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Header from './components/Header';
 
 // Lazy-loaded pages for faster performance
 const Home = lazy(() => import('./pages/Home'));
@@ -36,7 +37,7 @@ function App() {
   return (
     <ChakraProvider>
       <Router>
-        <Navbar />
+        <Header />
         <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="/" element={<Home />} />

@@ -18,7 +18,6 @@ const Footer = () => {
     <Box
       as="footer"
       position="relative"
-      mt={20}
       py={12}
       bg="#0A0A0F"
       color="#E0DFF5"
@@ -76,7 +75,10 @@ const Footer = () => {
           <Link href="/resources" _hover={{ color: "#F76B1C" }}>
             Resources
           </Link>
-          <Link href="/success-stories" _hover={{ color: "#F76B1C" }}>
+           <Link href="/chat" _hover={{ color: "#F76B1C" }}>
+            Chat
+          </Link>
+          <Link href="/stories" _hover={{ color: "#F76B1C" }}>
             Success
           </Link>
           <Link href="/contact" _hover={{ color: "#F76B1C" }}>
