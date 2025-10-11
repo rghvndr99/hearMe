@@ -1,0 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{font-family:Arial,sans-serif;background:#f8fafc;color:#0f172a}a{color:#4f46e5}
+.chat-box{background:#fff;padding:12px;border-radius:12px}

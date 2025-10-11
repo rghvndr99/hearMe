@@ -1,0 +1,1 @@
+import React from 'react';export default function Home(){return <div><h2>Welcome to hearMe</h2><p>Stubbed replies for local testing.</p></div>}
