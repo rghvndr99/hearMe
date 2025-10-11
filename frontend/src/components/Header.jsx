@@ -6,10 +6,10 @@ import {
   HStack,
   Link,
   Button,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { motion } from "framer-motion";
+import ThemeToggle from "./ThemeToggle";
 
 const MotionBox = motion(Box);
 
@@ -87,17 +87,20 @@ const Header= () => {
           </Link>
         </HStack>
 
-        {/* CTA Button */}
-        <Button
-          bgGradient="var(--hm-gradient-cta)"
-          _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
-          color="white"
-          borderRadius="full"
-          size="sm"
-          px={5}
-        >
-          Join Now
-        </Button>
+        {/* Theme Toggle & CTA */}
+        <HStack spacing={3}>
+          <ThemeToggle />
+          <Button
+            bgGradient="var(--hm-gradient-cta)"
+            _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
+            color="white"
+            borderRadius="full"
+            size="sm"
+            px={5}
+          >
+            Join Now
+          </Button>
+        </HStack>
       </Flex>
 
       {/* Animated Glow Line */}

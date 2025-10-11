@@ -2,7 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-:root{
+/* ========================================
+   THEME: DEFAULT DARK (Neo Expressionist)
+   ======================================== */
+:root, [data-theme="dark"]{
   /* Brand Colors */
   --hm-color-brand:#F76B1C;
   --hm-color-bg:#0A0A0F;
@@ -34,6 +37,154 @@
 
   /* Hover States */
   --hm-hover-bg:rgba(255,255,255,0.1);
+}
+
+/* ========================================
+   THEME: LIGHT MODE (Soft & Warm)
+   ======================================== */
+[data-theme="light"]{
+  /* Brand Colors */
+  --hm-color-brand:#F76B1C;
+  --hm-color-bg:#FDFBF7;
+  --hm-color-text-primary:#1A1A1A;
+  --hm-color-text-muted:#4A4A4A;
+  --hm-color-text-secondary:#6B6B6B;
+  --hm-color-text-tertiary:#5A5A5A;
+  --hm-color-placeholder:#9A9A9A;
+
+  /* Gradients */
+  --hm-gradient-cta:linear-gradient(to right, #6750A4, #F76B1C);
+  --hm-gradient-cta-hover:linear-gradient(to right, #F76B1C, #6750A4);
+
+  /* Glass Morphism */
+  --hm-border-glass:rgba(0,0,0,0.08);
+  --hm-border-glass-soft:rgba(0,0,0,0.05);
+  --hm-bg-glass:rgba(255,255,255,0.7);
+  --hm-bg-glass-light:rgba(255,255,255,0.5);
+  --hm-bg-glass-strong:rgba(255,255,255,0.85);
+
+  /* Backgrounds */
+  --hm-header-bg:rgba(253,251,247,0.9);
+  --hm-gradient-bg-pink:radial-gradient(circle at top left, rgba(247,107,138,0.12), transparent 70%);
+  --hm-gradient-bg-blue:radial-gradient(circle at bottom right, rgba(55,114,255,0.12), transparent 70%);
+  --hm-gradient-bg-orange:radial-gradient(circle at bottom left, rgba(249,168,38,0.08), transparent 70%);
+
+  /* Borders */
+  --hm-border-outline:rgba(0,0,0,0.15);
+
+  /* Hover States */
+  --hm-hover-bg:rgba(0,0,0,0.05);
+}
+
+/* ========================================
+   THEME: OCEAN (Cool & Calming)
+   ======================================== */
+[data-theme="ocean"]{
+  /* Brand Colors */
+  --hm-color-brand:#00D4FF;
+  --hm-color-bg:#0A1628;
+  --hm-color-text-primary:#E0F7FF;
+  --hm-color-text-muted:#B8E6F5;
+  --hm-color-text-secondary:#A0D4E8;
+  --hm-color-text-tertiary:#8BC5DB;
+  --hm-color-placeholder:#6B9FB5;
+
+  /* Gradients */
+  --hm-gradient-cta:linear-gradient(to right, #0077B6, #00D4FF);
+  --hm-gradient-cta-hover:linear-gradient(to right, #00D4FF, #0077B6);
+
+  /* Glass Morphism */
+  --hm-border-glass:rgba(0,212,255,0.15);
+  --hm-border-glass-soft:rgba(0,212,255,0.1);
+  --hm-bg-glass:rgba(0,212,255,0.05);
+  --hm-bg-glass-light:rgba(0,212,255,0.03);
+  --hm-bg-glass-strong:rgba(0,212,255,0.08);
+
+  /* Backgrounds */
+  --hm-header-bg:rgba(10,22,40,0.85);
+  --hm-gradient-bg-pink:radial-gradient(circle at top left, rgba(0,212,255,0.2), transparent 70%);
+  --hm-gradient-bg-blue:radial-gradient(circle at bottom right, rgba(0,119,182,0.25), transparent 70%);
+  --hm-gradient-bg-orange:radial-gradient(circle at bottom left, rgba(72,202,228,0.15), transparent 70%);
+
+  /* Borders */
+  --hm-border-outline:rgba(0,212,255,0.25);
+
+  /* Hover States */
+  --hm-hover-bg:rgba(0,212,255,0.1);
+}
+
+/* ========================================
+   THEME: FOREST (Natural & Grounding)
+   ======================================== */
+[data-theme="forest"]{
+  /* Brand Colors */
+  --hm-color-brand:#7CB342;
+  --hm-color-bg:#0F1A0F;
+  --hm-color-text-primary:#E8F5E9;
+  --hm-color-text-muted:#C8E6C9;
+  --hm-color-text-secondary:#A5D6A7;
+  --hm-color-text-tertiary:#81C784;
+  --hm-color-placeholder:#66BB6A;
+
+  /* Gradients */
+  --hm-gradient-cta:linear-gradient(to right, #558B2F, #7CB342);
+  --hm-gradient-cta-hover:linear-gradient(to right, #7CB342, #558B2F);
+
+  /* Glass Morphism */
+  --hm-border-glass:rgba(124,179,66,0.15);
+  --hm-border-glass-soft:rgba(124,179,66,0.1);
+  --hm-bg-glass:rgba(124,179,66,0.05);
+  --hm-bg-glass-light:rgba(124,179,66,0.03);
+  --hm-bg-glass-strong:rgba(124,179,66,0.08);
+
+  /* Backgrounds */
+  --hm-header-bg:rgba(15,26,15,0.85);
+  --hm-gradient-bg-pink:radial-gradient(circle at top left, rgba(124,179,66,0.2), transparent 70%);
+  --hm-gradient-bg-blue:radial-gradient(circle at bottom right, rgba(85,139,47,0.25), transparent 70%);
+  --hm-gradient-bg-orange:radial-gradient(circle at bottom left, rgba(156,204,101,0.15), transparent 70%);
+
+  /* Borders */
+  --hm-border-outline:rgba(124,179,66,0.25);
+
+  /* Hover States */
+  --hm-hover-bg:rgba(124,179,66,0.1);
+}
+
+/* ========================================
+   THEME: SUNSET (Warm & Energetic)
+   ======================================== */
+[data-theme="sunset"]{
+  /* Brand Colors */
+  --hm-color-brand:#FF6B35;
+  --hm-color-bg:#1A0F0A;
+  --hm-color-text-primary:#FFF4E6;
+  --hm-color-text-muted:#FFE0B2;
+  --hm-color-text-secondary:#FFCC80;
+  --hm-color-text-tertiary:#FFB74D;
+  --hm-color-placeholder:#FFA726;
+
+  /* Gradients */
+  --hm-gradient-cta:linear-gradient(to right, #E64A19, #FF6B35);
+  --hm-gradient-cta-hover:linear-gradient(to right, #FF6B35, #E64A19);
+
+  /* Glass Morphism */
+  --hm-border-glass:rgba(255,107,53,0.15);
+  --hm-border-glass-soft:rgba(255,107,53,0.1);
+  --hm-bg-glass:rgba(255,107,53,0.05);
+  --hm-bg-glass-light:rgba(255,107,53,0.03);
+  --hm-bg-glass-strong:rgba(255,107,53,0.08);
+
+  /* Backgrounds */
+  --hm-header-bg:rgba(26,15,10,0.85);
+  --hm-gradient-bg-pink:radial-gradient(circle at top left, rgba(255,107,53,0.25), transparent 70%);
+  --hm-gradient-bg-blue:radial-gradient(circle at bottom right, rgba(230,74,25,0.2), transparent 70%);
+  --hm-gradient-bg-orange:radial-gradient(circle at bottom left, rgba(255,152,0,0.18), transparent 70%);
+
+  /* Borders */
+  --hm-border-outline:rgba(255,107,53,0.25);
+
+  /* Hover States */
+  --hm-hover-bg:rgba(255,107,53,0.1);
 }
 
 body{
@@ -78,7 +229,7 @@ a{color:#4f46e5}
 .hm-input{
   background:var(--hm-bg-glass);
   border:1px solid var(--hm-border-glass);
-  color:white;
+  color:var(--hm-color-text-primary);
 }
 
 .hm-input:focus{
