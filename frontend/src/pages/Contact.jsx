@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Flex,
@@ -15,6 +15,29 @@ import { motion } from "framer-motion";
 const MotionBox = motion(Box);
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = () => {
+    if (formData.name && formData.email && formData.message) {
+      alert('✅ Thank you for your message! We will get back to you soon.');
+      setFormData({ name: '', email: '', message: '' });
+    } else {
+      alert('⚠️ Please fill in all fields.');
+    }
+  };
+
   return (
     <Flex
       direction="column"
@@ -73,6 +96,9 @@ const Contact = () => {
 
         <VStack spacing={4} w="100%">
           <Input
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
             placeholder="Name"
             bg="rgba(255,255,255,0.05)"
             border="1px solid rgba(255,255,255,0.1)"
@@ -83,6 +109,10 @@ const Contact = () => {
             p={4}
           />
           <Input
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleInputChange}
             placeholder="Email"
             bg="rgba(255,255,255,0.05)"
             border="1px solid rgba(255,255,255,0.1)"
@@ -93,6 +123,9 @@ const Contact = () => {
             p={4}
           />
           <Textarea
+            name="message"
+            value={formData.message}
+            onChange={handleInputChange}
             placeholder="Message"
             bg="rgba(255,255,255,0.05)"
             border="1px solid rgba(255,255,255,0.1)"
@@ -106,6 +139,7 @@ const Contact = () => {
         </VStack>
 
         <Button
+          onClick={handleSubmit}
           w="100%"
           size="lg"
           bgGradient="linear(to-r, #6750A4, #F76B1C)"

@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import './styles.css';
-import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Header from './components/Header';
 

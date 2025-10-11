@@ -8,6 +8,7 @@ import {
   IconButton,
   VStack,
 } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 import { FaTwitter, FaInstagram, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
 
@@ -69,19 +70,23 @@ const Footer = () => {
 
         {/* Middle Navigation */}
         <HStack spacing={6}>
-          <Link href="/about" _hover={{ color: "#F76B1C" }}>
+          <Link as={RouterLink} to="/about" _hover={{ color: "#F76B1C" }}>
             About
           </Link>
-          <Link href="/resources" _hover={{ color: "#F76B1C" }}>
+          <Link as={RouterLink} to="/resources" _hover={{ color: "#F76B1C" }}>
             Resources
           </Link>
-           <Link href="/chat" _hover={{ color: "#F76B1C" }}>
+           <Link as={RouterLink} to="/chat" _hover={{ color: "#F76B1C" }}>
             Chat
           </Link>
-          <Link href="/stories" _hover={{ color: "#F76B1C" }}>
+          <Link as={RouterLink} to="/stories" _hover={{ color: "#F76B1C" }}>
             Success
           </Link>
-          <Link href="/contact" _hover={{ color: "#F76B1C" }}>
+          <Link as={RouterLink} to="/volunteer" _hover={{ color: "#F76B1C" }}>
+            Volunteer
+          </Link>
+
+          <Link as={RouterLink} to="/contact" _hover={{ color: "#F76B1C" }}>
             Contact
           </Link>
         </HStack>

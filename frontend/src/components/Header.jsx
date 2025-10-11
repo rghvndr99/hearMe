@@ -8,6 +8,7 @@ import {
   Button,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const MotionBox = motion(Box);
@@ -33,56 +34,56 @@ const Header= () => {
         py={4}
       >
         {/* Brand / Logo */}
-        <Text
-          fontSize="2xl"
-          fontWeight="800"
-          color="#FFF8E7"
-          letterSpacing="tight"
-        >
-          Hear<span style={{ color: "#F76B1C" }}>Me</span>
-        </Text>
+        <Link as={RouterLink} to="/" _hover={{ textDecoration: 'none' }}>
+          <Text
+            fontSize="2xl"
+            fontWeight="800"
+            color="#FFF8E7"
+            letterSpacing="tight"
+          >
+            Hear<span style={{ color: "#F76B1C" }}>Me</span>
+          </Text>
+        </Link>
 
         {/* Navigation Links */}
         <HStack spacing={[4, 8]} display={["none", "flex"]}>
-          <Link
-            href="/about"
+          <Link as={RouterLink} to="/about"
             _hover={{ color: "#F76B1C" }}
             color="#E0DFF5"
             fontWeight="500"
           >
             About
           </Link>
-          <Link
-            href="/resources"
+          <Link as={RouterLink} to="/resources"
             _hover={{ color: "#F76B1C" }}
             color="#E0DFF5"
             fontWeight="500"
           >
             Resources
           </Link>
-                    <Link
-            href="/chat"
+                    <Link as={RouterLink} to="/chat"
             _hover={{ color: "#F76B1C" }}
             color="#E0DFF5"
             fontWeight="500"
           >
             Chat
           </Link>
-          <Link
-            href="/stories"
+          <Link as={RouterLink} to="/stories"
             _hover={{ color: "#F76B1C" }}
             color="#E0DFF5"
             fontWeight="500"
           >
             Success Stories
           </Link>
-          <Link
-            href="/contact"
+          <Link as={RouterLink} to="/contact"
             _hover={{ color: "#F76B1C" }}
             color="#E0DFF5"
             fontWeight="500"
           >
             Contact
+          </Link>
+          <Link as={RouterLink} to="/volunteer" _hover={{ color: "#F76B1C" }} color="#E0DFF5" fontWeight="500">
+            Volunteer
           </Link>
         </HStack>
 
