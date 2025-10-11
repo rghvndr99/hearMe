@@ -1,125 +1,109 @@
-// src/pages/Chat.jsx
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import { io } from 'socket.io-client';
-import { v4 as uuidv4 } from 'uuid';
+import React from "react";
+import { Box, Flex, Text, Input, Button, Avatar, VStack, HStack } from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import { FiSend } from "react-icons/fi";
 
-const SOCKET_PATH = import.meta.env.VITE_BACKEND_URL || ''; // e.g. http://localhost:5000
+const MotionBox = motion(Box);
 
-export default function Chat() {
-  const [messages, setMessages] = useState([{ text: "Hi — I'm here to listen. What’s on your mind?", who:'ai' }]);
-  const [input, setInput] = useState('');
-  const [sessionId] = useState(() => localStorage.getItem('hearMeSessionId') || uuidv4());
-  const [typingStatus, setTypingStatus] = useState(null); // 'listener', 'ai', null
-  const [listenerRequested, setListenerRequested] = useState(false);
-  const socketRef = useRef(null);
-
-  useEffect(() => {
-    // persist session id
-    localStorage.setItem('hearMeSessionId', sessionId);
-
-    // connect socket
-    const socket = io(SOCKET_PATH || undefined, { transports: ['websocket'] });
-    socketRef.current = socket;
-
-    socket.on('connect', () => {
-      socket.emit('identify', { sessionId, role: 'user' });
-    });
-
-    socket.on('typing', (data) => {
-      // data = { from: 'listener' | 'ai', sessionId }
-      if (data.sessionId === sessionId) setTypingStatus(data.from);
-    });
-
-    socket.on('listener_assigned', (data) => {
-      // data = { listenerId, listenerName }
-      appendMessage(`A volunteer has joined the session (${data.listenerName || 'listener'}).`, 'ai');
-    });
-
-    socket.on('listener_message', (data) => {
-      if (data.sessionId === sessionId) appendMessage(data.text, 'ai');
-    });
-
-    socket.on('ai_reply', (data) => {
-      if (data.sessionId === sessionId) appendMessage(data.reply, 'ai');
-    });
-
-    socket.on('typing_clear', (d) => { if (d.sessionId === sessionId) setTypingStatus(null); });
-
-    return () => { socket.disconnect(); };
-  }, [sessionId]);
-
-  const appendMessage = (text, who='ai') => {
-    setMessages(prev => [...prev, { text, who }]);
-  };
-
-  // call backend AI chat endpoint
-  const sendToAI = async (text) => {
-    try {
-      appendMessage(text, 'user');
-      const res = await axios.post(`${SOCKET_PATH || ''}/api/chat`, { sessionId, message: text, lang: 'en' });
-      if (res.data?.reply) {
-        appendMessage(res.data.reply, 'ai');
-        // also emit ai_reply over socket to allow listeners to see it in real-time
-        socketRef.current?.emit('ai_reply', { sessionId, reply: res.data.reply });
-      }
-    } catch (err) {
-      appendMessage('Sorry, something went wrong connecting to the AI.', 'ai');
-      console.error(err);
-    }
-  };
-
-  const handleSend = async () => {
-    if (!input.trim()) return;
-    // while typing: emit typing events ended
-    socketRef.current?.emit('typing_clear', { sessionId, from: 'user' });
-    await sendToAI(input.trim());
-    setInput('');
-  };
-
-  // typing indicator emit
-  let typingTimeout = useRef();
-  const handleTyping = (val) => {
-    setInput(val);
-    socketRef.current?.emit('typing', { sessionId, from: 'user' });
-    clearTimeout(typingTimeout.current);
-    typingTimeout.current = setTimeout(() => {
-      socketRef.current?.emit('typing_clear', { sessionId, from: 'user' });
-    }, 1200);
-  };
-
-  // request a human listener
-  const requestListener = () => {
-    setListenerRequested(true);
-    socketRef.current?.emit('request_listener', { sessionId });
-    appendMessage('Connecting you to a volunteer listener — please wait...', 'ai');
-  };
-
+const Chat = () => {
   return (
-    <div className="max-w-5xl mx-auto p-4">
-      <div className="bg-white shadow rounded-xl p-4 flex flex-col h-[700px]">
-        <div className="flex-1 overflow-y-auto space-y-3 py-3">
-          {messages.map((m,i) => (
-            <div key={i} className={`px-4 py-2 rounded-xl text-sm max-w-[80%] ${m.who==='user' ? 'bg-indigo-500 text-white self-end ml-auto' : 'bg-indigo-50 text-slate-800 self-start'}`}>
-              {m.text}
-            </div>
-          ))}
-        </div>
+    <Flex
+      direction="column"
+      align="center"
+      justify="center"
+      h="100vh"
+      bg="#0A0A0F"
+      position="relative"
+      overflow="hidden"
+      color="white"
+    >
+      {/* Background Gradient Brush Strokes */}
+      <MotionBox
+        position="absolute"
+        top="-20%"
+        left="-10%"
+        w="80%"
+        h="80%"
+        bg="radial-gradient(circle at top left, rgba(247,107,138,0.25), transparent 70%)"
+        filter="blur(100px)"
+        animate={{ opacity: [0.6, 0.9, 0.6] }}
+        transition={{ duration: 6, repeat: Infinity }}
+      />
+      <MotionBox
+        position="absolute"
+        bottom="-20%"
+        right="-10%"
+        w="70%"
+        h="70%"
+        bg="radial-gradient(circle at bottom right, rgba(55,114,255,0.25), transparent 70%)"
+        filter="blur(120px)"
+        animate={{ opacity: [0.6, 0.9, 0.6] }}
+        transition={{ duration: 6, repeat: Infinity }}
+      />
 
-        <div className="text-xs text-slate-500 mb-2">{typingStatus ? `${typingStatus === 'listener' ? 'Volunteer is typing…' : 'Someone is typing…'}` : ''}</div>
+      {/* Header */}
+      <VStack spacing={4} mb={8} zIndex={1}>
+        <Avatar
+          name="Albert Flores"
+          src="https://i.pravatar.cc/150?img=32"
+          size="lg"
+          border="2px solid rgba(255,255,255,0.2)"
+        />
+        <Text fontSize="2xl" fontWeight="600" color="#FFFFFF">
+          Albert Flores
+        </Text>
+      </VStack>
 
-        <div className="flex items-center gap-2 mt-2">
-          <input
-            value={input}
-            onChange={(e) => handleTyping(e.target.value)}
-            placeholder="Type or speak (e.g. 'I feel lonely')"
-            className="flex-1 p-3 border rounded-lg"
-            onKeyDown={(e) => { if (e.key==='Enter') handleSend(); }}
-          />
-          <button onClick={handleSend} className="bg-indigo-500 text-white px-4 py-2 rounded-lg">Send</button>
-          <button onClick={requestListener} disabled={listenerRequested} className="bg-amber-400 px-3 py-2 rounded-lg">{listenerRequested ? 'Waiting...' : 'Talk to a human'}</button>
-        </div>
-      </div>
-    </div>
+      {/* Chat Input Section */}
+      <VStack spacing={4} w={["90%", "400px"]} zIndex={1}>
+        <Input
+          placeholder="Type a message..."
+          bg="rgba(255,255,255,0.05)"
+          border="1px solid rgba(255,255,255,0.1)"
+          _focus={{ borderColor: "#6C63FF" }}
+          color="white"
+          borderRadius="md"
+          p={4}
+          fontSize="md"
+        />
+        <HStack spacing={3} justify="center">
+          <Button
+            bg="rgba(255,255,255,0.08)"
+            _hover={{ bg: "rgba(255,255,255,0.15)" }}
+            color="white"
+            borderRadius="full"
+            px={5}
+            py={2}
+            fontWeight="500"
+          >
+            Hi Albert!
+          </Button>
+          <Button
+            bg="rgba(255,255,255,0.08)"
+            _hover={{ bg: "rgba(255,255,255,0.15)" }}
+            color="white"
+            borderRadius="full"
+            px={5}
+            py={2}
+            fontWeight="500"
+          >
+            I have a question.
+          </Button>
+          <Button
+            bgGradient="linear(to-r, #6750A4, #F76B1C)"
+            _hover={{ bgGradient: "linear(to-r, #F76B1C, #6750A4)" }}
+            color="white"
+            borderRadius="full"
+            px={3}
+            py={2}
+            rightIcon={<FiSend />}
+          >
+            Send
+          </Button>
+        </HStack>
+      </VStack>
+    </Flex>
   );
-}
+};
+
+export default Chat;

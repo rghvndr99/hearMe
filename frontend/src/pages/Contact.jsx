@@ -1,41 +1,125 @@
-import React from 'react';
 
-export default function Contact() {
+import React from "react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  VStack,
+  Input,
+  Textarea,
+  Button,
+} from "@chakra-ui/react";
+import { motion } from "framer-motion";
+
+const MotionBox = motion(Box);
+
+const Contact = () => {
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Contact Us</h1>
-        <div className="bg-white rounded-lg shadow p-6">
-          <p className="text-gray-600 mb-4">
-            Have questions or feedback? We'd love to hear from you.
-          </p>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email
-              </label>
-              <input 
-                type="email" 
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                placeholder="your@email.com"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Message
-              </label>
-              <textarea 
-                rows={4}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                placeholder="Your message..."
-              />
-            </div>
-            <button className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700">
-              Send Message
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Flex
+      direction="column"
+      align="center"
+      justify="center"
+      minH="100vh"
+      bg="#0A0A0F"
+      position="relative"
+      overflow="hidden"
+      color="white"
+      px={6}
+    >
+      {/* Background gradients - Neo Expressionist */}
+      <MotionBox
+        position="absolute"
+        top="-10%"
+        left="-15%"
+        w="80%"
+        h="80%"
+        bg="radial-gradient(circle at top left, rgba(247,107,138,0.25), transparent 70%)"
+        filter="blur(100px)"
+        animate={{ opacity: [0.6, 0.9, 0.6] }}
+        transition={{ duration: 8, repeat: Infinity }}
+      />
+      <MotionBox
+        position="absolute"
+        bottom="-10%"
+        right="-15%"
+        w="80%"
+        h="80%"
+        bg="radial-gradient(circle at bottom right, rgba(55,114,255,0.25), transparent 70%)"
+        filter="blur(120px)"
+        animate={{ opacity: [0.6, 0.9, 0.6] }}
+        transition={{ duration: 8, repeat: Infinity }}
+      />
+
+      {/* Contact Form Container */}
+      <VStack
+        spacing={8}
+        w={["100%", "450px"]}
+        bg="rgba(255,255,255,0.03)"
+        border="1px solid rgba(255,255,255,0.1)"
+        backdropFilter="blur(10px)"
+        borderRadius="xl"
+        p={[6, 10]}
+        zIndex={1}
+      >
+        <VStack spacing={3} textAlign="center">
+          <Heading fontSize={["3xl", "4xl"]} fontWeight="700" color="#FFF8E7">
+            Contact Us.
+          </Heading>
+          <Text color="#CFCFCF">
+            Have questions or feedback? Reach out to us.
+          </Text>
+        </VStack>
+
+        <VStack spacing={4} w="100%">
+          <Input
+            placeholder="Name"
+            bg="rgba(255,255,255,0.05)"
+            border="1px solid rgba(255,255,255,0.1)"
+            _focus={{ borderColor: "#F76B1C" }}
+            color="white"
+            _placeholder={{ color: "#A0A0A0" }}
+            borderRadius="md"
+            p={4}
+          />
+          <Input
+            placeholder="Email"
+            bg="rgba(255,255,255,0.05)"
+            border="1px solid rgba(255,255,255,0.1)"
+            _focus={{ borderColor: "#F76B1C" }}
+            color="white"
+            _placeholder={{ color: "#A0A0A0" }}
+            borderRadius="md"
+            p={4}
+          />
+          <Textarea
+            placeholder="Message"
+            bg="rgba(255,255,255,0.05)"
+            border="1px solid rgba(255,255,255,0.1)"
+            _focus={{ borderColor: "#F76B1C" }}
+            color="white"
+            _placeholder={{ color: "#A0A0A0" }}
+            borderRadius="md"
+            rows={5}
+            p={4}
+          />
+        </VStack>
+
+        <Button
+          w="100%"
+          size="lg"
+          bgGradient="linear(to-r, #6750A4, #F76B1C)"
+          _hover={{ bgGradient: "linear(to-r, #F76B1C, #6750A4)" }}
+          color="white"
+          fontWeight="600"
+          borderRadius="md"
+          shadow="0px 0px 10px rgba(255, 107, 138, 0.4)"
+        >
+          Send
+        </Button>
+      </VStack>
+    </Flex>
   );
-}
+};
+
+export default Contact;

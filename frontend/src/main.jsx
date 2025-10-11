@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ChakraProvider } from '@chakra-ui/react';
 import './styles.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -33,21 +34,23 @@ function Loader() {
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/stories" element={<Stories />} />
-          <Route path="/volunteer" element={<Volunteer />} />
-          <Route path="/resources" element={<Resources />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </Suspense>
-      <Footer />
-    </Router>
+    <ChakraProvider>
+      <Router>
+        <Navbar />
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/stories" element={<Stories />} />
+            <Route path="/volunteer" element={<Volunteer />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </Suspense>
+        <Footer />
+      </Router>
+    </ChakraProvider>
   );
 }
 

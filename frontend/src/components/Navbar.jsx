@@ -14,6 +14,7 @@ export default function Navbar() {
           <div className="flex items-center space-x-8">
             <Link to="/" className="text-gray-700 hover:text-indigo-600">Home</Link>
             <Link to="/chat" className="text-gray-700 hover:text-indigo-600">Chat</Link>
+            <Link to="/stories" className="text-gray-700 hover:text-indigo-600">Stories</Link>
             <Link to="/volunteer" className="text-gray-700 hover:text-indigo-600">Volunteer</Link>
             <Link to="/resources" className="text-gray-700 hover:text-indigo-600">Resources</Link>
             <Link to="/about" className="text-gray-700 hover:text-indigo-600">About</Link>
