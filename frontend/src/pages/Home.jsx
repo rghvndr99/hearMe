@@ -34,8 +34,7 @@ const Home = () => {
         left="-10%"
         w="80%"
         h="80%"
-        bg="radial-gradient(circle at top left, rgba(247,107,138,0.25), transparent 70%)"
-        filter="blur(120px)"
+        className="hm-bg-gradient-pink"
         animate={{ opacity: [0.5, 0.9, 0.5] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
@@ -45,8 +44,7 @@ const Home = () => {
         right="-10%"
         w="80%"
         h="80%"
-        bg="radial-gradient(circle at bottom right, rgba(55,114,255,0.25), transparent 70%)"
-        filter="blur(120px)"
+        className="hm-bg-gradient-blue"
         animate={{ opacity: [0.5, 0.9, 0.5] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
@@ -56,7 +54,7 @@ const Home = () => {
         <Heading fontSize={["4xl", "6xl", "7xl"]} fontWeight="800">
           Hear yourself.<br />Feel heard.
         </Heading>
-        <Text fontSize="lg" color="#D0CFE0" maxW="600px">
+        <Text fontSize="lg" color="var(--hm-color-text-tertiary)" maxW="600px">
           Your space to express, create, and connect freely.
         </Text>
 
@@ -73,8 +71,7 @@ const Home = () => {
           <Button
             size="lg"
             variant="outline"
-            borderColor="rgba(255,255,255,0.2)"
-            _hover={{ bg: "rgba(255,255,255,0.1)" }}
+            className="hm-border-outline hm-hover-bg"
             borderRadius="full"
           >
             Explore the Community
@@ -103,12 +100,10 @@ const Home = () => {
         ].map((f, i) => (
           <Box
             key={i}
-            bg="rgba(255,255,255,0.05)"
+            className="hm-glass-card"
             p={8}
             borderRadius="xl"
             textAlign="center"
-            border="1px solid rgba(255,255,255,0.1)"
-            backdropFilter="blur(10px)"
             transition="0.3s"
             _hover={{ transform: "translateY(-5px)", borderColor: "var(--hm-color-brand)" }}
           >
@@ -118,7 +113,7 @@ const Home = () => {
             <Text fontSize="xl" fontWeight="600" mb={2}>
               {f.title}
             </Text>
-            <Text color="#CFCFCF" fontSize="sm">
+            <Text color="var(--hm-color-text-secondary)" fontSize="sm">
               {f.desc}
             </Text>
           </Box>
@@ -139,11 +134,9 @@ const Home = () => {
           ].map((item, i) => (
             <Box
               key={i}
+              className="hm-glass-card-soft"
               p={6}
               borderRadius="xl"
-              bg="rgba(255,255,255,0.05)"
-              border="1px solid rgba(255,255,255,0.08)"
-              backdropFilter="blur(8px)"
               transition="0.3s"
               _hover={{ borderColor: "var(--hm-color-brand)" }}
             >
@@ -177,9 +170,8 @@ const Home = () => {
           </Button>
           <Button
             variant="outline"
-            borderColor="rgba(255,255,255,0.2)"
+            className="hm-border-outline hm-hover-bg"
             borderRadius="full"
-            _hover={{ bg: "rgba(255,255,255,0.1)" }}
           >
             Sign In
           </Button>

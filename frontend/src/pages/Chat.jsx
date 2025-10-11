@@ -24,8 +24,7 @@ const Chat = () => {
         left="-10%"
         w="80%"
         h="80%"
-        bg="radial-gradient(circle at top left, rgba(247,107,138,0.25), transparent 70%)"
-        filter="blur(100px)"
+        className="hm-bg-gradient-pink"
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 6, repeat: Infinity }}
       />
@@ -35,8 +34,7 @@ const Chat = () => {
         right="-10%"
         w="70%"
         h="70%"
-        bg="radial-gradient(circle at bottom right, rgba(55,114,255,0.25), transparent 70%)"
-        filter="blur(120px)"
+        className="hm-bg-gradient-blue"
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 6, repeat: Infinity }}
       />
@@ -47,7 +45,7 @@ const Chat = () => {
           name="Albert Flores"
           src="https://i.pravatar.cc/150?img=32"
           size="lg"
-          border="2px solid rgba(255,255,255,0.2)"
+          className="hm-border-outline"
         />
         <Text fontSize="2xl" fontWeight="600" color="#FFFFFF">
           Albert Flores
@@ -58,8 +56,7 @@ const Chat = () => {
       <VStack spacing={4} w={["90%", "400px"]} zIndex={1}>
         <Input
           placeholder="Type a message..."
-          bg="rgba(255,255,255,0.05)"
-          border="1px solid rgba(255,255,255,0.1)"
+          className="hm-input"
           _focus={{ borderColor: "#6C63FF" }}
           color="white"
           borderRadius="md"
@@ -68,8 +65,8 @@ const Chat = () => {
         />
         <HStack spacing={3} justify="center">
           <Button
-            bg="rgba(255,255,255,0.08)"
-            _hover={{ bg: "rgba(255,255,255,0.15)" }}
+            bg="var(--hm-bg-glass-strong)"
+            className="hm-hover-bg"
             color="white"
             borderRadius="full"
             px={5}
@@ -79,8 +76,8 @@ const Chat = () => {
             Hi Albert!
           </Button>
           <Button
-            bg="rgba(255,255,255,0.08)"
-            _hover={{ bg: "rgba(255,255,255,0.15)" }}
+            bg="var(--hm-bg-glass-strong)"
+            className="hm-hover-bg"
             color="white"
             borderRadius="full"
             px={5}

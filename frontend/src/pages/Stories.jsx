@@ -61,7 +61,7 @@ const Stories = () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg="#0A0A0F"
+      bg="var(--hm-color-bg)"
       color="white"
       position="relative"
       overflow="hidden"
@@ -76,8 +76,7 @@ const Stories = () => {
         left="-15%"
         w="80%"
         h="80%"
-        bg="radial-gradient(circle at top left, rgba(247,107,138,0.25), transparent 70%)"
-        filter="blur(120px)"
+        className="hm-bg-gradient-pink"
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
@@ -87,8 +86,7 @@ const Stories = () => {
         right="-15%"
         w="80%"
         h="80%"
-        bg="radial-gradient(circle at bottom right, rgba(55,114,255,0.25), transparent 70%)"
-        filter="blur(120px)"
+        className="hm-bg-gradient-blue"
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
@@ -98,8 +96,7 @@ const Stories = () => {
         left="0%"
         w="100%"
         h="100%"
-        bg="radial-gradient(circle at bottom left, rgba(249,168,38,0.15), transparent 70%)"
-        filter="blur(150px)"
+        className="hm-bg-gradient-orange"
       />
 
       {/* === PAGE CONTENT === */}
@@ -116,22 +113,19 @@ const Stories = () => {
         {/* Share Your Story Section */}
         <Box
           w="full"
-          bg="rgba(255,255,255,0.05)"
-          border="1px solid rgba(255,255,255,0.1)"
+          className="hm-glass-card"
           borderRadius="xl"
           p={[6, 8]}
-          backdropFilter="blur(10px)"
         >
-          <Text fontSize="lg" mb={4} color="#D0CFE0">
+          <Text fontSize="lg" mb={4} color="var(--hm-color-text-tertiary)">
             Share your own HearMe journey with our community 💬
           </Text>
           <Textarea
             placeholder="Write your success story..."
-            bg="rgba(255,255,255,0.05)"
-            border="1px solid rgba(255,255,255,0.1)"
-            _focus={{ borderColor: "#F76B1C" }}
+            className="hm-input"
+            _focus={{ borderColor: "var(--hm-color-brand)" }}
             color="white"
-            _placeholder={{ color: "#A0A0A0" }}
+            _placeholder={{ color: "var(--hm-color-placeholder)" }}
             borderRadius="md"
             p={4}
             mb={4}
@@ -139,8 +133,8 @@ const Stories = () => {
             onChange={(e) => setNewStory(e.target.value)}
           />
           <Button
-            bgGradient="linear(to-r, #6750A4, #F76B1C)"
-            _hover={{ bgGradient: "linear(to-r, #F76B1C, #6750A4)" }}
+            bgGradient="var(--hm-gradient-cta)"
+            _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
             color="white"
             fontWeight="600"
             borderRadius="md"
@@ -156,8 +150,7 @@ const Stories = () => {
           {mockStories.map((s, i) => (
             <Box
               key={i}
-              bg="rgba(255,255,255,0.05)"
-              border="1px solid rgba(255,255,255,0.1)"
+              className="hm-glass-card"
               borderRadius="xl"
               p={[6, 8]}
               textAlign="left"
@@ -168,10 +161,10 @@ const Stories = () => {
               <Flex align="center" mb={4}>
                 <Avatar name={s.name} src={s.avatar} size="md" mr={4} />
                 <Box>
-                  <Text fontWeight="600" color="#FFF8E7">
+                  <Text fontWeight="600" color="var(--hm-color-text-primary)">
                     {s.name}
                   </Text>
-                  <Text fontSize="sm" color="#CFCFCF">
+                  <Text fontSize="sm" color="var(--hm-color-text-secondary)">
                     {s.role}
                   </Text>
                 </Box>

@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root{
+  /* Brand Colors */
   --hm-color-brand:#F76B1C;
   --hm-color-bg:#0A0A0F;
   --hm-color-text-primary:#FFF8E7;
@@ -10,16 +11,110 @@
   --hm-color-text-secondary:#CFCFCF;
   --hm-color-text-tertiary:#D0CFE0;
   --hm-color-placeholder:#A0A0A0;
+
+  /* Gradients */
   --hm-gradient-cta:linear-gradient(to right, #6750A4, #F76B1C);
   --hm-gradient-cta-hover:linear-gradient(to right, #F76B1C, #6750A4);
+
+  /* Glass Morphism */
   --hm-border-glass:rgba(255,255,255,0.1);
   --hm-border-glass-soft:rgba(255,255,255,0.08);
   --hm-bg-glass:rgba(255,255,255,0.05);
+  --hm-bg-glass-light:rgba(255,255,255,0.03);
   --hm-bg-glass-strong:rgba(255,255,255,0.08);
+
+  /* Backgrounds */
   --hm-header-bg:rgba(10,10,15,0.8);
+  --hm-gradient-bg-pink:radial-gradient(circle at top left, rgba(247,107,138,0.25), transparent 70%);
+  --hm-gradient-bg-blue:radial-gradient(circle at bottom right, rgba(55,114,255,0.25), transparent 70%);
+  --hm-gradient-bg-orange:radial-gradient(circle at bottom left, rgba(249,168,38,0.15), transparent 70%);
+
+  /* Borders */
+  --hm-border-outline:rgba(255,255,255,0.2);
+
+  /* Hover States */
+  --hm-hover-bg:rgba(255,255,255,0.1);
 }
 
-body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;background:var(--hm-color-bg);color:var(--hm-color-text-primary)}
+body{
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+  background:var(--hm-color-bg);
+  color:var(--hm-color-text-primary);
+}
 a{color:#4f46e5}
+
+/* Utility Classes */
 .hm-brand{color:var(--hm-color-brand)}
-.chat-box{background:#fff;padding:12px;border-radius:12px}
+
+/* Glass Card Styles */
+.hm-glass-card{
+  background:var(--hm-bg-glass);
+  border:1px solid var(--hm-border-glass);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  transition:all 0.3s ease;
+}
+
+.hm-glass-card-light{
+  background:var(--hm-bg-glass-light);
+  border:1px solid var(--hm-border-glass);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+.hm-glass-card-soft{
+  background:var(--hm-bg-glass);
+  border:1px solid var(--hm-border-glass-soft);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  transition:all 0.3s ease;
+}
+
+.hm-glass-card:hover{
+  border-color:var(--hm-color-brand);
+}
+
+/* Form Input Styles */
+.hm-input{
+  background:var(--hm-bg-glass);
+  border:1px solid var(--hm-border-glass);
+  color:white;
+}
+
+.hm-input:focus{
+  border-color:var(--hm-color-brand);
+  outline:none;
+}
+
+.hm-input::placeholder{
+  color:var(--hm-color-placeholder);
+}
+
+/* Background Gradient Animations */
+.hm-bg-gradient-pink{
+  background:var(--hm-gradient-bg-pink);
+  filter:blur(120px);
+}
+
+.hm-bg-gradient-blue{
+  background:var(--hm-gradient-bg-blue);
+  filter:blur(120px);
+}
+
+.hm-bg-gradient-orange{
+  background:var(--hm-gradient-bg-orange);
+  filter:blur(150px);
+}
+
+/* Border Utilities */
+.hm-border-top{
+  border-top:1px solid var(--hm-border-glass);
+}
+
+.hm-border-outline{
+  border-color:var(--hm-border-outline);
+}
+
+.hm-hover-bg:hover{
+  background:var(--hm-hover-bg);
+}

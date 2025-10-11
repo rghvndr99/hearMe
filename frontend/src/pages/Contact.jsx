@@ -44,7 +44,7 @@ const Contact = () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg="#0A0A0F"
+      bg="var(--hm-color-bg)"
       position="relative"
       overflow="hidden"
       color="white"
@@ -57,8 +57,7 @@ const Contact = () => {
         left="-15%"
         w="80%"
         h="80%"
-        bg="radial-gradient(circle at top left, rgba(247,107,138,0.25), transparent 70%)"
-        filter="blur(100px)"
+        className="hm-bg-gradient-pink"
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
@@ -68,8 +67,7 @@ const Contact = () => {
         right="-15%"
         w="80%"
         h="80%"
-        bg="radial-gradient(circle at bottom right, rgba(55,114,255,0.25), transparent 70%)"
-        filter="blur(120px)"
+        className="hm-bg-gradient-blue"
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
@@ -78,18 +76,16 @@ const Contact = () => {
       <VStack
         spacing={8}
         w={["100%", "450px"]}
-        bg="rgba(255,255,255,0.03)"
-        border="1px solid rgba(255,255,255,0.1)"
-        backdropFilter="blur(10px)"
+        className="hm-glass-card-light"
         borderRadius="xl"
         p={[6, 10]}
         zIndex={1}
       >
         <VStack spacing={3} textAlign="center">
-          <Heading fontSize={["3xl", "4xl"]} fontWeight="700" color="#FFF8E7">
+          <Heading fontSize={["3xl", "4xl"]} fontWeight="700" color="var(--hm-color-text-primary)">
             Contact Us.
           </Heading>
-          <Text color="#CFCFCF">
+          <Text color="var(--hm-color-text-secondary)">
             Have questions or feedback? Reach out to us.
           </Text>
         </VStack>
@@ -100,11 +96,10 @@ const Contact = () => {
             value={formData.name}
             onChange={handleInputChange}
             placeholder="Name"
-            bg="rgba(255,255,255,0.05)"
-            border="1px solid rgba(255,255,255,0.1)"
-            _focus={{ borderColor: "#F76B1C" }}
+            className="hm-input"
+            _focus={{ borderColor: "var(--hm-color-brand)" }}
             color="white"
-            _placeholder={{ color: "#A0A0A0" }}
+            _placeholder={{ color: "var(--hm-color-placeholder)" }}
             borderRadius="md"
             p={4}
           />
@@ -114,11 +109,10 @@ const Contact = () => {
             value={formData.email}
             onChange={handleInputChange}
             placeholder="Email"
-            bg="rgba(255,255,255,0.05)"
-            border="1px solid rgba(255,255,255,0.1)"
-            _focus={{ borderColor: "#F76B1C" }}
+            className="hm-input"
+            _focus={{ borderColor: "var(--hm-color-brand)" }}
             color="white"
-            _placeholder={{ color: "#A0A0A0" }}
+            _placeholder={{ color: "var(--hm-color-placeholder)" }}
             borderRadius="md"
             p={4}
           />
@@ -127,11 +121,10 @@ const Contact = () => {
             value={formData.message}
             onChange={handleInputChange}
             placeholder="Message"
-            bg="rgba(255,255,255,0.05)"
-            border="1px solid rgba(255,255,255,0.1)"
-            _focus={{ borderColor: "#F76B1C" }}
+            className="hm-input"
+            _focus={{ borderColor: "var(--hm-color-brand)" }}
             color="white"
-            _placeholder={{ color: "#A0A0A0" }}
+            _placeholder={{ color: "var(--hm-color-placeholder)" }}
             borderRadius="md"
             rows={5}
             p={4}
@@ -142,8 +135,8 @@ const Contact = () => {
           onClick={handleSubmit}
           w="100%"
           size="lg"
-          bgGradient="linear(to-r, #6750A4, #F76B1C)"
-          _hover={{ bgGradient: "linear(to-r, #F76B1C, #6750A4)" }}
+          bgGradient="var(--hm-gradient-cta)"
+          _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
           color="white"
           fontWeight="600"
           borderRadius="md"

@@ -19,7 +19,7 @@ const Resources = () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg="#0A0A0F"
+      bg="var(--hm-color-bg)"
       color="white"
       position="relative"
       overflow="hidden"
@@ -34,8 +34,7 @@ const Resources = () => {
         left="-15%"
         w="80%"
         h="80%"
-        bg="radial-gradient(circle at top left, rgba(247,107,138,0.25), transparent 70%)"
-        filter="blur(120px)"
+        className="hm-bg-gradient-pink"
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
@@ -45,8 +44,7 @@ const Resources = () => {
         right="-15%"
         w="80%"
         h="80%"
-        bg="radial-gradient(circle at bottom right, rgba(55,114,255,0.25), transparent 70%)"
-        filter="blur(120px)"
+        className="hm-bg-gradient-blue"
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
@@ -56,8 +54,7 @@ const Resources = () => {
         left="0%"
         w="100%"
         h="100%"
-        bg="radial-gradient(circle at bottom left, rgba(249,168,38,0.15), transparent 70%)"
-        filter="blur(150px)"
+        className="hm-bg-gradient-orange"
       />
 
       {/* === PAGE CONTENT === */}
@@ -66,7 +63,7 @@ const Resources = () => {
           as="h1"
           fontSize={["4xl", "5xl", "6xl"]}
           fontWeight="800"
-          color="#CBB9FF"
+          color="var(--hm-color-text-primary)"
         >
           Mental Health Resources
         </Heading>
@@ -74,26 +71,24 @@ const Resources = () => {
         <SimpleGrid columns={[1]} spacing={8} w="full">
           {/* Crisis Hotlines */}
           <Box
-            bg="rgba(255,255,255,0.05)"
-            border="1px solid rgba(255,255,255,0.1)"
+            className="hm-glass-card"
             borderRadius="xl"
             p={[6, 10]}
             textAlign="left"
-            backdropFilter="blur(10px)"
             transition="0.3s"
-            _hover={{ borderColor: "#F76B1C" }}
+            _hover={{ borderColor: "var(--hm-color-brand)" }}
           >
             <Heading
               as="h2"
               fontSize="2xl"
               mb={4}
               fontWeight="700"
-              color="#FFF8E7"
+              color="var(--hm-color-text-primary)"
             >
               Crisis Hotlines
             </Heading>
 
-            <VStack align="start" spacing={3} color="#D0CFE0" fontSize="md">
+            <VStack align="start" spacing={3} color="var(--hm-color-text-tertiary)" fontSize="md">
               <Text>
                 <strong>National Suicide Prevention Lifeline:</strong>{" "}
                 <Link
@@ -131,25 +126,23 @@ const Resources = () => {
 
           {/* Professional Help */}
           <Box
-            bg="rgba(255,255,255,0.05)"
-            border="1px solid rgba(255,255,255,0.1)"
+            className="hm-glass-card"
             borderRadius="xl"
             p={[6, 10]}
             textAlign="left"
-            backdropFilter="blur(10px)"
             transition="0.3s"
-            _hover={{ borderColor: "#F76B1C" }}
+            _hover={{ borderColor: "var(--hm-color-brand)" }}
           >
             <Heading
               as="h2"
               fontSize="2xl"
               mb={4}
               fontWeight="700"
-              color="#FFF8E7"
+              color="var(--hm-color-text-primary)"
             >
               Professional Help
             </Heading>
-            <Text color="#D0CFE0" fontSize="md">
+            <Text color="var(--hm-color-text-tertiary)" fontSize="md">
               Find licensed therapists and mental health professionals in your
               area. Many online platforms such as{" "}
               <Link

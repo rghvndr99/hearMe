@@ -43,7 +43,7 @@ const Volunteer = () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg="#0A0A0F"
+      bg="var(--hm-color-bg)"
       color="white"
       position="relative"
       overflow="hidden"
@@ -58,8 +58,7 @@ const Volunteer = () => {
         left="-15%"
         w="80%"
         h="80%"
-        bg="radial-gradient(circle at top left, rgba(247,107,138,0.25), transparent 70%)"
-        filter="blur(120px)"
+        className="hm-bg-gradient-pink"
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
@@ -69,8 +68,7 @@ const Volunteer = () => {
         right="-15%"
         w="80%"
         h="80%"
-        bg="radial-gradient(circle at bottom right, rgba(55,114,255,0.25), transparent 70%)"
-        filter="blur(120px)"
+        className="hm-bg-gradient-blue"
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
@@ -80,8 +78,7 @@ const Volunteer = () => {
         left="0%"
         w="100%"
         h="100%"
-        bg="radial-gradient(circle at bottom left, rgba(249,168,38,0.15), transparent 70%)"
-        filter="blur(150px)"
+        className="hm-bg-gradient-orange"
       />
 
       {/* === PAGE CONTENT === */}
@@ -91,13 +88,13 @@ const Volunteer = () => {
           as="h1"
           fontSize={["4xl", "5xl", "6xl"]}
           fontWeight="800"
-          color="#FFF8E7"
+          color="var(--hm-color-text-primary)"
           lineHeight="1.2"
         >
           Make an impact.<br />Be a volunteer.
         </Heading>
 
-        <Text fontSize="lg" color="#D0CFE0" maxW="700px">
+        <Text fontSize="lg" color="var(--hm-color-text-tertiary)" maxW="700px">
           Join HearMe’s mission to provide a supportive space where every voice
           can be heard. Your compassion and time can help others express and
           heal through connection.
@@ -105,8 +102,8 @@ const Volunteer = () => {
 
         {/* Apply Now Button */}
         <Button
-          bgGradient="linear(to-r, #6750A4, #F76B1C)"
-          _hover={{ bgGradient: "linear(to-r, #F76B1C, #6750A4)" }}
+          bgGradient="var(--hm-gradient-cta)"
+          _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
           color="white"
           borderRadius="full"
           px={10}
@@ -121,30 +118,26 @@ const Volunteer = () => {
         {/* Benefits Section */}
         <SimpleGrid columns={[1, 3]} spacing={8} pt={12} w="full">
           <Box
-            bg="rgba(255,255,255,0.05)"
-            border="1px solid rgba(255,255,255,0.1)"
+            className="hm-glass-card"
             borderRadius="xl"
             p={[6, 8]}
-            backdropFilter="blur(10px)"
             transition="0.3s"
-            _hover={{ borderColor: "#F76B1C" }}
+            _hover={{ borderColor: "var(--hm-color-brand)" }}
           >
             <Icon as={FaHeart} boxSize={8} color="#F76B1C" mb={4} />
             <Text fontSize="xl" fontWeight="600" mb={2}>
               Support Others
             </Text>
-            <Text color="#CFCFCF">
+            <Text color="var(--hm-color-text-secondary)">
               Help individuals express themselves in a safe and welcoming
               environment.
             </Text>
           </Box>
 
           <Box
-            bg="rgba(255,255,255,0.05)"
-            border="1px solid rgba(255,255,255,0.1)"
+            className="hm-glass-card"
             borderRadius="xl"
             p={[6, 8]}
-            backdropFilter="blur(10px)"
             transition="0.3s"
             _hover={{ borderColor: "#F76B1C" }}
           >
@@ -152,18 +145,16 @@ const Volunteer = () => {
             <Text fontSize="xl" fontWeight="600" mb={2}>
               Gain Experience
             </Text>
-            <Text color="#CFCFCF">
+            <Text color="var(--hm-color-text-secondary)">
               Develop valuable skills in listening, empathy, and compassionate
               communication.
             </Text>
           </Box>
 
           <Box
-            bg="rgba(255,255,255,0.05)"
-            border="1px solid rgba(255,255,255,0.1)"
+            className="hm-glass-card"
             borderRadius="xl"
             p={[6, 8]}
-            backdropFilter="blur(10px)"
             transition="0.3s"
             _hover={{ borderColor: "#F76B1C" }}
           >
@@ -171,7 +162,7 @@ const Volunteer = () => {
             <Text fontSize="xl" fontWeight="600" mb={2}>
               Build Community
             </Text>
-            <Text color="#CFCFCF">
+            <Text color="var(--hm-color-text-secondary)">
               Connect with like-minded individuals who care deeply about mental
               wellness.
             </Text>
@@ -182,11 +173,9 @@ const Volunteer = () => {
         <Box
           w="full"
           mt={16}
-          bg="rgba(255,255,255,0.05)"
-          border="1px solid rgba(255,255,255,0.1)"
+          className="hm-glass-card"
           borderRadius="xl"
           p={[6, 10]}
-          backdropFilter="blur(10px)"
           textAlign="left"
         >
           <Heading
@@ -194,7 +183,7 @@ const Volunteer = () => {
             fontSize="2xl"
             mb={6}
             textAlign="center"
-            color="#FFF8E7"
+            color="var(--hm-color-text-primary)"
           >
             Volunteer Application
           </Heading>
@@ -203,9 +192,8 @@ const Volunteer = () => {
             <Input
               name="name"
               placeholder="Full Name *"
-              bg="rgba(255,255,255,0.05)"
-              border="1px solid rgba(255,255,255,0.1)"
-              _focus={{ borderColor: "#F76B1C" }}
+              className="hm-input"
+              _focus={{ borderColor: "var(--hm-color-brand)" }}
               color="white"
               value={form.name}
               onChange={handleChange}
@@ -214,9 +202,8 @@ const Volunteer = () => {
               name="email"
               placeholder="Email Address *"
               type="email"
-              bg="rgba(255,255,255,0.05)"
-              border="1px solid rgba(255,255,255,0.1)"
-              _focus={{ borderColor: "#F76B1C" }}
+              className="hm-input"
+              _focus={{ borderColor: "var(--hm-color-brand)" }}
               color="white"
               value={form.email}
               onChange={handleChange}
@@ -224,9 +211,8 @@ const Volunteer = () => {
             <Input
               name="skills"
               placeholder="Skills / Areas of Expertise"
-              bg="rgba(255,255,255,0.05)"
-              border="1px solid rgba(255,255,255,0.1)"
-              _focus={{ borderColor: "#F76B1C" }}
+              className="hm-input"
+              _focus={{ borderColor: "var(--hm-color-brand)" }}
               color="white"
               value={form.skills}
               onChange={handleChange}
@@ -235,9 +221,8 @@ const Volunteer = () => {
               name="message"
               placeholder="Tell us why you want to volunteer *"
               rows={5}
-              bg="rgba(255,255,255,0.05)"
-              border="1px solid rgba(255,255,255,0.1)"
-              _focus={{ borderColor: "#F76B1C" }}
+              className="hm-input"
+              _focus={{ borderColor: "var(--hm-color-brand)" }}
               color="white"
               value={form.message}
               onChange={handleChange}
@@ -246,8 +231,8 @@ const Volunteer = () => {
 
           <Flex justify="center" mt={6}>
             <Button
-              bgGradient="linear(to-r, #6750A4, #F76B1C)"
-              _hover={{ bgGradient: "linear(to-r, #F76B1C, #6750A4)" }}
+              bgGradient="var(--hm-gradient-cta)"
+              _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
               color="white"
               borderRadius="full"
               px={10}

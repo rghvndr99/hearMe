@@ -18,7 +18,7 @@ const About= () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg="#0A0A0F"
+      bg="var(--hm-color-bg)"
       color="white"
       position="relative"
       overflow="hidden"
@@ -33,8 +33,7 @@ const About= () => {
         left="-15%"
         w="80%"
         h="80%"
-        bg="radial-gradient(circle at top left, rgba(247,107,138,0.25), transparent 70%)"
-        filter="blur(120px)"
+        className="hm-bg-gradient-pink"
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
@@ -44,8 +43,7 @@ const About= () => {
         right="-15%"
         w="80%"
         h="80%"
-        bg="radial-gradient(circle at bottom right, rgba(55,114,255,0.25), transparent 70%)"
-        filter="blur(120px)"
+        className="hm-bg-gradient-blue"
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
@@ -55,8 +53,7 @@ const About= () => {
         left="0%"
         w="100%"
         h="100%"
-        bg="radial-gradient(circle at bottom left, rgba(249,168,38,0.15), transparent 70%)"
-        filter="blur(150px)"
+        className="hm-bg-gradient-orange"
       />
 
       {/* === PAGE CONTENT === */}
@@ -65,12 +62,12 @@ const About= () => {
           as="h1"
           fontSize={["4xl", "5xl", "6xl"]}
           fontWeight="800"
-          color="#FFF8E7"
+          color="var(--hm-color-text-primary)"
         >
           About Us.
         </Heading>
 
-        <Text fontSize="lg" color="#D0CFE0" lineHeight="1.8">
+        <Text fontSize="lg" color="var(--hm-color-text-tertiary)" lineHeight="1.8">
           At <strong>HearMe</strong>, we’re dedicated to providing a safe and open space
           for everyone to share their thoughts, feelings, and creations.
           Our platform empowers individuals to connect authentically and express
@@ -83,12 +80,12 @@ const About= () => {
             as="h2"
             fontSize={["2xl", "3xl"]}
             mb={4}
-            color="#FFF8E7"
+            color="var(--hm-color-text-primary)"
             fontWeight="700"
           >
             Our Mission
           </Heading>
-          <Text fontSize="md" color="#CFCFCF" maxW="600px" mx="auto">
+          <Text fontSize="md" color="var(--hm-color-text-secondary)" maxW="600px" mx="auto">
             To foster a community where every voice can be heard and valued.
           </Text>
         </Box>
@@ -96,47 +93,43 @@ const About= () => {
         {/* Values & Team Section */}
         <SimpleGrid columns={[1, 2]} spacing={10} pt={10} w="full">
           <Box
-            bg="rgba(255,255,255,0.05)"
+            className="hm-glass-card"
             p={8}
             borderRadius="lg"
-            border="1px solid rgba(255,255,255,0.1)"
-            backdropFilter="blur(10px)"
             transition="0.3s"
-            _hover={{ borderColor: "#F76B1C" }}
+            _hover={{ borderColor: "var(--hm-color-brand)" }}
           >
             <Heading
               as="h3"
               fontSize="2xl"
               mb={3}
-              color="#FFF8E7"
+              color="var(--hm-color-text-primary)"
               fontWeight="700"
             >
               Our Values
             </Heading>
-            <Text fontSize="md" color="#CFCFCF">
+            <Text fontSize="md" color="var(--hm-color-text-secondary)">
               Empathy, inclusivity, and creativity are at the core of what we do.
             </Text>
           </Box>
 
           <Box
-            bg="rgba(255,255,255,0.05)"
+            className="hm-glass-card"
             p={8}
             borderRadius="lg"
-            border="1px solid rgba(255,255,255,0.1)"
-            backdropFilter="blur(10px)"
             transition="0.3s"
-            _hover={{ borderColor: "#F76B1C" }}
+            _hover={{ borderColor: "var(--hm-color-brand)" }}
           >
             <Heading
               as="h3"
               fontSize="2xl"
               mb={3}
-              color="#FFF8E7"
+              color="var(--hm-color-text-primary)"
               fontWeight="700"
             >
               Our Team
             </Heading>
-            <Text fontSize="md" color="#CFCFCF">
+            <Text fontSize="md" color="var(--hm-color-text-secondary)">
               A diverse group of passionate individuals committed to making a
               difference.
             </Text>

@@ -20,10 +20,10 @@ const Footer = () => {
       as="footer"
       position="relative"
       py={12}
-      bg="#0A0A0F"
-      color="#E0DFF5"
+      bg="var(--hm-color-bg)"
+      color="var(--hm-color-text-muted)"
       overflow="hidden"
-      borderTop="1px solid rgba(255,255,255,0.1)"
+      className="hm-border-top"
     >
       {/* Brushstroke Glow Background */}
       <MotionBox
@@ -32,8 +32,8 @@ const Footer = () => {
         left="-10%"
         w="70%"
         h="100%"
-        bg="radial-gradient(circle at top left, rgba(247,107,138,0.25), transparent 70%)"
-        filter="blur(100px)"
+        className="hm-bg-gradient-pink"
+
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 6, repeat: Infinity }}
       />
@@ -43,8 +43,8 @@ const Footer = () => {
         right="-10%"
         w="70%"
         h="100%"
-        bg="radial-gradient(circle at bottom right, rgba(55,114,255,0.25), transparent 70%)"
-        filter="blur(120px)"
+        className="hm-bg-gradient-blue"
+
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 6, repeat: Infinity }}
       />
