@@ -5,6 +5,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import './styles.css';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import ChatBubble from './components/ChatBubble';
 
 // Lazy-loaded pages for faster performance
 const Home = lazy(() => import('./pages/Home'));
@@ -48,6 +49,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </Suspense>
+        <ChatBubble />
         <Footer />
       </Router>
     </ChakraProvider>
