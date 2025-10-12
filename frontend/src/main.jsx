@@ -7,6 +7,10 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import ChatBubble from './components/ChatBubble';
 
+// Initialize theme before app renders
+const savedTheme = localStorage.getItem('hm-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+
 // Lazy-loaded pages for faster performance
 const Home = lazy(() => import('./pages/Home'));
 const Chat = lazy(() => import('./pages/Chat'));

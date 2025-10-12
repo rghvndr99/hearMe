@@ -217,10 +217,29 @@
   --hm-hover-bg:rgba(255,107,53,0.1);
 }
 
+/* Smooth theme transitions */
+*{
+  transition:background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
 body{
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
   background:var(--hm-color-bg);
   color:var(--hm-color-text-primary);
+  margin:0;
+  padding:0;
+}
+
+/* Pulse animation for typing indicator */
+@keyframes pulse{
+  0%, 100%{
+    opacity:0.4;
+    transform:scale(0.8);
+  }
+  50%{
+    opacity:1;
+    transform:scale(1.2);
+  }
 }
 a{color:#4f46e5}
 

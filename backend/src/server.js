@@ -6,12 +6,29 @@ import rateLimit from 'express-rate-limit';
 import mongoose from 'mongoose';
 import http from 'http';
 import { Server } from 'socket.io';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import chatRouter from './routes/chat.js';
 import sentimentRouter from './routes/sentiment.js';
 import listenerRouter from './routes/listener.js';
 import authRouter from './routes/auth.js';
+import aiChatRouter from './routes/aiChat.js';
 
-dotenv.config();
+// Get directory name in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load .env from root directory
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
+// Verify OpenAI API key is loaded
+if (process.env.OPENAI_API_KEY) {
+  console.log('✅ OpenAI API Key loaded successfully');
+  console.log(`   Key starts with: ${process.env.OPENAI_API_KEY.substring(0, 10)}...`);
+} else {
+  console.warn('⚠️  WARNING: OPENAI_API_KEY not found in environment variables');
+}
+
 const app = express();
 app.use(helmet());
 app.use(cors());
@@ -28,6 +45,7 @@ app.use('/api/chat', chatRouter);
 app.use('/api/sentiment', sentimentRouter);
 app.use('/api/listener', listenerRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/ai-chat', aiChatRouter);
 
 const server = http.createServer(app);
 const io = new Server(server, {
