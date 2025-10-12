@@ -44,7 +44,7 @@ const Volunteer = () => {
       justify="center"
       minH="100vh"
       bg="var(--hm-color-bg)"
-      color="white"
+      color="var(--hm-color-text-primary)"
       position="relative"
       overflow="hidden"
       px={[6, 12]}
@@ -124,7 +124,7 @@ const Volunteer = () => {
             transition="0.3s"
             _hover={{ borderColor: "var(--hm-color-brand)" }}
           >
-            <Icon as={FaHeart} boxSize={8} color="#F76B1C" mb={4} />
+            <Icon as={FaHeart} boxSize={8} color="var(--hm-color-brand)" mb={4} />
             <Text fontSize="xl" fontWeight="600" mb={2}>
               Support Others
             </Text>
@@ -139,9 +139,9 @@ const Volunteer = () => {
             borderRadius="xl"
             p={[6, 8]}
             transition="0.3s"
-            _hover={{ borderColor: "#F76B1C" }}
+            _hover={{ borderColor: "var(--hm-color-brand)" }}
           >
-            <Icon as={FaUsers} boxSize={8} color="#F9A826" mb={4} />
+            <Icon as={FaUsers} boxSize={8} color="var(--hm-color-accent-orange)" mb={4} />
             <Text fontSize="xl" fontWeight="600" mb={2}>
               Gain Experience
             </Text>
@@ -156,9 +156,9 @@ const Volunteer = () => {
             borderRadius="xl"
             p={[6, 8]}
             transition="0.3s"
-            _hover={{ borderColor: "#F76B1C" }}
+            _hover={{ borderColor: "var(--hm-color-brand)" }}
           >
-            <Icon as={FaStar} boxSize={8} color="#A78BFA" mb={4} />
+            <Icon as={FaStar} boxSize={8} color="var(--hm-color-accent-purple)" mb={4} />
             <Text fontSize="xl" fontWeight="600" mb={2}>
               Build Community
             </Text>
@@ -194,7 +194,7 @@ const Volunteer = () => {
               placeholder="Full Name *"
               className="hm-input"
               _focus={{ borderColor: "var(--hm-color-brand)" }}
-              color="white"
+
               value={form.name}
               onChange={handleChange}
             />
@@ -204,7 +204,7 @@ const Volunteer = () => {
               type="email"
               className="hm-input"
               _focus={{ borderColor: "var(--hm-color-brand)" }}
-              color="white"
+
               value={form.email}
               onChange={handleChange}
             />
@@ -213,7 +213,7 @@ const Volunteer = () => {
               placeholder="Skills / Areas of Expertise"
               className="hm-input"
               _focus={{ borderColor: "var(--hm-color-brand)" }}
-              color="white"
+
               value={form.skills}
               onChange={handleChange}
             />
@@ -223,7 +223,7 @@ const Volunteer = () => {
               rows={5}
               className="hm-input"
               _focus={{ borderColor: "var(--hm-color-brand)" }}
-              color="white"
+
               value={form.message}
               onChange={handleChange}
             />

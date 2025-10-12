@@ -62,7 +62,7 @@ const Stories = () => {
       justify="center"
       minH="100vh"
       bg="var(--hm-color-bg)"
-      color="white"
+      color="var(--hm-color-text-primary)"
       position="relative"
       overflow="hidden"
       px={[6, 12]}
@@ -105,7 +105,7 @@ const Stories = () => {
           as="h1"
           fontSize={["4xl", "5xl", "6xl"]}
           fontWeight="800"
-          color="#CBB9FF"
+          color="var(--hm-color-accent-pink)"
         >
           Success Stories
         </Heading>
@@ -124,7 +124,7 @@ const Stories = () => {
             placeholder="Write your success story..."
             className="hm-input"
             _focus={{ borderColor: "var(--hm-color-brand)" }}
-            color="white"
+
             _placeholder={{ color: "var(--hm-color-placeholder)" }}
             borderRadius="md"
             p={4}
@@ -156,7 +156,7 @@ const Stories = () => {
               textAlign="left"
               backdropFilter="blur(10px)"
               transition="0.3s"
-              _hover={{ borderColor: "#F76B1C" }}
+              _hover={{ borderColor: "var(--hm-color-brand)" }}
             >
               <Flex align="center" mb={4}>
                 <Avatar name={s.name} src={s.avatar} size="md" mr={4} />
@@ -169,7 +169,7 @@ const Stories = () => {
                   </Text>
                 </Box>
               </Flex>
-              <Text color="#E8E8E8" fontSize="md">
+              <Text color="var(--hm-color-text-secondary)" fontSize="md">
                 {s.story}
               </Text>
             </Box>

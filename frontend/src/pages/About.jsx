@@ -19,7 +19,7 @@ const About= () => {
       justify="center"
       minH="100vh"
       bg="var(--hm-color-bg)"
-      color="white"
+      color="var(--hm-color-text-primary)"
       position="relative"
       overflow="hidden"
       px={[6, 12]}

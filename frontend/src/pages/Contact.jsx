@@ -47,7 +47,7 @@ const Contact = () => {
       bg="var(--hm-color-bg)"
       position="relative"
       overflow="hidden"
-      color="white"
+      color="var(--hm-color-text-primary)"
       px={6}
     >
       {/* Background gradients - Neo Expressionist */}
@@ -98,7 +98,7 @@ const Contact = () => {
             placeholder="Name"
             className="hm-input"
             _focus={{ borderColor: "var(--hm-color-brand)" }}
-            color="white"
+
             _placeholder={{ color: "var(--hm-color-placeholder)" }}
             borderRadius="md"
             p={4}
@@ -111,7 +111,7 @@ const Contact = () => {
             placeholder="Email"
             className="hm-input"
             _focus={{ borderColor: "var(--hm-color-brand)" }}
-            color="white"
+
             _placeholder={{ color: "var(--hm-color-placeholder)" }}
             borderRadius="md"
             p={4}
@@ -123,7 +123,7 @@ const Contact = () => {
             placeholder="Message"
             className="hm-input"
             _focus={{ borderColor: "var(--hm-color-brand)" }}
-            color="white"
+
             _placeholder={{ color: "var(--hm-color-placeholder)" }}
             borderRadius="md"
             rows={5}

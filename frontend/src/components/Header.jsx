@@ -20,9 +20,9 @@ const Header= () => {
       position="sticky"
       top="0"
       zIndex="1000"
-      bg="rgba(10,10,15,0.8)"
+      bg="var(--hm-header-bg)"
       backdropFilter="blur(10px)"
-      borderBottom="1px solid rgba(255,255,255,0.1)"
+      borderBottom="1px solid var(--hm-border-glass)"
       boxShadow="0 4px 20px rgba(0,0,0,0.3)"
     >
       <Flex

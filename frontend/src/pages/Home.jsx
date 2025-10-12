@@ -20,7 +20,7 @@ const Home = () => {
   return (
     <Box
       bg="var(--hm-color-bg)"
-      color="white"
+      color="var(--hm-color-text-primary)"
       minH="100vh"
       position="relative"
       overflow="hidden"
@@ -73,6 +73,7 @@ const Home = () => {
             variant="outline"
             className="hm-border-outline hm-hover-bg"
             borderRadius="full"
+            color="var(--hm-color-text-primary)"
           >
             Explore the Community
           </Button>
@@ -172,6 +173,7 @@ const Home = () => {
             variant="outline"
             className="hm-border-outline hm-hover-bg"
             borderRadius="full"
+            color="var(--hm-color-text-primary)"
           >
             Sign In
           </Button>

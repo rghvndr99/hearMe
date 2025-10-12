@@ -20,7 +20,7 @@ const Resources = () => {
       justify="center"
       minH="100vh"
       bg="var(--hm-color-bg)"
-      color="white"
+      color="var(--hm-color-text-primary)"
       position="relative"
       overflow="hidden"
       px={[6, 12]}
@@ -93,7 +93,7 @@ const Resources = () => {
                 <strong>National Suicide Prevention Lifeline:</strong>{" "}
                 <Link
                   href="tel:988"
-                  color="#A78BFA"
+                  color="var(--hm-color-accent-link)"
                   _hover={{ textDecoration: "underline" }}
                 >
                   988
@@ -104,7 +104,7 @@ const Resources = () => {
                 <strong>Crisis Text Line:</strong>{" "}
                 <Link
                   href="sms:741741"
-                  color="#A78BFA"
+                  color="var(--hm-color-accent-link)"
                   _hover={{ textDecoration: "underline" }}
                 >
                   Text HOME to 741741
@@ -115,7 +115,7 @@ const Resources = () => {
                 <strong>SAMHSA National Helpline:</strong>{" "}
                 <Link
                   href="tel:18006624357"
-                  color="#A78BFA"
+                  color="var(--hm-color-accent-link)"
                   _hover={{ textDecoration: "underline" }}
                 >
                   1-800-662-4357
@@ -148,7 +148,7 @@ const Resources = () => {
               <Link
                 href="https://www.betterhelp.com/"
                 target="_blank"
-                color="#A78BFA"
+                color="var(--hm-color-accent-link)"
                 _hover={{ textDecoration: "underline" }}
               >
                 BetterHelp
@@ -157,7 +157,7 @@ const Resources = () => {
               <Link
                 href="https://www.talkspace.com/"
                 target="_blank"
-                color="#A78BFA"
+                color="var(--hm-color-accent-link)"
                 _hover={{ textDecoration: "underline" }}
               >
                 Talkspace

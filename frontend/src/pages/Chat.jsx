@@ -15,7 +15,7 @@ const Chat = () => {
       bg="var(--hm-color-bg)"
       position="relative"
       overflow="hidden"
-      color="white"
+      color="var(--hm-color-text-primary)"
     >
       {/* Background Gradient Brush Strokes */}
       <MotionBox
@@ -47,7 +47,7 @@ const Chat = () => {
           size="lg"
           className="hm-border-outline"
         />
-        <Text fontSize="2xl" fontWeight="600" color="#FFFFFF">
+        <Text fontSize="2xl" fontWeight="600" color="var(--hm-color-text-primary)">
           Albert Flores
         </Text>
       </VStack>
@@ -57,8 +57,8 @@ const Chat = () => {
         <Input
           placeholder="Type a message..."
           className="hm-input"
-          _focus={{ borderColor: "#6C63FF" }}
-          color="white"
+          _focus={{ borderColor: "var(--hm-color-brand)" }}
+
           borderRadius="md"
           p={4}
           fontSize="md"
@@ -67,7 +67,7 @@ const Chat = () => {
           <Button
             bg="var(--hm-bg-glass-strong)"
             className="hm-hover-bg"
-            color="white"
+            color="var(--hm-color-text-primary)"
             borderRadius="full"
             px={5}
             py={2}
@@ -78,7 +78,7 @@ const Chat = () => {
           <Button
             bg="var(--hm-bg-glass-strong)"
             className="hm-hover-bg"
-            color="white"
+            color="var(--hm-color-text-primary)"
             borderRadius="full"
             px={5}
             py={2}

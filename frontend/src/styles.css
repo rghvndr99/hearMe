@@ -15,6 +15,12 @@
   --hm-color-text-tertiary:#D0CFE0;
   --hm-color-placeholder:#A0A0A0;
 
+  /* Accent Colors */
+  --hm-color-accent-purple:#A78BFA;
+  --hm-color-accent-orange:#F9A826;
+  --hm-color-accent-pink:#CBB9FF;
+  --hm-color-accent-link:#A78BFA;
+
   /* Gradients */
   --hm-gradient-cta:linear-gradient(to right, #6750A4, #F76B1C);
   --hm-gradient-cta-hover:linear-gradient(to right, #F76B1C, #6750A4);
@@ -51,6 +57,12 @@
   --hm-color-text-secondary:#6B6B6B;
   --hm-color-text-tertiary:#5A5A5A;
   --hm-color-placeholder:#9A9A9A;
+
+  /* Accent Colors */
+  --hm-color-accent-purple:#7C3AED;
+  --hm-color-accent-orange:#EA580C;
+  --hm-color-accent-pink:#9333EA;
+  --hm-color-accent-link:#7C3AED;
 
   /* Gradients */
   --hm-gradient-cta:linear-gradient(to right, #6750A4, #F76B1C);
@@ -89,6 +101,12 @@
   --hm-color-text-tertiary:#8BC5DB;
   --hm-color-placeholder:#6B9FB5;
 
+  /* Accent Colors */
+  --hm-color-accent-purple:#60A5FA;
+  --hm-color-accent-orange:#38BDF8;
+  --hm-color-accent-pink:#7DD3FC;
+  --hm-color-accent-link:#60A5FA;
+
   /* Gradients */
   --hm-gradient-cta:linear-gradient(to right, #0077B6, #00D4FF);
   --hm-gradient-cta-hover:linear-gradient(to right, #00D4FF, #0077B6);
@@ -126,6 +144,12 @@
   --hm-color-text-tertiary:#81C784;
   --hm-color-placeholder:#66BB6A;
 
+  /* Accent Colors */
+  --hm-color-accent-purple:#9CCC65;
+  --hm-color-accent-orange:#AED581;
+  --hm-color-accent-pink:#C5E1A5;
+  --hm-color-accent-link:#9CCC65;
+
   /* Gradients */
   --hm-gradient-cta:linear-gradient(to right, #558B2F, #7CB342);
   --hm-gradient-cta-hover:linear-gradient(to right, #7CB342, #558B2F);
@@ -162,6 +186,12 @@
   --hm-color-text-secondary:#FFCC80;
   --hm-color-text-tertiary:#FFB74D;
   --hm-color-placeholder:#FFA726;
+
+  /* Accent Colors */
+  --hm-color-accent-purple:#FB923C;
+  --hm-color-accent-orange:#FDBA74;
+  --hm-color-accent-pink:#FED7AA;
+  --hm-color-accent-link:#FB923C;
 
   /* Gradients */
   --hm-gradient-cta:linear-gradient(to right, #E64A19, #FF6B35);
