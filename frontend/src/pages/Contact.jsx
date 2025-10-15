@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
+
 const MotionBox = motion(Box);
 
 const Contact = () => {
@@ -49,28 +50,10 @@ const Contact = () => {
       overflow="hidden"
       color="var(--hm-color-text-primary)"
       px={6}
+      pt="100px"
+      pb={12}
     >
       {/* Background gradients - Neo Expressionist */}
-      <MotionBox
-        position="absolute"
-        top="-10%"
-        left="-15%"
-        w="80%"
-        h="80%"
-        className="hm-bg-gradient-pink"
-        animate={{ opacity: [0.6, 0.9, 0.6] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
-      <MotionBox
-        position="absolute"
-        bottom="-10%"
-        right="-15%"
-        w="80%"
-        h="80%"
-        className="hm-bg-gradient-blue"
-        animate={{ opacity: [0.6, 0.9, 0.6] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
 
       {/* Contact Form Container */}
       <VStack
@@ -85,8 +68,12 @@ const Contact = () => {
           <Heading fontSize={["3xl", "4xl"]} fontWeight="700" color="var(--hm-color-text-primary)">
             Contact Us.
           </Heading>
+
           <Text color="var(--hm-color-text-secondary)">
-            Have questions or feedback? Reach out to us.
+            For feedback, partnerships, or non-urgent questions. For emotional support, please use the Chat page.
+          </Text>
+          <Text color="var(--hm-color-text-secondary)" fontSize="sm">
+            If you are in immediate danger or feel unsafe, call <strong>112</strong> (India) or see Resources for more help options.
           </Text>
         </VStack>
 
@@ -95,7 +82,7 @@ const Contact = () => {
             name="name"
             value={formData.name}
             onChange={handleInputChange}
-            placeholder="Name"
+            placeholder="Your name"
             className="hm-input"
             _focus={{ borderColor: "var(--hm-color-brand)" }}
 
@@ -108,7 +95,7 @@ const Contact = () => {
             type="email"
             value={formData.email}
             onChange={handleInputChange}
-            placeholder="Email"
+            placeholder="Your email"
             className="hm-input"
             _focus={{ borderColor: "var(--hm-color-brand)" }}
 
@@ -120,7 +107,7 @@ const Contact = () => {
             name="message"
             value={formData.message}
             onChange={handleInputChange}
-            placeholder="Message"
+            placeholder="How can we help? (feedback, partnership, non-urgent)"
             className="hm-input"
             _focus={{ borderColor: "var(--hm-color-brand)" }}
 

@@ -5,6 +5,7 @@ import {
   generateResponse,
   generateQuickReplies,
   generateSummary,
+  detectIntent,
 } from '../services/openaiService.js';
 
 const router = express.Router();
@@ -76,39 +77,79 @@ router.post('/message', async (req, res) => {
     };
     conversation.messages.push(userMessage);
 
-    // Analyze sentiment
-    const sentiment = await analyzeSentiment(message);
-    conversation.mood = sentiment.mood;
+    // Get user's language preference
+    const userLanguage = conversation.language || 'English';
+
+    // 🧠 STEP 1: Check for intent detection BEFORE calling OpenAI
+    console.log(`🔍 Checking intent for message: "${message}"`);
+    console.log(`🌐 User language: ${userLanguage}`);
+    const detectedIntent = detectIntent(message, userLanguage);
+    console.log(`🎯 Intent detection result:`, detectedIntent);
+
+    let aiResponseContent;
+    let sentiment;
+    let quickReplies = [];
+    let intentDetected = false;
+
+    if (detectedIntent && detectedIntent.skipOpenAI) {
+      // Intent detected! Use custom response instead of OpenAI
+      console.log(`✅ Intent detected: ${detectedIntent.intent} - Skipping OpenAI`);
+
+      aiResponseContent = detectedIntent.response;
+      intentDetected = true;
+
+      // For intent-based responses, create a basic sentiment
+      sentiment = {
+        mood: detectedIntent.intent === 'emergency' ? 'crisis' : 'neutral',
+        crisis: detectedIntent.intent === 'emergency',
+        confidence: 1.0,
+      };
+
+      // No quick replies for intent-based responses
+      quickReplies = [];
+
+    } else {
+      // No intent detected, proceed with normal OpenAI flow
+      console.log('📤 No intent detected - Calling OpenAI');
+
+      // Analyze sentiment
+      sentiment = await analyzeSentiment(message);
+      conversation.mood = sentiment.mood;
+
+      // Prepare conversation history for OpenAI (last 10 messages)
+      const recentMessages = conversation.messages
+        .slice(-10)
+        .map((msg) => ({
+          role: msg.role,
+          content: msg.content,
+        }));
+
+      // Generate AI response in the user's language
+      aiResponseContent = await generateResponse(recentMessages, userLanguage);
+
+      // Generate quick replies for next interaction
+      quickReplies = await generateQuickReplies(recentMessages);
+    }
+
+    // Update conversation metadata
     conversation.lastActivity = new Date();
 
-    // Prepare conversation history for OpenAI (last 10 messages)
-    const recentMessages = conversation.messages
-      .slice(-10)
-      .map((msg) => ({
-        role: msg.role,
-        content: msg.content,
-      }));
-
-    // Generate AI response in the user's language
-    const userLanguage = conversation.language || 'English';
-    const aiResponseContent = await generateResponse(recentMessages, userLanguage);
-
+    // Create AI message
     const aiMessage = {
       role: 'assistant',
       content: aiResponseContent,
       timestamp: new Date(),
       sentiment,
+      intentDetected: intentDetected ? detectedIntent.intent : null,
     };
     conversation.messages.push(aiMessage);
-
-    // Generate quick replies for next interaction
-    const quickReplies = await generateQuickReplies(recentMessages);
 
     res.json({
       message: aiMessage,
       sentiment,
       quickReplies,
       crisis: sentiment.crisis,
+      intentDetected: intentDetected ? detectedIntent.intent : null,
     });
   } catch (error) {
     console.error('Error processing message:', error);

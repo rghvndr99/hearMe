@@ -55,12 +55,18 @@ const ThemeToggle = () => {
     const savedTheme = localStorage.getItem('hm-theme') || 'dark';
     setCurrentTheme(savedTheme);
     document.documentElement.setAttribute('data-theme', savedTheme);
+    // Sync color-scheme
+    const colorScheme = (savedTheme === 'light') ? 'light' : 'dark';
+    document.documentElement.style.colorScheme = colorScheme;
   }, []);
 
   const handleThemeChange = (themeId) => {
     setCurrentTheme(themeId);
     document.documentElement.setAttribute('data-theme', themeId);
     localStorage.setItem('hm-theme', themeId);
+    // Sync color-scheme
+    const colorScheme = (themeId === 'light') ? 'light' : 'dark';
+    document.documentElement.style.colorScheme = colorScheme;
   };
 
   const activeTheme = themes.find((t) => t.id === currentTheme) || themes[0];

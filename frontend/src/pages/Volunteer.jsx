@@ -14,6 +14,7 @@ import {
 import { motion } from "framer-motion";
 import { FaHeart, FaUsers, FaStar } from "react-icons/fa";
 
+
 const MotionBox = motion(Box);
 
 const Volunteer = () => {
@@ -48,7 +49,8 @@ const Volunteer = () => {
       position="relative"
       overflow="hidden"
       px={[6, 12]}
-      py={[12, 20]}
+      pt="100px"
+      pb={[12, 20]}
       textAlign="center"
     >
       {/* === BACKGROUND BRUSHSTROKES === */}
@@ -62,24 +64,6 @@ const Volunteer = () => {
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
-      <MotionBox
-        position="absolute"
-        bottom="-10%"
-        right="-15%"
-        w="80%"
-        h="80%"
-        className="hm-bg-gradient-blue"
-        animate={{ opacity: [0.6, 0.9, 0.6] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
-      <MotionBox
-        position="absolute"
-        bottom="0%"
-        left="0%"
-        w="100%"
-        h="100%"
-        className="hm-bg-gradient-orange"
-      />
 
       {/* === PAGE CONTENT === */}
       <VStack spacing={10} zIndex={1} maxW="900px">
@@ -91,13 +75,14 @@ const Volunteer = () => {
           color="var(--hm-color-text-primary)"
           lineHeight="1.2"
         >
-          Make an impact.<br />Be a volunteer.
+          Help someone feel less alone.
         </Heading>
 
+
         <Text fontSize="lg" color="var(--hm-color-text-tertiary)" maxW="700px">
-          Join HearMe’s mission to provide a supportive space where every voice
-          can be heard. Your compassion and time can help others express and
-          heal through connection.
+          Join HearMe’s mission to offer simple, private support in many Indian languages.
+          You don’t need to be a counselor—just a kind, patient listener.
+          We’ll guide you on how to listen with care and without judgment.
         </Text>
 
         {/* Apply Now Button */}
@@ -112,7 +97,7 @@ const Volunteer = () => {
           fontSize="lg"
           shadow="0px 0px 20px rgba(247,107,138,0.3)"
         >
-          Apply Now
+          Apply to Volunteer
         </Button>
 
         {/* Benefits Section */}
@@ -129,8 +114,7 @@ const Volunteer = () => {
               Support Others
             </Text>
             <Text color="var(--hm-color-text-secondary)">
-              Help individuals express themselves in a safe and welcoming
-              environment.
+              Offer calm, non-judgmental listening so someone can feel heardin their own words.
             </Text>
           </Box>
 
@@ -146,8 +130,7 @@ const Volunteer = () => {
               Gain Experience
             </Text>
             <Text color="var(--hm-color-text-secondary)">
-              Develop valuable skills in listening, empathy, and compassionate
-              communication.
+              Build practical skills in active listening, empathy, and compassionate communication.
             </Text>
           </Box>
 
@@ -163,8 +146,7 @@ const Volunteer = () => {
               Build Community
             </Text>
             <Text color="var(--hm-color-text-secondary)">
-              Connect with like-minded individuals who care deeply about mental
-              wellness.
+              Be part of a caring, inclusive community supporting mental wellness across India.
             </Text>
           </Box>
         </SimpleGrid>
@@ -181,12 +163,15 @@ const Volunteer = () => {
           <Heading
             as="h2"
             fontSize="2xl"
-            mb={6}
+            mb={2}
             textAlign="center"
             color="var(--hm-color-text-primary)"
           >
             Volunteer Application
           </Heading>
+          <Text textAlign="center" color="var(--hm-color-text-secondary)" mb={6}>
+            Note: This form is for volunteering. If youre seeking support, please use the Chat page.
+          </Text>
 
           <VStack spacing={4} align="stretch">
             <Input

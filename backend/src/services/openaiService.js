@@ -1,4 +1,5 @@
 import OpenAI from 'openai';
+import { detectIntent as detectIntentFromConfig } from '../config/intentResponses.js';
 
 // Initialize OpenAI client lazily to ensure env vars are loaded
 let openai = null;
@@ -14,6 +15,9 @@ const getOpenAIClient = () => {
   }
   return openai;
 };
+
+// Re-export detectIntent from config for easy access
+export { detectIntentFromConfig as detectIntent };
 
 // System prompt for mental health support
 const getSystemPrompt = (language = 'English') => {
@@ -48,82 +52,109 @@ Remember: You're here to listen, support, and guide - not to fix or solve. Alway
  * Analyze the sentiment and mood of a message
  */
 export async function analyzeSentiment(message) {
+  const client = getOpenAIClient();
+
   try {
-    const client = getOpenAIClient();
     const response = await client.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: [
         {
           role: 'system',
-          content: 'Analyze the emotional tone of the following message. Respond with a JSON object containing: mood (happy/sad/anxious/angry/neutral/mixed), intensity (low/medium/high), and crisis (true/false if mentions self-harm/suicide).',
+          content:
+            'You are a sentiment analyzer for mental health support. Analyze the mood and detect crisis situations. Respond ONLY with a JSON object containing: mood (string: happy/sad/anxious/angry/neutral/crisis), crisis (boolean), confidence (number 0-1).',
         },
         {
           role: 'user',
           content: message,
         },
       ],
-      response_format: { type: 'json_object' },
       temperature: 0.3,
+      max_tokens: 50,
     });
 
-    return JSON.parse(response.choices[0].message.content);
+    const result = JSON.parse(response.choices[0].message.content);
+    return result;
   } catch (error) {
     console.error('Error analyzing sentiment:', error);
-    return { mood: 'neutral', intensity: 'medium', crisis: false };
+    return { mood: 'neutral', crisis: false, confidence: 0.5 };
   }
 }
 
 /**
- * Generate a response based on conversation history
+ * Generate AI response based on conversation history
  */
 export async function generateResponse(conversationHistory, language = 'English') {
-  try {
-    const client = getOpenAIClient();
-    // Prepare messages with system prompt
-    const messages = [
-      {
-        role: 'system',
-        content: getSystemPrompt(language),
-      },
-      ...conversationHistory,
-    ];
+  const client = getOpenAIClient();
 
+  const messages = [
+    {
+      role: 'system',
+      content: getSystemPrompt(language),
+    },
+    ...conversationHistory,
+  ];
+
+  try {
     const response = await client.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: messages,
       temperature: 0.7,
       max_tokens: 250,
-      presence_penalty: 0.6,
-      frequency_penalty: 0.3,
     });
 
     return response.choices[0].message.content;
   } catch (error) {
     console.error('Error generating response:', error);
-    throw new Error('Failed to generate response');
+    throw error;
   }
 }
 
 /**
- * Generate conversation summary for analytics
+ * Generate quick reply suggestions
  */
-export async function generateSummary(conversationHistory) {
-  try {
-    const client = getOpenAIClient();
-    const messages = [
-      {
-        role: 'system',
-        content: 'Summarize this mental health support conversation in 2-3 sentences. Focus on the main concerns discussed and the emotional journey.',
-      },
-      {
-        role: 'user',
-        content: JSON.stringify(conversationHistory),
-      },
-    ];
+export async function generateQuickReplies(conversationHistory) {
+  const client = getOpenAIClient();
 
+  try {
     const response = await client.chat.completions.create({
       model: 'gpt-4o-mini',
-      messages: messages,
+      messages: [
+        {
+          role: 'system',
+          content:
+            'Based on the conversation, suggest 3 short (3-5 words) quick reply options the user might want to say next. Respond ONLY with a JSON array of strings.',
+        },
+        ...conversationHistory.slice(-4),
+      ],
+      temperature: 0.8,
+      max_tokens: 60,
+    });
+
+    const replies = JSON.parse(response.choices[0].message.content);
+    return Array.isArray(replies) ? replies.slice(0, 3) : [];
+  } catch (error) {
+    console.error('Error generating quick replies:', error);
+    return [];
+  }
+}
+
+/**
+ * Generate a summary of the conversation
+ */
+export async function generateSummary(conversationHistory) {
+  const client = getOpenAIClient();
+
+  try {
+    const response = await client.chat.completions.create({
+      model: 'gpt-4o-mini',
+      messages: [
+        {
+          role: 'system',
+          content:
+            'Summarize this mental health support conversation in 2-3 sentences. Focus on the main concerns and emotional themes.',
+        },
+        ...conversationHistory,
+      ],
       temperature: 0.5,
       max_tokens: 150,
     });
@@ -131,47 +162,7 @@ export async function generateSummary(conversationHistory) {
     return response.choices[0].message.content;
   } catch (error) {
     console.error('Error generating summary:', error);
-    return 'Conversation summary unavailable';
+    return 'Unable to generate summary.';
   }
 }
-
-/**
- * Generate suggested quick replies based on context
- */
-export async function generateQuickReplies(conversationHistory) {
-  try {
-    const client = getOpenAIClient();
-    const messages = [
-      {
-        role: 'system',
-        content: 'Based on this conversation, suggest 3 short (3-5 words) quick reply options the user might want to say next. Return as JSON array of strings.',
-      },
-      {
-        role: 'user',
-        content: JSON.stringify(conversationHistory.slice(-4)), // Last 4 messages
-      },
-    ];
-
-    const response = await client.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: messages,
-      response_format: { type: 'json_object' },
-      temperature: 0.8,
-      max_tokens: 100,
-    });
-
-    const result = JSON.parse(response.choices[0].message.content);
-    return result.replies || [];
-  } catch (error) {
-    console.error('Error generating quick replies:', error);
-    return ['Tell me more', 'I understand', 'Thank you'];
-  }
-}
-
-export default {
-  analyzeSentiment,
-  generateResponse,
-  generateSummary,
-  generateQuickReplies,
-};
 

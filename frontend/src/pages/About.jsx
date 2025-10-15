@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
+
 const MotionBox = motion(Box);
 
 const About= () => {
@@ -23,7 +24,8 @@ const About= () => {
       position="relative"
       overflow="hidden"
       px={[6, 12]}
-      py={[12, 20]}
+      pt="100px"
+      pb={[12, 20]}
       textAlign="center"
     >
       {/* === BACKGROUND GRADIENTS (Neo Expressionist Glow) === */}
@@ -37,60 +39,48 @@ const About= () => {
         animate={{ opacity: [0.6, 0.9, 0.6] }}
         transition={{ duration: 8, repeat: Infinity }}
       />
-      <MotionBox
-        position="absolute"
-        bottom="-10%"
-        right="-15%"
-        w="80%"
-        h="80%"
-        className="hm-bg-gradient-blue"
-        animate={{ opacity: [0.6, 0.9, 0.6] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
-      <MotionBox
-        position="absolute"
-        bottom="0%"
-        left="0%"
-        w="100%"
-        h="100%"
-        className="hm-bg-gradient-orange"
-      />
 
       {/* === PAGE CONTENT === */}
       <VStack spacing={10} zIndex={1} maxW="800px">
         <Heading
           as="h1"
-          fontSize={["4xl", "5xl", "6xl"]}
+          fontSize={["3xl", "5xl", "6xl"]}
           fontWeight="800"
           color="var(--hm-color-text-primary)"
         >
-          About Us.
+          About HearMe
         </Heading>
 
-        <Text fontSize="lg" color="var(--hm-color-text-tertiary)" lineHeight="1.8">
-          At <strong>HearMe</strong>, we’re dedicated to providing a safe and open space
-          for everyone to share their thoughts, feelings, and creations.
-          Our platform empowers individuals to connect authentically and express
-          themselves freely.
-        </Text>
+
+        <VStack spacing={4}>
+          <Text fontSize={["md","lg"]} color="var(--hm-color-text-tertiary)" lineHeight="1.8">
+            HearMe is a simple, private chat space for anyone feeling stressed, overwhelmed, or alone.
+            You can talk in your own language, type or speak, and share at your own pace. No judgment. No pressure.
+          </Text>
+          <Text fontSize={["md","lg"]} color="var(--hm-color-text-tertiary)" lineHeight="1.8">
+            We built HearMe for real life in India study pressure, job stress, family expectations, money worries, and everything in between.
+            When your mind feels heavy, were here to listen with care.
+          </Text>
+        </VStack>
 
         {/* Mission Section */}
         <Box pt={10}>
           <Heading
             as="h2"
-            fontSize={["2xl", "3xl"]}
+            fontSize={["xl", "2xl"]}
             mb={4}
             color="var(--hm-color-text-primary)"
             fontWeight="700"
           >
             Our Mission
           </Heading>
-          <Text fontSize="md" color="var(--hm-color-text-secondary)" maxW="600px" mx="auto">
-            To foster a community where every voice can be heard and valued.
+          <Text fontSize={["sm","md"]} color="var(--hm-color-text-secondary)" maxW="700px" mx="auto">
+            Make emotional support simple, private, and available in the language you think in  24/7.
+            We use caring AI to listen without judgment and guide gentle next steps when you feel stuck.
           </Text>
         </Box>
 
-        {/* Values & Team Section */}
+        {/* Values & Who We Serve */}
         <SimpleGrid columns={[1, 2]} spacing={10} pt={10} w="full">
           <Box
             className="hm-glass-card"
@@ -108,9 +98,12 @@ const About= () => {
             >
               Our Values
             </Heading>
-            <Text fontSize="md" color="var(--hm-color-text-secondary)">
-              Empathy, inclusivity, and creativity are at the core of what we do.
-            </Text>
+            <VStack align="start" spacing={2} color="var(--hm-color-text-secondary)">
+              <Text><strong>Empathy:</strong> We listen with care and respect.</Text>
+              <Text><strong>Privacy:</strong> Anonymous and confidential by design.</Text>
+              <Text><strong>Inclusivity:</strong> Support for many languages and backgrounds.</Text>
+              <Text><strong>Simplicity:</strong> Easy to use, even on a hard day.</Text>
+            </VStack>
           </Box>
 
           <Box
@@ -127,12 +120,14 @@ const About= () => {
               color="var(--hm-color-text-primary)"
               fontWeight="700"
             >
-              Our Team
+              Who We Serve
             </Heading>
-            <Text fontSize="md" color="var(--hm-color-text-secondary)">
-              A diverse group of passionate individuals committed to making a
-              difference.
-            </Text>
+            <VStack align="start" spacing={2} color="var(--hm-color-text-secondary)">
+              <Text>Students facing exam or career pressure</Text>
+              <Text>Working professionals under deadlines and workload</Text>
+              <Text>Caregivers and parents juggling many roles</Text>
+              <Text>Anyone feeling lonely, anxious, or overwhelmed</Text>
+            </VStack>
           </Box>
         </SimpleGrid>
       </VStack>

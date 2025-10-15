@@ -25,29 +25,6 @@ const Footer = () => {
       overflow="hidden"
       className="hm-border-top"
     >
-      {/* Brushstroke Glow Background */}
-      <MotionBox
-        position="absolute"
-        top="-20%"
-        left="-10%"
-        w="70%"
-        h="100%"
-        className="hm-bg-gradient-pink"
-
-        animate={{ opacity: [0.6, 0.9, 0.6] }}
-        transition={{ duration: 6, repeat: Infinity }}
-      />
-      <MotionBox
-        position="absolute"
-        bottom="-20%"
-        right="-10%"
-        w="70%"
-        h="100%"
-        className="hm-bg-gradient-blue"
-
-        animate={{ opacity: [0.6, 0.9, 0.6] }}
-        transition={{ duration: 6, repeat: Infinity }}
-      />
 
       <Flex
         direction={["column", "row"]}

@@ -291,15 +291,6 @@ a{color:#4f46e5}
 }
 
 /* Background Gradient Animations */
-.hm-bg-gradient-pink{
-  background:var(--hm-gradient-bg-pink);
-  filter:blur(120px);
-}
-
-.hm-bg-gradient-blue{
-  background:var(--hm-gradient-bg-blue);
-  filter:blur(120px);
-}
 
 .hm-bg-gradient-orange{
   background:var(--hm-gradient-bg-orange);
@@ -317,4 +308,76 @@ a{color:#4f46e5}
 
 .hm-hover-bg:hover{
   background:var(--hm-hover-bg);
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Smooth scrollbar for all scrollable areas */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--hm-color-brand) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--hm-color-brand);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--hm-color-accent-purple);
 }

@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset='utf-8' />
@@ -11,6 +11,9 @@
         (function() {
             const savedTheme = localStorage.getItem('hm-theme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
+            // Set color-scheme to match theme
+            const colorScheme = (savedTheme === 'light') ? 'light' : 'dark';
+            document.documentElement.style.colorScheme = colorScheme;
         })();
     </script>
 </head>

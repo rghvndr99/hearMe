@@ -7,9 +7,11 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import ChatBubble from './components/ChatBubble';
 
-// Initialize theme before app renders
+// Initialize theme before app renders (backup in case index.html script didn't run)
 const savedTheme = localStorage.getItem('hm-theme') || 'dark';
 document.documentElement.setAttribute('data-theme', savedTheme);
+const colorScheme = (savedTheme === 'light') ? 'light' : 'dark';
+document.documentElement.style.colorScheme = colorScheme;
 
 // Lazy-loaded pages for faster performance
 const Home = lazy(() => import('./pages/Home'));
@@ -22,17 +24,44 @@ const Contact = lazy(() => import('./pages/Contact'));
 
 function Loader() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-indigo-600 bg-gradient-to-b from-indigo-50 to-white">
+    <div
+      className="flex flex-col items-center justify-center h-screen"
+      style={{
+        backgroundColor: 'var(--hm-color-bg)',
+        color: 'var(--hm-color-text-primary)'
+      }}
+    >
       <div className="relative w-16 h-16">
-        <div className="absolute inset-0 bg-indigo-400 rounded-full animate-ping opacity-30"></div>
-        <div className="relative flex items-center justify-center w-full h-full bg-indigo-500 text-white text-2xl rounded-full animate-pulse">💜</div>
+        <div
+          className="absolute inset-0 rounded-full animate-ping opacity-30"
+          style={{ backgroundColor: 'var(--hm-color-brand)' }}
+        ></div>
+        <div
+          className="relative flex items-center justify-center w-full h-full text-2xl rounded-full animate-pulse"
+          style={{
+            backgroundColor: 'var(--hm-color-brand)',
+            color: 'var(--hm-color-bg)'
+          }}
+        >💜</div>
       </div>
       <div className="flex mt-6 space-x-2">
-        <div className="w-3 h-3 bg-indigo-400 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-        <div className="w-3 h-3 bg-indigo-400 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-        <div className="w-3 h-3 bg-indigo-400 rounded-full animate-bounce"></div>
+        <div
+          className="w-3 h-3 rounded-full animate-bounce [animation-delay:-0.3s]"
+          style={{ backgroundColor: 'var(--hm-color-accent-purple)' }}
+        ></div>
+        <div
+          className="w-3 h-3 rounded-full animate-bounce [animation-delay:-0.15s]"
+          style={{ backgroundColor: 'var(--hm-color-accent-purple)' }}
+        ></div>
+        <div
+          className="w-3 h-3 rounded-full animate-bounce"
+          style={{ backgroundColor: 'var(--hm-color-accent-purple)' }}
+        ></div>
       </div>
-      <p className="mt-4 text-slate-600 font-medium">Preparing a safe space for you...</p>
+      <p
+        className="mt-4 font-medium"
+        style={{ color: 'var(--hm-color-text-muted)' }}
+      >Preparing a safe space for you...</p>
     </div>
   );
 }

@@ -8,11 +8,11 @@ import {
   SimpleGrid,
   VStack,
   HStack,
-  Avatar,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { FaPaintBrush, FaHandshake, FaChartBar, FaHeart } from "react-icons/fa";
+import { Link as RouterLink } from "react-router-dom";
+import { FaUserSecret, FaClock, FaGlobe, FaMicrophone, FaRobot, FaLifeRing, FaLock, FaUpload } from "react-icons/fa";
+
 
 const MotionBox = motion(Box);
 
@@ -25,78 +25,83 @@ const Home = () => {
       position="relative"
       overflow="hidden"
       px={[6, 10]}
-      py={[12, 24]}
+      pt="100px"
+      pb={[12, 24]}
     >
-      {/* Background gradients */}
-      <MotionBox
-        position="absolute"
-        top="-20%"
-        left="-10%"
-        w="80%"
-        h="80%"
-        className="hm-bg-gradient-pink"
-        animate={{ opacity: [0.5, 0.9, 0.5] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
-      <MotionBox
-        position="absolute"
-        bottom="-20%"
-        right="-10%"
-        w="80%"
-        h="80%"
-        className="hm-bg-gradient-blue"
-        animate={{ opacity: [0.5, 0.9, 0.5] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
 
       {/* Hero Section */}
       <VStack spacing={6} align="center" textAlign="center" zIndex={1} position="relative">
-        <Heading fontSize={["4xl", "6xl", "7xl"]} fontWeight="800">
-          Hear yourself.<br />Feel heard.
+        <Heading fontSize={["3xl", "5xl", "6xl"]} fontWeight="800">
+          You don’t have to carry it alone.
         </Heading>
-        <Text fontSize="lg" color="var(--hm-color-text-tertiary)" maxW="600px">
-          Your space to express, create, and connect freely.
+        <Text fontSize={["md", "lg"]} color="var(--hm-color-text-tertiary)" maxW="780px">
+          HearMe is a safe, anonymous chat space—day or night. Talk in your language, type or speak, and feel heard without judgment.
         </Text>
 
         <HStack spacing={4}>
           <Button
+            as={RouterLink}
+            to="/chat"
             size="lg"
             bgGradient="var(--hm-gradient-cta)"
             color="white"
-            _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
+            _hover={{ bgGradient: "var(--hm-gradient-cta-hover)", transform: "translateY(-2px)" }}
             borderRadius="full"
           >
-            Start Building
+            Start a safe conversation
           </Button>
           <Button
+            as={RouterLink}
+            to="/chat"
             size="lg"
             variant="outline"
             className="hm-border-outline hm-hover-bg"
             borderRadius="full"
             color="var(--hm-color-text-primary)"
           >
-            Explore the Community
+            I just want to talk
           </Button>
         </HStack>
+
       </VStack>
 
-      {/* Feature Cards */}
-      <SimpleGrid columns={[1, 3]} spacing={8} mt={20} zIndex={1} position="relative">
+      {/* Key Features */}
+      <SimpleGrid columns={[1, 2, 3]} spacing={8} mt={20} zIndex={1} position="relative">
         {[
           {
-            title: "Create Freely",
-            icon: FaPaintBrush,
-            desc: "Drag, drop, and design your emotions into expression.",
+            title: "Anonymous & Confidential",
+            icon: FaUserSecret,
+            desc: "No personal details needed. Your privacy comes first.",
           },
           {
-            title: "Collaborate Instantly",
-            icon: FaHandshake,
-            desc: "Invite friends to co-create in real time.",
+            title: "24/7 Availability",
+            icon: FaClock,
+            desc: "We’re here day and night — whenever you need to talk.",
           },
           {
-            title: "Understand Your Voice",
-            icon: FaChartBar,
-            desc: "Track engagement and insights on your expressions.",
+            title: "Multi‑language Support",
+            icon: FaGlobe,
+            desc: "Chat in the language you’re most comfortable with — English, Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi, and more.",
+          },
+          {
+            title: "Voice Input & Replies",
+            icon: FaMicrophone,
+            desc: "Don’t want to type? Speak your heart. You can also listen to responses.",
+          },
+          {
+            title: "Caring AI Guidance",
+            icon: FaRobot,
+            desc: "Calm, non‑judgmental support to help you breathe, think, and take small steps.",
+          },
+          {
+            title: "Crisis Detection",
+            icon: FaLifeRing,
+            desc: "If you’re in danger or feel unsafe, we’ll guide you to urgent help options right away.",
+          },
+          {
+            title: "Personal Voice (Experimental)",
+            icon: FaUpload,
+            desc: "Upload your voice and hear replies in a similar tone. Try this early feature to make conversations feel more like you.",
           },
         ].map((f, i) => (
           <Box
@@ -104,16 +109,16 @@ const Home = () => {
             className="hm-glass-card"
             p={8}
             borderRadius="xl"
-            textAlign="center"
+            textAlign="left"
             transition="0.3s"
             _hover={{ transform: "translateY(-5px)", borderColor: "var(--hm-color-brand)" }}
           >
-            <Box fontSize="3xl" mb={4} color="var(--hm-color-brand)">
-              <f.icon />
-            </Box>
-            <Text fontSize="xl" fontWeight="600" mb={2}>
-              {f.title}
-            </Text>
+            <HStack spacing={4} mb={3}>
+              <Box fontSize="2xl" color="var(--hm-color-brand)">
+                <f.icon />
+              </Box>
+              <Text fontSize="xl" fontWeight="600">{f.title}</Text>
+            </HStack>
             <Text color="var(--hm-color-text-secondary)" fontSize="sm">
               {f.desc}
             </Text>
@@ -121,61 +126,65 @@ const Home = () => {
         ))}
       </SimpleGrid>
 
-      {/* Community Showcase */}
-      <Box mt={24} position="relative" zIndex={1}>
-        <Heading fontSize="2xl" mb={6}>
-          See how others express themselves.
-        </Heading>
-        <SimpleGrid columns={[1, 2, 4]} spacing={6}>
-          {[
-            { name: "My Next Idea", likes: 8 },
-            { name: "Shared Playlist", likes: 4 },
-            { name: "Time to Create", likes: 620 },
-            { name: "Reflecting", likes: 339 },
-          ].map((item, i) => (
-            <Box
-              key={i}
-              className="hm-glass-card-soft"
-              p={6}
-              borderRadius="xl"
-              transition="0.3s"
-              _hover={{ borderColor: "var(--hm-color-brand)" }}
-            >
-              <HStack spacing={3} mb={3}>
-                <Avatar name={item.name} size="sm" />
-                <Text fontWeight="500">{item.name}</Text>
-              </HStack>
-              <HStack spacing={2}>
-                <FaHeart color="var(--hm-color-brand)" />
-                <Text>{item.likes}</Text>
-              </HStack>
-            </Box>
-          ))}
-        </SimpleGrid>
+      {/* Introduction */}
+      <Box mt={24} position="relative" zIndex={1} maxW="900px">
+        <VStack align="start" spacing={4} className="hm-glass-card" p={[6,8]} borderRadius="xl">
+          <Heading fontSize={["xl","2xl"]}>A simple, safe place to talk</Heading>
+          <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
+            Life in India can be intense study pressure, job stress, family expectations, money worries, loneliness, or simply feeling stuck. If your mind feels heavy, we are here for you.
+          </Text>
+          <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
+            HearMe is an AIsupported chat that listens with care. Its private, confidential, and always available. You can share what you feel, at your own pace, in simple words. No signup. No judgment. Just support.
+          </Text>
+        </VStack>
+      </Box>
+
+      {/* Trust & Safety */}
+      <Box mt={12} position="relative" zIndex={1} maxW="900px">
+        <VStack align="start" spacing={4} className="hm-glass-card" p={[6,8]} borderRadius="xl">
+          <HStack spacing={3}>
+            <Box color="var(--hm-color-brand)" fontSize="xl"><FaLock /></Box>
+            <Heading fontSize={["lg","xl"]}>Trust & Safety</Heading>
+          </HStack>
+          <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
+            Your safety and privacy matter to us. Your chats stay anonymous and confidential. HearMe is a supportive space, not a replacement for medical or emergency care.
+          </Text>
+          <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
+            If you are in immediate danger or thinking of harming yourself, please call your local emergency number (India: <strong>112</strong>) or reach a trusted crisis helpline in your area. Your life matters.
+          </Text>
+        </VStack>
       </Box>
 
       {/* CTA Footer */}
       <VStack mt={24} spacing={6} textAlign="center">
-        <Text fontSize="2xl" fontWeight="600">
-          Your voice deserves to be heard.
+        <Text fontSize="2xl" fontWeight="700">
+          You are not alone.
         </Text>
-        <Text fontSize="xl">Start creating today.</Text>
-        <HStack spacing={4}>
+        <Text fontSize="lg" color="var(--hm-color-text-secondary)">
+          Share whats on your mind. Were here to listen.
+        </Text>
+        <HStack spacing={4} justify="center">
           <Button
+            as={RouterLink}
+            to="/chat"
+            size="lg"
             bgGradient="var(--hm-gradient-cta)"
             color="white"
             borderRadius="full"
-            _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
+            _hover={{ bgGradient: "var(--hm-gradient-cta-hover)", transform: "translateY(-2px)" }}
           >
-            Join Free
+            Start a safe conversation
           </Button>
           <Button
+            as={RouterLink}
+            to="/chat"
+            size="lg"
             variant="outline"
             className="hm-border-outline hm-hover-bg"
             borderRadius="full"
             color="var(--hm-color-text-primary)"
           >
-            Sign In
+            Continue as anonymous
           </Button>
         </HStack>
       </VStack>
