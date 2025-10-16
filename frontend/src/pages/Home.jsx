@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Flex,
@@ -8,15 +8,24 @@ import {
   SimpleGrid,
   VStack,
   HStack,
+  Image,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { Link as RouterLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { FaUserSecret, FaClock, FaGlobe, FaMicrophone, FaRobot, FaLifeRing, FaLock, FaUpload } from "react-icons/fa";
 
 
 const MotionBox = motion(Box);
 
+// Banner image preference: use env var or local file; auto-fallback to Unsplash at runtime
+const DEFAULT_BANNER_FALLBACK = "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop";
+const PREFERRED_BANNER_URL = import.meta.env.VITE_HOME_BANNER_URL || "/images/home-banner.jpg";
+
+
 const Home = () => {
+  const { t } = useTranslation('common');
+  const [bannerSrc, setBannerSrc] = useState(PREFERRED_BANNER_URL);
   return (
     <Box
       bg="var(--hm-color-bg)"
@@ -32,11 +41,27 @@ const Home = () => {
       {/* Hero Section */}
       <VStack spacing={6} align="center" textAlign="center" zIndex={1} position="relative">
         <Heading fontSize={["3xl", "5xl", "6xl"]} fontWeight="800">
-          You don’t have to carry it alone.
+          {t('home.hero.title')}
         </Heading>
         <Text fontSize={["md", "lg"]} color="var(--hm-color-text-tertiary)" maxW="780px">
-          HearMe is a safe, anonymous chat space—day or night. Talk in your language, type or speak, and feel heard without judgment.
+          {t('home.hero.subtitle')}
         </Text>
+
+        {/* Banner Image */
+        }
+        <Box maxW="1100px" w="full" className="hm-glass-card-light" borderRadius="2xl" overflow="hidden" position="relative">
+          <Image
+            src={bannerSrc}
+            alt="Calming, supportive banner illustrating connection and emotional well-being — HearMe"
+            w="100%"
+            h={["180px","260px","360px"]}
+            objectFit="cover"
+            loading="lazy"
+            onError={() => { if (bannerSrc !== DEFAULT_BANNER_FALLBACK) setBannerSrc(DEFAULT_BANNER_FALLBACK); }}
+          />
+          {/* Subtle overlay to harmonize with themes and glass look */}
+          <Box position="absolute" inset={0} bg="linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0))" />
+        </Box>
 
         <HStack spacing={4}>
           <Button
@@ -59,7 +84,7 @@ const Home = () => {
             borderRadius="full"
             color="var(--hm-color-text-primary)"
           >
-            I just want to talk
+            {t('home.hero.ctaSecondary')}
           </Button>
         </HStack>
 
@@ -68,41 +93,13 @@ const Home = () => {
       {/* Key Features */}
       <SimpleGrid columns={[1, 2, 3]} spacing={8} mt={20} zIndex={1} position="relative">
         {[
-          {
-            title: "Anonymous & Confidential",
-            icon: FaUserSecret,
-            desc: "No personal details needed. Your privacy comes first.",
-          },
-          {
-            title: "24/7 Availability",
-            icon: FaClock,
-            desc: "We’re here day and night — whenever you need to talk.",
-          },
-          {
-            title: "Multi‑language Support",
-            icon: FaGlobe,
-            desc: "Chat in the language you’re most comfortable with — English, Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi, and more.",
-          },
-          {
-            title: "Voice Input & Replies",
-            icon: FaMicrophone,
-            desc: "Don’t want to type? Speak your heart. You can also listen to responses.",
-          },
-          {
-            title: "Caring AI Guidance",
-            icon: FaRobot,
-            desc: "Calm, non‑judgmental support to help you breathe, think, and take small steps.",
-          },
-          {
-            title: "Crisis Detection",
-            icon: FaLifeRing,
-            desc: "If you’re in danger or feel unsafe, we’ll guide you to urgent help options right away.",
-          },
-          {
-            title: "Personal Voice (Experimental)",
-            icon: FaUpload,
-            desc: "Upload your voice and hear replies in a similar tone. Try this early feature to make conversations feel more like you.",
-          },
+          { title: t('home.features.anon.title'), icon: FaUserSecret, desc: t('home.features.anon.desc') },
+          { title: t('home.features.availability.title'), icon: FaClock, desc: t('home.features.availability.desc') },
+          { title: t('home.features.languages.title'), icon: FaGlobe, desc: t('home.features.languages.desc') },
+          { title: t('home.features.voice.title'), icon: FaMicrophone, desc: t('home.features.voice.desc') },
+          { title: t('home.features.ai.title'), icon: FaRobot, desc: t('home.features.ai.desc') },
+          { title: t('home.features.crisis.title'), icon: FaLifeRing, desc: t('home.features.crisis.desc') },
+          { title: t('home.features.voicePersonal.title'), icon: FaUpload, desc: t('home.features.voicePersonal.desc') },
         ].map((f, i) => (
           <Box
             key={i}
@@ -129,12 +126,12 @@ const Home = () => {
       {/* Introduction */}
       <Box mt={24} position="relative" zIndex={1} maxW="900px">
         <VStack align="start" spacing={4} className="hm-glass-card" p={[6,8]} borderRadius="xl">
-          <Heading fontSize={["xl","2xl"]}>A simple, safe place to talk</Heading>
+          <Heading fontSize={["xl","2xl"]}>{t('home.intro.title')}</Heading>
           <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
-            Life in India can be intense study pressure, job stress, family expectations, money worries, loneliness, or simply feeling stuck. If your mind feels heavy, we are here for you.
+            {t('home.intro.p1')}
           </Text>
           <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
-            HearMe is an AIsupported chat that listens with care. Its private, confidential, and always available. You can share what you feel, at your own pace, in simple words. No signup. No judgment. Just support.
+            {t('home.intro.p2')}
           </Text>
         </VStack>
       </Box>
@@ -144,13 +141,13 @@ const Home = () => {
         <VStack align="start" spacing={4} className="hm-glass-card" p={[6,8]} borderRadius="xl">
           <HStack spacing={3}>
             <Box color="var(--hm-color-brand)" fontSize="xl"><FaLock /></Box>
-            <Heading fontSize={["lg","xl"]}>Trust & Safety</Heading>
+            <Heading fontSize={["lg","xl"]}>{t('home.trust.title')}</Heading>
           </HStack>
           <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
-            Your safety and privacy matter to us. Your chats stay anonymous and confidential. HearMe is a supportive space, not a replacement for medical or emergency care.
+            {t('home.trust.p1')}
           </Text>
           <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
-            If you are in immediate danger or thinking of harming yourself, please call your local emergency number (India: <strong>112</strong>) or reach a trusted crisis helpline in your area. Your life matters.
+            {t('home.trust.p2')}
           </Text>
         </VStack>
       </Box>
@@ -158,10 +155,10 @@ const Home = () => {
       {/* CTA Footer */}
       <VStack mt={24} spacing={6} textAlign="center">
         <Text fontSize="2xl" fontWeight="700">
-          You are not alone.
+          {t('home.ctaFooter.title')}
         </Text>
         <Text fontSize="lg" color="var(--hm-color-text-secondary)">
-          Share whats on your mind. Were here to listen.
+          {t('home.ctaFooter.subtitle')}
         </Text>
         <HStack spacing={4} justify="center">
           <Button
@@ -173,7 +170,7 @@ const Home = () => {
             borderRadius="full"
             _hover={{ bgGradient: "var(--hm-gradient-cta-hover)", transform: "translateY(-2px)" }}
           >
-            Start a safe conversation
+            {t('home.ctaFooter.ctaPrimary')}
           </Button>
           <Button
             as={RouterLink}
@@ -184,7 +181,7 @@ const Home = () => {
             borderRadius="full"
             color="var(--hm-color-text-primary)"
           >
-            Continue as anonymous
+            {t('home.ctaFooter.ctaSecondary')}
           </Button>
         </HStack>
       </VStack>

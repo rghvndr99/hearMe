@@ -9,11 +9,12 @@ import {
   Link,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-
+import { useTranslation } from "react-i18next";
 
 const MotionBox = motion(Box);
 
 const Resources = () => {
+  const { t } = useTranslation('common');
   return (
     <Flex
       direction="column"
@@ -49,7 +50,7 @@ const Resources = () => {
           fontWeight="800"
           color="var(--hm-color-text-primary)"
         >
-          Support & Resources
+          {t('resources.title')}
         </Heading>
 
 
@@ -70,24 +71,24 @@ const Resources = () => {
               fontWeight="700"
               color="var(--hm-color-text-primary)"
             >
-              If you need urgent help (India)
+              {t('resources.urgent.title')}
             </Heading>
 
             <VStack align="start" spacing={3} color="var(--hm-color-text-tertiary)" fontSize="md">
               <Text>
-                <strong>Emergency number:</strong>{" "}
+                <strong>{t('resources.urgent.emergencyLabel')}</strong>{" "}
                 <Link href="tel:112" color="var(--hm-color-accent-link)" _hover={{ textDecoration: "underline" }}>
                   112
                 </Link>
               </Text>
               <Text>
-                If you feel unsafe or are in immediate danger, please call <strong>112</strong> right now.
+                {t('resources.urgent.callNow')}
               </Text>
               <Text>
-                For mental health support, look for trusted national or state helplines from official government websites, hospitals, and recognized NGOs in your area.
+                {t('resources.urgent.helplines')}
               </Text>
               <Text>
-                If you are outside India, please contact your local emergency number or crisis helpline.
+                {t('resources.urgent.outside')}
               </Text>
             </VStack>
           </Box>
@@ -108,23 +109,23 @@ const Resources = () => {
               fontWeight="700"
               color="var(--hm-color-text-primary)"
             >
-              Finding Professional Help
+              {t('resources.professional.title')}
             </Heading>
             <VStack align="start" spacing={3} color="var(--hm-color-text-tertiary)" fontSize="md">
               <Text>
-                If youd like to speak with a professional, consider:
+                {t('resources.professional.intro')}
               </Text>
               <Text>
-                 Government or state health department websites for official directories
+                {t('resources.professional.govtDirs')}
               </Text>
               <Text>
-                 Local hospitals and medical colleges with psychiatry/psychology departments
+                {t('resources.professional.hospitals')}
               </Text>
               <Text>
-                 Recognized NGOs that offer counseling services
+                {t('resources.professional.ngos')}
               </Text>
               <Text>
-                Many platforms also offer online therapy. Choose what feels safe and comfortable for you.
+                {t('resources.professional.closing')}
               </Text>
             </VStack>
           </Box>

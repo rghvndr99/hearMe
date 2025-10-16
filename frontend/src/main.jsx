@@ -7,6 +7,25 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import ChatBubble from './components/ChatBubble';
 
+import i18n from './i18n';
+// Keep <html lang> in sync with selected language
+if (typeof document !== 'undefined') {
+  document.documentElement.lang = i18n.language || 'en';
+  i18n.on('languageChanged', (lng) => {
+    document.documentElement.lang = lng || 'en';
+  });
+  // Ensure Chat language (hm-language) is aligned on initial load
+  try {
+    const map = { en: 'en-US', hi: 'hi-IN' };
+    const ui = i18n.language || 'en';
+    const chat = localStorage.getItem('hm-language');
+    if (map[ui] && chat !== map[ui]) {
+      localStorage.setItem('hm-language', map[ui]);
+    }
+  } catch {}
+
+}
+
 // Initialize theme before app renders (backup in case index.html script didn't run)
 const savedTheme = localStorage.getItem('hm-theme') || 'dark';
 document.documentElement.setAttribute('data-theme', savedTheme);

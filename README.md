@@ -124,21 +124,24 @@ hearMe/
 
 ### Environment Variables
 
-Create `.env` files in both backend and frontend directories:
+Create a `.env` at the repository root for the backend, and `frontend/.env` for the frontend:
 
-#### Backend (.env)
+#### Backend environment (root .env)
 ```env
 PORT=5001
 MONGO_URI=mongodb://localhost:27017/hearme
+OPENAI_API_KEY=your-openai-key
+ELEVENLABS_API_KEY=your-elevenlabs-api-key
+ELEVENLABS_VOICE_ID=your-elevenlabs-voice-id
 JWT_SECRET=your-super-secret-jwt-key
 FRONTEND_ORIGIN=http://localhost:5174
 RATE_LIMIT_WINDOW_MS=60000
 RATE_LIMIT_MAX=60
 ```
 
-#### Frontend (.env)
+#### Frontend (frontend/.env)
 ```env
-VITE_BACKEND_URL=http://localhost:5001
+VITE_API_URL=http://localhost:5001
 ```
 
 ### Database Setup (Optional)
@@ -146,6 +149,22 @@ VITE_BACKEND_URL=http://localhost:5001
 The application works without MongoDB for basic functionality. For full features:
 
 1. **Install MongoDB locally** or use MongoDB Atlas
+
+### 🔊 Text-to-Speech (ElevenLabs)
+
+- Backend endpoint: `POST /api/tts/eleven` (returns `audio/mpeg`)
+- Configure in root `.env`: `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`
+- Frontend: Chat has a TTS engine selector (ElevenLabs vs Browser) next to the mic button
+- Fallback: If ElevenLabs fails, the app falls back to the browser's SpeechSynthesis automatically
+
+Quick test (backend only):
+```bash
+curl -X POST http://localhost:5001/api/tts/eleven \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Hello from HearMe!"}' \
+  --output /tmp/tts-test.mp3
+```
+
 2. **Update MONGO_URI** in backend/.env
 3. **Restart the backend** to connect to database
 
@@ -185,6 +204,22 @@ The application works without MongoDB for basic functionality. For full features
 
 ### Auth Routes (`/api/auth`)
 - `GET /ping` - Health check
+
+### Additional Endpoints
+
+#### AI Chat (`/api/ai-chat`)
+- `POST /session/start` — Start an anonymous chat session
+- `POST /message` — Send a message and get an AI reply (accepts `{ sessionId, message, language }`)
+- `POST /quick-replies` — Get quick reply suggestions for the current session
+- `GET /session/:sessionId` — Get conversation history
+- `POST /session/end` — End session and get summary
+
+#### Text-to-Speech (`/api/tts`)
+- `POST /eleven` — ElevenLabs TTS, returns `audio/mpeg` (body: `{ text, voiceId? }`)
+
+#### Volunteer (`/api/volunteer`)
+- `POST /apply` — Save volunteer application to MongoDB
+
 
 ## 🔌 Socket.IO Events
 

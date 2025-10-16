@@ -1,0 +1,183 @@
+{
+  "language": { "en": "English", "hi": "Hindi" },
+  "nav": {
+    "about": "About",
+    "resources": "Resources",
+    "chat": "Chat",
+    "stories": "Success Stories",
+    "contact": "Contact",
+    "volunteer": "Volunteer",
+    "joinNow": "Join Now"
+  },
+  "home": {
+    "hero": {
+      "title": "You don’t have to carry it alone.",
+      "subtitle": "HearMe is a safe, anonymous chat space—day or night. Talk in your language, type or speak, and feel heard without judgment.",
+      "ctaPrimary": "Start a safe conversation",
+      "ctaSecondary": "I just want to talk"
+    },
+    "features": {
+      "anon": { "title": "Anonymous & Confidential", "desc": "No personal details needed. Your privacy comes first." },
+      "availability": { "title": "24/7 Availability", "desc": "We’re here day and night — whenever you need to talk." },
+      "languages": { "title": "Multi‑language Support", "desc": "Chat in the language you’re most comfortable with — English, Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi, and more." },
+      "voice": { "title": "Voice Input & Replies", "desc": "Don’t want to type? Speak your heart. You can also listen to responses." },
+      "ai": { "title": "Caring AI Guidance", "desc": "Calm, non‑judgmental support to help you breathe, think, and take small steps." },
+      "crisis": { "title": "Crisis Detection", "desc": "If you’re in danger or feel unsafe, we’ll guide you to urgent help options right away." },
+      "voicePersonal": { "title": "Personal Voice (Experimental)", "desc": "Upload your voice and hear replies in a similar tone. Try this early feature to make conversations feel more like you." }
+    },
+    "intro": {
+      "title": "A simple, safe place to talk",
+      "p1": "Life in India can be intense—study pressure, job stress, family expectations, money worries, loneliness, or simply feeling stuck. If your mind feels heavy, we are here for you.",
+      "p2": "HearMe is an AI‑supported chat that listens with care. It’s private, confidential, and always available. You can share what you feel, at your own pace, in simple words. No signup. No judgment. Just support."
+    },
+    "trust": {
+      "title": "Trust & Safety",
+      "p1": "Your safety and privacy matter to us. Your chats stay anonymous and confidential. HearMe is a supportive space, not a replacement for medical or emergency care.",
+      "p2": "If you are in immediate danger or thinking of harming yourself, please call your local emergency number (India: 112) or reach a trusted crisis helpline in your area. Your life matters."
+    },
+    "ctaFooter": {
+      "title": "You are not alone.",
+      "subtitle": "Share what’s on your mind. We’re here to listen.",
+      "ctaPrimary": "Start a safe conversation",
+      "ctaSecondary": "Continue as anonymous"
+    }
+  },
+  "about": {
+    "title": "About HearMe",
+    "p1": "HearMe is a simple, private chat space for anyone feeling stressed, overwhelmed, or alone. You can talk in your own language, type or speak, and share at your own pace. No judgment. No pressure.",
+    "p2": "We built HearMe for real life in India—study pressure, job stress, family expectations, money worries, and everything in between. When your mind feels heavy, we’re here to listen with care.",
+    "mission": { "title": "Our Mission", "p": "Make emotional support simple, private, and available in the language you think in — 24/7. We use caring AI to listen without judgment and guide gentle next steps when you feel stuck." },
+    "values": {
+      "title": "Our Values",
+      "empathy": "Empathy: We listen with care and respect.",
+      "privacy": "Privacy: Anonymous and confidential by design.",
+      "inclusivity": "Inclusivity: Support for many languages and backgrounds.",
+      "simplicity": "Simplicity: Easy to use, even on a hard day."
+    },
+    "serve": {
+      "title": "Who We Serve",
+      "students": "Students facing exam or career pressure",
+      "professionals": "Working professionals under deadlines and workload",
+      "caregivers": "Caregivers and parents juggling many roles",
+      "anyone": "Anyone feeling lonely, anxious, or overwhelmed"
+    }
+  },
+  "resources": {
+    "title": "Support & Resources",
+    "urgent": {
+      "title": "If you need urgent help (India)",
+      "emergencyLabel": "Emergency number:",
+      "callNow": "If you feel unsafe or are in immediate danger, please call 112 right now.",
+      "helplines": "For mental health support, look for trusted national or state helplines from official government websites, hospitals, and recognized NGOs in your area.",
+      "outside": "If you are outside India, please contact your local emergency number or crisis helpline."
+    },
+    "professional": {
+      "title": "Finding Professional Help",
+      "intro": "If you’d like to speak with a professional, consider:",
+      "govtDirs": "Government or state health department websites for official directories",
+      "hospitals": "Local hospitals and medical colleges with psychiatry/psychology departments",
+      "ngos": "Recognized NGOs that offer counseling services",
+      "closing": "Many platforms also offer online therapy. Choose what feels safe and comfortable for you."
+    }
+  },
+  "stories": {
+    "title": "Stories of Strength",
+    "subtitle": "Real moments of courage from our community. Share anonymously if you’d like — only if it feels right.",
+    "share": {
+      "title": "Share your experience (optional). You can stay anonymous. 💜",
+      "placeholder": "Share what helped you, or leave a kind word for someone reading this...",
+      "submit": "Share Your Story",
+      "thanks": "✅ Thank you for sharing. Your words might help someone today."
+    }
+  },
+  "volunteer": {
+    "title": "Help someone feel less alone.",
+    "intro1": "Join HearMe’s mission to offer simple, private support in many Indian languages.",
+    "intro2": "You don’t need to be a counselor—just a kind, patient listener. We’ll guide you on how to listen with care and without judgment.",
+    "apply": "Apply to Volunteer",
+    "benefits": {
+      "supportTitle": "Support Others",
+      "supportDesc": "Offer calm, non-judgmental listening so someone can feel heard—in their own words.",
+      "experienceTitle": "Gain Experience",
+      "experienceDesc": "Build practical skills in active listening, empathy, and compassionate communication.",
+      "communityTitle": "Build Community",
+      "communityDesc": "Be part of a caring, inclusive community supporting mental wellness across India."
+    },
+    "form": {
+      "title": "Volunteer Application",
+      "note": "Note: This form is for volunteering. If you’re seeking support, please use the Chat page.",
+      "name": "Full Name *",
+      "email": "Email Address *",
+      "phone": "Phone",
+      "availability": "Availability (days/time)",
+      "location": "Location (city)",
+
+      "skills": "Skills / Areas of Expertise",
+      "message": "Tell us why you want to volunteer *",
+      "submit": "Submit Application",
+      "alertRequired": "Please fill in all required fields ✍️",
+      "alertInvalidEmail": "Please enter a valid email address",
+
+      "alertThanks": "✅ Thank you for applying to volunteer with HearMe!"
+    }
+  },
+  "contact": {
+    "title": "Contact Us.",
+    "intro1": "For feedback, partnerships, or non-urgent questions. For emotional support, please use the Chat page.",
+    "intro2": "If you are in immediate danger or feel unsafe, call 112 (India) or see Resources for more help options.",
+    "name": "Your name",
+    "email": "Your email",
+    "message": "How can we help? (feedback, partnership, non-urgent)",
+    "send": "Send",
+    "alertThanks": "✅ Thank you for your message! We will get back to you soon.",
+    "alertFillAll": "⚠️ Please fill in all fields."
+  },
+  "chat": {
+    "header": { "anonConf": "Anonymous & Confidential" },
+    "tooltips": {
+      "languageSelect": "Select your language",
+      "voiceToggleOn": "Mute AI voice",
+      "voiceToggleOff": "Enable AI voice",
+      "voiceInputOn": "Listening... Click to stop",
+      "voiceInputOff": "Click to speak"
+    },
+    "aria": {
+      "replay": "Replay message",
+      "send": "Send message",
+      "muteVoice": "Mute voice",
+      "enableVoice": "Enable voice",
+      "stopListening": "Stop listening",
+      "startVoice": "Start voice input"
+    },
+    "status": {
+      "speakingBadge": "Speaking",
+      "listening": "Listening...",
+      "aiSpeaking": "AI is speaking...",
+      "speakingIn": "Speaking in {{name}}"
+    },
+    "badge": { "active": "Active" },
+    "input": {
+      "placeholderIdle": "Type or speak your message...",
+      "placeholderListening": "Listening..."
+    },
+    "toasts": {
+      "languageDetectedTitle": "Language Auto-Detected: {{flag}} {{name}}",
+      "languageDetectedDesc": "You can change it anytime using the language selector.",
+      "voiceInputErrorTitle": "Voice Input Error",
+      "voiceInputErrorDesc": "Could not recognize speech. Please try again.",
+      "voiceNotSupportedTitle": "Voice Not Supported",
+      "voiceNotSupportedDesc": "Your browser doesn't support voice input.",
+      "connectionErrorTitle": "Connection Error",
+      "connectionErrorDesc": "Failed to start chat session. Please refresh the page.",
+      "messageFailedTitle": "Message Failed",
+      "messageFailedDesc": "Failed to send message. Please try again."
+    }
+  },
+
+  "footer": {
+    "tagline": "A safe, expressive, and inclusive space where every voice matters.",
+    "rights": "All rights reserved."
+  }
+}
+
+

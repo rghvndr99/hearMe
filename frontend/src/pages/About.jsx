@@ -8,11 +8,12 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-
+import { useTranslation } from "react-i18next";
 
 const MotionBox = motion(Box);
 
 const About= () => {
+  const { t } = useTranslation('common');
   return (
     <Flex
       direction="column"
@@ -48,18 +49,16 @@ const About= () => {
           fontWeight="800"
           color="var(--hm-color-text-primary)"
         >
-          About HearMe
+          {t('about.title')}
         </Heading>
 
 
         <VStack spacing={4}>
           <Text fontSize={["md","lg"]} color="var(--hm-color-text-tertiary)" lineHeight="1.8">
-            HearMe is a simple, private chat space for anyone feeling stressed, overwhelmed, or alone.
-            You can talk in your own language, type or speak, and share at your own pace. No judgment. No pressure.
+            {t('about.p1')}
           </Text>
           <Text fontSize={["md","lg"]} color="var(--hm-color-text-tertiary)" lineHeight="1.8">
-            We built HearMe for real life in India study pressure, job stress, family expectations, money worries, and everything in between.
-            When your mind feels heavy, were here to listen with care.
+            {t('about.p2')}
           </Text>
         </VStack>
 
@@ -72,11 +71,10 @@ const About= () => {
             color="var(--hm-color-text-primary)"
             fontWeight="700"
           >
-            Our Mission
+            {t('about.mission.title')}
           </Heading>
           <Text fontSize={["sm","md"]} color="var(--hm-color-text-secondary)" maxW="700px" mx="auto">
-            Make emotional support simple, private, and available in the language you think in  24/7.
-            We use caring AI to listen without judgment and guide gentle next steps when you feel stuck.
+            {t('about.mission.p')}
           </Text>
         </Box>
 
@@ -96,13 +94,13 @@ const About= () => {
               color="var(--hm-color-text-primary)"
               fontWeight="700"
             >
-              Our Values
+              {t('about.values.title')}
             </Heading>
             <VStack align="start" spacing={2} color="var(--hm-color-text-secondary)">
-              <Text><strong>Empathy:</strong> We listen with care and respect.</Text>
-              <Text><strong>Privacy:</strong> Anonymous and confidential by design.</Text>
-              <Text><strong>Inclusivity:</strong> Support for many languages and backgrounds.</Text>
-              <Text><strong>Simplicity:</strong> Easy to use, even on a hard day.</Text>
+              <Text>{t('about.values.empathy')}</Text>
+              <Text>{t('about.values.privacy')}</Text>
+              <Text>{t('about.values.inclusivity')}</Text>
+              <Text>{t('about.values.simplicity')}</Text>
             </VStack>
           </Box>
 
@@ -120,13 +118,13 @@ const About= () => {
               color="var(--hm-color-text-primary)"
               fontWeight="700"
             >
-              Who We Serve
+              {t('about.serve.title')}
             </Heading>
             <VStack align="start" spacing={2} color="var(--hm-color-text-secondary)">
-              <Text>Students facing exam or career pressure</Text>
-              <Text>Working professionals under deadlines and workload</Text>
-              <Text>Caregivers and parents juggling many roles</Text>
-              <Text>Anyone feeling lonely, anxious, or overwhelmed</Text>
+              <Text>{t('about.serve.students')}</Text>
+              <Text>{t('about.serve.professionals')}</Text>
+              <Text>{t('about.serve.caregivers')}</Text>
+              <Text>{t('about.serve.anyone')}</Text>
             </VStack>
           </Box>
         </SimpleGrid>

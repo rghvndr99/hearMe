@@ -6,6 +6,10 @@ import {
   HStack,
   Link,
   Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -13,7 +17,11 @@ import ThemeToggle from "./ThemeToggle";
 
 const MotionBox = motion(Box);
 
+import { useTranslation } from "react-i18next";
+
 const Header= () => {
+  const { t, i18n } = useTranslation('common');
+
   return (
     <Box
       as="header"
@@ -52,44 +60,62 @@ const Header= () => {
             color="var(--hm-color-text-muted)"
             fontWeight="500"
           >
-            About
+            {t('nav.about')}
           </Link>
           <Link as={RouterLink} to="/resources"
             _hover={{ color: "var(--hm-color-brand)" }}
             color="var(--hm-color-text-muted)"
             fontWeight="500"
           >
-            Resources
+            {t('nav.resources')}
           </Link>
-                    <Link as={RouterLink} to="/chat"
+          <Link as={RouterLink} to="/chat"
             _hover={{ color: "var(--hm-color-brand)" }}
             color="var(--hm-color-text-muted)"
             fontWeight="500"
           >
-            Chat
+            {t('nav.chat')}
           </Link>
           <Link as={RouterLink} to="/stories"
             _hover={{ color: "var(--hm-color-brand)" }}
             color="var(--hm-color-text-muted)"
             fontWeight="500"
           >
-            Success Stories
+            {t('nav.stories')}
           </Link>
           <Link as={RouterLink} to="/contact"
             _hover={{ color: "var(--hm-color-brand)" }}
             color="var(--hm-color-text-muted)"
             fontWeight="500"
           >
-            Contact
+            {t('nav.contact')}
           </Link>
           <Link as={RouterLink} to="/volunteer" _hover={{ color: "var(--hm-color-brand)" }} color="var(--hm-color-text-muted)" fontWeight="500">
-            Volunteer
+            {t('nav.volunteer')}
           </Link>
         </HStack>
 
         {/* Theme Toggle & CTA */}
         <HStack spacing={3}>
           <ThemeToggle />
+          {/* Language selector */}
+          <Menu>
+            <MenuButton as={Button} variant="ghost" size="sm">🌐 {i18n.language?.toUpperCase()}</MenuButton>
+            <MenuList bg="var(--hm-bg-glass-strong)" border="1px solid var(--hm-border-glass)">
+              {['en','hi'].map(lng => (
+                <MenuItem key={lng} onClick={() => {
+                  i18n.changeLanguage(lng);
+                  // Keep Chat page language in sync with UI language
+                  const map = { en: 'en-US', hi: 'hi-IN' };
+                  const chatLang = map[lng] || 'en-US';
+                  localStorage.setItem('hm-language', chatLang);
+                  localStorage.setItem('hm-ui-language', lng);
+                }}>
+                  {t(`language.${lng}`)}
+                </MenuItem>
+              ))}
+            </MenuList>
+          </Menu>
           <Button
             bgGradient="var(--hm-gradient-cta)"
             _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
@@ -98,7 +124,7 @@ const Header= () => {
             size="sm"
             px={5}
           >
-            Join Now
+            {t('nav.joinNow')}
           </Button>
         </HStack>
       </Flex>

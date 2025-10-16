@@ -13,6 +13,8 @@ import sentimentRouter from './routes/sentiment.js';
 import listenerRouter from './routes/listener.js';
 import authRouter from './routes/auth.js';
 import aiChatRouter from './routes/aiChat.js';
+import volunteerRouter from './routes/volunteer.js';
+import ttsRouter from './routes/tts.js';
 
 // Get directory name in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -46,6 +48,8 @@ app.use('/api/sentiment', sentimentRouter);
 app.use('/api/listener', listenerRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/ai-chat', aiChatRouter);
+app.use('/api/volunteer', volunteerRouter);
+app.use('/api/tts', ttsRouter);
 
 const server = http.createServer(app);
 const io = new Server(server, {

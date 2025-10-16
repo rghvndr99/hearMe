@@ -19,6 +19,31 @@ const getOpenAIClient = () => {
 // Re-export detectIntent from config for easy access
 export { detectIntentFromConfig as detectIntent };
 
+// Helper to robustly parse JSON that may be wrapped in markdown fences
+function parseJsonLoose(input) {
+  if (!input) return null;
+  let s = String(input).trim();
+  // Strip triple-backtick fences (with optional language tag)
+  if (s.startsWith('```')) {
+    s = s.replace(/^```[a-zA-Z]*\s*/m, '').replace(/```\s*$/m, '').trim();
+  }
+  // First attempt direct parse
+  try { return JSON.parse(s); } catch {}
+  // Try extracting array
+  let start = s.indexOf('['), end = s.lastIndexOf(']');
+  if (start !== -1 && end !== -1 && end > start) {
+    const sub = s.slice(start, end + 1);
+    try { return JSON.parse(sub); } catch {}
+  }
+  // Try extracting object
+  start = s.indexOf('{'); end = s.lastIndexOf('}');
+  if (start !== -1 && end !== -1 && end > start) {
+    const sub = s.slice(start, end + 1);
+    try { return JSON.parse(sub); } catch {}
+  }
+  return null;
+}
+
 // System prompt for mental health support
 const getSystemPrompt = (language = 'English') => {
   return `You are a compassionate, empathetic mental health support companion for the HearMe platform. Your role is to provide emotional support to anonymous users who are sharing their feelings and struggles.
@@ -61,7 +86,7 @@ export async function analyzeSentiment(message) {
         {
           role: 'system',
           content:
-            'You are a sentiment analyzer for mental health support. Analyze the mood and detect crisis situations. Respond ONLY with a JSON object containing: mood (string: happy/sad/anxious/angry/neutral/crisis), crisis (boolean), confidence (number 0-1).',
+            'You are a sentiment analyzer for mental health support. Analyze the mood and detect crisis situations. Respond ONLY with a JSON object containing: mood (string: happy/sad/anxious/angry/neutral/crisis), crisis (boolean), confidence (number 0-1). Do not include any extra text, markdown, or backticks.',
         },
         {
           role: 'user',
@@ -72,8 +97,8 @@ export async function analyzeSentiment(message) {
       max_tokens: 50,
     });
 
-    const result = JSON.parse(response.choices[0].message.content);
-    return result;
+    const result = parseJsonLoose(response.choices[0].message.content);
+    if (result && typeof result === 'object') return result;
   } catch (error) {
     console.error('Error analyzing sentiment:', error);
     return { mood: 'neutral', crisis: false, confidence: 0.5 };
@@ -122,7 +147,7 @@ export async function generateQuickReplies(conversationHistory) {
         {
           role: 'system',
           content:
-            'Based on the conversation, suggest 3 short (3-5 words) quick reply options the user might want to say next. Respond ONLY with a JSON array of strings.',
+            'Based on the conversation, suggest 3 short (3-5 words) quick reply options the user might want to say next. Respond ONLY with a JSON array of strings. No markdown and no backticks.',
         },
         ...conversationHistory.slice(-4),
       ],
@@ -130,7 +155,7 @@ export async function generateQuickReplies(conversationHistory) {
       max_tokens: 60,
     });
 
-    const replies = JSON.parse(response.choices[0].message.content);
+    const replies = parseJsonLoose(response.choices[0].message.content);
     return Array.isArray(replies) ? replies.slice(0, 3) : [];
   } catch (error) {
     console.error('Error generating quick replies:', error);

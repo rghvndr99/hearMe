@@ -10,32 +10,66 @@ import {
   Icon,
   Input,
   Textarea,
+  useToast,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { FaHeart, FaUsers, FaStar } from "react-icons/fa";
+import axios from "axios";
 
+import { useTranslation } from "react-i18next";
 
 const MotionBox = motion(Box);
 
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+
 const Volunteer = () => {
+  const { t } = useTranslation('common');
+  const toast = useToast();
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+
   const [form, setForm] = useState({
     name: "",
     email: "",
+    phone: "",
+    availability: "",
+    location: "",
     skills: "",
     message: "",
   });
 
   const handleChange = (e) => {
+    setSubmitted(false);
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!form.name || !form.email || !form.message) {
-      alert("Please fill in all required fields ✍️");
+      toast({ title: t('volunteer.form.alertRequired'), status: "warning", duration: 3000, isClosable: true });
       return;
     }
-    alert("✅ Thank you for applying to volunteer with HearMe!");
-    setForm({ name: "", email: "", skills: "", message: "" });
+    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email);
+    if (!emailValid) {
+      toast({ title: t('volunteer.form.alertInvalidEmail'), status: "warning", duration: 3000, isClosable: true });
+      return;
+    }
+    try {
+      setSubmitting(true);
+      await axios.post(`${API_URL}/api/volunteer/apply`, form);
+      setSubmitted(true);
+      toast({ title: t('volunteer.form.alertThanks'), status: "success", duration: 4000, isClosable: true });
+      setForm({ name: "", email: "", phone: "", availability: "", location: "", skills: "", message: "" });
+    } catch (err) {
+      console.error('Volunteer apply failed:', err);
+      const desc = err?.response?.data?.error || 'Failed to submit application. Please try again.';
+      toast({ title: 'Error', description: desc, status: "error", duration: 4000, isClosable: true });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -75,14 +109,15 @@ const Volunteer = () => {
           color="var(--hm-color-text-primary)"
           lineHeight="1.2"
         >
-          Help someone feel less alone.
+          {t('volunteer.title')}
         </Heading>
 
 
         <Text fontSize="lg" color="var(--hm-color-text-tertiary)" maxW="700px">
-          Join HearMe’s mission to offer simple, private support in many Indian languages.
-          You don’t need to be a counselor—just a kind, patient listener.
-          We’ll guide you on how to listen with care and without judgment.
+          {t('volunteer.intro1')}
+        </Text>
+        <Text fontSize="lg" color="var(--hm-color-text-tertiary)" maxW="700px">
+          {t('volunteer.intro2')}
         </Text>
 
         {/* Apply Now Button */}
@@ -97,7 +132,7 @@ const Volunteer = () => {
           fontSize="lg"
           shadow="0px 0px 20px rgba(247,107,138,0.3)"
         >
-          Apply to Volunteer
+          {t('volunteer.apply')}
         </Button>
 
         {/* Benefits Section */}
@@ -111,10 +146,10 @@ const Volunteer = () => {
           >
             <Icon as={FaHeart} boxSize={8} color="var(--hm-color-brand)" mb={4} />
             <Text fontSize="xl" fontWeight="600" mb={2}>
-              Support Others
+              {t('volunteer.benefits.supportTitle')}
             </Text>
             <Text color="var(--hm-color-text-secondary)">
-              Offer calm, non-judgmental listening so someone can feel heardin their own words.
+              {t('volunteer.benefits.supportDesc')}
             </Text>
           </Box>
 
@@ -127,10 +162,10 @@ const Volunteer = () => {
           >
             <Icon as={FaUsers} boxSize={8} color="var(--hm-color-accent-orange)" mb={4} />
             <Text fontSize="xl" fontWeight="600" mb={2}>
-              Gain Experience
+              {t('volunteer.benefits.experienceTitle')}
             </Text>
             <Text color="var(--hm-color-text-secondary)">
-              Build practical skills in active listening, empathy, and compassionate communication.
+              {t('volunteer.benefits.experienceDesc')}
             </Text>
           </Box>
 
@@ -143,10 +178,10 @@ const Volunteer = () => {
           >
             <Icon as={FaStar} boxSize={8} color="var(--hm-color-accent-purple)" mb={4} />
             <Text fontSize="xl" fontWeight="600" mb={2}>
-              Build Community
+              {t('volunteer.benefits.communityTitle')}
             </Text>
             <Text color="var(--hm-color-text-secondary)">
-              Be part of a caring, inclusive community supporting mental wellness across India.
+              {t('volunteer.benefits.communityDesc')}
             </Text>
           </Box>
         </SimpleGrid>
@@ -160,6 +195,13 @@ const Volunteer = () => {
           p={[6, 10]}
           textAlign="left"
         >
+          {submitted && (
+            <Alert status="success" borderRadius="md" mb={4}>
+              <AlertIcon />
+              <Text>{t('volunteer.form.alertThanks')}</Text>
+            </Alert>
+          )}
+
           <Heading
             as="h2"
             fontSize="2xl"
@@ -167,16 +209,41 @@ const Volunteer = () => {
             textAlign="center"
             color="var(--hm-color-text-primary)"
           >
-            Volunteer Application
+            {t('volunteer.form.title')}
           </Heading>
           <Text textAlign="center" color="var(--hm-color-text-secondary)" mb={6}>
-            Note: This form is for volunteering. If youre seeking support, please use the Chat page.
+            {t('volunteer.form.note')}
           </Text>
 
           <VStack spacing={4} align="stretch">
             <Input
+              name="phone"
+              placeholder={t('volunteer.form.phone')}
+              className="hm-input"
+              _focus={{ borderColor: "var(--hm-color-brand)" }}
+              value={form.phone}
+              onChange={handleChange}
+            />
+            <Input
+              name="availability"
+              placeholder={t('volunteer.form.availability')}
+              className="hm-input"
+              _focus={{ borderColor: "var(--hm-color-brand)" }}
+              value={form.availability}
+              onChange={handleChange}
+            />
+            <Input
+              name="location"
+              placeholder={t('volunteer.form.location')}
+              className="hm-input"
+              _focus={{ borderColor: "var(--hm-color-brand)" }}
+              value={form.location}
+              onChange={handleChange}
+            />
+
+            <Input
               name="name"
-              placeholder="Full Name *"
+              placeholder={t('volunteer.form.name')}
               className="hm-input"
               _focus={{ borderColor: "var(--hm-color-brand)" }}
 
@@ -185,7 +252,7 @@ const Volunteer = () => {
             />
             <Input
               name="email"
-              placeholder="Email Address *"
+              placeholder={t('volunteer.form.email')}
               type="email"
               className="hm-input"
               _focus={{ borderColor: "var(--hm-color-brand)" }}
@@ -195,7 +262,7 @@ const Volunteer = () => {
             />
             <Input
               name="skills"
-              placeholder="Skills / Areas of Expertise"
+              placeholder={t('volunteer.form.skills')}
               className="hm-input"
               _focus={{ borderColor: "var(--hm-color-brand)" }}
 
@@ -204,7 +271,7 @@ const Volunteer = () => {
             />
             <Textarea
               name="message"
-              placeholder="Tell us why you want to volunteer *"
+              placeholder={t('volunteer.form.message')}
               rows={5}
               className="hm-input"
               _focus={{ borderColor: "var(--hm-color-brand)" }}
@@ -226,8 +293,10 @@ const Volunteer = () => {
               fontSize="md"
               shadow="0px 0px 20px rgba(247,107,138,0.3)"
               onClick={handleSubmit}
+              isLoading={submitting}
+              isDisabled={submitting}
             >
-              Submit Application
+              {t('volunteer.form.submit')}
             </Button>
           </Flex>
         </Box>

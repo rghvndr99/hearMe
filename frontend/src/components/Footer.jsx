@@ -9,12 +9,14 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import { FaTwitter, FaInstagram, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import { FaTwitter, FaInstagram, FaLinkedin, FaEnvelope, FaPhone, FaGlobe } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const MotionBox = motion(Box);
 
 const Footer = () => {
+  const { t } = useTranslation('common');
   return (
     <Box
       as="footer"
@@ -41,30 +43,30 @@ const Footer = () => {
             Hear<span className="hm-brand">Me</span>
           </Text>
           <Text color="var(--hm-color-text-secondary)" fontSize="sm" maxW="400px">
-            A safe, expressive, and inclusive space where every voice matters.
+            {t('footer.tagline')}
           </Text>
         </VStack>
 
         {/* Middle Navigation */}
         <HStack spacing={6}>
           <Link as={RouterLink} to="/about" _hover={{ color: "var(--hm-color-brand)" }}>
-            About
+            {t('nav.about')}
           </Link>
           <Link as={RouterLink} to="/resources" _hover={{ color: "var(--hm-color-brand)" }}>
-            Resources
+            {t('nav.resources')}
           </Link>
            <Link as={RouterLink} to="/chat" _hover={{ color: "var(--hm-color-brand)" }}>
-            Chat
+            {t('nav.chat')}
           </Link>
           <Link as={RouterLink} to="/stories" _hover={{ color: "var(--hm-color-brand)" }}>
-            Success
+            {t('nav.stories')}
           </Link>
           <Link as={RouterLink} to="/volunteer" _hover={{ color: "var(--hm-color-brand)" }}>
-            Volunteer
+            {t('nav.volunteer')}
           </Link>
 
           <Link as={RouterLink} to="/contact" _hover={{ color: "var(--hm-color-brand)" }}>
-            Contact
+            {t('nav.contact')}
           </Link>
         </HStack>
 
@@ -91,13 +93,33 @@ const Footer = () => {
             color="var(--hm-color-text-muted)"
             _hover={{ color: "#F76B1C" }}
           />
-          <IconButton
-            aria-label="Email"
-            icon={<FaEnvelope />}
-            variant="ghost"
-            color="var(--hm-color-text-muted)"
-            _hover={{ color: "#F76B1C" }}
-          />
+          <Link href="mailto:rghvndr99@gmail.com">
+            <IconButton
+              aria-label="Email"
+              icon={<FaEnvelope />}
+              variant="ghost"
+              color="var(--hm-color-text-muted)"
+              _hover={{ color: "#F76B1C" }}
+            />
+          </Link>
+          <Link href="tel:+918105568665">
+            <IconButton
+              aria-label="Phone"
+              icon={<FaPhone />}
+              variant="ghost"
+              color="var(--hm-color-text-muted)"
+              _hover={{ color: "#F76B1C" }}
+            />
+          </Link>
+          <Link href="https://hearme.com" isExternal>
+            <IconButton
+              aria-label="Website"
+              icon={<FaGlobe />}
+              variant="ghost"
+              color="var(--hm-color-text-muted)"
+              _hover={{ color: "#F76B1C" }}
+            />
+          </Link>
         </HStack>
       </Flex>
 
@@ -109,7 +131,7 @@ const Footer = () => {
         color="var(--hm-color-text-secondary)"
         opacity="0.8"
       >
-        © {new Date().getFullYear()} HearMe. All rights reserved.
+        © {new Date().getFullYear()} HearMe. {t('footer.rights')}
       </Text>
     </Box>
   );

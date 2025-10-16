@@ -21,6 +21,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FiSend, FiAlertCircle, FiMic, FiMicOff, FiVolume2, FiVolumeX, FiGlobe, FiChevronDown } from "react-icons/fi";
 import { BsRobot } from "react-icons/bs";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
+
 
 const MotionBox = motion(Box);
 
@@ -69,8 +71,11 @@ const detectUserLanguage = () => {
 };
 
 const Chat = () => {
+  const { t } = useTranslation('common');
+
   // Initialize language from localStorage or auto-detect
   const getInitialLanguage = () => {
+
     const savedLang = localStorage.getItem('hm-language');
     if (savedLang) {
       const found = LANGUAGES.find(lang => lang.code === savedLang);
@@ -94,6 +99,8 @@ const Chat = () => {
   const messagesEndRef = useRef(null);
   const recognitionRef = useRef(null);
   const synthRef = useRef(null);
+  const audioRef = useRef(null);
+  const [ttsEngine, setTtsEngine] = useState(localStorage.getItem('hm-tts-engine') || 'eleven');
   const toast = useToast();
 
   const scrollToBottom = () => {
@@ -112,8 +119,8 @@ const Chat = () => {
     const hasSeenLanguageNotification = localStorage.getItem('hm-language-notification');
     if (!hasSeenLanguageNotification) {
       toast({
-        title: `Language Auto-Detected: ${selectedLanguage.flag} ${selectedLanguage.name}`,
-        description: "You can change it anytime using the language selector.",
+        title: t('chat.toasts.languageDetectedTitle', { flag: selectedLanguage.flag, name: selectedLanguage.name }),
+        description: t('chat.toasts.languageDetectedDesc'),
         status: "info",
         duration: 5000,
         isClosable: true,
@@ -127,6 +134,11 @@ const Chat = () => {
   useEffect(() => {
     localStorage.setItem('hm-language', selectedLanguage.code);
   }, [selectedLanguage]);
+
+  // Persist TTS engine preference
+  useEffect(() => {
+    localStorage.setItem('hm-tts-engine', ttsEngine);
+  }, [ttsEngine]);
 
   // Initialize speech recognition and synthesis
   const initializeVoice = () => {
@@ -153,8 +165,8 @@ const Chat = () => {
         setIsListening(false);
         if (event.error !== 'no-speech') {
           toast({
-            title: "Voice Input Error",
-            description: "Could not recognize speech. Please try again.",
+            title: t('chat.toasts.voiceInputErrorTitle'),
+            description: t('chat.toasts.voiceInputErrorDesc'),
             status: "error",
             duration: 3000,
             isClosable: true,
@@ -203,8 +215,8 @@ const Chat = () => {
       }
     } else {
       toast({
-        title: "Voice Not Supported",
-        description: "Your browser doesn't support voice input.",
+        title: t('chat.toasts.voiceNotSupportedTitle'),
+        description: t('chat.toasts.voiceNotSupportedDesc'),
         status: "warning",
         duration: 3000,
         isClosable: true,
@@ -220,61 +232,74 @@ const Chat = () => {
   };
 
   // Speak text using text-to-speech
-  const speakText = (text) => {
-    if (synthRef.current && voiceEnabled) {
-      // Cancel any ongoing speech
-      synthRef.current.cancel();
+  const speakText = async (text) => {
+    if (!voiceEnabled || !text) return;
 
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = 0.9; // Slightly slower for better comprehension
-      utterance.pitch = 1.0;
-      utterance.volume = 1.0;
-      utterance.lang = selectedLanguage.code;
+    // Stop any current audio/speech first
+    if (audioRef.current) {
+      try { audioRef.current.pause(); } catch {}
+      try { URL.revokeObjectURL(audioRef.current.src); } catch {}
+      audioRef.current = null;
+    }
+    if (synthRef.current) synthRef.current.cancel();
 
-      // Get the best voice for the selected language
-      const voices = availableVoices.length > 0 ? availableVoices : synthRef.current.getVoices();
-
-      // Try to find a voice that matches the selected language
-      const languageVoices = voices.filter(voice =>
-        voice.lang.startsWith(selectedLanguage.code.split('-')[0])
-      );
-
-      // Prefer high-quality voices
-      const preferredVoice = languageVoices.find(voice =>
-        voice.name.includes('Google') ||
-        voice.name.includes('Natural') ||
-        voice.name.includes('Enhanced') ||
-        voice.name.includes('Premium')
-      ) || languageVoices.find(voice =>
-        voice.lang === selectedLanguage.code
-      ) || languageVoices[0] || voices[0];
-
-      if (preferredVoice) {
-        utterance.voice = preferredVoice;
+    const speakWithBrowser = () => {
+      if (!synthRef.current) return;
+      try {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.9;
+        utterance.pitch = 1.0;
+        utterance.volume = 1.0;
+        utterance.lang = selectedLanguage.code;
+        const voices = availableVoices.length > 0 ? availableVoices : synthRef.current.getVoices();
+        const languageVoices = voices.filter(voice => voice.lang.startsWith(selectedLanguage.code.split('-')[0]));
+        const preferredVoice = languageVoices.find(v => v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Enhanced') || v.name.includes('Premium'))
+          || languageVoices.find(v => v.lang === selectedLanguage.code)
+          || languageVoices[0]
+          || voices[0];
+        if (preferredVoice) utterance.voice = preferredVoice;
+        utterance.onstart = () => setIsSpeaking(true);
+        utterance.onend = () => setIsSpeaking(false);
+        utterance.onerror = () => setIsSpeaking(false);
+        synthRef.current.speak(utterance);
+      } catch (err) {
+        console.error('Browser TTS failed:', err);
       }
+    };
 
-      utterance.onstart = () => {
-        setIsSpeaking(true);
-      };
+    if (ttsEngine === 'browser') {
+      return speakWithBrowser();
+    }
 
-      utterance.onend = () => {
-        setIsSpeaking(false);
-      };
-
-      utterance.onerror = () => {
-        setIsSpeaking(false);
-      };
-
-      synthRef.current.speak(utterance);
+    // ttsEngine === 'eleven'
+    try {
+      const resp = await axios.post(`${API_URL}/api/tts/eleven`, { text }, { responseType: 'blob' });
+      const blob = resp.data;
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      audioRef.current = audio;
+      audio.onplay = () => setIsSpeaking(true);
+      audio.onended = () => { setIsSpeaking(false); try { URL.revokeObjectURL(url); } catch {}; };
+      audio.onerror = () => { setIsSpeaking(false); try { URL.revokeObjectURL(url); } catch {}; };
+      await audio.play();
+      return;
+    } catch (e) {
+      console.warn('ElevenLabs playback failed; falling back to browser TTS:', e?.message || e);
+      return speakWithBrowser();
     }
   };
 
   // Stop speaking
   const stopSpeaking = () => {
+    if (audioRef.current) {
+      try { audioRef.current.pause(); } catch {}
+      try { URL.revokeObjectURL(audioRef.current.src); } catch {}
+      audioRef.current = null;
+    }
     if (synthRef.current) {
       synthRef.current.cancel();
-      setIsSpeaking(false);
     }
+    setIsSpeaking(false);
   };
 
   // Toggle voice output
@@ -294,8 +319,8 @@ const Chat = () => {
     } catch (error) {
       console.error('Error starting chat session:', error);
       toast({
-        title: "Connection Error",
-        description: "Failed to start chat session. Please refresh the page.",
+        title: t('chat.toasts.connectionErrorTitle'),
+        description: t('chat.toasts.connectionErrorDesc'),
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -348,8 +373,8 @@ const Chat = () => {
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
-        title: "Message Failed",
-        description: "Failed to send message. Please try again.",
+        title: t('chat.toasts.messageFailedTitle'),
+        description: t('chat.toasts.messageFailedDesc'),
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -430,13 +455,13 @@ const Chat = () => {
               </Text>
             </HStack>
             <Text fontSize="sm" color="var(--hm-color-text-secondary)">
-              Anonymous & Confidential
+              {t('chat.header.anonConf')}
             </Text>
           </VStack>
 
           {/* Right: Language Selector */}
           <Menu>
-            <Tooltip label="Select your language" placement="bottom">
+            <Tooltip label={t('chat.tooltips.languageSelect')} placement="bottom">
               <MenuButton
                 as={Button}
                 rightIcon={<FiChevronDown />}
@@ -487,7 +512,7 @@ const Chat = () => {
                     <Text flex="1">{lang.name}</Text>
                     {selectedLanguage.code === lang.code && (
                       <Badge colorScheme="green" variant="subtle">
-                        Active
+                        {t('chat.badge.active')}
                       </Badge>
                     )}
                   </HStack>
@@ -559,7 +584,7 @@ const Chat = () => {
                         borderRadius="full"
                       >
                         <FiVolume2 size={12} color="white" />
-                        <Text fontSize="xs" color="white">Speaking</Text>
+                        <Text fontSize="xs" color="white">{t('chat.status.speakingBadge')}</Text>
                       </HStack>
                     )}
 
@@ -590,7 +615,7 @@ const Chat = () => {
                           color="var(--hm-color-text-secondary)"
                           _hover={{ color: "var(--hm-color-brand)" }}
                           onClick={() => speakText(msg.content)}
-                          aria-label="Replay message"
+                          aria-label={t('chat.aria.replay')}
                         />
                       )}
                     </HStack>
@@ -688,12 +713,12 @@ const Chat = () => {
               alignSelf="flex-start"
             >
               <Text>{selectedLanguage.flag}</Text>
-              <Text>Speaking in {selectedLanguage.name}</Text>
+              <Text>{t('chat.status.speakingIn', { name: selectedLanguage.name })}</Text>
             </HStack>
 
             <HStack spacing={2} w="full">
               {/* Voice Output Toggle */}
-              <Tooltip label={voiceEnabled ? "Mute AI voice" : "Enable AI voice"} placement="top">
+              <Tooltip label={voiceEnabled ? t('chat.tooltips.voiceToggleOn') : t('chat.tooltips.voiceToggleOff')} placement="top">
                 <IconButton
                   icon={voiceEnabled ? <FiVolume2 /> : <FiVolumeX />}
                   onClick={toggleVoice}
@@ -701,13 +726,13 @@ const Chat = () => {
                   color={voiceEnabled ? "var(--hm-color-brand)" : "var(--hm-color-text-secondary)"}
                   _hover={{ bg: "var(--hm-hover-bg)" }}
                   size="lg"
-                  aria-label={voiceEnabled ? "Mute voice" : "Enable voice"}
+                  aria-label={voiceEnabled ? t('chat.aria.muteVoice') : t('chat.aria.enableVoice')}
                 />
               </Tooltip>
 
               {/* Voice Input Button */}
               <Tooltip
-                label={isListening ? "Listening... Click to stop" : "Click to speak"}
+                label={isListening ? t('chat.tooltips.voiceInputOn') : t('chat.tooltips.voiceInputOff')}
                 placement="top"
               >
                 <IconButton
@@ -718,17 +743,53 @@ const Chat = () => {
                   bg={isListening ? "red.50" : "transparent"}
                   _hover={{ bg: isListening ? "red.100" : "var(--hm-hover-bg)" }}
                   size="lg"
-                  aria-label={isListening ? "Stop listening" : "Start voice input"}
+                  aria-label={isListening ? t('chat.aria.stopListening') : t('chat.aria.startVoice')}
                   animation={isListening ? "pulse 1.5s ease-in-out infinite" : "none"}
                 />
               </Tooltip>
+
+              {/* TTS Engine Selector */
+              }
+              <Menu>
+                <Tooltip label={`TTS: ${ttsEngine === 'eleven' ? 'ElevenLabs' : 'Browser'}`} placement="top">
+                  <MenuButton
+                    as={Button}
+                    size="sm"
+                    variant="ghost"
+                    color="var(--hm-color-text-primary)"
+                    _hover={{ bg: "var(--hm-hover-bg)" }}
+                  >
+                    <HStack spacing={2}>
+                      <Text fontSize="sm">{ttsEngine === 'eleven' ? 'ElevenLabs' : 'Browser'}</Text>
+                    </HStack>
+                  </MenuButton>
+                </Tooltip>
+                <MenuList
+                  bg="var(--hm-bg-glass-strong)"
+                  backdropFilter="blur(20px)"
+                  border="1px solid var(--hm-border-glass)"
+                >
+                  <MenuItem onClick={() => setTtsEngine('eleven')}>
+                    ElevenLabs
+                    {ttsEngine === 'eleven' && (
+                      <Badge ml={2} colorScheme="green" variant="subtle">Active</Badge>
+                    )}
+                  </MenuItem>
+                  <MenuItem onClick={() => setTtsEngine('browser')}>
+                    Browser
+                    {ttsEngine === 'browser' && (
+                      <Badge ml={2} colorScheme="green" variant="subtle">Active</Badge>
+                    )}
+                  </MenuItem>
+                </MenuList>
+              </Menu>
 
               {/* Text Input */}
               <Input
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyDown={handleKeyPress}
-                placeholder={isListening ? "Listening..." : "Type or speak your message..."}
+                placeholder={isListening ? t('chat.input.placeholderListening') : t('chat.input.placeholderIdle')}
                 className="hm-input"
                 _focus={{ borderColor: "var(--hm-color-brand)" }}
                 borderRadius="full"
@@ -752,7 +813,7 @@ const Chat = () => {
                 color="white"
                 borderRadius="full"
                 size="lg"
-                aria-label="Send message"
+                aria-label={t('chat.aria.send')}
                 transition="all 0.2s"
               />
             </HStack>
@@ -769,7 +830,7 @@ const Chat = () => {
                       bg="red.500"
                       animation="pulse 1s ease-in-out infinite"
                     />
-                    <Text>Listening...</Text>
+                    <Text>{t('chat.status.listening')}</Text>
                   </HStack>
                 )}
                 {isSpeaking && (
@@ -781,7 +842,7 @@ const Chat = () => {
                       bg="var(--hm-color-brand)"
                       animation="pulse 1s ease-in-out infinite"
                     />
-                    <Text>AI is speaking...</Text>
+                    <Text>{t('chat.status.aiSpeaking')}</Text>
                   </HStack>
                 )}
               </HStack>

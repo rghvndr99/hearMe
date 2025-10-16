@@ -9,13 +9,15 @@ import {
   Input,
   Textarea,
   Button,
+  Link,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-
+import { useTranslation } from "react-i18next";
 
 const MotionBox = motion(Box);
 
 const Contact = () => {
+  const { t } = useTranslation('common');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,10 +34,10 @@ const Contact = () => {
 
   const handleSubmit = () => {
     if (formData.name && formData.email && formData.message) {
-      alert('✅ Thank you for your message! We will get back to you soon.');
+      alert(t('contact.alertThanks'));
       setFormData({ name: '', email: '', message: '' });
     } else {
-      alert('⚠️ Please fill in all fields.');
+      alert(t('contact.alertFillAll'));
     }
   };
 
@@ -66,14 +68,22 @@ const Contact = () => {
       >
         <VStack spacing={3} textAlign="center">
           <Heading fontSize={["3xl", "4xl"]} fontWeight="700" color="var(--hm-color-text-primary)">
-            Contact Us.
+            {t('contact.title')}
           </Heading>
 
           <Text color="var(--hm-color-text-secondary)">
-            For feedback, partnerships, or non-urgent questions. For emotional support, please use the Chat page.
+            {t('contact.intro1')}
           </Text>
           <Text color="var(--hm-color-text-secondary)" fontSize="sm">
-            If you are in immediate danger or feel unsafe, call <strong>112</strong> (India) or see Resources for more help options.
+            {t('contact.intro2')}
+          </Text>
+          <Text color="var(--hm-color-text-secondary)" fontSize="sm">
+            You can also reach us at
+            <Link href="tel:+918105568665" color="var(--hm-color-accent-link)">+91 8105568665</Link>
+            {"  ·  "}
+            <Link href="mailto:rghvndr99@gmail.com" color="var(--hm-color-accent-link)">rghvndr99@gmail.com</Link>
+            {"  ·  "}
+            <Link href="https://hearme.com" isExternal color="var(--hm-color-accent-link)">hearme.com</Link>
           </Text>
         </VStack>
 
@@ -82,7 +92,7 @@ const Contact = () => {
             name="name"
             value={formData.name}
             onChange={handleInputChange}
-            placeholder="Your name"
+            placeholder={t('contact.name')}
             className="hm-input"
             _focus={{ borderColor: "var(--hm-color-brand)" }}
 
@@ -95,7 +105,7 @@ const Contact = () => {
             type="email"
             value={formData.email}
             onChange={handleInputChange}
-            placeholder="Your email"
+            placeholder={t('contact.email')}
             className="hm-input"
             _focus={{ borderColor: "var(--hm-color-brand)" }}
 
@@ -107,7 +117,7 @@ const Contact = () => {
             name="message"
             value={formData.message}
             onChange={handleInputChange}
-            placeholder="How can we help? (feedback, partnership, non-urgent)"
+            placeholder={t('contact.message')}
             className="hm-input"
             _focus={{ borderColor: "var(--hm-color-brand)" }}
 
@@ -129,7 +139,7 @@ const Contact = () => {
           borderRadius="md"
           shadow="0px 0px 10px rgba(255, 107, 138, 0.4)"
         >
-          Send
+          {t('contact.send')}
         </Button>
       </VStack>
     </Flex>
