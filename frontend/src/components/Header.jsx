@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Flex,
@@ -11,7 +11,7 @@ import {
   MenuList,
   MenuItem
 } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
 
@@ -21,6 +21,18 @@ import { useTranslation } from "react-i18next";
 
 const Header= () => {
   const { t, i18n } = useTranslation('common');
+  const navigate = useNavigate();
+  const [authToken, setAuthToken] = useState(() => (typeof window !== 'undefined' ? localStorage.getItem('hm-token') : null));
+  useEffect(() => {
+    const update = () => setAuthToken(typeof window !== 'undefined' ? localStorage.getItem('hm-token') : null);
+    window.addEventListener('storage', update);
+    window.addEventListener('hm-auth-changed', update);
+    return () => {
+      window.removeEventListener('storage', update);
+      window.removeEventListener('hm-auth-changed', update);
+    };
+  }, []);
+
 
   return (
     <Box
@@ -62,6 +74,14 @@ const Header= () => {
           >
             {t('nav.about')}
           </Link>
+          <Link as={RouterLink} to="/voicemate"
+            _hover={{ color: "var(--hm-color-brand)" }}
+            color="var(--hm-color-text-muted)"
+            fontWeight="500"
+          >
+            {t('nav.voiceMate', 'VoiceMate')}
+          </Link>
+
           <Link as={RouterLink} to="/resources"
             _hover={{ color: "var(--hm-color-brand)" }}
             color="var(--hm-color-text-muted)"
@@ -100,10 +120,10 @@ const Header= () => {
           <ThemeToggle />
           {/* Language selector */}
           <Menu>
-            <MenuButton as={Button} variant="ghost" size="sm">🌐 {i18n.language?.toUpperCase()}</MenuButton>
+            <MenuButton as={Button} variant="ghost" size="sm" color="var(--hm-color-text-muted)" _hover={{ color: 'var(--hm-color-brand)' }}>🌐 {i18n.language?.toUpperCase()}</MenuButton>
             <MenuList bg="var(--hm-bg-glass-strong)" border="1px solid var(--hm-border-glass)">
               {['en','hi'].map(lng => (
-                <MenuItem key={lng} onClick={() => {
+                <MenuItem key={lng} color={lng === i18n.language ? 'var(--hm-color-brand)' : 'var(--hm-color-text-muted)'} fontWeight={lng === i18n.language ? '700' : '500'} _hover={{ color: 'var(--hm-color-brand)', bg: 'transparent' }} onClick={() => {
                   i18n.changeLanguage(lng);
                   // Keep Chat page language in sync with UI language
                   const map = { en: 'en-US', hi: 'hi-IN' };
@@ -116,16 +136,55 @@ const Header= () => {
               ))}
             </MenuList>
           </Menu>
-          <Button
-            bgGradient="var(--hm-gradient-cta)"
-            _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
-            color="white"
-            borderRadius="full"
-            size="sm"
-            px={5}
-          >
-            {t('nav.joinNow')}
-          </Button>
+          {/* Auth Links */}
+          {authToken ? (
+            <Menu>
+              <MenuButton
+                as={Button}
+                variant="outline"
+                size="sm"
+                color="var(--hm-color-text-muted)"
+                borderColor="var(--hm-border-glass)"
+                _hover={{ color: 'var(--hm-color-brand)', borderColor: 'var(--hm-color-brand)' }}
+              >
+                {t('nav.account', 'Account')}
+              </MenuButton>
+              <MenuList
+                bg="var(--hm-bg-glass-strong)"
+                border="1px solid var(--hm-border-glass)"
+              >
+                <MenuItem as={RouterLink} to="/profile" color="var(--hm-color-text-primary)" _hover={{ bg: 'transparent', color: 'var(--hm-color-brand)' }}>
+                  {t('nav.profile', 'Profile')}
+                </MenuItem>
+                <MenuItem as={RouterLink} to="/voicemate" color="var(--hm-color-text-primary)" _hover={{ bg: 'transparent', color: 'var(--hm-color-brand)' }}>
+                  {t('nav.voiceMate', 'VoiceMate')}
+                </MenuItem>
+                <MenuItem as={RouterLink} to="/change-password" color="var(--hm-color-text-primary)" _hover={{ bg: 'transparent', color: 'var(--hm-color-brand)' }}>
+                  {t('nav.changePassword', 'Change Password')}
+                </MenuItem>
+                <MenuItem as={RouterLink} to="/change-email" color="var(--hm-color-text-primary)" _hover={{ bg: 'transparent', color: 'var(--hm-color-brand)' }}>
+                  {t('nav.changeEmail', 'Change Email')}
+                </MenuItem>
+                <MenuItem onClick={() => { try { localStorage.removeItem('hm-token'); setAuthToken(null); window.dispatchEvent(new Event('hm-auth-changed')); } catch {} navigate('/login'); }} color="var(--hm-color-text-primary)" _hover={{ bg: 'transparent', color: 'var(--hm-color-brand)' }}>
+                  {t('nav.logout', 'Logout')}
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          ) : (
+            <>
+              <Button as={RouterLink} to="/login" variant="ghost" size="sm" color="var(--hm-color-text-muted)" _hover={{ color: 'var(--hm-color-brand)' }}>{t('nav.login', 'Login')}</Button>
+              <Button as={RouterLink} to="/register"
+                bgGradient="var(--hm-gradient-cta)"
+                _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
+                color="white"
+                borderRadius="full"
+                size="sm"
+                px={5}
+              >
+                {t('nav.signUp', 'Sign up')}
+              </Button>
+            </>
+          )}
         </HStack>
       </Flex>
 
