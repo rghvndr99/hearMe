@@ -81,14 +81,6 @@ const Header= () => {
           >
             {t('nav.voiceMate', 'VoiceMate')}
           </Link>
-
-          <Link as={RouterLink} to="/resources"
-            _hover={{ color: "var(--hm-color-brand)" }}
-            color="var(--hm-color-text-muted)"
-            fontWeight="500"
-          >
-            {t('nav.resources')}
-          </Link>
           <Link as={RouterLink} to="/chat"
             _hover={{ color: "var(--hm-color-brand)" }}
             color="var(--hm-color-text-muted)"

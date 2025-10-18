@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, Box } from '@chakra-ui/react';
 import './styles.css';
 import Footer from './components/Footer';
 import Header from './components/Header';
@@ -40,6 +40,14 @@ const Volunteer = lazy(() => import('./pages/Volunteer'));
 const Resources = lazy(() => import('./pages/Resources'));
 const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
+const Login = lazy(() => import('./pages/Login'));
+const Register = lazy(() => import('./pages/Register'));
+const Profile = lazy(() => import('./pages/Profile'));
+const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword'));
+const ChangePassword = lazy(() => import('./pages/ChangePassword'));
+const ChangeEmail = lazy(() => import('./pages/ChangeEmail'));
+const VoiceMate = lazy(() => import('./pages/VoiceMate'));
 
 function Loader() {
   return (
@@ -91,15 +99,25 @@ function App() {
       <Router>
         <Header />
         <Suspense fallback={<Loader />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/stories" element={<Stories />} />
-            <Route path="/volunteer" element={<Volunteer />} />
-            <Route path="/resources" element={<Resources />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
+          <Box as="main" w={["100%","80%"]} mx="auto" px={[6,8]}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/stories" element={<Stories />} />
+              <Route path="/volunteer" element={<Volunteer />} />
+              <Route path="/resources" element={<Resources />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/change-password" element={<ChangePassword />} />
+              <Route path="/change-email" element={<ChangeEmail />} />
+              <Route path="/voicemate" element={<VoiceMate />} />
+            </Routes>
+          </Box>
         </Suspense>
         <ChatBubble />
         <Footer />

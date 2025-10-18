@@ -168,6 +168,34 @@ curl -X POST http://localhost:5001/api/tts/eleven \
 2. **Update MONGO_URI** in backend/.env
 3. **Restart the backend** to connect to database
 
+
+### 📧 Email (Password Reset)
+
+The forgot/reset password flow sends an email with a secure reset link. Email delivery is provider‑pluggable (Resend, SendGrid, SES). Easiest to start with Resend.
+
+1) Configure environment (root .env)
+```env
+# Email delivery
+APP_NAME=HearMe
+EMAIL_PROVIDER=RESEND            # LOG | RESEND | SENDGRID | SES
+EMAIL_FROM="HearMe <onboarding@resend.dev>"  # Quick test sender for Resend
+RESEND_API_KEY=your_resend_api_key
+```
+
+2) Where to get RESEND_API_KEY
+- Create a free account at https://resend.com/
+- In the dashboard, go to “API Keys” and click “Create API Key” → copy the value into RESEND_API_KEY
+- For production, verify your own domain in Resend and set EMAIL_FROM to an address on that domain (e.g., no-reply@yourdomain.com)
+- For quick local tests, you can use the default Resend sender `onboarding@resend.dev` as shown above
+
+3) Test locally
+- Start backend (ensure MongoDB is running): `cd backend && npm run dev`
+- Register a user (POST /api/users/register) or use an existing one
+- Open http://localhost:5174/forgot-password and submit your username/email
+- Check your inbox for the reset email; in non‑production the API also returns the reset URL in the response for convenience
+
+If you prefer SendGrid or AWS SES instead, set EMAIL_PROVIDER accordingly and provide the relevant credentials (see backend/src/services/email.js).
+
 ## 🛠️ Development
 
 ### Adding New Features

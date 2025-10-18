@@ -15,6 +15,8 @@ import authRouter from './routes/auth.js';
 import aiChatRouter from './routes/aiChat.js';
 import volunteerRouter from './routes/volunteer.js';
 import ttsRouter from './routes/tts.js';
+import usersRouter from './routes/users.js';
+import voiceTwinRouter from './routes/voicetwin.js';
 
 // Get directory name in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -50,6 +52,8 @@ app.use('/api/auth', authRouter);
 app.use('/api/ai-chat', aiChatRouter);
 app.use('/api/volunteer', volunteerRouter);
 app.use('/api/tts', ttsRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/voicetwin', voiceTwinRouter);
 
 const server = http.createServer(app);
 const io = new Server(server, {
