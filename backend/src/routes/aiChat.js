@@ -127,8 +127,8 @@ router.post('/message', async (req, res) => {
       // Generate AI response in the user's language
       aiResponseContent = await generateResponse(recentMessages, userLanguage);
 
-      // Generate quick replies for next interaction
-      quickReplies = await generateQuickReplies(recentMessages);
+      // Generate quick replies for next interaction in the user's language
+      quickReplies = await generateQuickReplies(recentMessages, userLanguage);
     }
 
     // Update conversation metadata
@@ -229,7 +229,7 @@ router.post('/session/end', async (req, res) => {
  */
 router.post('/quick-replies', async (req, res) => {
   try {
-    const { sessionId } = req.body;
+    const { sessionId, language } = req.body;
 
     if (!sessionId) {
       return res.status(400).json({ error: 'Session ID is required' });
@@ -247,7 +247,9 @@ router.post('/quick-replies', async (req, res) => {
         content: msg.content,
       }));
 
-    const quickReplies = await generateQuickReplies(recentMessages);
+    // Use provided language or default to English
+    const userLanguage = language || 'English';
+    const quickReplies = await generateQuickReplies(recentMessages, userLanguage);
 
     res.json({ quickReplies });
   } catch (error) {

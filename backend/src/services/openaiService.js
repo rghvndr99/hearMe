@@ -135,9 +135,11 @@ export async function generateResponse(conversationHistory, language = 'English'
 }
 
 /**
- * Generate quick reply suggestions
+ * Generate quick reply suggestions in the specified language
+ * @param {Array} conversationHistory - Recent conversation messages
+ * @param {string} language - Language for the quick replies (e.g., "English", "Hindi", "Spanish")
  */
-export async function generateQuickReplies(conversationHistory) {
+export async function generateQuickReplies(conversationHistory, language = 'English') {
   const client = getOpenAIClient();
 
   try {
@@ -147,7 +149,7 @@ export async function generateQuickReplies(conversationHistory) {
         {
           role: 'system',
           content:
-            'Based on the conversation, suggest 3 short (3-5 words) quick reply options the user might want to say next. Respond ONLY with a JSON array of strings. No markdown and no backticks.',
+            `Based on the conversation, suggest 3 short (3-5 words) quick reply options the user might want to say next. IMPORTANT: Generate the replies in ${language}. Respond ONLY with a JSON array of strings. No markdown and no backticks.`,
         },
         ...conversationHistory.slice(-4),
       ],
