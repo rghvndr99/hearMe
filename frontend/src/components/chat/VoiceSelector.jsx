@@ -10,6 +10,7 @@ import {
   Spinner,
 } from '@chakra-ui/react';
 import { FiHeadphones, FiChevronDown } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
@@ -21,6 +22,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
  * @param {string} props.tooltip - Tooltip text
  */
 const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip }) => {
+  const { t } = useTranslation('common');
   const [voices, setVoices] = useState([]);
   const [loading, setLoading] = useState(false);
   const token = typeof window !== 'undefined' ? localStorage.getItem('hm-token') : null;
@@ -28,9 +30,15 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip }) => {
   // Fetch user's saved voices
   useEffect(() => {
     let active = true;
+    const browserDefaultVoice = {
+      id: 'browser',
+      name: t('chat.voice.browserDefault', 'Browser Default'),
+      provider: 'browser'
+    };
+
     if (!token) {
       // Not logged in - only show browser default
-      setVoices([{ id: 'browser', name: 'Browser Default', provider: 'browser' }]);
+      setVoices([browserDefaultVoice]);
       return;
     }
 
@@ -46,15 +54,15 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip }) => {
           const userVoices = Array.isArray(data?.voices) ? data.voices : [];
           // Add browser default as first option
           setVoices([
-            { id: 'browser', name: 'Browser Default', provider: 'browser' },
+            browserDefaultVoice,
             ...userVoices,
           ]);
         } else {
-          setVoices([{ id: 'browser', name: 'Browser Default', provider: 'browser' }]);
+          setVoices([browserDefaultVoice]);
         }
       } catch (e) {
         console.error('Failed to load voices:', e);
-        setVoices([{ id: 'browser', name: 'Browser Default', provider: 'browser' }]);
+        setVoices([browserDefaultVoice]);
       } finally {
         if (active) setLoading(false);
       }
@@ -63,7 +71,7 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip }) => {
     return () => {
       active = false;
     };
-  }, [token]);
+  }, [token, t]);
 
   const selectedVoice = voices.find(v => (v.voiceId || v.id) === selectedVoiceId) || voices[0];
 
@@ -82,7 +90,7 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip }) => {
       >
         <HStack spacing={2}>
           <Text display={{ base: 'none', md: 'block' }}>
-            {selectedVoice?.name || 'Browser Default'}
+            {selectedVoice?.name || t('chat.voice.browserDefault', 'Browser Default')}
           </Text>
         </HStack>
       </MenuButton>

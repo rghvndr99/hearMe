@@ -198,7 +198,13 @@
     "alertFillAll": "⚠️ Please fill in all fields."
   },
   "chat": {
-    "header": { "anonConf": "Anonymous & Confidential" },
+    "header": {
+      "anonConf": "Anonymous & Confidential",
+      "title": "HearMe Support"
+    },
+    "voice": {
+      "browserDefault": "Browser Default"
+    },
     "tooltips": {
       "languageSelect": "Select your language",
       "voiceSelect": "Select voice for responses",

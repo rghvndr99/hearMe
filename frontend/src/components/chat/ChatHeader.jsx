@@ -32,14 +32,14 @@ const ChatHeader = ({
       borderBottom="1px solid var(--hm-border-glass)"
       className="hm-glass-card"
       backdropFilter="blur(10px)"
+      w="76%"
+      mx="auto"
     >
       <Flex
         align="center"
         justify="space-between"
         px={6}
         py={4}
-        maxW="1200px"
-        mx="auto"
       >
         {/* Left: Logo and Title */}
         <VStack spacing={1} align="flex-start">

@@ -205,7 +205,13 @@
     "alertFillAll": " कृपया सभी फ़ील्ड भरें।"
   },
   "chat": {
-    "header": { "anonConf": "गुमनाम और गोपनीय" },
+    "header": {
+      "anonConf": "गुमनाम और गोपनीय",
+      "title": "HearMe सपोर्ट"
+    },
+    "voice": {
+      "browserDefault": "ब्राउज़र डिफ़ॉल्ट"
+    },
     "tooltips": {
       "languageSelect": "अपनी भाषा चुनें",
       "voiceSelect": "प्रतिक्रियाओं के लिए आवाज़ चुनें",
