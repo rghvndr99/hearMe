@@ -52,12 +52,14 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip }) => {
         if (res.ok) {
           const data = await res.json();
           const userVoices = Array.isArray(data?.voices) ? data.voices : [];
+          console.log('VoiceSelector: Loaded voices:', userVoices);
           // Add browser default as first option
           setVoices([
             browserDefaultVoice,
             ...userVoices,
           ]);
         } else {
+          console.warn('VoiceSelector: Failed to fetch voices, status:', res.status);
           setVoices([browserDefaultVoice]);
         }
       } catch (e) {
@@ -76,7 +78,7 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip }) => {
   const selectedVoice = voices.find(v => (v.voiceId || v.id) === selectedVoiceId) || voices[0];
 
   return (
-    <Menu placement="bottom-end" strategy="fixed">
+    <Menu placement="bottom-end">
       <MenuButton
         as={Button}
         variant="ghost"
@@ -101,6 +103,7 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip }) => {
         borderColor="var(--hm-border-glass)"
         backdropFilter="blur(10px)"
         zIndex={9999}
+        position="absolute"
       >
         {voices.map((voice) => {
           const voiceId = voice.voiceId || voice.id;
