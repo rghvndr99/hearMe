@@ -15,19 +15,20 @@ import ChatInput from "../components/chat/ChatInput";
 import QuickReplies from "../components/chat/QuickReplies";
 
 // Constants and utilities
-import { getInitialLanguage } from "../constants/languages";
+import { LANGUAGES } from "../constants/languages";
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 /**
  * Main Chat page component - refactored and modular
+ * Language is managed by the main Header component via i18n
  */
 const Chat = () => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const toast = useToast();
 
-  // Language state
-  const [selectedLanguage, setSelectedLanguage] = useState(getInitialLanguage());
+  // Get current language from i18n (synced with Header)
+  const currentLanguage = LANGUAGES.find(lang => lang.code === (localStorage.getItem('hm-language') || 'en-US')) || LANGUAGES[0];
 
   // Chat state
   const [sessionId, setSessionId] = useState(null);
@@ -47,7 +48,7 @@ const Chat = () => {
     isListening,
     toggleListening,
   } = useSpeechRecognition(
-    selectedLanguage.code,
+    currentLanguage.code,
     (transcript) => {
       setInputMessage(transcript);
     },
@@ -64,7 +65,7 @@ const Chat = () => {
 
   // Speech synthesis hook
   const { isSpeaking, speak, stopSpeaking } = useSpeechSynthesis(
-    selectedLanguage.code,
+    currentLanguage.code,
     voiceEnabled,
     selectedVoiceId
   );
@@ -94,28 +95,7 @@ const Chat = () => {
     };
 
     startChatSession();
-
-    // Show language detection notification on first visit
-    const hasSeenLanguageNotification = localStorage.getItem('hm-language-notification');
-    if (!hasSeenLanguageNotification) {
-      toast({
-        title: `${selectedLanguage.flag} ${t('chat.toasts.languageDetectedTitle', 'Language detected')}`,
-        description: t('chat.toasts.languageDetectedDesc', 'We detected your language. You can change it anytime.'),
-        status: "info",
-        duration: 5000,
-        isClosable: true,
-        position: "top",
-      });
-      localStorage.setItem('hm-language-notification', 'true');
-    }
   }, []);
-
-  /**
-   * Save language preference
-   */
-  useEffect(() => {
-    localStorage.setItem('hm-language', selectedLanguage.code);
-  }, [selectedLanguage]);
 
   /**
    * Send message to AI
@@ -137,7 +117,7 @@ const Chat = () => {
       const response = await axios.post(`${API_URL}/api/ai-chat/message`, {
         sessionId,
         message: messageText,
-        language: selectedLanguage.name,
+        language: currentLanguage.name,
       });
 
       const { message: aiMessage, quickReplies: newQuickReplies, crisis } = response.data;
@@ -193,13 +173,6 @@ const Chat = () => {
   };
 
   /**
-   * Handle language change
-   */
-  const handleLanguageChange = (language) => {
-    setSelectedLanguage(language);
-  };
-
-  /**
    * Toggle voice output
    */
   const toggleVoice = () => {
@@ -224,10 +197,8 @@ const Chat = () => {
       position="relative"
       overflow="hidden"
     >
-      {/* Fixed Header */}
+      {/* Fixed Header - Language managed by main Header component */}
       <ChatHeader
-        selectedLanguage={selectedLanguage}
-        onLanguageChange={handleLanguageChange}
         voiceEnabled={voiceEnabled}
         onVoiceToggle={toggleVoice}
         selectedVoiceId={selectedVoiceId}

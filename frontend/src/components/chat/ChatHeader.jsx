@@ -1,24 +1,20 @@
 import React from 'react';
 import { Box, Flex, VStack, HStack, Text } from '@chakra-ui/react';
 import { BsRobot } from 'react-icons/bs';
-import LanguageSelector from './LanguageSelector';
 import VoiceControls from './VoiceControls';
 import VoiceSelector from './VoiceSelector';
 import { useTranslation } from 'react-i18next';
 
 /**
- * Chat header component with branding, language selector, voice selector, and voice controls
+ * Chat header component with voice controls
+ * Language is managed by the main Header component
  * @param {Object} props
- * @param {Object} props.selectedLanguage - Currently selected language
- * @param {Function} props.onLanguageChange - Language change callback
  * @param {boolean} props.voiceEnabled - Whether voice is enabled
  * @param {Function} props.onVoiceToggle - Voice toggle callback
  * @param {string} props.selectedVoiceId - Currently selected voice ID for TTS
  * @param {Function} props.onVoiceChange - Voice change callback
  */
 const ChatHeader = ({
-  selectedLanguage,
-  onLanguageChange,
   voiceEnabled,
   onVoiceToggle,
   selectedVoiceId,
@@ -32,7 +28,7 @@ const ChatHeader = ({
       top="70px"
       left={0}
       right={0}
-      zIndex={999}
+      zIndex={998}
       borderBottom="1px solid var(--hm-border-glass)"
       className="hm-glass-card"
       backdropFilter="blur(10px)"
@@ -42,7 +38,7 @@ const ChatHeader = ({
         justify="space-between"
         px={6}
         py={4}
-        maxW="80%"
+        maxW="1200px"
         mx="auto"
       >
         {/* Left: Logo and Title */}
@@ -54,7 +50,7 @@ const ChatHeader = ({
               color="var(--hm-color-brand)"
             />
             <Text fontSize="xl" fontWeight="700" color="var(--hm-color-text-primary)">
-              HearMe Support
+              {t('chat.header.title', 'HearMe Support')}
             </Text>
           </HStack>
           <Text fontSize="sm" color="var(--hm-color-text-secondary)">
@@ -76,11 +72,6 @@ const ChatHeader = ({
             tooltipOff={t('chat.tooltips.enableVoice', 'Enable voice responses')}
             ariaLabelMute={t('chat.aria.muteVoice', 'Mute voice')}
             ariaLabelEnable={t('chat.aria.enableVoice', 'Enable voice')}
-          />
-          <LanguageSelector
-            selectedLanguage={selectedLanguage}
-            onLanguageChange={onLanguageChange}
-            tooltip={t('chat.tooltips.languageSelect', 'Select language')}
           />
         </HStack>
       </Flex>

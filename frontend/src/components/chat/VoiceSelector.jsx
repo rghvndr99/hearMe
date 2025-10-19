@@ -92,7 +92,7 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip }) => {
         bg="var(--hm-bg-glass)"
         borderColor="var(--hm-border-glass)"
         backdropFilter="blur(10px)"
-        zIndex={1000}
+        zIndex={9999}
       >
         {voices.map((voice) => {
           const voiceId = voice.voiceId || voice.id;
