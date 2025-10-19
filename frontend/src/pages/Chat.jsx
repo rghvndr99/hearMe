@@ -38,10 +38,7 @@ const Chat = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [quickReplies, setQuickReplies] = useState([]);
   const [voiceEnabled, setVoiceEnabled] = useState(true);
-  const [selectedVoiceId, setSelectedVoiceId] = useState(() => {
-    // Load saved voice preference or default to 'browser'
-    return localStorage.getItem('hm-chat-voice-id') || 'browser';
-  });
+  const [selectedVoiceId, setSelectedVoiceId] = useState('browser');
 
   // Speech recognition hook
   const {
@@ -69,6 +66,34 @@ const Chat = () => {
     voiceEnabled,
     selectedVoiceId
   );
+
+  /**
+   * Load user's voice preference from backend
+   */
+  useEffect(() => {
+    const loadVoicePreference = async () => {
+      const token = localStorage.getItem('hm-token');
+      if (!token) {
+        // Not logged in - use browser default
+        setSelectedVoiceId('browser');
+        return;
+      }
+
+      try {
+        const response = await axios.get(`${API_URL}/api/users/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const voiceId = response.data?.user?.selectedVoiceId || 'browser';
+        setSelectedVoiceId(voiceId);
+      } catch (error) {
+        console.error('Error loading voice preference:', error);
+        // Fallback to browser default
+        setSelectedVoiceId('browser');
+      }
+    };
+
+    loadVoicePreference();
+  }, []);
 
   /**
    * Initialize chat session
@@ -183,11 +208,28 @@ const Chat = () => {
   };
 
   /**
-   * Handle voice change
+   * Handle voice change - save to backend
    */
-  const handleVoiceChange = (voiceId) => {
+  const handleVoiceChange = async (voiceId) => {
     setSelectedVoiceId(voiceId);
-    localStorage.setItem('hm-chat-voice-id', voiceId);
+
+    const token = localStorage.getItem('hm-token');
+    if (!token) {
+      // Not logged in - just update local state
+      return;
+    }
+
+    try {
+      await axios.patch(
+        `${API_URL}/api/users/voice-preference`,
+        { selectedVoiceId: voiceId },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log('Voice preference saved:', voiceId);
+    } catch (error) {
+      console.error('Error saving voice preference:', error);
+      // Still update local state even if save fails
+    }
   };
 
   return (

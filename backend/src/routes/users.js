@@ -50,6 +50,7 @@ function publicUser(u) {
     email: u.email,
     phone: u.phone || '',
     language: u.language || 'en-US',
+    selectedVoiceId: u.selectedVoiceId || 'browser',
     createdAt: u.createdAt,
     updatedAt: u.updatedAt,
   };
@@ -321,7 +322,29 @@ router.post('/change-email', auth, async (req, res) => {
   }
 });
 
+// PATCH /api/users/voice-preference (authenticated)
+router.patch('/voice-preference', auth, async (req, res) => {
+  try {
+    const userId = req.user?.sub || req.user?.id;
+    if (!userId) return res.status(401).json({ error: 'Unauthorized' });
 
+    const { selectedVoiceId } = req.body || {};
+    if (!selectedVoiceId) {
+      return res.status(400).json({ error: 'selectedVoiceId is required' });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    user.selectedVoiceId = selectedVoiceId;
+    await user.save({ validateBeforeSave: false });
+
+    return res.json({ message: 'Voice preference updated successfully', selectedVoiceId: user.selectedVoiceId });
+  } catch (err) {
+    console.error('Voice-preference error:', err);
+    return res.status(500).json({ error: 'Failed to update voice preference' });
+  }
+});
 
 export default router;
 

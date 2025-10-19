@@ -9,7 +9,7 @@ import {
   Text,
   Spinner,
 } from '@chakra-ui/react';
-import { FiHeadphones, FiChevronDown } from 'react-icons/fi';
+import { FiHeadphones, FiChevronDown, FiStar } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
@@ -108,6 +108,7 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip }) => {
         {voices.map((voice) => {
           const voiceId = voice.voiceId || voice.id;
           const isSelected = voiceId === selectedVoiceId;
+          const isCloned = voice.category === 'cloned';
           return (
             <MenuItem
               key={voiceId}
@@ -118,10 +119,25 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip }) => {
               _hover={{ bg: 'var(--hm-bg-glass)', color: 'var(--hm-color-brand)' }}
             >
               <HStack spacing={3} justify="space-between" w="full">
-                <Text>{voice.name}</Text>
+                <HStack spacing={2}>
+                  {isCloned && (
+                    <FiStar
+                      size={14}
+                      style={{
+                        color: 'var(--hm-color-brand)',
+                        fill: 'var(--hm-color-brand)'
+                      }}
+                    />
+                  )}
+                  <Text>{voice.name}</Text>
+                </HStack>
                 {voice.provider === 'elevenlabs' && (
-                  <Text fontSize="xs" color="var(--hm-color-text-secondary)">
-                    ElevenLabs
+                  <Text
+                    fontSize="xs"
+                    color={isCloned ? 'var(--hm-color-brand)' : 'var(--hm-color-text-secondary)'}
+                    fontWeight={isCloned ? '600' : '400'}
+                  >
+                    {isCloned ? 'Custom Voice' : 'ElevenLabs'}
                   </Text>
                 )}
               </HStack>

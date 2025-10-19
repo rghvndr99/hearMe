@@ -7,6 +7,7 @@ const UserSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
     phone: { type: String, required: false, trim: true },
     language: { type: String, required: false, default: 'en-US' },
+    selectedVoiceId: { type: String, required: false, default: 'browser' },
     passwordHash: { type: String, required: true },
     passwordSalt: { type: String, required: true },
     passwordResetTokenHash: { type: String, required: false },

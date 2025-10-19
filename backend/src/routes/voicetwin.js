@@ -7,6 +7,11 @@ import VoiceTwin from '../models/VoiceTwin.js';
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 15 * 1024 * 1024 } }); // 15MB in-memory
 
+// In-memory cache for voices per user session
+// Key: userId, Value: { voices: [], timestamp: Date }
+const voicesCache = new Map();
+const CACHE_DURATION_MS = 30 * 60 * 1000; // 30 minutes
+
 // POST /api/voicetwin/upload
 // Accepts multipart/form-data with field name "audio" (Blob/File)
 // Proxies upload to ElevenLabs Voice Creation API and returns the created voice id
@@ -70,6 +75,9 @@ router.post('/upload', auth, upload.single('audio'), async (req, res) => {
       sourceType,
     });
 
+    // Invalidate cache for this user since they added a new voice
+    voicesCache.delete(userId);
+
     return res.json({ success: true, voiceId, provider: 'elevenlabs', voice: {
       id: doc._id,
       name: doc.name,
@@ -81,7 +89,7 @@ router.post('/upload', auth, upload.single('audio'), async (req, res) => {
   }
 });
 
-// GET /api/voicetwin/mine - list voices from ElevenLabs API
+// GET /api/voicetwin/mine - list voices from ElevenLabs API (with caching)
 router.get('/mine', auth, async (req, res) => {
   try {
     const userId = req.user?.sub || req.user?.id;
@@ -90,6 +98,15 @@ router.get('/mine', auth, async (req, res) => {
     if (!process.env.ELEVENLABS_API_KEY) {
       console.warn('ELEVENLABS_API_KEY not configured, returning empty voices list');
       return res.json({ voices: [] });
+    }
+
+    // Check cache first
+    const cached = voicesCache.get(userId);
+    const now = Date.now();
+    
+    if (cached && (now - cached.timestamp) < CACHE_DURATION_MS) {
+      console.log('VoiceTwin: Returning cached voices for user ' + userId + ' (' + cached.voices.length + ' voices)');
+      return res.json({ voices: cached.voices, cached: true });
     }
 
     // Fetch voices from ElevenLabs API
@@ -110,9 +127,15 @@ router.get('/mine', auth, async (req, res) => {
       previewUrl: voice.previewUrl,
     }));
 
-    console.log(`VoiceTwin: Fetched ${voices.length} voices from ElevenLabs for user ${userId}`);
+    // Store in cache
+    voicesCache.set(userId, {
+      voices,
+      timestamp: now,
+    });
+
+    console.log(`VoiceTwin: Fetched \${voices.length} voices from ElevenLabs for user \${userId} (cached for 30min)`);
     
-    return res.json({ voices });
+    return res.json({ voices, cached: false });
   } catch (err) {
     console.error('VoiceTwin list error:', err);
     return res.status(500).json({ error: 'Failed to list voices', details: err?.message });
@@ -152,4 +175,3 @@ router.delete('/:id', auth, async (req, res) => {
 });
 
 export default router;
-
