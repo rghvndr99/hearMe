@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Flex,
@@ -9,8 +9,7 @@ import {
   Menu,
   MenuButton,
   MenuList,
-  MenuItem,
-  useColorModeValue
+  MenuItem
 } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -34,14 +33,7 @@ const Header= () => {
     };
   }, []);
 
-  // Theme-aware tokens for menus/buttons
-  const menuBg = useColorModeValue('white', 'gray.800');
-  const menuBorder = useColorModeValue('blackAlpha.200', 'whiteAlpha.300');
-  const menuItemColor = useColorModeValue('gray.800', 'gray.100');
-  const menuItemHoverBg = useColorModeValue('blackAlpha.50', 'whiteAlpha.100');
-  const profileBtnColor = useColorModeValue('gray.700', 'gray.100');
-  const profileBtnBorder = useColorModeValue('blackAlpha.300', 'whiteAlpha.400');
-  const langBtnColor = useColorModeValue('gray.600', 'gray.200');
+
 
   return (
     <Box
@@ -121,10 +113,10 @@ const Header= () => {
           <ThemeToggle />
           {/* Language selector */}
           <Menu>
-            <MenuButton as={Button} variant="ghost" size="sm" color={langBtnColor} _hover={{ color: 'var(--hm-color-brand)' }}>🌐 {i18n.language?.toUpperCase()}</MenuButton>
-            <MenuList bg={menuBg} borderWidth="1px" borderColor={menuBorder}>
+            <MenuButton as={Button} variant="ghost" size="sm" color="var(--hm-color-text-muted)" _hover={{ color: 'var(--hm-color-brand)' }}>🌐 {i18n.language?.toUpperCase()}</MenuButton>
+            <MenuList bg="var(--hm-bg-glass)" borderWidth="1px" borderColor="var(--hm-border-glass)" backdropFilter="blur(10px)">
               {['en','hi'].map(lng => (
-                <MenuItem key={lng} color={lng === i18n.language ? 'var(--hm-color-brand)' : menuItemColor} fontWeight={lng === i18n.language ? '700' : '500'} _hover={{ color: 'var(--hm-color-brand)', bg: menuItemHoverBg }} onClick={() => {
+                <MenuItem key={lng} color={lng === i18n.language ? 'var(--hm-color-brand)' : 'var(--hm-color-text-primary)'} fontWeight={lng === i18n.language ? '700' : '500'} _hover={{ color: 'var(--hm-color-brand)', bg: 'var(--hm-bg-glass)' }} onClick={() => {
                   i18n.changeLanguage(lng);
                   // Keep Chat page language in sync with UI language
                   const map = { en: 'en-US', hi: 'hi-IN' };
@@ -144,26 +136,26 @@ const Header= () => {
                 as={Button}
                 variant="outline"
                 size="sm"
-                color={profileBtnColor}
-                borderColor={profileBtnBorder}
+                color="var(--hm-color-text-primary)"
+                borderColor="var(--hm-border-outline)"
                 _hover={{ color: 'var(--hm-color-brand)', borderColor: 'var(--hm-color-brand)' }}
               >
                 {t('nav.account', 'Account')}
               </MenuButton>
-              <MenuList bg={menuBg} borderWidth="1px" borderColor={menuBorder}>
-                <MenuItem as={RouterLink} to="/profile" color={menuItemColor} _hover={{ bg: menuItemHoverBg, color: 'var(--hm-color-brand)' }}>
+              <MenuList bg="var(--hm-bg-glass)" borderWidth="1px" borderColor="var(--hm-border-glass)" backdropFilter="blur(10px)">
+                <MenuItem as={RouterLink} to="/profile" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)', color: 'var(--hm-color-brand)' }}>
                   {t('nav.profile', 'Profile')}
                 </MenuItem>
-                <MenuItem as={RouterLink} to="/voicemate" color={menuItemColor} _hover={{ bg: menuItemHoverBg, color: 'var(--hm-color-brand)' }}>
+                <MenuItem as={RouterLink} to="/voicemate" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)', color: 'var(--hm-color-brand)' }}>
                   {t('nav.voiceMate', 'VoiceMate')}
                 </MenuItem>
-                <MenuItem as={RouterLink} to="/change-password" color={menuItemColor} _hover={{ bg: menuItemHoverBg, color: 'var(--hm-color-brand)' }}>
+                <MenuItem as={RouterLink} to="/change-password" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)', color: 'var(--hm-color-brand)' }}>
                   {t('nav.changePassword', 'Change Password')}
                 </MenuItem>
-                <MenuItem as={RouterLink} to="/change-email" color={menuItemColor} _hover={{ bg: menuItemHoverBg, color: 'var(--hm-color-brand)' }}>
+                <MenuItem as={RouterLink} to="/change-email" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)', color: 'var(--hm-color-brand)' }}>
                   {t('nav.changeEmail', 'Change Email')}
                 </MenuItem>
-                <MenuItem onClick={() => { try { localStorage.removeItem('hm-token'); setAuthToken(null); window.dispatchEvent(new Event('hm-auth-changed')); } catch {} navigate('/login'); }} color={menuItemColor} _hover={{ bg: menuItemHoverBg, color: 'var(--hm-color-brand)' }}>
+                <MenuItem onClick={() => { try { localStorage.removeItem('hm-token'); setAuthToken(null); window.dispatchEvent(new Event('hm-auth-changed')); } catch {} navigate('/login'); }} color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)', color: 'var(--hm-color-brand)' }}>
                   {t('nav.logout', 'Logout')}
                 </MenuItem>
               </MenuList>
