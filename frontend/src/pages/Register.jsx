@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Box, Flex, Heading, VStack, FormControl, FormLabel, Input, Button, useToast, Select, useColorModeValue } from '@chakra-ui/react';
 import axios from 'axios';
-import { motion } from 'framer-motion';
 
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
-const MotionBox = motion(Box);
 
 
 const Register = () => {
@@ -65,16 +63,6 @@ const Register = () => {
       pt="100px"
       pb={[12, 20]}
     >
-      <MotionBox
-        position="absolute"
-        top="-10%"
-        left="-15%"
-        w="80%"
-        h="80%"
-        className="hm-bg-gradient-pink"
-        animate={{ opacity: [0.6, 0.9, 0.6] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
         <Box maxW="500px" mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
           <Heading size="lg" mb={6} color={textPrimary}>{t('auth.createAccount','Create your account')}</Heading>

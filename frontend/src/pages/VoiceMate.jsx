@@ -18,9 +18,6 @@ import {
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import { motion } from 'framer-motion';
-const MotionBox = motion(Box);
-
 export default function VoiceMate() {
   const { t } = useTranslation();
   const toast = useToast();
@@ -714,16 +711,6 @@ export default function VoiceMate() {
         pt="100px"
         pb={[12, 20]}
       >
-        <MotionBox
-          position="absolute"
-          top="-10%"
-          left="-15%"
-          w="80%"
-          h="80%"
-          className="hm-bg-gradient-pink"
-          animate={{ opacity: [0.6, 0.9, 0.6] }}
-          transition={{ duration: 8, repeat: Infinity }}
-        />
         <AnonymousView />
       </Flex>
     );
@@ -743,17 +730,6 @@ export default function VoiceMate() {
       pt="100px"
       pb={[12, 20]}
     >
-      <MotionBox
-        position="absolute"
-        top="-10%"
-        left="-15%"
-        w="80%"
-        h="80%"
-        className="hm-bg-gradient-pink"
-        animate={{ opacity: [0.6, 0.9, 0.6] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
-
       <VStack spacing={8} zIndex={1} maxW="900px" w="full">
         {/* Section 1: Capture (record or upload) */}
         <Box className="hm-glass-card p-6 rounded-2xl" p="20px" w="full" border="1px solid var(--hm-border-glass)" _hover={{ borderColor: 'var(--hm-color-brand)' }}>

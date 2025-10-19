@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Flex,
@@ -8,10 +7,7 @@ import {
   SimpleGrid,
   Link,
 } from "@chakra-ui/react";
-import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-
-const MotionBox = motion(Box);
 
 const Resources = () => {
   const { t } = useTranslation('common');
@@ -30,18 +26,6 @@ const Resources = () => {
       pb={[12, 20]}
       textAlign="center"
     >
-      {/* === BACKGROUND BRUSH GLOWS === */}
-      <MotionBox
-        position="absolute"
-        top="-10%"
-        left="-15%"
-        w="80%"
-        h="80%"
-        className="hm-bg-gradient-pink"
-        animate={{ opacity: [0.6, 0.9, 0.6] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
-
       {/* === PAGE CONTENT === */}
       <VStack spacing={12} zIndex={1} maxW="800px">
         <Heading

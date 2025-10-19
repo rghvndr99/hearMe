@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Flex,
@@ -14,14 +14,10 @@ import {
   Alert,
   AlertIcon,
 } from "@chakra-ui/react";
-import { motion } from "framer-motion";
 import { FaHeart, FaUsers, FaStar } from "react-icons/fa";
 import axios from "axios";
 
 import { useTranslation } from "react-i18next";
-
-const MotionBox = motion(Box);
-
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
@@ -87,18 +83,6 @@ const Volunteer = () => {
       pb={[12, 20]}
       textAlign="center"
     >
-      {/* === BACKGROUND BRUSHSTROKES === */}
-      <MotionBox
-        position="absolute"
-        top="-10%"
-        left="-15%"
-        w="80%"
-        h="80%"
-        className="hm-bg-gradient-pink"
-        animate={{ opacity: [0.6, 0.9, 0.6] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
-
       {/* === PAGE CONTENT === */}
       <VStack spacing={10} zIndex={1} maxW="900px">
         {/* Heading Section */}

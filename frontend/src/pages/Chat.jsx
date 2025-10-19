@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Box, Flex, useToast } from "@chakra-ui/react";
-import { motion } from "framer-motion";
 import { FiAlertCircle } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
@@ -18,7 +17,6 @@ import QuickReplies from "../components/chat/QuickReplies";
 // Constants and utilities
 import { getInitialLanguage } from "../constants/languages";
 
-const MotionBox = motion(Box);
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 /**
@@ -43,8 +41,6 @@ const Chat = () => {
   // Speech recognition hook
   const {
     isListening,
-    startListening,
-    stopListening,
     toggleListening,
   } = useSpeechRecognition(
     selectedLanguage.code,
@@ -215,28 +211,6 @@ const Chat = () => {
       position="relative"
       overflow="hidden"
     >
-      {/* Animated Background */}
-      <MotionBox
-        position="absolute"
-        top="-20%"
-        left="-10%"
-        w="80%"
-        h="80%"
-        className="hm-bg-gradient-pink"
-        animate={{ opacity: [0.4, 0.7, 0.4] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
-      <MotionBox
-        position="absolute"
-        bottom="-20%"
-        right="-10%"
-        w="70%"
-        h="70%"
-        className="hm-bg-gradient-blue"
-        animate={{ opacity: [0.4, 0.7, 0.4] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
-
       {/* Main Chat Container */}
       <Flex
         direction="column"
