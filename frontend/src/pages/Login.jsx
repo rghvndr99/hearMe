@@ -10,11 +10,6 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 const Login = () => {
   const { t } = useTranslation('common');
-  // Theme tokens
-  const pageBg = useColorModeValue('gray.50', 'gray.900');
-  const textPrimary = useColorModeValue('gray.800', 'gray.100');
-  const brandColor = useColorModeValue('blue.600', 'blue.300');
-  const ctaGradient = useColorModeValue('linear(to-r, blue.500, pink.500)', 'linear(to-r, blue.400, pink.400)');
   const [form, setForm] = useState({ usernameOrEmail: '', password: '' });
   const [loading, setLoading] = useState(false);
   const toast = useToast();
@@ -45,8 +40,8 @@ const Login = () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg={pageBg}
-      color={textPrimary}
+      bg="var(--hm-color-bg)"
+      color="var(--hm-color-text-primary)"
       position="relative"
       overflow="hidden"
       px={[6, 12]}
@@ -55,20 +50,41 @@ const Login = () => {
     >
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
         <Box maxW="480px" mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
-          <Heading size="lg" mb={6} color={textPrimary}>{t('auth.signIn','Sign in')}</Heading>
+          <Heading size="lg" mb={6} color="var(--hm-color-text-primary)">{t('auth.signIn','Sign in')}</Heading>
           <form onSubmit={submit}>
             <VStack spacing={4} align="stretch">
               <FormControl isRequired>
-                <FormLabel>{t('auth.usernameOrEmail','Username or Email')}</FormLabel>
-                <Input name="usernameOrEmail" value={form.usernameOrEmail} onChange={onChange} placeholder={t('placeholders.usernameOrEmail','yourusername or you@example.com')} />
+                <FormLabel color="var(--hm-color-text-primary)">{t('auth.usernameOrEmail','Username or Email')}</FormLabel>
+                <Input
+                  name="usernameOrEmail"
+                  value={form.usernameOrEmail}
+                  onChange={onChange}
+                  placeholder={t('placeholders.usernameOrEmail','yourusername or you@example.com')}
+                  bg="var(--hm-bg-glass)"
+                  borderColor="var(--hm-border-glass)"
+                  color="var(--hm-color-text-primary)"
+                  _placeholder={{ color: 'var(--hm-color-placeholder)' }}
+                  _hover={{ borderColor: 'var(--hm-border-outline)' }}
+                  _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel>{t('auth.password','Password')}</FormLabel>
-                <Input type="password" name="password" value={form.password} onChange={onChange} />
+                <FormLabel color="var(--hm-color-text-primary)">{t('auth.password','Password')}</FormLabel>
+                <Input
+                  type="password"
+                  name="password"
+                  value={form.password}
+                  onChange={onChange}
+                  bg="var(--hm-bg-glass)"
+                  borderColor="var(--hm-border-glass)"
+                  color="var(--hm-color-text-primary)"
+                  _hover={{ borderColor: 'var(--hm-border-outline)' }}
+                  _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                />
               </FormControl>
-              <Button type="submit" isLoading={loading} bgGradient={ctaGradient} color="white">{t('nav.login','Login')}</Button>
-              <Text fontSize="sm">
-                <Link as={RouterLink} to="/forgot-password" color={brandColor}>{t('auth.forgotPassword','Forgot password?')}</Link>
+              <Button type="submit" isLoading={loading} bgGradient="var(--hm-gradient-cta)" color="white" _hover={{ opacity: 0.9 }}>{t('nav.login','Login')}</Button>
+              <Text fontSize="sm" color="var(--hm-color-text-primary)">
+                <Link as={RouterLink} to="/forgot-password" color="var(--hm-color-brand)" _hover={{ textDecoration: 'underline' }}>{t('auth.forgotPassword','Forgot password?')}</Link>
               </Text>
             </VStack>
           </form>

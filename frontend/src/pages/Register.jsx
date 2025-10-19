@@ -10,10 +10,6 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 const Register = () => {
   const { t } = useTranslation('common');
-  // Theme tokens
-  const pageBg = useColorModeValue('gray.50', 'gray.900');
-  const textPrimary = useColorModeValue('gray.800', 'gray.100');
-  const ctaGradient = useColorModeValue('linear(to-r, blue.500, pink.500)', 'linear(to-r, blue.400, pink.400)');
   const [form, setForm] = useState({
     username: '',
     name: '',
@@ -55,8 +51,8 @@ const Register = () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg={pageBg}
-      color={textPrimary}
+      bg="var(--hm-color-bg)"
+      color="var(--hm-color-text-primary)"
       position="relative"
       overflow="hidden"
       px={[6, 12]}
@@ -65,43 +61,119 @@ const Register = () => {
     >
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
         <Box maxW="500px" mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
-          <Heading size="lg" mb={6} color={textPrimary}>{t('auth.createAccount','Create your account')}</Heading>
+          <Heading size="lg" mb={6} color="var(--hm-color-text-primary)">{t('auth.createAccount','Create your account')}</Heading>
           <form onSubmit={submit}>
             <VStack spacing={4} align="stretch">
               <FormControl isRequired>
-                <FormLabel>{t('auth.username','Username')}</FormLabel>
-                <Input name="username" value={form.username} onChange={onChange} placeholder={t('placeholders.username','yourusername')} />
+                <FormLabel color="var(--hm-color-text-primary)">{t('auth.username','Username')}</FormLabel>
+                <Input
+                  name="username"
+                  value={form.username}
+                  onChange={onChange}
+                  placeholder={t('placeholders.username','yourusername')}
+                  bg="var(--hm-bg-glass)"
+                  borderColor="var(--hm-border-glass)"
+                  color="var(--hm-color-text-primary)"
+                  _placeholder={{ color: 'var(--hm-color-placeholder)' }}
+                  _hover={{ borderColor: 'var(--hm-border-outline)' }}
+                  _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel>{t('account.name','Name')}</FormLabel>
-                <Input name="name" value={form.name} onChange={onChange} placeholder={t('placeholders.fullName','Full name')} />
+                <FormLabel color="var(--hm-color-text-primary)">{t('account.name','Name')}</FormLabel>
+                <Input
+                  name="name"
+                  value={form.name}
+                  onChange={onChange}
+                  placeholder={t('placeholders.fullName','Full name')}
+                  bg="var(--hm-bg-glass)"
+                  borderColor="var(--hm-border-glass)"
+                  color="var(--hm-color-text-primary)"
+                  _placeholder={{ color: 'var(--hm-color-placeholder)' }}
+                  _hover={{ borderColor: 'var(--hm-border-outline)' }}
+                  _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel>{t('account.email','Email')}</FormLabel>
-                <Input type="email" name="email" value={form.email} onChange={onChange} placeholder={t('placeholders.email','you@example.com')} />
+                <FormLabel color="var(--hm-color-text-primary)">{t('account.email','Email')}</FormLabel>
+                <Input
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={onChange}
+                  placeholder={t('placeholders.email','you@example.com')}
+                  bg="var(--hm-bg-glass)"
+                  borderColor="var(--hm-border-glass)"
+                  color="var(--hm-color-text-primary)"
+                  _placeholder={{ color: 'var(--hm-color-placeholder)' }}
+                  _hover={{ borderColor: 'var(--hm-border-outline)' }}
+                  _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                />
               </FormControl>
               <FormControl>
-                <FormLabel>{t('account.phone','Phone')}</FormLabel>
-                <Input name="phone" value={form.phone} onChange={onChange} placeholder={t('placeholders.phone','+1 555 123 4567')} />
+                <FormLabel color="var(--hm-color-text-primary)">{t('account.phone','Phone')}</FormLabel>
+                <Input
+                  name="phone"
+                  value={form.phone}
+                  onChange={onChange}
+                  placeholder={t('placeholders.phone','+1 555 123 4567')}
+                  bg="var(--hm-bg-glass)"
+                  borderColor="var(--hm-border-glass)"
+                  color="var(--hm-color-text-primary)"
+                  _placeholder={{ color: 'var(--hm-color-placeholder)' }}
+                  _hover={{ borderColor: 'var(--hm-border-outline)' }}
+                  _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                />
               </FormControl>
               <FormControl>
-                <FormLabel>{t('account.language','Language')}</FormLabel>
-                <Select name="language" value={form.language} onChange={onChange}>
-                  <option value="en-US">{t('language.enUS','English (US)')}</option>
-                  <option value="hi-IN">{t('language.hiIN','Hindi')}</option>
-                  <option value="es-ES">{t('language.esES','Spanish')}</option>
-                  <option value="fr-FR">{t('language.frFR','French')}</option>
+                <FormLabel color="var(--hm-color-text-primary)">{t('account.language','Language')}</FormLabel>
+                <Select
+                  name="language"
+                  value={form.language}
+                  onChange={onChange}
+                  bg="var(--hm-bg-glass)"
+                  borderColor="var(--hm-border-glass)"
+                  color="var(--hm-color-text-primary)"
+                  _hover={{ borderColor: 'var(--hm-border-outline)' }}
+                  _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                >
+                  <option value="en-US" style={{ background: 'var(--hm-color-bg)', color: 'var(--hm-color-text-primary)' }}>{t('language.enUS','English (US)')}</option>
+                  <option value="hi-IN" style={{ background: 'var(--hm-color-bg)', color: 'var(--hm-color-text-primary)' }}>{t('language.hiIN','Hindi')}</option>
+                  <option value="es-ES" style={{ background: 'var(--hm-color-bg)', color: 'var(--hm-color-text-primary)' }}>{t('language.esES','Spanish')}</option>
+                  <option value="fr-FR" style={{ background: 'var(--hm-color-bg)', color: 'var(--hm-color-text-primary)' }}>{t('language.frFR','French')}</option>
                 </Select>
               </FormControl>
               <FormControl isRequired>
-                <FormLabel>{t('auth.password','Password')}</FormLabel>
-                <Input type="password" name="password" value={form.password} onChange={onChange} placeholder={t('placeholders.passwordHint','At least 8 characters')} />
+                <FormLabel color="var(--hm-color-text-primary)">{t('auth.password','Password')}</FormLabel>
+                <Input
+                  type="password"
+                  name="password"
+                  value={form.password}
+                  onChange={onChange}
+                  placeholder={t('placeholders.passwordHint','At least 8 characters')}
+                  bg="var(--hm-bg-glass)"
+                  borderColor="var(--hm-border-glass)"
+                  color="var(--hm-color-text-primary)"
+                  _placeholder={{ color: 'var(--hm-color-placeholder)' }}
+                  _hover={{ borderColor: 'var(--hm-border-outline)' }}
+                  _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel>{t('auth.confirmPassword','Confirm Password')}</FormLabel>
-                <Input type="password" name="confirmPassword" value={form.confirmPassword} onChange={onChange} />
+                <FormLabel color="var(--hm-color-text-primary)">{t('auth.confirmPassword','Confirm Password')}</FormLabel>
+                <Input
+                  type="password"
+                  name="confirmPassword"
+                  value={form.confirmPassword}
+                  onChange={onChange}
+                  bg="var(--hm-bg-glass)"
+                  borderColor="var(--hm-border-glass)"
+                  color="var(--hm-color-text-primary)"
+                  _hover={{ borderColor: 'var(--hm-border-outline)' }}
+                  _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                />
               </FormControl>
-              <Button type="submit" isLoading={loading} bgGradient={ctaGradient} color="white">{t('auth.register','Register')}</Button>
+              <Button type="submit" isLoading={loading} bgGradient="var(--hm-gradient-cta)" color="white" _hover={{ opacity: 0.9 }}>{t('auth.register','Register')}</Button>
             </VStack>
           </form>
         </Box>

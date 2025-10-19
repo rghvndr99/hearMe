@@ -23,12 +23,6 @@ const Profile = () => {
   };
 
   const { t, i18n } = useTranslation('common');
-  // Theme tokens
-  const pageBg = useColorModeValue('gray.50', 'gray.900');
-  const textPrimary = useColorModeValue('gray.800', 'gray.100');
-  const textSecondary = useColorModeValue('gray.600', 'gray.300');
-  const brandColor = useColorModeValue('blue.600', 'blue.300');
-  const ctaGradient = useColorModeValue('linear(to-r, blue.500, pink.500)', 'linear(to-r, blue.400, pink.400)');
   const [editMode, setEditMode] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', language: '' });
 
@@ -115,8 +109,8 @@ const Profile = () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg={pageBg}
-      color={textPrimary}
+      bg="var(--hm-color-bg)"
+      color="var(--hm-color-text-primary)"
       position="relative"
       overflow="hidden"
       px={[6, 12]}
@@ -126,26 +120,26 @@ const Profile = () => {
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
         <Box maxW="700px" mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
           <HStack justify="space-between" mb={4}>
-            <Heading size="lg" color={textPrimary}>{t('account.profile', 'Your Profile')}</Heading>
+            <Heading size="lg" color="var(--hm-color-text-primary)">{t('account.profile', 'Your Profile')}</Heading>
             <HStack>
               {!loading && user && !editMode && (
-                <Button variant="outline" onClick={handleStartEdit}>{t('common.edit', 'Edit')}</Button>
+                <Button variant="outline" borderColor="var(--hm-border-outline)" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)' }} onClick={handleStartEdit}>{t('common.edit', 'Edit')}</Button>
               )}
-              <Button variant="outline" onClick={logout}>{t('nav.logout', 'Logout')}</Button>
+              <Button variant="outline" borderColor="var(--hm-border-outline)" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)' }} onClick={logout}>{t('nav.logout', 'Logout')}</Button>
             </HStack>
           </HStack>
-          {loading && <Text color={textSecondary}>{t('common.loading', 'Loading...')}</Text>}
+          {loading && <Text color="var(--hm-color-text-secondary)">{t('common.loading', 'Loading...')}</Text>}
           {!loading && user && !editMode && (
             <VStack align="stretch" spacing={3}>
-              <HStack justify="space-between"><Text color={textSecondary}>{t('account.username', 'Username')}</Text><Text>{user.username}</Text></HStack>
-              <HStack justify="space-between"><Text color={textSecondary}>{t('account.name', 'Name')}</Text><Text>{user.name}</Text></HStack>
-              <HStack justify="space-between"><Text color={textSecondary}>{t('account.email', 'Email')}</Text><Text>{user.email}</Text></HStack>
-              <HStack justify="space-between"><Text color={textSecondary}>{t('account.phone', 'Phone')}</Text><Text>{user.phone || '-'}</Text></HStack>
-              <HStack justify="space-between"><Text color={textSecondary}>{t('account.language', 'Language')}</Text><Text>{user.language}</Text></HStack>
-              <HStack justify="space-between"><Text color={textSecondary}>{t('account.memberSince', 'Member since')}</Text><Text>{new Date(user.createdAt).toLocaleString()}</Text></HStack>
+              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('account.username', 'Username')}</Text><Text color="var(--hm-color-text-primary)">{user.username}</Text></HStack>
+              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('account.name', 'Name')}</Text><Text color="var(--hm-color-text-primary)">{user.name}</Text></HStack>
+              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('account.email', 'Email')}</Text><Text color="var(--hm-color-text-primary)">{user.email}</Text></HStack>
+              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('account.phone', 'Phone')}</Text><Text color="var(--hm-color-text-primary)">{user.phone || '-'}</Text></HStack>
+              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('account.language', 'Language')}</Text><Text color="var(--hm-color-text-primary)">{user.language}</Text></HStack>
+              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('account.memberSince', 'Member since')}</Text><Text color="var(--hm-color-text-primary)">{new Date(user.createdAt).toLocaleString()}</Text></HStack>
               <HStack pt={2} spacing={3} justify="flex-end">
-                <Button as={RouterLink} to="/change-email" size="sm" variant="ghost" color={brandColor}>{t('account.changeEmail', 'Change email')}</Button>
-                <Button as={RouterLink} to="/change-password" size="sm" variant="ghost" color={brandColor}>{t('account.changePassword', 'Change password')}</Button>
+                <Button as={RouterLink} to="/change-email" size="sm" variant="ghost" color="var(--hm-color-brand)" _hover={{ bg: 'var(--hm-bg-glass)' }}>{t('account.changeEmail', 'Change email')}</Button>
+                <Button as={RouterLink} to="/change-password" size="sm" variant="ghost" color="var(--hm-color-brand)" _hover={{ bg: 'var(--hm-bg-glass)' }}>{t('account.changePassword', 'Change password')}</Button>
               </HStack>
             </VStack>
           )}
@@ -153,27 +147,58 @@ const Profile = () => {
             <Box as="form" onSubmit={updateProfile}>
               <VStack spacing={4} align="stretch">
                 <FormControl>
-                  <FormLabel>{t('account.username', 'Username')}</FormLabel>
-                  <Input value={user.username} isReadOnly />
+                  <FormLabel color="var(--hm-color-text-primary)">{t('account.username', 'Username')}</FormLabel>
+                  <Input
+                    value={user.username}
+                    isReadOnly
+                    bg="var(--hm-bg-glass)"
+                    borderColor="var(--hm-border-glass)"
+                    color="var(--hm-color-text-primary)"
+                    _hover={{ borderColor: 'var(--hm-border-outline)' }}
+                  />
                 </FormControl>
                 <FormControl isRequired>
-                  <FormLabel>{t('account.name', 'Name')}</FormLabel>
-                  <Input value={form.name} onChange={(e) => setForm(s => ({ ...s, name: e.target.value }))} />
+                  <FormLabel color="var(--hm-color-text-primary)">{t('account.name', 'Name')}</FormLabel>
+                  <Input
+                    value={form.name}
+                    onChange={(e) => setForm(s => ({ ...s, name: e.target.value }))}
+                    bg="var(--hm-bg-glass)"
+                    borderColor="var(--hm-border-glass)"
+                    color="var(--hm-color-text-primary)"
+                    _hover={{ borderColor: 'var(--hm-border-outline)' }}
+                    _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                  />
                 </FormControl>
                 <FormControl>
-                  <FormLabel>{t('account.phone', 'Phone')}</FormLabel>
-                  <Input value={form.phone} onChange={(e) => setForm(s => ({ ...s, phone: e.target.value }))} />
+                  <FormLabel color="var(--hm-color-text-primary)">{t('account.phone', 'Phone')}</FormLabel>
+                  <Input
+                    value={form.phone}
+                    onChange={(e) => setForm(s => ({ ...s, phone: e.target.value }))}
+                    bg="var(--hm-bg-glass)"
+                    borderColor="var(--hm-border-glass)"
+                    color="var(--hm-color-text-primary)"
+                    _hover={{ borderColor: 'var(--hm-border-outline)' }}
+                    _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                  />
                 </FormControl>
                 <FormControl>
-                  <FormLabel>{t('account.language', 'Language')}</FormLabel>
-                  <Select value={form.language} onChange={(e) => setForm(s => ({ ...s, language: e.target.value }))}>
-                    <option value="en">{t('language.en','English')}</option>
-                    <option value="hi">{t('language.hi','हिंदी')}</option>
+                  <FormLabel color="var(--hm-color-text-primary)">{t('account.language', 'Language')}</FormLabel>
+                  <Select
+                    value={form.language}
+                    onChange={(e) => setForm(s => ({ ...s, language: e.target.value }))}
+                    bg="var(--hm-bg-glass)"
+                    borderColor="var(--hm-border-glass)"
+                    color="var(--hm-color-text-primary)"
+                    _hover={{ borderColor: 'var(--hm-border-outline)' }}
+                    _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                  >
+                    <option value="en" style={{ background: 'var(--hm-color-bg)', color: 'var(--hm-color-text-primary)' }}>{t('language.en','English')}</option>
+                    <option value="hi" style={{ background: 'var(--hm-color-bg)', color: 'var(--hm-color-text-primary)' }}>{t('language.hi','हिंदी')}</option>
                   </Select>
                 </FormControl>
                 <HStack justify="flex-end">
-                  <Button variant="ghost" onClick={handleCancelEdit}>{t('common.cancel', 'Cancel')}</Button>
-                  <Button type="submit" isLoading={saving} bgGradient={ctaGradient} color="white">{t('common.update', 'Update')}</Button>
+                  <Button variant="ghost" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)' }} onClick={handleCancelEdit}>{t('common.cancel', 'Cancel')}</Button>
+                  <Button type="submit" isLoading={saving} bgGradient="var(--hm-gradient-cta)" color="white" _hover={{ opacity: 0.9 }}>{t('common.update', 'Update')}</Button>
                 </HStack>
               </VStack>
             </Box>
