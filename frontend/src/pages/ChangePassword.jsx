@@ -10,11 +10,6 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 const ChangePassword = () => {
   const { t } = useTranslation('common');
-  // Theme tokens
-  const pageBg = useColorModeValue('gray.50', 'gray.900');
-  const textPrimary = useColorModeValue('gray.800', 'gray.100');
-  const textSecondary = useColorModeValue('gray.600', 'gray.300');
-  const ctaGradient = useColorModeValue('linear(to-r, blue.500, pink.500)', 'linear(to-r, blue.400, pink.400)');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -57,8 +52,8 @@ const ChangePassword = () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg={pageBg}
-      color={textPrimary}
+      bg="var(--hm-color-bg)"
+      color="var(--hm-color-text-primary)"
       position="relative"
       overflow="hidden"
       px={[6, 12]}
@@ -67,25 +62,54 @@ const ChangePassword = () => {
     >
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
         <Box maxW="500px" mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
-          <Heading size="lg" mb={6} color={textPrimary}>{t('account.changePassword', 'Change Password')}</Heading>
+          <Heading size="lg" mb={6} color="var(--hm-color-text-primary)">{t('account.changePassword', 'Change Password')}</Heading>
           <form onSubmit={submit}>
             <VStack spacing={4} align="stretch">
               <FormControl isRequired>
-                <FormLabel>{t('account.currentPassword', 'Current Password')}</FormLabel>
-                <Input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
+                <FormLabel color="var(--hm-color-text-primary)">{t('account.currentPassword', 'Current Password')}</FormLabel>
+                <Input
+                  type="password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  bg="var(--hm-bg-glass)"
+                  borderColor="var(--hm-border-glass)"
+                  color="var(--hm-color-text-primary)"
+                  _hover={{ borderColor: 'var(--hm-border-outline)' }}
+                  _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel>{t('account.newPassword', 'New Password')}</FormLabel>
-                <Input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder={t('account.passwordHint', 'At least 8 characters')} />
+                <FormLabel color="var(--hm-color-text-primary)">{t('account.newPassword', 'New Password')}</FormLabel>
+                <Input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder={t('account.passwordHint', 'At least 8 characters')}
+                  bg="var(--hm-bg-glass)"
+                  borderColor="var(--hm-border-glass)"
+                  color="var(--hm-color-text-primary)"
+                  _placeholder={{ color: 'var(--hm-color-placeholder)' }}
+                  _hover={{ borderColor: 'var(--hm-border-outline)' }}
+                  _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel>{t('account.confirmNewPassword', 'Confirm New Password')}</FormLabel>
-                <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                <FormLabel color="var(--hm-color-text-primary)">{t('account.confirmNewPassword', 'Confirm New Password')}</FormLabel>
+                <Input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  bg="var(--hm-bg-glass)"
+                  borderColor="var(--hm-border-glass)"
+                  color="var(--hm-color-text-primary)"
+                  _hover={{ borderColor: 'var(--hm-border-outline)' }}
+                  _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                />
               </FormControl>
-              <Button type="submit" isLoading={loading} bgGradient={ctaGradient} color="white">
+              <Button type="submit" isLoading={loading} bgGradient="var(--hm-gradient-cta)" color="white" _hover={{ opacity: 0.9 }}>
                 {t('account.updatePassword', 'Update password')}
               </Button>
-              <Text color={textSecondary} fontSize="sm">
+              <Text color="var(--hm-color-text-secondary)" fontSize="sm">
                 {t('account.securityNote', 'For your security, you will be asked to re-enter your current password.')}
               </Text>
             </VStack>
