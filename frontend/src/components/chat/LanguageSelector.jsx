@@ -20,7 +20,7 @@ import { LANGUAGES } from '../../constants/languages';
  */
 const LanguageSelector = ({ selectedLanguage, onLanguageChange, tooltip }) => {
   return (
-    <Menu>
+    <Menu placement="bottom-end" strategy="fixed">
       <MenuButton
         as={Button}
         variant="ghost"
@@ -44,6 +44,7 @@ const LanguageSelector = ({ selectedLanguage, onLanguageChange, tooltip }) => {
         bg="var(--hm-bg-glass)"
         borderColor="var(--hm-border-glass)"
         backdropFilter="blur(10px)"
+        zIndex={1000}
       >
         {LANGUAGES.map((lang) => (
           <MenuItem

@@ -68,7 +68,7 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip }) => {
   const selectedVoice = voices.find(v => (v.voiceId || v.id) === selectedVoiceId) || voices[0];
 
   return (
-    <Menu>
+    <Menu placement="bottom-end" strategy="fixed">
       <MenuButton
         as={Button}
         variant="ghost"
@@ -86,12 +86,13 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip }) => {
           </Text>
         </HStack>
       </MenuButton>
-      <MenuList 
-        maxH="400px" 
-        overflowY="auto" 
-        bg="var(--hm-bg-glass)" 
-        borderColor="var(--hm-border-glass)" 
+      <MenuList
+        maxH="400px"
+        overflowY="auto"
+        bg="var(--hm-bg-glass)"
+        borderColor="var(--hm-border-glass)"
         backdropFilter="blur(10px)"
+        zIndex={1000}
       >
         {voices.map((voice) => {
           const voiceId = voice.voiceId || voice.id;
