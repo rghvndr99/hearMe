@@ -5,28 +5,59 @@ A fullstack web application providing anonymous, peer-to-peer mental health supp
 ## 🌟 Features
 
 - **Anonymous Chat**: Safe, judgment-free conversations with AI support
+- **Multilingual Support**: 20+ languages with auto-detection
+- **Voice Interaction**: Speech-to-text input and text-to-speech output
+- **Voice Cloning**: Create personalized AI voices with ElevenLabs
 - **Human Connection**: Connect with trained volunteer listeners
 - **Real-time Communication**: Socket.IO powered live messaging
 - **Mental Health Resources**: Curated resources and crisis hotlines
-- **Responsive Design**: Beautiful, accessible UI with Tailwind CSS
-- **Secure**: JWT authentication and rate limiting
+- **Responsive Design**: Beautiful, accessible UI with Chakra UI + Tailwind CSS v4
+- **Theme Support**: Light, dark, and high-contrast themes
+- **Secure**: JWT authentication, rate limiting, and PBKDF2 password hashing
+
+## 📚 Documentation
+
+- **[Architecture Documentation](ARCHITECTURE.md)** - Detailed system architecture, component structure, and design patterns
+- **[Flow Diagrams](FLOW_DIAGRAMS.md)** - Visual flow diagrams for all major features
+- **[Refactoring Plan](REFACTORING_PLAN.md)** - Modularization strategy and implementation plan
 
 ## 🏗️ Architecture
 
-### Frontend (React + Vite)
-- **Framework**: React 18 with modern hooks
-- **Styling**: Tailwind CSS for responsive design
-- **Routing**: React Router for SPA navigation
-- **Build Tool**: Vite for fast development
+### Frontend (React + Vite) - **Fully Modularized**
+- **Framework**: React 18 with custom hooks for reusable logic
+- **UI Libraries**: Chakra UI + Tailwind CSS v4
+- **Styling**: CSS variables for theme support + component-based CSS classes
+- **Routing**: React Router v6 for SPA navigation
+- **Build Tool**: Vite 5.4 for fast development and optimized builds
+- **i18n**: react-i18next with English and Hindi translations
+- **Animations**: Framer Motion for smooth transitions
 - **Real-time**: Socket.IO client for live features
 
-### Backend (Node.js + Express)
-- **Runtime**: Node.js with ES6 modules
+**Modular Structure:**
+- **Components**: Broken into small, reusable pieces (e.g., `ChatHeader`, `ChatInput`, `LanguageSelector`)
+- **Custom Hooks**: Business logic extracted to hooks (`useChat`, `useSpeechRecognition`, `useAuth`)
+- **Constants**: Shared configuration (e.g., `languages.js`)
+- **Utilities**: Helper functions for API calls, validation, formatting
+- **No inline styles**: All styles use CSS classes with theme variables
+
+### Backend (Node.js + Express) - **Layered Architecture**
+- **Runtime**: Node.js with CommonJS modules
 - **Framework**: Express.js with security middleware
 - **Database**: MongoDB with Mongoose ODM
-- **Authentication**: JWT tokens
+- **Authentication**: JWT tokens with secure password hashing (PBKDF2-SHA512)
 - **Real-time**: Socket.IO server
-- **Security**: Helmet, CORS, rate limiting
+- **Security**: Helmet, CORS, rate limiting, input validation
+- **AI Integration**: OpenAI GPT-4 for conversational AI
+- **TTS**: ElevenLabs for multilingual text-to-speech
+- **Email**: Resend for transactional emails (password reset)
+
+**Layered Structure:**
+- **Routes**: HTTP endpoint definitions (thin layer)
+- **Controllers**: Request/response handling (coming soon)
+- **Services**: Business logic and external API calls
+- **Models**: Database schemas and validation
+- **Middleware**: Authentication, error handling
+- **Utils**: Password hashing, token generation
 
 ## 🚀 Quick Start
 
@@ -96,29 +127,69 @@ npm run dev
 npm run build
 ```
 
-## 🗂️ Project Structure
+## 🗂️ Project Structure (Refactored & Modularized)
 
 ```
 hearMe/
 ├── backend/                 # Node.js/Express backend
 │   ├── src/
-│   │   ├── routes/         # API routes
-│   │   ├── models/         # MongoDB models
-│   │   ├── middleware/     # Custom middleware
+│   │   ├── routes/         # API route definitions (thin layer)
+│   │   ├── controllers/    # Request/response handlers (NEW)
+│   │   ├── services/       # Business logic & external APIs
+│   │   ├── models/         # MongoDB schemas
+│   │   ├── middleware/     # Auth, error handling
+│   │   ├── utils/          # Password utils, helpers (NEW)
+│   │   ├── config/         # Configuration files
+│   │   ├── templates/      # Email templates
 │   │   └── server.js       # Main server file
 │   └── package.json
-├── frontend/               # React frontend
+├── frontend/               # React frontend (fully modularized)
 │   ├── src/
-│   │   ├── components/     # Reusable components
-│   │   ├── pages/          # Page components
-│   │   ├── styles.css      # Global styles
+│   │   ├── components/     # Reusable UI components
+│   │   │   ├── chat/       # Chat-specific components (NEW)
+│   │   │   ├── voicemate/  # VoiceMate components (NEW)
+│   │   │   ├── Header.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   └── ChatBubble.jsx
+│   │   ├── pages/          # Page components (route handlers)
+│   │   │   ├── Chat.jsx    # Refactored to ~300 lines
+│   │   │   ├── VoiceMate.jsx
+│   │   │   ├── Profile.jsx
+│   │   │   └── ...
+│   │   ├── hooks/          # Custom React hooks (NEW)
+│   │   │   ├── useAuth.js
+│   │   │   ├── useChat.js
+│   │   │   ├── useSpeechRecognition.js
+│   │   │   ├── useSpeechSynthesis.js
+│   │   │   └── useVoiceRecording.js
+│   │   ├── constants/      # App constants (NEW)
+│   │   │   └── languages.js
+│   │   ├── utils/          # Utility functions (NEW)
+│   │   ├── locales/        # i18n translations
+│   │   │   ├── en/
+│   │   │   └── hi/
+│   │   ├── styles/         # CSS files
+│   │   │   ├── styles.css      # Global styles & theme variables
+│   │   │   └── components.css  # Component CSS classes (NEW)
+│   │   ├── i18n.js         # i18n configuration
 │   │   └── main.jsx        # App entry point
 │   ├── index.html
 │   ├── vite.config.js
 │   └── package.json
+├── ARCHITECTURE.md         # Detailed architecture docs (NEW)
+├── FLOW_DIAGRAMS.md        # Visual flow diagrams (NEW)
+├── REFACTORING_PLAN.md     # Modularization plan (NEW)
 ├── package.json            # Root workspace config
 └── README.md
 ```
+
+### Key Improvements in Refactored Structure
+
+✅ **No component > 300 lines** - Large components broken into smaller, focused modules
+✅ **Custom hooks** - Reusable logic extracted from components
+✅ **No inline styles** - All styles use CSS classes with theme variables
+✅ **Layered backend** - Clear separation: routes → controllers → services → models
+✅ **Comprehensive docs** - Architecture diagrams, flow charts, and API documentation
 
 ## 🔧 Configuration
 
