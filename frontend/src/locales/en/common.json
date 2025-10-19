@@ -1,5 +1,5 @@
 {
-  "language": { "en": "English", "hi": "Hindi" },
+  "language": { "en": "English", "hi": "Hindi", "enUS": "English (US)", "hiIN": "Hindi", "esES": "Spanish", "frFR": "French" },
   "nav": {
     "about": "About",
     "resources": "Resources",
@@ -9,6 +9,70 @@
     "volunteer": "Volunteer",
     "joinNow": "Join Now",
     "voiceMate": "Voice Mate"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "usernameOrEmail": "Username or Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "welcomeBack": "Welcome back",
+    "createAccount": "Create your account",
+    "username": "Username",
+    "register": "Register",
+    "registrationSuccess": "Registration successful",
+    "confirmPassword": "Confirm Password"
+  },
+  "errors": {
+    "loginFailed": "Login failed",
+    "registrationFailed": "Registration failed",
+    "passwordMismatch": "Passwords do not match",
+    "sessionExpired": "Session expired, please login again",
+    "loadProfileFailed": "Failed to load profile",
+    "updateFailed": "Failed to update profile"
+  },
+  "placeholders": {
+    "usernameOrEmail": "yourusername or you@example.com",
+    "username": "yourusername",
+    "fullName": "Full name",
+    "email": "you@example.com",
+    "phone": "+1 555 123 4567",
+    "passwordHint": "At least 8 characters"
+  },
+  "common": {
+    "edit": "Edit",
+    "loading": "Loading...",
+    "cancel": "Cancel",
+    "update": "Update",
+    "error": "Error"
+  },
+  "account": {
+    "profile": "Your Profile",
+    "username": "Username",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "language": "Language",
+    "memberSince": "Member since",
+    "changeEmail": "Change email",
+    "changePassword": "Change password",
+    "profileUpdated": "Profile updated",
+    "nameRequired": "Name is required",
+
+    "newEmail": "New Email Address",
+    "currentPassword": "Current Password",
+    "updateEmail": "Update email",
+    "emailUpdated": "Email updated",
+    "failedToChangeEmail": "Failed to change email",
+    "securityNoteEmail": "For your security, please confirm your current password to change your email.",
+
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "updatePassword": "Update password",
+    "passwordUpdated": "Password updated",
+    "failedToChangePassword": "Failed to change password",
+    "passwordsDontMatch": "Passwords do not match",
+    "passwordHint": "At least 8 characters",
+    "securityNote": "For your security, you will be asked to re-enter your current password."
   },
   "home": {
     "hero": {

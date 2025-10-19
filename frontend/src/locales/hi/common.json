@@ -1,5 +1,5 @@
 {
-  "language": { "en": "English", "hi": "हिन्दी" },
+  "language": { "en": "English", "hi": "हिन्दी", "enUS": "अंग्रेज़ी (US)", "hiIN": "हिन्दी", "esES": "स्पैनिश", "frFR": "फ़्रेंच" },
   "nav": {
     "about": "हमारे बारे में",
     "resources": "संसाधन",
@@ -16,6 +16,70 @@
     "changePassword": "पासवर्ड बदलें",
     "changeEmail": "ईमेल बदलें",
     "logout": "लॉगआउट"
+  },
+  "auth": {
+    "signIn": "साइन इन",
+    "usernameOrEmail": "यूज़रनेम या ईमेल",
+    "password": "पासवर्ड",
+    "forgotPassword": "पासवर्ड भूल गए?",
+    "welcomeBack": "वापसी पर स्वागत है",
+    "createAccount": "अपना खाता बनाएँ",
+    "username": "यूज़रनेम",
+    "register": "रजिस्टर",
+    "registrationSuccess": "रजिस्ट्रेशन सफल",
+    "confirmPassword": "पासवर्ड की पुष्टि करें"
+  },
+  "errors": {
+    "loginFailed": "लॉगिन विफल",
+    "registrationFailed": "रजिस्ट्रेशन विफल",
+    "passwordMismatch": "पासवर्ड मेल नहीं खाते",
+    "sessionExpired": "सेशन समाप्त, कृपया फिर से लॉगिन करें",
+    "loadProfileFailed": "प्रोफ़ाइल लोड नहीं हो सकी",
+    "updateFailed": "प्रोफ़ाइल अपडेट विफल"
+  },
+  "placeholders": {
+    "usernameOrEmail": "yourusername या you@example.com",
+    "username": "yourusername",
+    "fullName": "पूरा नाम",
+    "email": "you@example.com",
+    "phone": "+91 81055 68665",
+    "passwordHint": "कम से कम 8 अक्षर"
+  },
+  "common": {
+    "edit": "संपादित करें",
+    "loading": "लोड हो रहा है...",
+    "cancel": "रद्द करें",
+    "update": "अपडेट करें",
+    "error": "त्रुटि"
+  },
+  "account": {
+    "profile": "आपकी प्रोफ़ाइल",
+    "username": "यूज़रनेम",
+    "name": "नाम",
+    "email": "ईमेल",
+    "phone": "फ़ोन",
+    "language": "भाषा",
+    "memberSince": "से सदस्य",
+    "changeEmail": "ईमेल बदलें",
+    "changePassword": "पासवर्ड बदलें",
+    "profileUpdated": "प्रोफ़ाइल अपडेट हो गई",
+    "nameRequired": "नाम आवश्यक है",
+
+    "newEmail": "नया ईमेल पता",
+    "currentPassword": "वर्तमान पासवर्ड",
+    "updateEmail": "ईमेल अपडेट करें",
+    "emailUpdated": "ईमेल अपडेट हो गया",
+    "failedToChangeEmail": "ईमेल बदलने में विफल",
+    "securityNoteEmail": "सुरक्षा के लिए, ईमेल बदलने हेतु अपना वर्तमान पासवर्ड पुष्टि करें।",
+
+    "newPassword": "नया पासवर्ड",
+    "confirmNewPassword": "नए पासवर्ड की पुष्टि करें",
+    "updatePassword": "पासवर्ड अपडेट करें",
+    "passwordUpdated": "पासवर्ड अपडेट हो गया",
+    "failedToChangePassword": "पासवर्ड बदलने में विफल",
+    "passwordsDontMatch": "पासवर्ड मेल नहीं खाते",
+    "passwordHint": "कम से कम 8 अक्षर",
+    "securityNote": "सुरक्षा हेतु आपसे वर्तमान पासवर्ड दोबारा दर्ज करने को कहा जाएगा।"
   },
   "home": {
     "hero": {

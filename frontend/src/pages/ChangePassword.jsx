@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Flex, Heading, VStack, FormControl, FormLabel, Input, Button, useToast, Text } from '@chakra-ui/react';
+import { Box, Flex, Heading, VStack, FormControl, FormLabel, Input, Button, useToast, Text, useColorModeValue } from '@chakra-ui/react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -12,6 +12,11 @@ const MotionBox = motion(Box);
 
 const ChangePassword = () => {
   const { t } = useTranslation('common');
+  // Theme tokens
+  const pageBg = useColorModeValue('gray.50', 'gray.900');
+  const textPrimary = useColorModeValue('gray.800', 'gray.100');
+  const textSecondary = useColorModeValue('gray.600', 'gray.300');
+  const ctaGradient = useColorModeValue('linear(to-r, blue.500, pink.500)', 'linear(to-r, blue.400, pink.400)');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -54,8 +59,8 @@ const ChangePassword = () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg="var(--hm-color-bg)"
-      color="var(--hm-color-text-primary)"
+      bg={pageBg}
+      color={textPrimary}
       position="relative"
       overflow="hidden"
       px={[6, 12]}
@@ -74,7 +79,7 @@ const ChangePassword = () => {
       />
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
         <Box maxW="500px" mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
-          <Heading size="lg" mb={6} color="var(--hm-color-text-primary)">{t('account.changePassword', 'Change Password')}</Heading>
+          <Heading size="lg" mb={6} color={textPrimary}>{t('account.changePassword', 'Change Password')}</Heading>
           <form onSubmit={submit}>
             <VStack spacing={4} align="stretch">
               <FormControl isRequired>
@@ -89,10 +94,10 @@ const ChangePassword = () => {
                 <FormLabel>{t('account.confirmNewPassword', 'Confirm New Password')}</FormLabel>
                 <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
               </FormControl>
-              <Button type="submit" isLoading={loading} bgGradient="var(--hm-gradient-cta)" color="white">
+              <Button type="submit" isLoading={loading} bgGradient={ctaGradient} color="white">
                 {t('account.updatePassword', 'Update password')}
               </Button>
-              <Text color="var(--hm-color-text-secondary)" fontSize="sm">
+              <Text color={textSecondary} fontSize="sm">
                 {t('account.securityNote', 'For your security, you will be asked to re-enter your current password.')}
               </Text>
             </VStack>
