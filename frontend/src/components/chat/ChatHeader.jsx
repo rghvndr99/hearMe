@@ -3,21 +3,26 @@ import { Flex, VStack, HStack, Box, Text } from '@chakra-ui/react';
 import { BsRobot } from 'react-icons/bs';
 import LanguageSelector from './LanguageSelector';
 import VoiceControls from './VoiceControls';
+import VoiceSelector from './VoiceSelector';
 import { useTranslation } from 'react-i18next';
 
 /**
- * Chat header component with branding, language selector, and voice controls
+ * Chat header component with branding, language selector, voice selector, and voice controls
  * @param {Object} props
  * @param {Object} props.selectedLanguage - Currently selected language
  * @param {Function} props.onLanguageChange - Language change callback
  * @param {boolean} props.voiceEnabled - Whether voice is enabled
  * @param {Function} props.onVoiceToggle - Voice toggle callback
+ * @param {string} props.selectedVoiceId - Currently selected voice ID for TTS
+ * @param {Function} props.onVoiceChange - Voice change callback
  */
 const ChatHeader = ({
   selectedLanguage,
   onLanguageChange,
   voiceEnabled,
   onVoiceToggle,
+  selectedVoiceId,
+  onVoiceChange,
 }) => {
   const { t } = useTranslation('common');
 
@@ -26,10 +31,15 @@ const ChatHeader = ({
       align="center"
       justify="space-between"
       px={6}
-      py={6}
-      mt="80px"
+      py={4}
+      position="fixed"
+      top="80px"
+      left={0}
+      right={0}
+      zIndex={999}
       borderBottom="1px solid var(--hm-border-glass)"
       className="hm-glass-card"
+      backdropFilter="blur(10px)"
     >
       {/* Left: Logo and Title */}
       <VStack spacing={1} align="flex-start">
@@ -50,6 +60,11 @@ const ChatHeader = ({
 
       {/* Right: Controls */}
       <HStack spacing={2}>
+        <VoiceSelector
+          selectedVoiceId={selectedVoiceId}
+          onVoiceChange={onVoiceChange}
+          tooltip={t('chat.tooltips.voiceSelect', 'Select voice for responses')}
+        />
         <VoiceControls
           voiceEnabled={voiceEnabled}
           onToggle={onVoiceToggle}

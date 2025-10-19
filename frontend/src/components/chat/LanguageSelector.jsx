@@ -28,7 +28,8 @@ const LanguageSelector = ({ selectedLanguage, onLanguageChange, tooltip }) => {
         leftIcon={<FiGlobe />}
         rightIcon={<FiChevronDown />}
         title={tooltip}
-        className="hm-language-selector"
+        color="var(--hm-color-text-muted)"
+        _hover={{ color: 'var(--hm-color-brand)' }}
       >
         <HStack spacing={2}>
           <Text>{selectedLanguage.flag}</Text>
@@ -37,12 +38,21 @@ const LanguageSelector = ({ selectedLanguage, onLanguageChange, tooltip }) => {
           </Text>
         </HStack>
       </MenuButton>
-      <MenuList maxH="400px" overflowY="auto" className="hm-menu-list">
+      <MenuList
+        maxH="400px"
+        overflowY="auto"
+        bg="var(--hm-bg-glass)"
+        borderColor="var(--hm-border-glass)"
+        backdropFilter="blur(10px)"
+      >
         {LANGUAGES.map((lang) => (
           <MenuItem
             key={lang.code}
             onClick={() => onLanguageChange(lang)}
-            className={selectedLanguage.code === lang.code ? 'hm-menu-item-active' : 'hm-menu-item'}
+            color={selectedLanguage.code === lang.code ? 'var(--hm-color-brand)' : 'var(--hm-color-text-primary)'}
+            fontWeight={selectedLanguage.code === lang.code ? '700' : '500'}
+            bg={selectedLanguage.code === lang.code ? 'var(--hm-bg-glass)' : 'transparent'}
+            _hover={{ bg: 'var(--hm-bg-glass)', color: 'var(--hm-color-brand)' }}
           >
             <HStack spacing={3}>
               <Text fontSize="lg">{lang.flag}</Text>

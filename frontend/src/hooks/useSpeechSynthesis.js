@@ -7,9 +7,10 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
  * Custom hook for text-to-speech synthesis
  * @param {string} language - Language code for speech
  * @param {boolean} enabled - Whether TTS is enabled
+ * @param {string} voiceId - Voice ID to use (browser or ElevenLabs voice ID)
  * @returns {Object} Speech synthesis state and methods
  */
-export const useSpeechSynthesis = (language, enabled = true) => {
+export const useSpeechSynthesis = (language, enabled = true, voiceId = 'browser') => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [availableVoices, setAvailableVoices] = useState([]);
   const [ttsEngine, setTtsEngine] = useState('browser'); // 'browser' or 'elevenlabs'
@@ -77,20 +78,21 @@ export const useSpeechSynthesis = (language, enabled = true) => {
   /**
    * Speak text using ElevenLabs TTS
    * @param {string} text - Text to speak
+   * @param {string} customVoiceId - Optional custom voice ID
    */
-  const speakWithElevenLabs = useCallback(async (text) => {
+  const speakWithElevenLabs = useCallback(async (text, customVoiceId = null) => {
     if (!enabled) return;
 
     try {
       setIsSpeaking(true);
 
       const response = await axios.post(
-        `${API_URL}/api/tts/synthesize`,
-        { text, language },
-        { responseType: 'blob' }
+        `${API_URL}/api/tts/eleven`,
+        { text, voiceId: customVoiceId },
+        { responseType: 'arraybuffer' }
       );
 
-      const audioBlob = response.data;
+      const audioBlob = new Blob([response.data], { type: 'audio/mpeg' });
       const audioUrl = URL.createObjectURL(audioBlob);
 
       const audio = new Audio(audioUrl);
@@ -113,7 +115,7 @@ export const useSpeechSynthesis = (language, enabled = true) => {
       // Fallback to browser TTS
       speakWithBrowser(text);
     }
-  }, [language, enabled, speakWithBrowser]);
+  }, [enabled, speakWithBrowser]);
 
   /**
    * Speak text using the selected TTS engine
@@ -134,13 +136,15 @@ export const useSpeechSynthesis = (language, enabled = true) => {
       return;
     }
 
-    // Otherwise use the selected engine
-    if (ttsEngine === 'elevenlabs') {
+    // If voiceId is not 'browser', use ElevenLabs with that voice
+    if (voiceId && voiceId !== 'browser') {
+      speakWithElevenLabs(text, voiceId);
+    } else if (ttsEngine === 'elevenlabs') {
       speakWithElevenLabs(text);
     } else {
       speakWithBrowser(text);
     }
-  }, [enabled, ttsEngine, speakWithBrowser, speakWithElevenLabs]);
+  }, [enabled, voiceId, ttsEngine, speakWithBrowser, speakWithElevenLabs]);
 
   /**
    * Stop any ongoing speech

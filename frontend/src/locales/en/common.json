@@ -201,10 +201,16 @@
     "header": { "anonConf": "Anonymous & Confidential" },
     "tooltips": {
       "languageSelect": "Select your language",
+      "voiceSelect": "Select voice for responses",
       "voiceToggleOn": "Mute AI voice",
       "voiceToggleOff": "Enable AI voice",
       "voiceInputOn": "Listening... Click to stop",
-      "voiceInputOff": "Click to speak"
+      "voiceInputOff": "Click to speak",
+      "muteVoice": "Mute voice responses",
+      "enableVoice": "Enable voice responses",
+      "stopListening": "Stop listening",
+      "startListening": "Start voice input",
+      "sendMessage": "Send message"
     },
     "aria": {
       "replay": "Replay message",

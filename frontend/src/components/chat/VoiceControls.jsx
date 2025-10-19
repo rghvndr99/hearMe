@@ -27,8 +27,9 @@ const VoiceControls = ({
         onClick={onToggle}
         variant="ghost"
         size="sm"
+        color={voiceEnabled ? 'var(--hm-color-brand)' : 'var(--hm-color-text-muted)'}
+        _hover={{ color: 'var(--hm-color-brand)' }}
         aria-label={voiceEnabled ? ariaLabelMute : ariaLabelEnable}
-        className={voiceEnabled ? 'hm-voice-btn-active' : 'hm-voice-btn-inactive'}
       />
     </Tooltip>
   );

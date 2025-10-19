@@ -37,6 +37,10 @@ const Chat = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [quickReplies, setQuickReplies] = useState([]);
   const [voiceEnabled, setVoiceEnabled] = useState(true);
+  const [selectedVoiceId, setSelectedVoiceId] = useState(() => {
+    // Load saved voice preference or default to 'browser'
+    return localStorage.getItem('hm-chat-voice-id') || 'browser';
+  });
 
   // Speech recognition hook
   const {
@@ -61,7 +65,8 @@ const Chat = () => {
   // Speech synthesis hook
   const { isSpeaking, speak, stopSpeaking } = useSpeechSynthesis(
     selectedLanguage.code,
-    voiceEnabled
+    voiceEnabled,
+    selectedVoiceId
   );
 
   /**
@@ -204,6 +209,14 @@ const Chat = () => {
     setVoiceEnabled(!voiceEnabled);
   };
 
+  /**
+   * Handle voice change
+   */
+  const handleVoiceChange = (voiceId) => {
+    setSelectedVoiceId(voiceId);
+    localStorage.setItem('hm-chat-voice-id', voiceId);
+  };
+
   return (
     <Box
       h="100vh"
@@ -211,6 +224,16 @@ const Chat = () => {
       position="relative"
       overflow="hidden"
     >
+      {/* Fixed Header */}
+      <ChatHeader
+        selectedLanguage={selectedLanguage}
+        onLanguageChange={handleLanguageChange}
+        voiceEnabled={voiceEnabled}
+        onVoiceToggle={toggleVoice}
+        selectedVoiceId={selectedVoiceId}
+        onVoiceChange={handleVoiceChange}
+      />
+
       {/* Main Chat Container */}
       <Flex
         direction="column"
@@ -218,15 +241,8 @@ const Chat = () => {
         position="relative"
         zIndex={1}
         mt="80px"
+        pt="80px"
       >
-        {/* Header */}
-        <ChatHeader
-          selectedLanguage={selectedLanguage}
-          onLanguageChange={handleLanguageChange}
-          voiceEnabled={voiceEnabled}
-          onVoiceToggle={toggleVoice}
-        />
-
         {/* Messages */}
         <ChatMessages messages={messages} isTyping={isTyping} />
 
@@ -241,17 +257,19 @@ const Chat = () => {
           </Box>
         )}
 
-        {/* Input */}
-        <ChatInput
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
-          onSend={() => sendMessage()}
-          onKeyPress={handleKeyPress}
-          isListening={isListening}
-          onVoiceToggle={toggleListening}
-          disabled={isLoading}
-          placeholder={t('chat.placeholder', 'Type your message...')}
-        />
+        {/* Input with bottom spacing */}
+        <Box pb={4}>
+          <ChatInput
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            onSend={() => sendMessage()}
+            onKeyPress={handleKeyPress}
+            isListening={isListening}
+            onVoiceToggle={toggleListening}
+            disabled={isLoading}
+            placeholder={t('chat.placeholder', 'Type your message...')}
+          />
+        </Box>
       </Flex>
     </Box>
   );
