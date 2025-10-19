@@ -94,9 +94,14 @@ const ChatInput = ({
           <IconButton
             icon={isListening ? <FiMicOff /> : <FiMic />}
             onClick={onVoiceToggle}
-            colorScheme={isListening ? "red" : "blue"}
             variant={isListening ? "solid" : "ghost"}
             size="lg"
+            color={isListening ? 'white' : 'var(--hm-color-text-muted)'}
+            bg={isListening ? 'red.500' : 'transparent'}
+            _hover={{
+              color: isListening ? 'white' : 'var(--hm-color-brand)',
+              bg: isListening ? 'red.600' : 'var(--hm-bg-glass)'
+            }}
             aria-label={
               isListening
                 ? t('chat.aria.stopListening', 'Stop listening')
@@ -111,11 +116,18 @@ const ChatInput = ({
           <IconButton
             icon={<FiSend />}
             onClick={onSend}
-            colorScheme="blue"
             size="lg"
+            bgGradient="var(--hm-gradient-cta)"
+            color="white"
+            _hover={{ opacity: 0.9 }}
+            _disabled={{
+              bgGradient: 'none',
+              bg: 'var(--hm-bg-glass)',
+              color: 'var(--hm-color-text-muted)',
+              opacity: 0.5
+            }}
             aria-label={t('chat.aria.sendMessage', 'Send message')}
             isDisabled={disabled || !value.trim() || isListening}
-            className="hm-button-primary"
           />
         </Tooltip>
       </HStack>

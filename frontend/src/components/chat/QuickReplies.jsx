@@ -20,7 +20,6 @@ const QuickReplies = ({ replies, onReplyClick, disabled = false }) => {
         spacing={2}
         flexWrap="wrap"
         mb={2}
-        className="hm-quick-replies"
       >
         {replies.map((reply, index) => (
           <MotionButton
@@ -33,7 +32,18 @@ const QuickReplies = ({ replies, onReplyClick, disabled = false }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ delay: index * 0.1 }}
-            className="hm-quick-reply-btn"
+            color="var(--hm-color-text-primary)"
+            borderColor="var(--hm-border-glass)"
+            bg="var(--hm-bg-glass)"
+            _hover={{
+              borderColor: 'var(--hm-color-brand)',
+              color: 'var(--hm-color-brand)',
+              bg: 'var(--hm-bg-glass)'
+            }}
+            _active={{
+              bg: 'var(--hm-bg-glass)',
+              borderColor: 'var(--hm-color-brand)'
+            }}
           >
             {reply}
           </MotionButton>
