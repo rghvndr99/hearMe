@@ -9,6 +9,7 @@
     "dev": "nodemon src/server.js"
   },
   "dependencies": {
+    "@elevenlabs/elevenlabs-js": "^2.19.0",
     "axios": "^1.12.2",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",

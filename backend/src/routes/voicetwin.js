@@ -1,5 +1,6 @@
 import express from 'express';
 import multer from 'multer';
+import { ElevenLabsClient } from '@elevenlabs/elevenlabs-js';
 import auth from '../middleware/auth.js';
 import VoiceTwin from '../models/VoiceTwin.js';
 
@@ -80,23 +81,41 @@ router.post('/upload', auth, upload.single('audio'), async (req, res) => {
   }
 });
 
-// GET /api/voicetwin/mine - list voices of current user
+// GET /api/voicetwin/mine - list voices from ElevenLabs API
 router.get('/mine', auth, async (req, res) => {
   try {
     const userId = req.user?.sub || req.user?.id;
     if (!userId) return res.status(401).json({ error: 'Unauthorized' });
-    const items = await VoiceTwin.find({ userId }).sort({ createdAt: -1 }).lean();
-    return res.json({ voices: items.map(v => ({
-      id: v._id,
-      name: v.name,
-      provider: v.provider,
-      voiceId: v.voiceId,
-      sourceType: v.sourceType,
-      createdAt: v.createdAt,
-    })) });
+
+    if (!process.env.ELEVENLABS_API_KEY) {
+      console.warn('ELEVENLABS_API_KEY not configured, returning empty voices list');
+      return res.json({ voices: [] });
+    }
+
+    // Fetch voices from ElevenLabs API
+    const client = new ElevenLabsClient({
+      apiKey: process.env.ELEVENLABS_API_KEY,
+    });
+
+    const voicesResponse = await client.voices.getAll();
+    
+    // Transform ElevenLabs voices to our format
+    const voices = voicesResponse.voices.map(voice => ({
+      id: voice.voiceId,
+      name: voice.name,
+      provider: 'elevenlabs',
+      voiceId: voice.voiceId,
+      category: voice.category || 'cloned',
+      labels: voice.labels || {},
+      previewUrl: voice.previewUrl,
+    }));
+
+    console.log(`VoiceTwin: Fetched ${voices.length} voices from ElevenLabs for user ${userId}`);
+    
+    return res.json({ voices });
   } catch (err) {
     console.error('VoiceTwin list error:', err);
-    return res.status(500).json({ error: 'Failed to list voices' });
+    return res.status(500).json({ error: 'Failed to list voices', details: err?.message });
   }
 });
 
