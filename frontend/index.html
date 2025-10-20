@@ -14,6 +14,22 @@
             // Set color-scheme to match theme
             const colorScheme = (savedTheme === 'light') ? 'light' : 'dark';
             document.documentElement.style.colorScheme = colorScheme;
+
+            // Prevent Chakra UI from overriding - set background immediately
+            document.documentElement.style.setProperty('background-color', 'var(--hm-color-bg)', 'important');
+
+            // Also prevent any class-based overrides
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.attributeName === 'class' || mutation.attributeName === 'style') {
+                        const currentTheme = localStorage.getItem('hm-theme') || 'dark';
+                        if (document.documentElement.getAttribute('data-theme') !== currentTheme) {
+                            document.documentElement.setAttribute('data-theme', currentTheme);
+                        }
+                    }
+                });
+            });
+            observer.observe(document.documentElement, { attributes: true });
         })();
     </script>
 </head>

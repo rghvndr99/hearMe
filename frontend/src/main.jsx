@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ChakraProvider, Box } from '@chakra-ui/react';
+import theme from './theme';
 import './styles.css';
 import './styles/components.css';
 import Footer from './components/Footer';
@@ -96,7 +97,7 @@ function Loader() {
 
 function App() {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <Router>
         <Header />
         <Suspense fallback={<Loader />}>
