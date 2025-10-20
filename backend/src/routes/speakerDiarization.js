@@ -114,9 +114,19 @@ router.post('/analyze', auth, upload.single('file'), async (req, res) => {
     // Clean up uploaded file
     await fs.remove(uploadedFilePath);
 
+    // Convert file system paths to API paths
+    const outputFilesWithApiPaths = result.outputFiles.map(file => {
+      const filename = path.basename(file.path);
+      return {
+        ...file,
+        path: `/api/speaker-diarization/download/${userId}/${timestamp}/${filename}`
+      };
+    });
+
     res.json({
       success: true,
-      ...result
+      ...result,
+      outputFiles: outputFilesWithApiPaths
     });
 
   } catch (error) {
