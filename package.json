@@ -12,6 +12,6 @@
     "preview": "cd frontend && npm run preview"
   },
   "devDependencies": {
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.2.2"
   }
 }
