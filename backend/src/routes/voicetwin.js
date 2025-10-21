@@ -89,7 +89,7 @@ router.post('/upload', auth, upload.single('audio'), async (req, res) => {
   }
 });
 
-// GET /api/voicetwin/mine - list voices from ElevenLabs API (with caching)
+// GET /api/voicetwin/mine - list user's custom voices from DB + default ElevenLabs voices
 router.get('/mine', auth, async (req, res) => {
   try {
     const userId = req.user?.sub || req.user?.id;
@@ -103,10 +103,73 @@ router.get('/mine', auth, async (req, res) => {
     // Check cache first
     const cached = voicesCache.get(userId);
     const now = Date.now();
-    
+
     if (cached && (now - cached.timestamp) < CACHE_DURATION_MS) {
       console.log('VoiceTwin: Returning cached voices for user ' + userId + ' (' + cached.voices.length + ' voices)');
       return res.json({ voices: cached.voices, cached: true });
+    }
+
+    // Step 1: Get user's custom voices from MongoDB (SECURITY: filter by userId)
+    const userCustomVoicesFromDB = await VoiceTwin.find({ userId }).lean();
+
+    // Step 2: Fetch default voices from ElevenLabs API
+    const client = new ElevenLabsClient({
+      apiKey: process.env.ELEVENLABS_API_KEY,
+    });
+
+    const voicesResponse = await client.voices.getAll();
+
+    // Filter to get ONLY default/premade voices (not cloned)
+    const defaultVoices = voicesResponse.voices
+      .filter(voice => voice.category === 'premade' || voice.category === 'professional')
+      .map(voice => ({
+        id: voice.voiceId,
+        name: voice.name,
+        provider: 'elevenlabs',
+        voiceId: voice.voiceId,
+        category: voice.category,
+        labels: voice.labels || {},
+        previewUrl: voice.previewUrl,
+      }));
+
+    // Step 3: Transform user's custom voices from DB
+    const customVoices = userCustomVoicesFromDB.map(doc => ({
+      id: doc.voiceId,
+      name: doc.name,
+      provider: doc.provider || 'elevenlabs',
+      voiceId: doc.voiceId,
+      category: 'cloned', // Mark as custom/cloned for highlighting in UI
+      createdAt: doc.createdAt,
+    }));
+
+    // Step 4: Determine what to return based on requirements
+    // If user has custom voices: show custom voices + default voices
+    // If user has NO custom voices: show only default ElevenLabs voices
+    const voicesToReturn = customVoices.length > 0
+      ? [...customVoices, ...defaultVoices]  // Custom + defaults
+      : defaultVoices;                        // Only defaults
+
+    // Store in cache
+    voicesCache.set(userId, {
+      voices: voicesToReturn,
+      timestamp: now,
+    });
+
+    console.log(`VoiceTwin: User ${userId} has ${customVoices.length} custom voices in DB. Returning ${voicesToReturn.length} voices (${customVoices.length} custom + ${defaultVoices.length} defaults)`);
+
+    return res.json({ voices: voicesToReturn, cached: false });
+  } catch (err) {
+    console.error('VoiceTwin list error:', err);
+    return res.status(500).json({ error: 'Failed to list voices', details: err?.message });
+  }
+});
+
+// GET /api/voicetwin/public - list default/premade voices for anonymous users
+router.get('/public', async (req, res) => {
+  try {
+    if (!process.env.ELEVENLABS_API_KEY) {
+      console.warn('ELEVENLABS_API_KEY not configured, returning empty voices list');
+      return res.json({ voices: [] });
     }
 
     // Fetch voices from ElevenLabs API
@@ -115,30 +178,26 @@ router.get('/mine', auth, async (req, res) => {
     });
 
     const voicesResponse = await client.voices.getAll();
-    
-    // Transform ElevenLabs voices to our format
-    const voices = voicesResponse.voices.map(voice => ({
-      id: voice.voiceId,
-      name: voice.name,
-      provider: 'elevenlabs',
-      voiceId: voice.voiceId,
-      category: voice.category || 'cloned',
-      labels: voice.labels || {},
-      previewUrl: voice.previewUrl,
-    }));
 
-    // Store in cache
-    voicesCache.set(userId, {
-      voices,
-      timestamp: now,
-    });
+    // Transform and filter to show ONLY default/premade voices (not cloned)
+    const publicVoices = voicesResponse.voices
+      .filter(voice => voice.category === 'premade' || voice.category === 'professional')
+      .map(voice => ({
+        id: voice.voiceId,
+        name: voice.name,
+        provider: 'elevenlabs',
+        voiceId: voice.voiceId,
+        category: voice.category,
+        labels: voice.labels || {},
+        previewUrl: voice.previewUrl,
+      }));
 
-    console.log(`VoiceTwin: Fetched \${voices.length} voices from ElevenLabs for user \${userId} (cached for 30min)`);
-    
-    return res.json({ voices, cached: false });
+    console.log(`VoiceTwin: Fetched ${publicVoices.length} public voices from ElevenLabs`);
+
+    return res.json({ voices: publicVoices });
   } catch (err) {
-    console.error('VoiceTwin list error:', err);
-    return res.status(500).json({ error: 'Failed to list voices', details: err?.message });
+    console.error('VoiceTwin public list error:', err);
+    return res.status(500).json({ error: 'Failed to list public voices', details: err?.message });
   }
 });
 

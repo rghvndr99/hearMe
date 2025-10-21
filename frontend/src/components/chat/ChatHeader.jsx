@@ -25,41 +25,43 @@ const ChatHeader = ({
   return (
     <Box
       position="fixed"
-      top="70px"
+      top={["60px", "70px"]}
       left={0}
       right={0}
       zIndex={998}
       borderBottom="1px solid var(--hm-border-glass)"
       className="hm-glass-card"
       backdropFilter="blur(10px)"
-      w="76%"
+      w={["100%", "100%", "76%"]}
       mx="auto"
     >
       <Flex
         align="center"
         justify="space-between"
-        px={6}
-        py={4}
+        px={[3, 4, 6]}
+        py={[3, 3, 4]}
+        flexDirection={["column", "column", "row"]}
+        gap={[2, 2, 0]}
       >
         {/* Left: Logo and Title */}
-        <VStack spacing={1} align="flex-start">
+        <VStack spacing={1} align={["center", "center", "flex-start"]} w={["full", "full", "auto"]}>
           <HStack spacing={2}>
             <Box
               as={BsRobot}
-              fontSize="24px"
+              fontSize={["20px", "24px"]}
               color="var(--hm-color-brand)"
             />
-            <Text fontSize="xl" fontWeight="700" color="var(--hm-color-text-primary)">
-              {t('chat.header.title', 'HearMe Support')}
+            <Text fontSize={["md", "lg", "xl"]} fontWeight="700" color="var(--hm-color-text-primary)">
+              {t('chat.header.title', 'Dil Ki Baat — Safe Space for You 💜')}
             </Text>
           </HStack>
-          <Text fontSize="sm" color="var(--hm-color-text-secondary)">
-            {t('chat.header.anonConf', 'Anonymous & Confidential')}
+          <Text fontSize={["xs", "sm"]} color="var(--hm-color-text-secondary)" textAlign={["center", "center", "left"]}>
+            {t('chat.header.anonConf', '100% Anonymous. 100% Confidential. 100% Judgment-Free.')}
           </Text>
         </VStack>
 
         {/* Right: Controls */}
-        <HStack spacing={2}>
+        <HStack spacing={2} w={["full", "full", "auto"]} justify={["center", "center", "flex-end"]}>
           <VoiceSelector
             selectedVoiceId={selectedVoiceId}
             onVoiceChange={onVoiceChange}

@@ -51,8 +51,8 @@ const Chat = () => {
     },
     (error) => {
       toast({
-        title: error.title,
-        description: error.description,
+        title: error.titleKey ? t(error.titleKey, error.title) : error.title,
+        description: error.descriptionKey ? t(error.descriptionKey, error.description) : error.description,
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -108,8 +108,8 @@ const Chat = () => {
       } catch (error) {
         console.error('Error starting chat session:', error);
         toast({
-          title: t('chat.toasts.connectionErrorTitle', 'Connection Error'),
-          description: t('chat.toasts.connectionErrorDesc', 'Failed to start chat session. Please refresh the page.'),
+          title: t('chat.toasts.connectionErrorTitle', 'Oops! Connection issue 😔'),
+          description: t('chat.toasts.connectionErrorDesc', 'We couldn\'t connect. Please refresh the page. Your privacy is still protected.'),
           status: "error",
           duration: 5000,
           isClosable: true,
@@ -158,10 +158,10 @@ const Chat = () => {
       // Show crisis alert if detected
       if (crisis) {
         toast({
-          title: t('chat.toasts.crisisTitle', 'Support Resources Available'),
-          description: t('chat.toasts.crisisDesc', "If you're in crisis, please reach out: National Suicide Prevention Lifeline: 988"),
+          title: t('chat.toasts.crisisTitle', 'You\'re Not Alone — Help Is Available 💜'),
+          description: t('chat.toasts.crisisDesc', 'If you\'re in crisis, please reach out immediately:\n\n🇮🇳 India:\n• AASRA: 9820466726\n• Vandrevala Foundation: 1860 2662 345\n• iCall: 9152987821\n\n🌍 International:\n• Suicide Prevention Lifeline: 988\n\nYou matter. Your life matters. Please reach out.'),
           status: "warning",
-          duration: 10000,
+          duration: 15000,
           isClosable: true,
           icon: <FiAlertCircle />,
         });
@@ -169,8 +169,8 @@ const Chat = () => {
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
-        title: t('chat.toasts.messageFailedTitle', 'Message Failed'),
-        description: t('chat.toasts.messageFailedDesc', 'Could not send message. Please try again.'),
+        title: t('chat.toasts.messageFailedTitle', 'Message didn\'t go through 😔'),
+        description: t('chat.toasts.messageFailedDesc', 'No worries! Try sending again. Your message is safe with us.'),
         status: "error",
         duration: 3000,
         isClosable: true,

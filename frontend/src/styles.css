@@ -220,98 +220,310 @@
   transition:background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-html, body{
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
-  background:var(--hm-color-bg) !important;
-  color:var(--hm-color-text-primary) !important;
-  margin:0;
-  padding:0;
+/* ========================================
+   MOBILE-FIRST BASE STYLES
+   ======================================== */
+
+/* Base font size: 16px minimum to prevent iOS zoom */
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html, body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Inter, Arial, sans-serif;
+  background: var(--hm-color-bg) !important;
+  color: var(--hm-color-text-primary) !important;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Prevent Chakra UI from overriding our theme */
 #root {
-  background:transparent !important;
-  color:inherit !important;
+  background: transparent !important;
+  color: inherit !important;
+}
+
+/* Box sizing reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Responsive images by default */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Remove default button styles */
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Improve text rendering */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* Mobile-first link styles */
+a {
+  color: var(--hm-color-accent-link);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--hm-color-brand);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--hm-color-brand);
+  outline-offset: 2px;
 }
 
 /* Pulse animation for typing indicator */
-@keyframes pulse{
-  0%, 100%{
-    opacity:0.4;
-    transform:scale(0.8);
+
+
+/* ========================================
+   MOBILE-FIRST UTILITY CLASSES
+   ======================================== */
+
+/* Brand Color */
+.hm-brand {
+  color: var(--hm-color-brand);
+}
+
+/* Touch Targets - Mobile First */
+.hm-touch-target {
+  min-width: 48px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hm-touch-target-large {
+  min-width: 56px;
+  min-height: 56px;
+}
+
+/* Responsive Container */
+.hm-container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .hm-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
-  50%{
-    opacity:1;
-    transform:scale(1.2);
+}
+
+@media (min-width: 1024px) {
+  .hm-container {
+    max-width: 1200px;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 }
-a{color:#4f46e5}
 
-/* Utility Classes */
-.hm-brand{color:var(--hm-color-brand)}
-
-/* Glass Card Styles */
-.hm-glass-card{
-  background:var(--hm-bg-glass);
-  border:1px solid var(--hm-border-glass);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  transition:all 0.3s ease;
+/* Responsive Text Alignment */
+.hm-text-center-mobile {
+  text-align: center;
 }
 
-.hm-glass-card-light{
-  background:var(--hm-bg-glass-light);
-  border:1px solid var(--hm-border-glass);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
+@media (min-width: 768px) {
+  .hm-text-center-mobile {
+    text-align: left;
+  }
 }
 
-.hm-glass-card-soft{
-  background:var(--hm-bg-glass);
-  border:1px solid var(--hm-border-glass-soft);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  transition:all 0.3s ease;
+/* Responsive Display */
+.hm-hide-mobile {
+  display: none;
 }
 
-.hm-glass-card:hover{
-  border-color:var(--hm-color-brand);
+@media (min-width: 768px) {
+  .hm-hide-mobile {
+    display: block;
+  }
 }
 
-/* Form Input Styles */
-.hm-input{
-  background:var(--hm-bg-glass);
-  border:1px solid var(--hm-border-glass);
-  color:var(--hm-color-text-primary);
+.hm-show-mobile {
+  display: block;
 }
 
-.hm-input:focus{
-  border-color:var(--hm-color-brand);
-  outline:none;
+@media (min-width: 768px) {
+  .hm-show-mobile {
+    display: none;
+  }
 }
 
-.hm-input::placeholder{
-  color:var(--hm-color-placeholder);
+/* ========================================
+   GLASS CARD STYLES - MOBILE FIRST
+   ======================================== */
+
+.hm-glass-card {
+  background: var(--hm-bg-glass);
+  border: 1px solid var(--hm-border-glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  border-radius: 1rem;
+  padding: 1rem;
 }
 
-/* Background Gradient Animations */
-
-.hm-bg-gradient-orange{
-  background:var(--hm-gradient-bg-orange);
-  filter:blur(150px);
+@media (min-width: 768px) {
+  .hm-glass-card {
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+  }
 }
 
-/* Border Utilities */
-.hm-border-top{
-  border-top:1px solid var(--hm-border-glass);
+@media (min-width: 1024px) {
+  .hm-glass-card {
+    border-radius: 1.5rem;
+    padding: 2rem;
+  }
 }
 
-.hm-border-outline{
-  border-color:var(--hm-border-outline);
+.hm-glass-card-light {
+  background: var(--hm-bg-glass-light);
+  border: 1px solid var(--hm-border-glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  padding: 1rem;
 }
 
-.hm-hover-bg:hover{
-  background:var(--hm-hover-bg);
+@media (min-width: 768px) {
+  .hm-glass-card-light {
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+  }
+}
+
+.hm-glass-card-soft {
+  background: var(--hm-bg-glass);
+  border: 1px solid var(--hm-border-glass-soft);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .hm-glass-card-soft {
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+  }
+}
+
+/* Hover effects - only on devices that support hover */
+@media (hover: hover) and (pointer: fine) {
+  .hm-glass-card:hover {
+    border-color: var(--hm-color-brand);
+    transform: translateY(-2px);
+  }
+}
+
+/* ========================================
+   FORM INPUT STYLES - MOBILE FIRST
+   ======================================== */
+
+.hm-input {
+  background: var(--hm-bg-glass);
+  border: 1px solid var(--hm-border-glass);
+  color: var(--hm-color-text-primary);
+  font-size: 16px; /* Prevents iOS zoom */
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  min-height: 48px; /* Touch-friendly */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (min-width: 768px) {
+  .hm-input {
+    min-height: 44px;
+    padding: 0.875rem 1.125rem;
+  }
+}
+
+.hm-input:focus {
+  border-color: var(--hm-color-brand);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(247, 107, 28, 0.1);
+}
+
+.hm-input::placeholder {
+  color: var(--hm-color-placeholder);
+}
+
+/* Textarea */
+.hm-textarea {
+  background: var(--hm-bg-glass);
+  border: 1px solid var(--hm-border-glass);
+  color: var(--hm-color-text-primary);
+  font-size: 16px; /* Prevents iOS zoom */
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hm-textarea:focus {
+  border-color: var(--hm-color-brand);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(247, 107, 28, 0.1);
+}
+
+/* ========================================
+   BACKGROUND & BORDER UTILITIES
+   ======================================== */
+
+.hm-bg-gradient-orange {
+  background: var(--hm-gradient-bg-orange);
+  filter: blur(100px);
+}
+
+@media (min-width: 768px) {
+  .hm-bg-gradient-orange {
+    filter: blur(150px);
+  }
+}
+
+.hm-border-top {
+  border-top: 1px solid var(--hm-border-glass);
+}
+
+.hm-border-bottom {
+  border-bottom: 1px solid var(--hm-border-glass);
+}
+
+.hm-border-outline {
+  border-color: var(--hm-border-outline);
+}
+
+/* Hover effects - only on devices that support hover */
+@media (hover: hover) and (pointer: fine) {
+  .hm-hover-bg:hover {
+    background: var(--hm-hover-bg);
+  }
 }
 
 /* ========================================
@@ -360,15 +572,19 @@ a{color:#4f46e5}
   }
 }
 
-/* Smooth scrollbar for all scrollable areas */
+/* ========================================
+   SCROLLBAR STYLES - MOBILE FIRST
+   ======================================== */
+
+/* Mobile: Thinner scrollbars */
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--hm-color-brand) transparent;
 }
 
 *::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 *::-webkit-scrollbar-track {
@@ -382,6 +598,17 @@ a{color:#4f46e5}
   transition: background 0.3s ease;
 }
 
-*::-webkit-scrollbar-thumb:hover {
-  background: var(--hm-color-accent-purple);
+/* Desktop: Slightly wider scrollbars */
+@media (min-width: 1024px) {
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* Hover effects only on desktop */
+@media (hover: hover) and (pointer: fine) {
+  *::-webkit-scrollbar-thumb:hover {
+    background: var(--hm-color-accent-purple);
+  }
 }

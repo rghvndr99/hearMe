@@ -10,17 +10,17 @@ router.post('/eleven', async (req, res) => {
       return res.status(400).json({ error: 'text is required' });
     }
 
+    if (!voiceId || !String(voiceId).trim()) {
+      return res.status(400).json({ error: 'voiceId is required' });
+    }
+
     const apiKey = process.env.ELEVENLABS_API_KEY;
-    const voice = voiceId || process.env.ELEVENLABS_VOICE_ID;
 
     if (!apiKey) {
       return res.status(500).json({ error: 'ELEVENLABS_API_KEY is not configured on the server' });
     }
-    if (!voice) {
-      return res.status(500).json({ error: 'Voice ID is not provided (pass voiceId or set ELEVENLABS_VOICE_ID)' });
-    }
 
-    const url = `https://api.elevenlabs.io/v1/text-to-speech/${voice}`;
+    const url = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
 
     const response = await axios.post(
       url,

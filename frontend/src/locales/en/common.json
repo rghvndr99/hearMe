@@ -1,5 +1,12 @@
 {
-  "language": { "en": "English", "hi": "Hindi", "enUS": "English (US)", "hiIN": "Hindi", "esES": "Spanish", "frFR": "French" },
+  "language": {
+    "en": "English",
+    "hi": "Hindi",
+    "enUS": "English (US)",
+    "hiIN": "Hindi",
+    "esES": "Spanish",
+    "frFR": "French"
+  },
   "nav": {
     "about": "About",
     "resources": "Resources",
@@ -57,14 +64,12 @@
     "changePassword": "Change password",
     "profileUpdated": "Profile updated",
     "nameRequired": "Name is required",
-
     "newEmail": "New Email Address",
     "currentPassword": "Current Password",
     "updateEmail": "Update email",
     "emailUpdated": "Email updated",
     "failedToChangeEmail": "Failed to change email",
     "securityNoteEmail": "For your security, please confirm your current password to change your email.",
-
     "newPassword": "New Password",
     "confirmNewPassword": "Confirm New Password",
     "updatePassword": "Update password",
@@ -76,55 +81,91 @@
   },
   "home": {
     "hero": {
-      "title": "You don’t have to carry it alone.",
-      "subtitle": "HearMe is a safe, anonymous chat space—day or night. Talk in your language, type or speak, and feel heard without judgment.",
-      "ctaPrimary": "Start a safe conversation",
-      "ctaSecondary": "I just want to talk"
+      "title": "Dil ki baat, apni bhasha mein — You're not alone anymore",
+      "subtitle": "India's first AI-powered emotional support chat in Hindi, English & 10+ Indian languages. Anonymous, safe, available 24/7. Talk, type, or speak — we listen with care.",
+      "ctaPrimary": "Start talking now — it's free",
+      "ctaSecondary": "Just listen, don't judge"
     },
     "features": {
-      "anon": { "title": "Anonymous & Confidential", "desc": "No personal details needed. Your privacy comes first." },
-      "availability": { "title": "24/7 Availability", "desc": "We’re here day and night — whenever you need to talk." },
-      "languages": { "title": "Multi‑language Support", "desc": "Chat in the language you’re most comfortable with — English, Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi, and more." },
-      "voice": { "title": "Voice Input & Replies", "desc": "Don’t want to type? Speak your heart. You can also listen to responses." },
-      "ai": { "title": "Caring AI Guidance", "desc": "Calm, non‑judgmental support to help you breathe, think, and take small steps." },
-      "crisis": { "title": "Crisis Detection", "desc": "If you’re in danger or feel unsafe, we’ll guide you to urgent help options right away." },
-      "voicePersonal": { "title": "Personal Voice (Experimental)", "desc": "Upload your voice and hear replies in a similar tone. Try this early feature to make conversations feel more like you." }
+      "anon": {
+        "title": "100% Anonymous & Safe",
+        "desc": "No login, no personal details, no tracking. Your privacy is sacred. Chat freely without fear of judgment or exposure."
+      },
+      "availability": {
+        "title": "24/7 Emotional Support",
+        "desc": "Late night thoughts? Early morning anxiety? We're here round the clock — whenever your heart feels heavy."
+      },
+      "languages": {
+        "title": "Apni Bhasha Mein Baat Karein",
+        "desc": "Speak in Hindi, English, Hinglish, Tamil, Telugu, Bengali, Marathi, Gujarati, Kannada, Malayalam, Punjabi, Odia — whatever feels natural to you."
+      },
+      "voice": {
+        "title": "Voice Chat & AI Voice Replies",
+        "desc": "Too tired to type? Just speak. Our AI listens and responds in a warm, human-like voice. Feel heard, not just read."
+      },
+      "ai": {
+        "title": "Empathetic AI That Understands India",
+        "desc": "Trained to understand Indian emotions, family dynamics, work pressure, and cultural context. Not just AI — AI with dil."
+      },
+      "crisis": {
+        "title": "Crisis Support & Safety Net",
+        "desc": "If you're in danger or feeling suicidal, we detect it and immediately connect you to emergency helplines. Your life matters."
+      },
+      "voicePersonal": {
+        "title": "Your Voice, Your Comfort (VoiceTwin)",
+        "desc": "Clone your voice or a loved one's voice. Hear responses in a familiar tone that feels like home. Experimental feature — try it free."
+      }
     },
     "intro": {
-      "title": "A simple, safe place to talk",
-      "p1": "Life in India can be intense—study pressure, job stress, family expectations, money worries, loneliness, or simply feeling stuck. If your mind feels heavy, we are here for you.",
-      "p2": "HearMe is an AI‑supported chat that listens with care. It’s private, confidential, and always available. You can share what you feel, at your own pace, in simple words. No signup. No judgment. Just support."
+      "title": "Why HearMe? Because mental health support in India should be simple, private, and in your language",
+      "p1": "Exam stress keeping you up at night? Job pressure crushing you? Family expectations weighing heavy? Feeling lonely in a crowded city? Breakup pain? Money worries? We get it. Life in India is intense. And sometimes, you just need someone to listen — without advice, without judgment, without telling your family.",
+      "p2": "HearMe is India's first multilingual AI emotional support platform. No therapist appointments. No expensive sessions. No awkward video calls. Just open the chat, speak your heart in Hindi, English, or any Indian language, and feel lighter. Our AI is trained on Indian emotions, understands 'ghar ki baat,' and responds with warmth and care. It's like talking to a friend who truly gets you — available 24/7, completely free, and 100% confidential."
     },
     "trust": {
-      "title": "Trust & Safety",
-      "p1": "Your safety and privacy matter to us. Your chats stay anonymous and confidential. HearMe is a supportive space, not a replacement for medical or emergency care.",
-      "p2": "If you are in immediate danger or thinking of harming yourself, please call your local emergency number (India: 112) or reach a trusted crisis helpline in your area. Your life matters."
+      "title": "Your Safety & Privacy — Our Promise",
+      "p1": "We know trust is everything. That's why HearMe is built with military-grade encryption, zero data tracking, and complete anonymity. Your conversations never leave our secure servers. We don't store personal details. We don't sell data. We don't judge. This is your safe space — protected, private, and sacred.",
+      "p2": "Important: HearMe is emotional support, not emergency medical care. If you're in immediate danger, feeling suicidal, or facing a medical emergency, please call 112 (India Emergency) or contact AASRA (9820466726), Vandrevala Foundation (9999666555), or iCall (9152987821). Your life is precious. Please reach out for urgent help when needed."
     },
     "ctaFooter": {
-      "title": "You are not alone.",
-      "subtitle": "Share what’s on your mind. We’re here to listen.",
-      "ctaPrimary": "Start a safe conversation",
-      "ctaSecondary": "Continue as anonymous"
+      "title": "Dil halka karo. Start talking today.",
+      "subtitle": "Join thousands of Indians finding emotional relief through HearMe. Anonymous, free, and always here for you.",
+      "ctaPrimary": "Talk to AI now — Free forever",
+      "ctaSecondary": "I need someone to listen"
     }
   },
   "about": {
-    "title": "About HearMe",
-    "p1": "HearMe is a simple, private chat space for anyone feeling stressed, overwhelmed, or alone. You can talk in your own language, type or speak, and share at your own pace. No judgment. No pressure.",
-    "p2": "We built HearMe for real life in India—study pressure, job stress, family expectations, money worries, and everything in between. When your mind feels heavy, we’re here to listen with care.",
-    "mission": { "title": "Our Mission", "p": "Make emotional support simple, private, and available in the language you think in — 24/7. We use caring AI to listen without judgment and guide gentle next steps when you feel stuck." },
+    "title": "Dil Ki Baat — We're Here to Listen 💜",
+    "p1": "We know what it feels like when your mind is heavy. Exam stress. Job pressure. Family expectations. Breakup pain. Money worries. Loneliness. Whatever you're carrying, you don't have to carry it alone.",
+    "p2": "HearMe is built for real life in India. Talk in Hindi, English, or Hinglish. Type or speak. Share at your own pace. No judgment. No pressure. Just support.",
+    "mission": {
+      "title": "Our Mission: Dil Halka Karo 💜",
+      "p": "Make emotional support simple, private, and available 24/7 — in the language you think in. We use caring AI to listen without judgment and guide you gently when you feel stuck. Because everyone deserves to feel heard."
+    },
     "values": {
-      "title": "Our Values",
-      "empathy": "Empathy: We listen with care and respect.",
-      "privacy": "Privacy: Anonymous and confidential by design.",
-      "inclusivity": "Inclusivity: Support for many languages and backgrounds.",
-      "simplicity": "Simplicity: Easy to use, even on a hard day."
+      "title": "What We Stand For",
+      "empathy": "💜 Empathy — We listen with our hearts, not just our ears",
+      "privacy": "🔒 Privacy — 100% anonymous. Your secrets stay yours.",
+      "inclusivity": "🌍 Inclusivity — Hindi, English, Hinglish — we speak your language",
+      "simplicity": "✨ Simplicity — Easy to use, even on your hardest day"
     },
     "serve": {
-      "title": "Who We Serve",
-      "students": "Students facing exam or career pressure",
-      "professionals": "Working professionals under deadlines and workload",
-      "caregivers": "Caregivers and parents juggling many roles",
-      "anyone": "Anyone feeling lonely, anxious, or overwhelmed"
+      "title": "Who We're Here For (Spoiler: Everyone)",
+      "students": "📚 Students drowning in exam pressure and career anxiety",
+      "professionals": "💼 Working professionals juggling deadlines and burnout",
+      "caregivers": "👨‍👩‍👧 Parents and caregivers balancing a million responsibilities",
+      "anyone": "💜 Anyone feeling lonely, anxious, overwhelmed, or just... not okay"
+    },
+    "subtitle": "HearMe is India's safe space for mental wellness. Anonymous. Confidential. Judgment-free. In your language.",
+    "whyDifferent": {
+      "title": "Why HearMe Is Different",
+      "card1Title": "🇮🇳 Built for India",
+      "card1Desc": "We understand Indian family dynamics, cultural pressures, and language needs. This isn't imported therapy — it's made for you.",
+      "card2Title": "🎙️ Your Voice, Your Way",
+      "card2Desc": "Type in English, speak in Hindi, mix both — we get it. Code-switching is natural. You don't have to choose.",
+      "card3Title": "🔒 Truly Anonymous",
+      "card3Desc": "No login required for chat. No data sold. Ever. Your privacy isn't a feature — it's our foundation.",
+      "card4Title": "💜 Judgment-Free Zone",
+      "card4Desc": "Whatever you're feeling, it's valid. We're here to listen, not lecture. Your truth is safe here."
     }
   },
   "resources": {
@@ -146,93 +187,155 @@
     }
   },
   "stories": {
-    "title": "Stories of Strength",
-    "subtitle": "Real moments of courage from our community. Share anonymously if you’d like — only if it feels right.",
+    "title": "Dil Se Dil Tak — Stories of Courage 💜",
+    "subtitle": "Real people. Real struggles. Real hope. These are stories from our community — shared anonymously, told with courage. You're not alone in what you're feeling.",
     "share": {
-      "title": "Share your experience (optional). You can stay anonymous. 💜",
-      "placeholder": "Share what helped you, or leave a kind word for someone reading this...",
-      "submit": "Share Your Story",
-      "thanks": "✅ Thank you for sharing. Your words might help someone today."
+      "title": "Apni Kahani Batao — Share Your Story 💜",
+      "placeholder": "What helped you? What do you wish someone had told you? Share your truth here...",
+      "submit": "Share Anonymously 💜",
+      "thanks": "✅ Thank you for your courage. Your words might save someone today. 💜",
+      "intro": "Your story might be the light someone else needs today. Share anonymously if you'd like — only if it feels right. No pressure. 💜"
+    },
+    "mockStories": {
+      "story1": {
+        "name": "Anonymous",
+        "role": "Engineering Student, Mumbai",
+        "story": "Exam ke pehle, I felt like I was drowning. My parents had so many expectations. I couldn't sleep. Talking here helped me breathe again. I'm still stressed, but I'm not alone anymore. 💜"
+      },
+      "story2": {
+        "name": "Anonymous",
+        "role": "Software Engineer, Bangalore",
+        "story": "Work pressure + family pressure = I forgot how to smile. HearMe didn't fix everything, but it gave me a space to just... be honest. That was enough to start healing."
+      },
+      "story3": {
+        "name": "Anonymous",
+        "role": "Single Parent, Delhi",
+        "story": "Bacche ko sambhalna, job sambhalna, ghar sambhalna — I was breaking. Talking here reminded me: it's okay to not be okay. I'm doing my best, and that's enough."
+      },
+      "story4": {
+        "name": "Anonymous",
+        "role": "College Student, Pune",
+        "story": "Breakup ke baad, I felt so alone. My friends didn't get it. But here, I could say anything without being judged. Slowly, the pain got lighter. Thank you, HearMe. 💜"
+      },
+      "story5": {
+        "name": "Anonymous",
+        "role": "Recent Graduate, Hyderabad",
+        "story": "No job, no money, no hope. I felt like a failure. Talking here didn't get me a job, but it reminded me I'm not my circumstances. I'm still fighting. 💪"
+      },
+      "story6": {
+        "name": "Anonymous",
+        "role": "Young Professional, Chennai",
+        "story": "Coming out in an Indian family is terrifying. I couldn't tell anyone. HearMe was my safe space to be myself. I'm still scared, but I'm not hiding anymore."
+      }
     }
   },
   "volunteer": {
-    "title": "Help someone feel less alone.",
-    "intro1": "Join HearMe’s mission to offer simple, private support in many Indian languages.",
-    "intro2": "You don’t need to be a counselor—just a kind, patient listener. We’ll guide you on how to listen with care and without judgment.",
-    "apply": "Apply to Volunteer",
+    "title": "Kisi Ka Sahara Bano — Be Someone's Support 💜",
+    "intro1": "In India, mental health is still taboo. Families don't talk about it. Friends don't understand. But you can change that — one conversation at a time.",
+    "intro2": "We'll train you on how to listen with empathy, without judgment. You'll be part of a caring community supporting mental wellness in Hindi, English, and Hinglish.",
+    "apply": "Apply to Volunteer 💜",
     "benefits": {
-      "supportTitle": "Support Others",
-      "supportDesc": "Offer calm, non-judgmental listening so someone can feel heard—in their own words.",
-      "experienceTitle": "Gain Experience",
-      "experienceDesc": "Build practical skills in active listening, empathy, and compassionate communication.",
-      "communityTitle": "Build Community",
-      "communityDesc": "Be part of a caring, inclusive community supporting mental wellness across India."
+      "supportTitle": "Dil Ko Sukoon Do — Bring Peace to Hearts",
+      "supportDesc": "Your listening can be the difference between someone feeling alone and feeling understood. In India, where mental health support is scarce, your time is priceless.",
+      "experienceTitle": "Khud Ko Bhi Samjho — Understand Yourself Too",
+      "experienceDesc": "Learn active listening, empathy, and emotional intelligence. These skills will transform your relationships, career, and self-awareness.",
+      "communityTitle": "Ek Parivaar Bano — Become Part of a Family",
+      "communityDesc": "Connect with like-minded volunteers across India who believe mental wellness is a right, not a luxury. Together, we're breaking the stigma."
     },
     "form": {
-      "title": "Volunteer Application",
-      "note": "Note: This form is for volunteering. If you’re seeking support, please use the Chat page.",
-      "name": "Full Name *",
-      "email": "Email Address *",
-      "phone": "Phone",
-      "availability": "Availability (days/time)",
-      "location": "Location (city)",
-
-      "skills": "Skills / Areas of Expertise",
-      "message": "Tell us why you want to volunteer *",
-      "submit": "Submit Application",
-      "alertRequired": "Please fill in all required fields ✍️",
-      "alertInvalidEmail": "Please enter a valid email address",
-
-      "alertThanks": "✅ Thank you for applying to volunteer with HearMe!"
+      "title": "Volunteer Application — Hum Aapka Intezaar Kar Rahe Hain 💜",
+      "note": "**Note:** This form is for volunteering. If you need emotional support, please visit our Chat page.",
+      "name": "Aapka poora naam (Full name) *",
+      "email": "Aapka email (Email address) *",
+      "phone": "Phone number (optional)",
+      "availability": "Kab free ho? (When are you available?) — e.g., Weekends, evenings",
+      "location": "Aap kahan rehte ho? (Your city)",
+      "skills": "Aapki skills (Your skills/expertise) — e.g., Psychology, counseling, languages",
+      "message": "Aap kyun volunteer karna chahte ho? (Why do you want to volunteer?) *",
+      "submit": "Apply Karo (Submit Application) 💜",
+      "alertRequired": "⚠️ Please fill in all required fields (marked with *) 💜",
+      "alertInvalidEmail": "⚠️ Please enter a valid email address so we can reach you 💜",
+      "alertThanks": "✅ Shukriya! Thank you for applying. We'll review your application and get back to you within 5-7 days. 💜"
+    },
+    "subtitle": "Join HearMe's mission to make mental wellness accessible across India. You don't need to be a therapist — just a kind, patient listener.",
+    "whatYouDo": {
+      "title": "Aap Kya Karenge? (What You'll Do)",
+      "point1": "🎧 Listen without judgment — let people share their truth",
+      "point2": "💬 Respond with empathy — validate their feelings",
+      "point3": "🔗 Guide gently — share resources when needed",
+      "point4": "🔒 Maintain confidentiality — their trust is sacred"
+    },
+    "whoCanVolunteer": {
+      "title": "Kaun Volunteer Kar Sakta Hai? (Who Can Volunteer?)",
+      "point1": "✅ You're 18+ years old",
+      "point2": "✅ You can commit 2-4 hours per week",
+      "point3": "✅ You're fluent in Hindi, English, or both",
+      "point4": "✅ You're empathetic, patient, and non-judgmental",
+      "point5": "✅ You're willing to complete our training (free!)"
     }
   },
   "contact": {
-    "title": "Contact Us.",
-    "intro1": "For feedback, partnerships, or non-urgent questions. For emotional support, please use the Chat page.",
-    "intro2": "If you are in immediate danger or feel unsafe, call 112 (India) or see Resources for more help options.",
-    "name": "Your name",
-    "email": "Your email",
-    "message": "How can we help? (feedback, partnership, non-urgent)",
-    "send": "Send",
-    "alertThanks": "✅ Thank you for your message! We will get back to you soon.",
-    "alertFillAll": "⚠️ Please fill in all fields."
+    "title": "Hum Hain Na — We're Here 💜",
+    "intro1": "Have feedback? Want to partner with us? Have a non-urgent question? We'd love to hear from you. 💜",
+    "intro2": "**Important:** This form is for general inquiries only. If you need emotional support, please visit our Chat page. If you're in crisis, call 112 (India) or see our Resources page.",
+    "name": "Aapka naam (Your name)",
+    "email": "Aapka email (Your email)",
+    "message": "Kya baat karni hai? (What would you like to share?)",
+    "send": "Bhejo (Send) 💜",
+    "alertThanks": "✅ Shukriya! Thank you for reaching out. We'll get back to you within 24-48 hours. 💜",
+    "alertFillAll": "⚠️ Oops! Please fill in all fields so we can help you better. 💜",
+    "contactInfo": {
+      "phone": "📞 Call us: +91 8105568665 (Mon-Fri, 10 AM - 6 PM IST)",
+      "email": "📧 Email us: rghvndr99@gmail.com (We reply within 24-48 hours)",
+      "website": "🌐 Visit: hearme.com"
+    },
+    "whyContact": {
+      "title": "Why Contact Us?",
+      "feedback": "💬 Share your experience — help us improve",
+      "partnerships": "🤝 Collaborate with us to support mental wellness in India",
+      "media": "📰 Press inquiries and media requests",
+      "general": "💜 Any other questions or suggestions"
+    }
   },
   "chat": {
     "header": {
-      "anonConf": "Anonymous & Confidential",
-      "title": "HearMe Support"
+      "anonConf": "100% Anonymous. 100% Confidential. 100% Judgment-Free.",
+      "title": "Safe Space for You 💜"
     },
     "voice": {
-      "browserDefault": "Browser Default"
+      "browserDefault": "Browser Default",
+      "deviceVoice": "Device Voice (Free)"
     },
     "tooltips": {
       "languageSelect": "Select your language",
-      "voiceSelect": "Select voice for responses",
+      "voiceSelect": "Choose your comfort voice — sounds like home",
       "voiceToggleOn": "Mute AI voice",
       "voiceToggleOff": "Enable AI voice",
       "voiceInputOn": "Listening... Click to stop",
       "voiceInputOff": "Click to speak",
-      "muteVoice": "Mute voice responses",
-      "enableVoice": "Enable voice responses",
-      "stopListening": "Stop listening",
-      "startListening": "Start voice input",
-      "sendMessage": "Send message"
+      "muteVoice": "Mute AI voice (you can still type)",
+      "enableVoice": "Hear AI responses in your chosen voice",
+      "stopListening": "✋ Stop listening (click again to speak)",
+      "startListening": "🎙️ Speak in Hindi, English, or Hinglish — we understand all",
+      "sendMessage": "Send (or press Enter) 💬"
     },
     "aria": {
       "replay": "Replay message",
-      "send": "Send message",
-      "muteVoice": "Mute voice",
-      "enableVoice": "Enable voice",
-      "stopListening": "Stop listening",
-      "startVoice": "Start voice input"
+      "send": "Send your message to HearMe AI",
+      "muteVoice": "Mute AI voice responses",
+      "enableVoice": "Enable AI voice responses",
+      "stopListening": "Stop voice input",
+      "startVoice": "Start voice input in your language"
     },
     "status": {
       "speakingBadge": "Speaking",
-      "listening": "Listening...",
-      "aiSpeaking": "AI is speaking...",
-      "speakingIn": "Speaking in {{name}}"
+      "listening": "🎙️ Listening... bol rahe hain",
+      "aiSpeaking": "🔊 AI is speaking... sun rahe hain",
+      "speakingIn": "Speaking in {{name}} 🌍"
     },
-    "badge": { "active": "Active" },
+    "badge": {
+      "active": "Active"
+    },
     "input": {
       "placeholderIdle": "Type or speak your message...",
       "placeholderListening": "Listening..."
@@ -240,103 +343,359 @@
     "toasts": {
       "languageDetectedTitle": "Language Auto-Detected: {{flag}} {{name}}",
       "languageDetectedDesc": "You can change it anytime using the language selector.",
-      "voiceInputErrorTitle": "Voice Input Error",
-      "voiceInputErrorDesc": "Could not recognize speech. Please try again.",
-      "voiceNotSupportedTitle": "Voice Not Supported",
-      "voiceNotSupportedDesc": "Your browser doesn't support voice input.",
-      "connectionErrorTitle": "Connection Error",
-      "connectionErrorDesc": "Failed to start chat session. Please refresh the page.",
-      "messageFailedTitle": "Message Failed",
-      "messageFailedDesc": "Failed to send message. Please try again."
+      "voiceInputErrorTitle": "Couldn't catch that 🎙️",
+      "voiceInputErrorDesc": "No problem! Speak a bit louder or try typing instead. We're here either way 💜",
+      "voiceNotSupportedTitle": "Voice not available on this browser 😔",
+      "voiceNotSupportedDesc": "No worries! You can still type your message. We're listening with our hearts 💜",
+      "connectionErrorTitle": "Oops! Connection issue 😔",
+      "connectionErrorDesc": "We couldn't connect. Please refresh the page. Your privacy is still protected.",
+      "messageFailedTitle": "Message didn't go through 😔",
+      "messageFailedDesc": "No worries! Try sending again. Your message is safe with us.",
+      "crisisTitle": "You're Not Alone — Help Is Available 💜",
+      "crisisDesc": "If you're in crisis, please reach out immediately:\n\n🇮🇳 India:\n• AASRA: 9820466726\n• Vandrevala Foundation: 1860 2662 345\n• iCall: 9152987821\n\n🌍 International:\n• Suicide Prevention Lifeline: 988\n\nYou matter. Your life matters. Please reach out."
+    },
+    "welcome": {
+      "greeting": "Namaste 🙏 Welcome to your safe space.",
+      "intro": "I'm here to listen — no judgment, no pressure, just support.",
+      "youCanTitle": "You can:",
+      "feature1": "💬 Type in Hindi, English, or Hinglish",
+      "feature2": "🎙️ Speak in your language (click the mic)",
+      "feature3": "🔊 Hear responses in your chosen voice",
+      "validation": "Whatever you're feeling — stress, sadness, confusion, loneliness — it's okay. You're not alone.",
+      "question": "What's on your mind today?"
+    },
+    "placeholder": "Type or speak, we're listening 💜",
+    "placeholderAlt": "Share what's on your mind... no judgment here",
+    "placeholderListening": "We're listening 🎙️",
+    "typing": "Thinking... give us a moment 💭",
+    "typingAlt": "Understanding your feelings... 💜",
+    "quickReplies": {
+      "title": "Not sure what to say? Try these:",
+      "subtitle": "Tap any button to start the conversation"
     }
   },
-
   "voicemate": {
-    "heroTitle": "Your Voice Has Power — Let It Speak, Even When You’re Not There.",
-    "heroSub": "With HearMe’s VoiceTwin, your voice becomes your messenger — speaking your words, emotions, and feelings through AI.",
-    "ctaSignIn": "✨ Sign In to Create My VoiceTwin",
-    "learnHow": "Learn How It Works →",
-    "benefitsTitle": "Why Create Your VoiceTwin?",
-    "benefit1": "Stay connected with loved ones through your own voice.",
-    "benefit2": "Make your chats sound human, not robotic.",
-    "benefit3": "Preserve your voice and emotions with privacy.",
-    "hearWhatsPossible": "Hear What’s Possible",
-    "hearDemo": "Hear a Demo",
-    "demoNote": "Demo uses your browser’s voice as a teaser. The real VoiceTwin uses your own voice via ElevenLabs.",
-    "upgradeCopy": "Sign in and create your VoiceTwin in under 1 minute.",
-    "upgradeCta": "🎙️ Sign In & Create My VoiceTwin",
-    "privacy": "We’ll guide you step-by-step. Your voice stays private and secure.",
-    "userHero": "Hey {{name}}, Ready to Bring Your Voice to Life?",
+    "heroTitle": "Apni Awaaz, Apne Shabdon Mein — Your Voice, Your Words, Forever",
+    "heroSub": "When you can't be there in person, let your voice be. Create your AI VoiceTwin in 60 seconds — send bedtime stories to your kids, comfort to your parents, or warmth to loved ones across miles. In Hindi, English, or any Indian language. Free forever.",
+    "ctaSignIn": "Create My VoiceTwin — Free, 60 Seconds",
+    "ctaDemo": "Hear a Demo First",
+    "emotionalTitle": "Why VoiceTwin? Because some voices should never fade away",
+    "emotionalSubtitle": "In India, a mother's lullaby, a father's advice, a grandparent's story — these aren't just sounds. They're home. They're love. They're who we are.",
+    "useCase1Title": "Maa ki lori, chahe aap office mein ho",
+    "useCase1Subtitle": "Mother's lullaby, even when you're at the office",
+    "useCase1Desc": "Stuck in a late-night meeting? Your child still hears your voice singing their favorite lullaby. Record once, send anytime. Your warmth, your tone, your love — even when you can't be there.",
+    "useCase2Title": "Ghar ki awaaz, videsh se bhi",
+    "useCase2Subtitle": "Voice of home, even from abroad",
+    "useCase2Desc": "Living in the US, UK, or Canada? Your parents in India can hear your voice every day — not a robotic text-to-speech, but YOU. Wish them good morning, remind them to take medicine, or just say 'I love you' in your own voice.",
+    "useCase3Title": "Preserve the voices you never want to lose",
+    "useCase3Subtitle": "Yaadein jo kabhi na mitein",
+    "useCase3Desc": "Record your grandmother's stories. Your father's advice. Your mother's prayers. VoiceTwin preserves these precious voices forever — so future generations can hear the love that shaped your family.",
+    "howItWorksTitle": "Create Your VoiceTwin in 3 Simple Steps",
+    "step1Title": "Speak for 30 seconds",
+    "step1Desc": "Record directly on your phone or upload an audio file. Speak naturally in Hindi, English, Hinglish, or any Indian language. No studio needed — your bedroom, kitchen, or car works perfectly.",
+    "step2Title": "AI learns your voice in 60 seconds",
+    "step2Desc": "Our AI (powered by ElevenLabs) analyzes your tone, pitch, emotion, and accent. It creates a digital twin that sounds exactly like you — not robotic, but warm and human.",
+    "step3Title": "Send voice messages that sound like YOU",
+    "step3Desc": "Type any message in HearMe chat, and it speaks in YOUR voice. Send to family, friends, or use for emotional support. Your voice, your words, your connection.",
+    "trustTitle": "Your Voice, Your Privacy — Sacred and Secure",
+    "trust1Title": "Bank-level security",
+    "trust1Desc": "Your voice sample is encrypted end-to-end. We use the same security standards as banks and hospitals. Your voice never leaves our secure servers.",
+    "trust2Title": "We never sell your data",
+    "trust2Desc": "Your voice is yours. We don't sell it to advertisers, train other AI models, or share it with third parties. Ever.",
+    "trust3Title": "Delete anytime, no questions asked",
+    "trust3Desc": "You own your VoiceTwin. Rename it, delete it, or create new ones — you're in complete control. No hidden fees, no lock-in.",
+    "trust4Title": "Built for India, respects Indian values",
+    "trust4Desc": "We understand Indian family dynamics, privacy concerns, and cultural sensitivity. Your data is handled with the respect it deserves.",
+    "benefitsTitle": "Why Thousands of Indians Trust VoiceTwin",
+    "benefit1Title": "Sounds Human, Not Robotic",
+    "benefit1Desc": "Unlike Google Translate or Siri, VoiceTwin captures YOUR unique voice — your accent, your warmth, your emotion. It's not AI pretending to be you. It IS you.",
+    "benefit2Title": "Works in All Indian Languages",
+    "benefit2Desc": "Hindi, English, Hinglish, Tamil, Telugu, Bengali, Marathi, Gujarati, Kannada, Malayalam, Punjabi, Odia — speak in any language. VoiceTwin learns YOUR voice, not a generic accent.",
+    "benefit3Title": "Free Forever (No Hidden Costs)",
+    "benefit3Desc": "Create your first VoiceTwin completely free. No credit card, no trial period, no surprise charges. If you love it, upgrade later for more features. But the core? Always free.",
+    "benefit4Title": "60-Second Setup",
+    "benefit4Desc": "No complicated software. No studio equipment. Just open HearMe, record for 30 seconds, and your VoiceTwin is ready in 60 seconds. Easier than ordering food online.",
+    "benefit5Title": "Emotional Connection",
+    "benefit5Desc": "Text messages feel cold. Voice notes take time. VoiceTwin gives you the best of both — type fast, but your loved ones hear YOUR voice. The warmth of a call, the convenience of a text.",
+    "socialProofTitle": "Real Stories from Real Families",
+    "testimonial1Name": "Priya S., Mumbai",
+    "testimonial1Quote": "I work night shifts as a nurse. My 5-year-old daughter now hears my voice singing her lullaby every night, even when I'm at the hospital. She sleeps peacefully knowing Maa is always there. VoiceTwin gave me my motherhood back.",
+    "testimonial2Name": "Arjun M., California",
+    "testimonial2Quote": "My parents in Delhi are 70+. I can't call them every day because of time zones. Now I send them voice messages in MY voice — 'Good morning Papa, take your medicine' or 'Happy Diwali Maa, I love you.' They play it on repeat. It's like I'm there.",
+    "testimonial3Name": "Sneha R., Bangalore",
+    "testimonial3Quote": "My father passed away last year. I had one voice recording of him singing my favorite song. VoiceTwin helped me preserve it. Now my kids can hear their grandfather's voice. It's the most precious gift I could give them.",
+    "faqTitle": "Frequently Asked Questions",
+    "faq1Question": "Is VoiceTwin really free?",
+    "faq1Answer": "Yes! Creating your first VoiceTwin is 100% free, forever. No credit card needed. If you want advanced features (multiple voices, higher quality), we offer premium plans starting at ₹99/month. But the basic VoiceTwin? Always free.",
+    "faq2Question": "How long does it take to create a VoiceTwin?",
+    "faq2Answer": "60 seconds. Record for 30 seconds, AI processes for 30 seconds. That's it.",
+    "faq3Question": "Can I use VoiceTwin in Hindi or other Indian languages?",
+    "faq3Answer": "Absolutely! VoiceTwin works in Hindi, English, Hinglish, Tamil, Telugu, Bengali, Marathi, Gujarati, Kannada, Malayalam, Punjabi, Odia, and more. Speak in your mother tongue — VoiceTwin learns YOUR voice, not a generic accent.",
+    "faq4Question": "Is my voice data safe?",
+    "faq4Answer": "Yes. We use military-grade encryption (same as banks). Your voice is stored securely, never sold to advertisers, and you can delete it anytime.",
+    "faq5Question": "Can I delete my VoiceTwin?",
+    "faq5Answer": "Yes! You own your VoiceTwin. Delete it anytime with one click. No questions asked.",
+    "faq6Question": "What if I don't like how it sounds?",
+    "faq6Answer": "You can re-record as many times as you want. Try different tones, speeds, or environments until it sounds perfect.",
+    "faq7Question": "Can I create VoiceTwins for my family members?",
+    "faq7Answer": "Yes! Record your child's voice, your spouse's voice, or your parent's voice (with their permission). Preserve family voices for generations.",
+    "finalCtaTitle": "Apni Awaaz Ko Amar Banao — Make Your Voice Immortal",
+    "finalCtaSubtitle": "Join thousands of Indian families preserving love, connection, and memories through VoiceTwin. Free forever. 60 seconds to create. A lifetime of warmth.",
+    "finalCtaPrimary": "Create My VoiceTwin Now — Free",
+    "finalCtaSecondary": "Hear a Demo First",
+    "userHero": "Hey {{name}}, Apni Awaaz Ko Amar Banao! 🎙️",
     "user": "Friend",
-    "userSub": "Record a short voice sample, and our AI will create your unique VoiceTwin.",
     "howTitle": "How It Works",
-    "step1": "Record your voice (30 seconds).",
-    "step2": "AI creates your VoiceTwin using ElevenLabs.",
-    "step3": "Use it in chats instantly.",
+    "singleVoice": "Single Voice",
+    "multiSpeaker": "Group Conversation",
+    "singleVoiceTitle": "🎙️ Single Voice (Recommended for First-Timers)",
+    "singleVoiceDesc": "Record your own voice or upload an audio file. Perfect for creating your personal VoiceTwin.",
+    "groupConversationTitle": "👥 Group Conversation (Advanced)",
+    "groupConversationDesc": "Upload a video/audio with multiple speakers. AI separates each voice automatically.",
+    "recordOrUpload": "Record or Upload Your Voice",
+    "startRecording": "🎙️ Start Recording",
+    "stopRecording": "⏹️ Stop Recording",
+    "sampleReadText": "Hi, this is me. I'm recording this short paragraph so HearMe can learn my unique voice. I speak naturally, clearly, and calmly. I am comfortable and safe. This is a sample for my VoiceTwin.",
+    "or": "or",
+    "uploadAudio": "Upload Audio File",
     "preview": "Preview",
-    "previewUpload": "Preview & Upload",
-    "reRecord": "Re-record",
-    "processing": "We’re building your VoiceTwin… this takes about a minute.",
+    "clear": "Clear",
+    "nameLabel": "Name your voice",
+    "namePlaceholder": "e.g., My Voice",
+    "createVoice": "Create VoiceTwin",
+    "micDenied": "Microphone permission denied",
+    "noAudio": "Please record or select an audio file first.",
+    "nameRequired": "Name is required",
+    "ready": "Your VoiceTwin is ready!",
+    "uploadError": "Could not create VoiceTwin",
     "readyTitle": "Your VoiceTwin Is Ready!",
     "readySub": "Now your messages will sound like you.",
     "tryInChat": "💬 Try It in Chat",
-    "upgradeUnlimited": "💖 Upgrade for Unlimited Use",
-    "plans": "Upgrade & Unlock VoiceTwin",
-    "free": "Free",
-    "freePrice": "$0",
-    "premium": "Premium",
-    "premiumPrice": "$5/mo",
-    "pro": "Pro",
-    "proPrice": "$12/mo",
-    "f1": "Create 1 VoiceTwin",
-    "f2": "Basic quality",
-    "f3": "Limited usage",
-    "p1": "Higher quality",
-    "p2": "More usage",
-    "p3": "Priority processing",
-    "pr1": "Studio quality",
-    "pr2": "Unlimited usage",
-    "pr3": "Fastest processing",
-    "upgradeNow": "Upgrade",
-    "ready": "Your VoiceTwin is ready!",
-    "uploadError": "Could not create VoiceTwin",
-    "startRecording": "🎙️ Start Recording",
-    "stopRecording": "⏹️ Stop Recording",
-    "recordOrUploadTitle": "Create your VoiceTwin",
-    "uploadOptionLabel": "Upload audio file",
-    "recordOptionLabel": "Record now",
-    "nameLabel": "Name your voice",
     "myVoices": "My Voices",
-    "playSample": "Play Sample",
-    "sampleReadText": "Hi, this is me. I’m recording this short paragraph so HearMe can learn my unique voice. I speak naturally, clearly, and calmly. I am comfortable and safe. This is a sample for my VoiceTwin.",
-    "recordSectionTitle": "Record your own voice",
-    "uploadSectionTitle": "Upload your own voice",
-    "nameSectionTitle": "Name of the voice",
-    "upload": "Upload",
-    "noAudio": "Please record or select an audio file first.",
-    "chooseFile": "Choose File",
-    "noFileChosen": "No file chosen",
-    "anonEmotionalTitle": "When distance grows, a familiar voice brings us back.",
-    "anonEmotionalBody": "Imagine your child hearing your words in your true voice when you’re late at work. Or a parent abroad hearing your warmth across time zones. For some of us, it’s also a way to preserve a voice we never want to lose.",
-    "anonValueTitle": "Priceless connection, not just technology",
-    "anonValueBody": "Money can’t replace the comfort of a real, familiar voice. VoiceTwin lets your words carry your emotion — safely, privately, and in your language.",
-    "anonWhatTitle": "What is VoiceTwin?",
-    "anonWhatBody": "VoiceTwin is an AI-powered way to create a digital version of your voice. Record or upload a short sample, and in about a minute, you can send messages that sound like you.",
-    "anonUseCasesTitle": "Made for the moments that matter",
-    "anonUseCase1": "Stay close to family across borders — send messages in your own voice.",
-    "anonUseCase2": "Leave loving notes for children — bedtime stories, reminders, encouragement.",
-    "anonUseCase3": "Preserve memories — keep your voice for the people who love you.",
-    "trustTitle": "Privacy and security you can rely on",
-    "trust1": "Your audio is encrypted in transit and stored securely.",
-    "trust2": "We only use your sample to create your VoiceTwin — never for ads.",
-    "trust3": "You control your data. Rename or delete your voice anytime.",
-    "anonGetStarted": "Get Started"
+    "loadingVoices": "Loading your voices...",
+    "clickToRename": "Click to rename",
+    "playPreview": "Play preview",
+    "rename": "Rename",
+    "delete": "Delete",
+    "confirmDelete": "Delete Voice?",
+    "deleteWarning": "Are you sure you want to delete this voice? This action cannot be undone.",
+    "cancel": "Cancel",
+    "deleteConfirm": "Delete",
+    "voiceNotFound": "Voice not found",
+    "renamed": "Voice renamed successfully",
+    "renameError": "Failed to rename voice",
+    "deleted": "Voice deleted successfully",
+    "deleteError": "Failed to delete voice",
+    "playError": "Failed to play preview",
+    "previewText": "Hello! This is a preview of my voice.",
+    "unknown": "Unknown",
+    "recorded": "Recorded",
+    "uploaded": "Uploaded",
+    "multiSpeakerDesc": "Upload a video or audio file with multiple speakers. We'll automatically separate each voice for you.",
+    "uploadVideo": "Upload Video/Audio File",
+    "analyzeSpeakers": "Analyze Speakers",
+    "analyzing": "Analyzing speakers... This may take a few minutes.",
+    "foundSpeakers": "Found {{count}} Speaker(s)",
+    "noSpeakersSelected": "Please select at least one speaker",
+    "voicesCreated": "Created {{count}} voice(s)!",
+    "processError": "Processing failed",
+    "createSelectedVoices": "Create {{count}} Voice(s)",
+    "noFile": "Please select a file",
+    "analysisError": "Analysis failed",
+    "speakersFound": "Found {{count}} speakers!",
+    "learnHow": "Learn How It Works →",
+    "userHeroSubtitle": "Create your AI VoiceTwin in 60 seconds. Send voice messages to family, even when you can't call. In Hindi, English, or any language you speak.",
+    "userStatus0": "You have 0 VoiceTwins. Let's create your first one!",
+    "userStatus1": "Great start! You have 1 VoiceTwin. Create more for different moods or languages!",
+    "userStatusMany": "Amazing! You have {{count}} VoiceTwins. You're a pro! 🌟",
+    "singleVoiceUseCase": "Best for: Sending messages to family, bedtime stories for kids, voice notes to parents",
+    "groupConversationUseCase": "Best for: Extracting voices from family videos, preserving multiple voices from one recording",
+    "recordingStepTitle": "Step 1: Speak for 30 Seconds",
+    "recordingInstructions": "Find a quiet spot. Speak naturally in Hindi, English, Hinglish, or any language. No studio needed — your bedroom, kitchen, or car works perfectly!",
+    "proTipsTitle": "Pro Tips for Best Results:",
+    "proTip1": "Speak clearly, but naturally (like talking to a friend)",
+    "proTip2": "Avoid background noise (turn off fans, close windows)",
+    "proTip3": "Use your normal tone (don't try to sound different)",
+    "proTip4": "Smile while speaking (it makes your voice warmer!)",
+    "sampleTextTitle": "Sample Text to Read:",
+    "sampleTextHindi": "नमस्ते, यह मैं हूं। मैं अपनी आवाज़ रिकॉर्ड कर रहा हूं ताकि HearMe मेरी अनूठी आवाज़ सीख सके। मैं स्वाभाविक रूप से, स्पष्ट रूप से और शांति से बोल रहा हूं। यह मेरे VoiceTwin के लिए एक नमूना है।",
+    "sampleTextEnglish": "Hi, this is me. I'm recording my voice so HearMe can learn my unique sound. I'm speaking naturally, clearly, and calmly. This is a sample for my VoiceTwin.",
+    "recordingStatus": "🎙️ Recording... {{seconds}} seconds left",
+    "recordingEncouragement": "You're doing great! Keep speaking naturally...",
+    "recordingSuccess": "✅ Perfect! {{seconds}} seconds recorded",
+    "recordingNextStep": "Listen to your recording below. If you like it, give it a name!",
+    "uploadTitle": "Or Upload an Existing Audio File",
+    "uploadDescription": "Have a voice recording already? Upload it here!",
+    "uploadFormats": "Accepted Formats: MP3, WAV, M4A, OGG (max 10MB)",
+    "uploadSourcesTitle": "Good Sources:",
+    "uploadSource1": "Voice notes from WhatsApp",
+    "uploadSource2": "Recordings from your phone",
+    "uploadSource3": "Audio extracted from videos",
+    "uploadSource4": "Old voice messages you want to preserve",
+    "uploadProTip": "Pro Tip: Longer recordings (1-2 minutes) create better VoiceTwins!",
+    "previewStepTitle": "Step 2: Listen to Your Recording",
+    "previewInstructions": "Play it back. Does it sound clear? Does it sound like you?",
+    "previewChecklistTitle": "Quality Checklist:",
+    "previewCheck1": "Voice is clear (not muffled)",
+    "previewCheck2": "No background noise",
+    "previewCheck3": "Sounds natural (not robotic)",
+    "previewCheck4": "You can hear your unique accent/tone",
+    "previewNotHappy": "Not happy? No problem!",
+    "previewRerecord": "🔄 Try Again",
+    "previewKeep": "✅ Sounds Good! Let's Continue",
+    "namingStepTitle": "Step 3: Give Your VoiceTwin a Name",
+    "namingInstructions": "Choose a name you'll remember. This is YOUR voice, make it personal!",
+    "namingIdeasTitle": "Name Ideas:",
+    "namingIdea1": "💜 \"Maa's Voice\" (for sending to kids)",
+    "namingIdea2": "🌍 \"My NRI Voice\" (for parents in India)",
+    "namingIdea3": "🎵 \"{{name}}'s Voice\" (simple and clear)",
+    "namingIdea4": "💖 \"Papa's Lullaby Voice\" (for bedtime stories)",
+    "namingIdea5": "🏠 \"Ghar Ki Awaaz\" (voice of home)",
+    "namingPlaceholder": "e.g., My Voice, Papa's Voice, Maa Ki Awaaz",
+    "createButtonText": "✨ Create My VoiceTwin",
+    "createButtonNote": "⏱️ Takes only 60 seconds",
+    "createLoadingAnalyzing": "⏳ Analyzing your voice...",
+    "createLoadingLearning": "🎵 Learning your unique tone...",
+    "createLoadingCreating": "✨ Creating your VoiceTwin...",
+    "createLoadingAlmost": "🎉 Almost ready...",
+    "createErrorGeneric": "Oops! Something went wrong. Let's try again.",
+    "createErrorProTip": "💡 Pro tip: Try recording in a quieter place",
+    "successModalTitle": "🎉 Shabash! Your VoiceTwin Is Ready!",
+    "successModalSubtitle": "Your voice now lives in HearMe. Send messages that sound exactly like YOU!",
+    "successWhatYouCanDoTitle": "What You Can Do Now:",
+    "successAction1": "💬 Send voice messages in chat (type text, hear YOUR voice)",
+    "successAction2": "📱 Share with family across India or abroad",
+    "successAction3": "🌙 Send bedtime stories to kids (even when you're working late)",
+    "successAction4": "💖 Comfort parents with your voice (even from miles away)",
+    "successCtaPrimary": "💬 Try It in Chat Now",
+    "successCtaSecondary": "Create Another Voice",
+    "successProTip": "Pro Tip: Go to Chat, type any message, and select \"{{voiceName}}\" as your voice. Magic! ✨",
+    "myVoicesTitle": "Your Voice Collection 🎙️",
+    "myVoicesSubtitle": "All your VoiceTwins in one place. Rename, preview, or delete anytime.",
+    "myVoicesEmpty": "You haven't created any VoiceTwins yet. Let's create your first one above! 👆",
+    "myVoices1": "Great start! You have 1 VoiceTwin. Create more for different moods or languages!",
+    "myVoicesMany": "Amazing! You have {{count}} VoiceTwins. You're a pro! 🌟",
+    "voiceCardPlayTooltip": "Hear how it sounds",
+    "voiceCardRenameTooltip": "Give it a better name",
+    "voiceCardDeleteTooltip": "Remove this voice",
+    "multiSpeakerTitle": "👥 Extract Voices from Group Conversations",
+    "multiSpeakerSubtitle": "Upload a family video or group recording. AI separates each person's voice automatically!",
+    "multiSpeakerPerfectForTitle": "Perfect For:",
+    "multiSpeakerUse1": "🎥 Family videos (birthdays, weddings, festivals)",
+    "multiSpeakerUse2": "📹 Group conversations (preserve everyone's voice)",
+    "multiSpeakerUse3": "🎬 Old recordings (extract grandparent's voice from family video)",
+    "multiSpeakerUse4": "📱 WhatsApp video calls (save voices from video chats)",
+    "multiSpeakerHowTitle": "How It Works:",
+    "multiSpeakerStep1": "1. Upload video/audio file (MP4, MOV, MP3, WAV)",
+    "multiSpeakerStep2": "2. AI analyzes and finds all speakers (takes 2-5 minutes)",
+    "multiSpeakerStep3": "3. Preview each voice separately",
+    "multiSpeakerStep4": "4. Select which voices to save",
+    "multiSpeakerStep5": "5. Create VoiceTwins for each person!",
+    "multiSpeakerProTip": "Pro Tip: Longer videos (2-5 minutes) work best. Each person should speak for at least 30 seconds.",
+    "multiSpeakerUploadButton": "📤 Upload Group Recording",
+    "multiSpeakerAnalyzing": "🔍 Analyzing speakers... This may take 2-5 minutes",
+    "multiSpeakerProgress": "Found {{count}} speakers so far...",
+    "multiSpeakerEncouragement": "Grab a chai ☕ while AI does the magic!",
+    "multiSpeakerFoundTitle": "Found {{count}} Speakers! 🎉",
+    "multiSpeakerFoundInstructions": "Listen to each voice preview. Select the ones you want to save.",
+    "multiSpeakerSpeakerLabel": "Speaker {{number}}",
+    "multiSpeakerSaveCheckbox": "Save this voice",
+    "multiSpeakerNameInput": "Give this voice a name (e.g., Papa, Maa, Dadi)",
+    "multiSpeakerCreateButton": "Create {{count}} VoiceTwins",
+    "micPermissionDenied": "Oops! Microphone permission denied. Please allow access in browser settings.",
+    "noAudioError": "Please record or upload an audio file first",
+    "nameRequiredError": "Please give your voice a name",
+    "uploadErrorGeneric": "Something went wrong. Let's try again!",
+    "deleteModalTitle": "Delete Voice?",
+    "deleteModalWarning": "Are you sure you want to delete this voice? This action cannot be undone.",
+    "deleteModalConfirm": "Delete",
+    "deleteModalCancel": "Cancel",
+    "deleteSuccess": "Deleted successfully",
+    "renameSuccess": "Voice renamed successfully"
   },
-
   "footer": {
     "tagline": "A safe, expressive, and inclusive space where every voice matters.",
     "rights": "All rights reserved."
+  },
+  "profile": {
+    "title": "Aapki Profile — Your Safe Space 💜",
+    "intro": "Yahan aap apni details dekh aur update kar sakte ho. Aapki privacy humari zimmedari hai. 💜",
+    "securityNote": "🔒 **Aapki Privacy Humari Zimmedari Hai:** Your data is encrypted and never shared with anyone. You're in control.",
+    "fields": {
+      "username": "Username (Aapka unique naam)",
+      "name": "Naam (Your name)",
+      "email": "Email address",
+      "phone": "Phone number (optional)",
+      "language": "Pasandida bhasha (Preferred language)",
+      "memberSince": "Member since (Aap kab se saath ho)"
+    },
+    "placeholders": {
+      "name": "Aapka poora naam (Your full name)",
+      "phone": "Phone number (optional) — e.g., +91 98765 43210"
+    },
+    "buttons": {
+      "edit": "Edit Karo (Edit)",
+      "update": "Update Karo (Save Changes) 💜",
+      "cancel": "Cancel Karo (Cancel)",
+      "logout": "Logout Karo (Sign Out)",
+      "changeEmail": "Email Badlo (Change Email)",
+      "changePassword": "Password Badlo (Change Password)"
+    },
+    "messages": {
+      "profileUpdated": "✅ Shabash! Profile updated successfully. 💜",
+      "nameRequired": "⚠️ Please enter your name so we know what to call you 💜",
+      "sessionExpired": "⚠️ Session expired. Please login again to continue. 💜",
+      "loadFailed": "❌ Oops! Failed to load profile. Please try again. 💜"
+    }
+  },
+  "changeEmail": {
+    "title": "Email Badlo — Update Your Email 💜",
+    "intro": "Apna email address update karna chahte ho? No problem! Bas apna current password confirm karo for security. 💜",
+    "fields": {
+      "newEmail": "Naya email address (New email)",
+      "currentPassword": "Current password (security ke liye)"
+    },
+    "placeholders": {
+      "newEmail": "you@example.com",
+      "currentPassword": "Enter your current password"
+    },
+    "button": "Update Email 💜",
+    "securityNote": "🔒 **Security ke liye:** We need your current password to confirm it's really you. Your data is safe with us. 💜",
+    "whyWeNeedThis": {
+      "title": "Why we ask for your password",
+      "description": "To protect your account from unauthorized changes. Only you should be able to change your email."
+    },
+    "messages": {
+      "emailUpdated": "✅ Shabash! Email updated successfully. Please check your new inbox for confirmation. 💜",
+      "failed": "❌ Oops! Failed to change email. Please check your password and try again. 💜"
+    }
+  },
+  "changePassword": {
+    "title": "Password Badlo — Update Your Password 💜",
+    "intro": "Apna password update karna chahte ho? Good practice! Bas apna current password confirm karo aur naya password choose karo. 💜",
+    "fields": {
+      "currentPassword": "Current password (purana password)",
+      "newPassword": "Naya password (New password)",
+      "confirmPassword": "Naya password dobara (Confirm new password)"
+    },
+    "placeholders": {
+      "currentPassword": "Enter your current password",
+      "newPassword": "At least 8 characters — make it strong! 💪",
+      "confirmPassword": "Re-enter your new password"
+    },
+    "button": "Password Update Karo (Update Password) 💜",
+    "securityNote": "🔒 **Security Tips:** Use a strong password with letters, numbers, and symbols. Don't share it with anyone. We'll never ask for your password via email or phone. 💜",
+    "passwordStrengthTips": {
+      "title": "Strong Password Tips",
+      "tip1": "✅ At least 8 characters",
+      "tip2": "✅ Mix of uppercase and lowercase",
+      "tip3": "✅ Include numbers and symbols",
+      "tip4": "✅ Avoid common words or personal info"
+    },
+    "messages": {
+      "passwordUpdated": "✅ Shabash! Password updated successfully. Your account is now more secure. 💜",
+      "passwordsDontMatch": "⚠️ Oops! New passwords don't match. Please check and try again. 💜",
+      "failed": "❌ Failed to change password. Please check your current password and try again. 💜"
+    }
   }
 }
-
-

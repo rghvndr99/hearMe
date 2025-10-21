@@ -67,7 +67,11 @@ const ChatInput = ({
           value={value}
           onChange={onChange}
           onKeyPress={onKeyPress}
-          placeholder={placeholder || t('chat.placeholder', 'Type your message...')}
+          placeholder={
+            isListening
+              ? t('chat.placeholderListening', 'Bol rahe hain... We\'re listening 🎙️')
+              : (placeholder || t('chat.placeholder', 'Kuch bhi bolo... Type or speak, we\'re listening 💜'))
+          }
           size="lg"
           variant="filled"
           bg="var(--hm-bg-input)"
@@ -87,8 +91,8 @@ const ChatInput = ({
         <Tooltip
           label={
             isListening
-              ? t('chat.tooltips.stopListening', 'Stop listening')
-              : t('chat.tooltips.startListening', 'Start voice input')
+              ? t('chat.tooltips.stopListening', '✋ Stop listening (click again to speak)')
+              : t('chat.tooltips.startListening', '🎙️ Speak in Hindi, English, or Hinglish — we understand all')
           }
         >
           <IconButton
@@ -104,15 +108,15 @@ const ChatInput = ({
             }}
             aria-label={
               isListening
-                ? t('chat.aria.stopListening', 'Stop listening')
-                : t('chat.aria.startListening', 'Start voice input')
+                ? t('chat.aria.stopListening', 'Stop voice input')
+                : t('chat.aria.startVoice', 'Start voice input in your language')
             }
             isDisabled={disabled}
           />
         </Tooltip>
 
         {/* Send Button */}
-        <Tooltip label={t('chat.tooltips.sendMessage', 'Send message')}>
+        <Tooltip label={t('chat.tooltips.sendMessage', 'Send (or press Enter) 💬')}>
           <IconButton
             icon={<FiSend />}
             onClick={onSend}
@@ -126,7 +130,7 @@ const ChatInput = ({
               color: 'var(--hm-color-text-muted)',
               opacity: 0.5
             }}
-            aria-label={t('chat.aria.sendMessage', 'Send message')}
+            aria-label={t('chat.aria.send', 'Send your message to HearMe AI')}
             isDisabled={disabled || !value.trim() || isListening}
           />
         </Tooltip>

@@ -36,8 +36,10 @@ export const useSpeechRecognition = (language, onResult, onError) => {
         setIsListening(false);
         if (onError) {
           onError({
-            title: "Voice Input Error",
-            description: "Could not recognize speech. Please try again.",
+            titleKey: "chat.toasts.voiceInputErrorTitle",
+            descriptionKey: "chat.toasts.voiceInputErrorDesc",
+            title: "Couldn't catch that 🎙️",
+            description: "No problem! Speak a bit louder or try typing instead. We're here either way 💜",
           });
         }
       };
@@ -74,8 +76,10 @@ export const useSpeechRecognition = (language, onResult, onError) => {
     if (!isSupported) {
       if (onError) {
         onError({
-          title: "Voice Not Supported",
-          description: "Your browser doesn't support voice input.",
+          titleKey: "chat.toasts.voiceNotSupportedTitle",
+          descriptionKey: "chat.toasts.voiceNotSupportedDesc",
+          title: "Voice not available on this browser 😔",
+          description: "No worries! You can still type your message. We're listening with our hearts 💜",
         });
       }
       return;
@@ -89,8 +93,10 @@ export const useSpeechRecognition = (language, onResult, onError) => {
         console.error('Failed to start recognition:', error);
         if (onError) {
           onError({
-            title: "Voice Input Error",
-            description: "Could not start voice input. Please try again.",
+            titleKey: "chat.toasts.voiceInputErrorTitle",
+            descriptionKey: "chat.toasts.voiceInputErrorDesc",
+            title: "Couldn't catch that 🎙️",
+            description: "No problem! Speak a bit louder or try typing instead. We're here either way 💜",
           });
         }
       }

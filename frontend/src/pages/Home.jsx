@@ -8,6 +8,7 @@ import {
   SimpleGrid,
   VStack,
   HStack,
+  Stack,
   Image,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
@@ -63,7 +64,7 @@ const Home = () => {
           <Box position="absolute" inset={0} bg="linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0))" />
         </Box>
 
-        <HStack spacing={4}>
+        <Stack direction={["column", "column", "row"]} spacing={4} w={["full", "full", "auto"]}>
           <Button
             as={RouterLink}
             to="/chat"
@@ -72,8 +73,9 @@ const Home = () => {
             color="white"
             _hover={{ bgGradient: "var(--hm-gradient-cta-hover)", transform: "translateY(-2px)" }}
             borderRadius="full"
+            w={["full", "full", "auto"]}
           >
-            Start a safe conversation
+            {t('home.hero.ctaPrimary')}
           </Button>
           <Button
             as={RouterLink}
@@ -83,10 +85,11 @@ const Home = () => {
             className="hm-border-outline hm-hover-bg"
             borderRadius="full"
             color="var(--hm-color-text-primary)"
+            w={["full", "full", "auto"]}
           >
             {t('home.hero.ctaSecondary')}
           </Button>
-        </HStack>
+        </Stack>
 
       </VStack>
 
@@ -160,7 +163,7 @@ const Home = () => {
         <Text fontSize="lg" color="var(--hm-color-text-secondary)">
           {t('home.ctaFooter.subtitle')}
         </Text>
-        <HStack spacing={4} justify="center">
+        <Stack direction={["column", "column", "row"]} spacing={4} justify="center" w={["full", "full", "auto"]} px={[4, 0]}>
           <Button
             as={RouterLink}
             to="/chat"
@@ -169,6 +172,8 @@ const Home = () => {
             color="white"
             borderRadius="full"
             _hover={{ bgGradient: "var(--hm-gradient-cta-hover)", transform: "translateY(-2px)" }}
+            w={["full", "full", "auto"]}
+            minH="48px"
           >
             {t('home.ctaFooter.ctaPrimary')}
           </Button>
@@ -180,10 +185,12 @@ const Home = () => {
             className="hm-border-outline hm-hover-bg"
             borderRadius="full"
             color="var(--hm-color-text-primary)"
+            w={["full", "full", "auto"]}
+            minH="48px"
           >
             {t('home.ctaFooter.ctaSecondary')}
           </Button>
-        </HStack>
+        </Stack>
       </VStack>
     </Box>
   );

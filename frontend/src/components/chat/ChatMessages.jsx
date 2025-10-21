@@ -44,6 +44,60 @@ const ChatMessages = ({ messages, isTyping }) => {
         },
       }}
     >
+      {/* Welcome Message - shown when no messages yet */}
+      {messages.length === 0 && !isTyping && (
+        <MotionBox
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          maxW="600px"
+          mx="auto"
+          mt={8}
+        >
+          <Box
+            className="hm-glass-card"
+            p={6}
+            borderRadius="2xl"
+            border="1px solid var(--hm-border-glass)"
+            textAlign="center"
+          >
+            <VStack spacing={4} align="start">
+              <Text fontSize="lg" fontWeight="600" color="var(--hm-color-text-primary)">
+                {t('chat.welcome.greeting', 'Namaste 🙏 Welcome to your safe space.')}
+              </Text>
+              <Text fontSize="md" color="var(--hm-color-text-secondary)">
+                {t('chat.welcome.intro', 'I\'m here to listen — no judgment, no pressure, just support.')}
+              </Text>
+
+              <Box w="full" textAlign="left">
+                <Text fontSize="sm" fontWeight="600" color="var(--hm-color-text-primary)" mb={2}>
+                  {t('chat.welcome.youCanTitle', 'You can:')}
+                </Text>
+                <VStack align="start" spacing={1}>
+                  <Text fontSize="sm" color="var(--hm-color-text-secondary)">
+                    {t('chat.welcome.feature1', '💬 Type in Hindi, English, or Hinglish')}
+                  </Text>
+                  <Text fontSize="sm" color="var(--hm-color-text-secondary)">
+                    {t('chat.welcome.feature2', '🎙️ Speak in your language (click the mic)')}
+                  </Text>
+                  <Text fontSize="sm" color="var(--hm-color-text-secondary)">
+                    {t('chat.welcome.feature3', '🔊 Hear responses in your chosen voice')}
+                  </Text>
+                </VStack>
+              </Box>
+
+              <Text fontSize="sm" color="var(--hm-color-text-tertiary)" fontStyle="italic">
+                {t('chat.welcome.validation', 'Whatever you\'re feeling — stress, sadness, confusion, loneliness — it\'s okay. You\'re not alone.')}
+              </Text>
+
+              <Text fontSize="md" fontWeight="600" color="var(--hm-color-brand)" mt={2}>
+                {t('chat.welcome.question', 'Kya baat karni hai aaj? What\'s on your mind today?')}
+              </Text>
+            </VStack>
+          </Box>
+        </MotionBox>
+      )}
+
       <AnimatePresence>
         {messages.map((message, index) => (
           <MotionBox
@@ -93,7 +147,7 @@ const ChatMessages = ({ messages, isTyping }) => {
             <HStack spacing={2}>
               <Spinner size="sm" color="var(--hm-color-brand)" />
               <Text fontSize="sm" color="var(--hm-color-text-secondary)">
-                {t('chat.typing', 'Typing...')}
+                {t('chat.typing', 'Thinking... give us a moment 💭')}
               </Text>
             </HStack>
           </Box>

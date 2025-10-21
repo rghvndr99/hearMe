@@ -203,7 +203,6 @@ PORT=5001
 MONGO_URI=mongodb://localhost:27017/hearme
 OPENAI_API_KEY=your-openai-key
 ELEVENLABS_API_KEY=your-elevenlabs-api-key
-ELEVENLABS_VOICE_ID=your-elevenlabs-voice-id
 JWT_SECRET=your-super-secret-jwt-key
 FRONTEND_ORIGIN=http://localhost:5174
 RATE_LIMIT_WINDOW_MS=60000
@@ -224,8 +223,9 @@ The application works without MongoDB for basic functionality. For full features
 ### 🔊 Text-to-Speech (ElevenLabs)
 
 - Backend endpoint: `POST /api/tts/eleven` (returns `audio/mpeg`)
-- Configure in root `.env`: `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`
-- Frontend: Chat has a TTS engine selector (ElevenLabs vs Browser) next to the mic button
+- Configure in root `.env`: `ELEVENLABS_API_KEY`
+- Voice IDs are managed per-user via the VoiceTwin model (users can create custom voices)
+- Frontend: Chat has a voice selector dropdown to choose from user's custom voices or browser default
 - Fallback: If ElevenLabs fails, the app falls back to the browser's SpeechSynthesis automatically
 
 Quick test (backend only):

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Flex, Heading, Text, VStack, HStack, Button, useToast, FormControl, FormLabel, Input, Select, useColorModeValue } from '@chakra-ui/react';
+import { Box, Flex, Heading, Text, VStack, HStack, Stack, Button, useToast, FormControl, FormLabel, Input, Select, useColorModeValue } from '@chakra-ui/react';
 import axios from 'axios';
 
 import { useTranslation } from 'react-i18next';
@@ -45,7 +45,7 @@ const Profile = () => {
   const updateProfile = async (e) => {
     e.preventDefault();
     if (!form.name || !form.name.trim()) {
-      toast({ title: t('account.nameRequired', 'Name is required'), status: 'warning', duration: 2500, isClosable: true });
+      toast({ title: t('profile.messages.nameRequired', '⚠️ Please enter your name so we know what to call you 💜'), status: 'warning', duration: 2500, isClosable: true });
       return;
     }
     const token = localStorage.getItem('hm-token');
@@ -65,7 +65,7 @@ const Profile = () => {
           await i18n.changeLanguage(payload.language);
         } catch {}
       }
-      toast({ title: t('account.profileUpdated', 'Profile updated'), status: 'success', duration: 2500, isClosable: true });
+      toast({ title: t('profile.messages.profileUpdated', '✅ Shabash! Profile updated successfully. 💜'), status: 'success', duration: 2500, isClosable: true });
       setEditMode(false);
     } catch (err) {
       const msg = err?.response?.data?.error || t('errors.updateFailed', 'Failed to update profile');
@@ -91,11 +91,11 @@ const Profile = () => {
       } catch (err) {
         const code = err?.response?.status;
         if (code === 401) {
-          toast({ title: t('errors.sessionExpired','Session expired, please login again'), status: 'warning', duration: 3000, isClosable: true });
+          toast({ title: t('profile.messages.sessionExpired','⚠️ Session expired. Please login again to continue. 💜'), status: 'warning', duration: 3000, isClosable: true });
           try { localStorage.removeItem('hm-token'); window.dispatchEvent(new Event('hm-auth-changed')); } catch {}
           navigate('/login');
         } else {
-          toast({ title: t('errors.loadProfileFailed','Failed to load profile'), status: 'error', duration: 3000, isClosable: true });
+          toast({ title: t('profile.messages.loadFailed','❌ Oops! Failed to load profile. Please try again. 💜'), status: 'error', duration: 3000, isClosable: true });
         }
       } finally {
         setLoading(false);
@@ -118,36 +118,76 @@ const Profile = () => {
       pb={[12, 20]}
     >
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
+        {/* Page Intro */}
+        <VStack spacing={2} textAlign="center" maxW="700px">
+          <Heading
+            as="h1"
+            fontSize={["3xl", "4xl", "5xl"]}
+            fontWeight="800"
+            color="var(--hm-color-text-primary)"
+            lineHeight="1.2"
+          >
+            {t('profile.title', 'Aapki Profile — Your Safe Space 💜')}
+          </Heading>
+          <Text fontSize="md" color="var(--hm-color-text-secondary)" lineHeight="1.7">
+            {t('profile.intro', 'Yahan aap apni details dekh aur update kar sakte ho. Aapki privacy humari zimmedari hai. 💜')}
+          </Text>
+        </VStack>
+
         <Box maxW="700px" mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
-          <HStack justify="space-between" mb={4}>
-            <Heading size="lg" color="var(--hm-color-text-primary)">{t('account.profile', 'Your Profile')}</Heading>
-            <HStack>
+          <Stack direction={["column", "column", "row"]} justify="space-between" align={["stretch", "stretch", "center"]} mb={4} spacing={3}>
+            <Heading size="md" color="var(--hm-color-text-primary)">{t('account.profile', 'Your Profile')}</Heading>
+            <Stack direction={["column", "column", "row"]} spacing={2} w={["full", "full", "auto"]}>
               {!loading && user && !editMode && (
-                <Button variant="outline" borderColor="var(--hm-border-outline)" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)' }} onClick={handleStartEdit}>{t('common.edit', 'Edit')}</Button>
+                <Button variant="outline" borderColor="var(--hm-border-outline)" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)' }} onClick={handleStartEdit} w={["full", "full", "auto"]} minH="48px">{t('profile.buttons.edit', 'Edit Karo (Edit)')}</Button>
               )}
-              <Button variant="outline" borderColor="var(--hm-border-outline)" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)' }} onClick={logout}>{t('nav.logout', 'Logout')}</Button>
-            </HStack>
-          </HStack>
+              <Button variant="outline" borderColor="var(--hm-border-outline)" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)' }} onClick={logout} w={["full", "full", "auto"]} minH="48px">{t('profile.buttons.logout', 'Logout Karo (Sign Out)')}</Button>
+            </Stack>
+          </Stack>
           {loading && <Text color="var(--hm-color-text-secondary)">{t('common.loading', 'Loading...')}</Text>}
           {!loading && user && !editMode && (
             <VStack align="stretch" spacing={3}>
-              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('account.username', 'Username')}</Text><Text color="var(--hm-color-text-primary)">{user.username}</Text></HStack>
-              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('account.name', 'Name')}</Text><Text color="var(--hm-color-text-primary)">{user.name}</Text></HStack>
-              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('account.email', 'Email')}</Text><Text color="var(--hm-color-text-primary)">{user.email}</Text></HStack>
-              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('account.phone', 'Phone')}</Text><Text color="var(--hm-color-text-primary)">{user.phone || '-'}</Text></HStack>
-              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('account.language', 'Language')}</Text><Text color="var(--hm-color-text-primary)">{user.language}</Text></HStack>
-              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('account.memberSince', 'Member since')}</Text><Text color="var(--hm-color-text-primary)">{new Date(user.createdAt).toLocaleString()}</Text></HStack>
-              <HStack pt={2} spacing={3} justify="flex-end">
-                <Button as={RouterLink} to="/change-email" size="sm" variant="ghost" color="var(--hm-color-brand)" _hover={{ bg: 'var(--hm-bg-glass)' }}>{t('account.changeEmail', 'Change email')}</Button>
-                <Button as={RouterLink} to="/change-password" size="sm" variant="ghost" color="var(--hm-color-brand)" _hover={{ bg: 'var(--hm-bg-glass)' }}>{t('account.changePassword', 'Change password')}</Button>
-              </HStack>
+              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('profile.fields.username', 'Username (Aapka unique naam)')}</Text><Text color="var(--hm-color-text-primary)">{user.username}</Text></HStack>
+              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('profile.fields.name', 'Naam (Your name)')}</Text><Text color="var(--hm-color-text-primary)">{user.name}</Text></HStack>
+              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('profile.fields.email', 'Email address')}</Text><Text color="var(--hm-color-text-primary)">{user.email}</Text></HStack>
+              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('profile.fields.phone', 'Phone number (optional)')}</Text><Text color="var(--hm-color-text-primary)">{user.phone || '-'}</Text></HStack>
+              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('profile.fields.language', 'Pasandida bhasha (Preferred language)')}</Text><Text color="var(--hm-color-text-primary)">{user.language}</Text></HStack>
+              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('profile.fields.memberSince', 'Member since (Aap kab se saath ho)')}</Text><Text color="var(--hm-color-text-primary)">{new Date(user.createdAt).toLocaleString()}</Text></HStack>
+              <Stack direction={["column", "column", "row"]} pt={2} spacing={3} justify={["stretch", "stretch", "flex-end"]} w="full">
+                <Button
+                  as={RouterLink}
+                  to="/change-email"
+                  size="sm"
+                  variant="outline"
+                  borderColor="var(--hm-color-brand)"
+                  color="var(--hm-color-brand)"
+                  _hover={{ bg: 'var(--hm-color-brand)', color: 'white' }}
+                  w={["full", "full", "auto"]}
+                  minH="48px"
+                >
+                  {t('profile.buttons.changeEmail', 'Change Email')}
+                </Button>
+                <Button
+                  as={RouterLink}
+                  to="/change-password"
+                  size="sm"
+                  variant="outline"
+                  borderColor="var(--hm-color-brand)"
+                  color="var(--hm-color-brand)"
+                  _hover={{ bg: 'var(--hm-color-brand)', color: 'white' }}
+                  w={["full", "full", "auto"]}
+                  minH="48px"
+                >
+                  {t('profile.buttons.changePassword', 'Change Password')}
+                </Button>
+              </Stack>
             </VStack>
           )}
           {!loading && user && editMode && (
             <Box as="form" onSubmit={updateProfile}>
               <VStack spacing={4} align="stretch">
                 <FormControl>
-                  <FormLabel color="var(--hm-color-text-primary)">{t('account.username', 'Username')}</FormLabel>
+                  <FormLabel color="var(--hm-color-text-primary)">{t('profile.fields.username', 'Username (Aapka unique naam)')}</FormLabel>
                   <Input
                     value={user.username}
                     isReadOnly
@@ -158,31 +198,35 @@ const Profile = () => {
                   />
                 </FormControl>
                 <FormControl isRequired>
-                  <FormLabel color="var(--hm-color-text-primary)">{t('account.name', 'Name')}</FormLabel>
+                  <FormLabel color="var(--hm-color-text-primary)">{t('profile.fields.name', 'Naam (Your name)')}</FormLabel>
                   <Input
                     value={form.name}
                     onChange={(e) => setForm(s => ({ ...s, name: e.target.value }))}
+                    placeholder={t('profile.placeholders.name', 'Aapka poora naam (Your full name)')}
                     bg="var(--hm-bg-glass)"
                     borderColor="var(--hm-border-glass)"
                     color="var(--hm-color-text-primary)"
+                    _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                     _hover={{ borderColor: 'var(--hm-border-outline)' }}
                     _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
                   />
                 </FormControl>
                 <FormControl>
-                  <FormLabel color="var(--hm-color-text-primary)">{t('account.phone', 'Phone')}</FormLabel>
+                  <FormLabel color="var(--hm-color-text-primary)">{t('profile.fields.phone', 'Phone number (optional)')}</FormLabel>
                   <Input
                     value={form.phone}
                     onChange={(e) => setForm(s => ({ ...s, phone: e.target.value }))}
+                    placeholder={t('profile.placeholders.phone', 'Phone number (optional) — e.g., +91 98765 43210')}
                     bg="var(--hm-bg-glass)"
                     borderColor="var(--hm-border-glass)"
                     color="var(--hm-color-text-primary)"
+                    _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                     _hover={{ borderColor: 'var(--hm-border-outline)' }}
                     _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
                   />
                 </FormControl>
                 <FormControl>
-                  <FormLabel color="var(--hm-color-text-primary)">{t('account.language', 'Language')}</FormLabel>
+                  <FormLabel color="var(--hm-color-text-primary)">{t('profile.fields.language', 'Pasandida bhasha (Preferred language)')}</FormLabel>
                   <Select
                     value={form.language}
                     onChange={(e) => setForm(s => ({ ...s, language: e.target.value }))}
@@ -196,13 +240,20 @@ const Profile = () => {
                     <option value="hi" style={{ background: 'var(--hm-color-bg)', color: 'var(--hm-color-text-primary)' }}>{t('language.hi','हिंदी')}</option>
                   </Select>
                 </FormControl>
-                <HStack justify="flex-end">
-                  <Button variant="ghost" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)' }} onClick={handleCancelEdit}>{t('common.cancel', 'Cancel')}</Button>
-                  <Button type="submit" isLoading={saving} bgGradient="var(--hm-gradient-cta)" color="white" _hover={{ opacity: 0.9 }}>{t('common.update', 'Update')}</Button>
-                </HStack>
+                <Stack direction={["column", "column", "row"]} justify={["stretch", "stretch", "flex-end"]} spacing={3} w="full">
+                  <Button variant="ghost" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)' }} onClick={handleCancelEdit} w={["full", "full", "auto"]} minH="48px">{t('profile.buttons.cancel', 'Cancel Karo (Cancel)')}</Button>
+                  <Button type="submit" isLoading={saving} bgGradient="var(--hm-gradient-cta)" color="white" _hover={{ opacity: 0.9 }} borderRadius="full" px={8} w={["full", "full", "auto"]} minH="48px">{t('profile.buttons.update', 'Update Karo (Save Changes) 💜')}</Button>
+                </Stack>
               </VStack>
             </Box>
           )}
+        </Box>
+
+        {/* Security Note */}
+        <Box maxW="700px" mx="auto" w="full" p={4} bg="var(--hm-bg-glass)" borderRadius="lg" borderLeft="4px solid var(--hm-color-brand)">
+          <Text fontSize="sm" color="var(--hm-color-text-secondary)" lineHeight="1.7">
+            {t('profile.securityNote', '🔒 **Aapki Privacy Humari Zimmedari Hai:** Your data is encrypted and never shared with anyone. You\'re in control.')}
+          </Text>
         </Box>
       </VStack>
     </Flex>

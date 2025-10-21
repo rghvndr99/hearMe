@@ -34,10 +34,10 @@ const Contact = () => {
 
   const handleSubmit = () => {
     if (formData.name && formData.email && formData.message) {
-      alert(t('contact.alertThanks'));
+      alert(t('contact.alertThanks', '✅ Shukriya! Thank you for reaching out. We\'ll get back to you within 24-48 hours. 💜'));
       setFormData({ name: '', email: '', message: '' });
     } else {
-      alert(t('contact.alertFillAll'));
+      alert(t('contact.alertFillAll', '⚠️ Oops! Please fill in all fields so we can help you better. 💜'));
     }
   };
 
@@ -66,25 +66,29 @@ const Contact = () => {
         p={[6, 10]}
         zIndex={1}
       >
-        <VStack spacing={3} textAlign="center">
+        <VStack spacing={4} textAlign="center">
           <Heading fontSize={["3xl", "4xl"]} fontWeight="700" color="var(--hm-color-text-primary)">
-            {t('contact.title')}
+            {t('contact.title', 'Hum Hain Na — We\'re Here 💜')}
           </Heading>
 
-          <Text color="var(--hm-color-text-secondary)">
-            {t('contact.intro1')}
+          <Text color="var(--hm-color-text-secondary)" fontSize="md">
+            {t('contact.intro1', 'Have feedback? Want to partner with us? Have a non-urgent question? We\'d love to hear from you. 💜')}
           </Text>
-          <Text color="var(--hm-color-text-secondary)" fontSize="sm">
-            {t('contact.intro2')}
+          <Text color="var(--hm-color-text-secondary)" fontSize="sm" fontWeight="600">
+            {t('contact.intro2', '**Important:** This form is for general inquiries only. If you need emotional support, please visit our Chat page. If you\'re in crisis, call 112 (India) or see our Resources page.')}
           </Text>
-          <Text color="var(--hm-color-text-secondary)" fontSize="sm">
-            You can also reach us at
-            <Link href="tel:+918105568665" color="var(--hm-color-accent-link)">+91 8105568665</Link>
-            {"  ·  "}
-            <Link href="mailto:rghvndr99@gmail.com" color="var(--hm-color-accent-link)">rghvndr99@gmail.com</Link>
-            {"  ·  "}
-            <Link href="https://hearme.com" isExternal color="var(--hm-color-accent-link)">hearme.com</Link>
-          </Text>
+
+          <VStack spacing={1} pt={2}>
+            <Text color="var(--hm-color-text-secondary)" fontSize="sm">
+              {t('contact.contactInfo.phone', '📞 Call us: +91 8105568665 (Mon-Fri, 10 AM - 6 PM IST)')}
+            </Text>
+            <Text color="var(--hm-color-text-secondary)" fontSize="sm">
+              {t('contact.contactInfo.email', '📧 Email us: rghvndr99@gmail.com (We reply within 24-48 hours)')}
+            </Text>
+            <Text color="var(--hm-color-text-secondary)" fontSize="sm">
+              {t('contact.contactInfo.website', '🌐 Visit: hearme.com')}
+            </Text>
+          </VStack>
         </VStack>
 
         <VStack spacing={4} w="100%">
@@ -92,10 +96,9 @@ const Contact = () => {
             name="name"
             value={formData.name}
             onChange={handleInputChange}
-            placeholder={t('contact.name')}
+            placeholder={t('contact.name', 'Aapka naam (Your name)')}
             className="hm-input"
             _focus={{ borderColor: "var(--hm-color-brand)" }}
-
             _placeholder={{ color: "var(--hm-color-placeholder)" }}
             borderRadius="md"
             p={4}
@@ -105,10 +108,9 @@ const Contact = () => {
             type="email"
             value={formData.email}
             onChange={handleInputChange}
-            placeholder={t('contact.email')}
+            placeholder={t('contact.email', 'Aapka email (Your email)')}
             className="hm-input"
             _focus={{ borderColor: "var(--hm-color-brand)" }}
-
             _placeholder={{ color: "var(--hm-color-placeholder)" }}
             borderRadius="md"
             p={4}
@@ -117,10 +119,9 @@ const Contact = () => {
             name="message"
             value={formData.message}
             onChange={handleInputChange}
-            placeholder={t('contact.message')}
+            placeholder={t('contact.message', 'Kya baat karni hai? (What would you like to share?)')}
             className="hm-input"
             _focus={{ borderColor: "var(--hm-color-brand)" }}
-
             _placeholder={{ color: "var(--hm-color-placeholder)" }}
             borderRadius="md"
             rows={5}
@@ -136,10 +137,11 @@ const Contact = () => {
           _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
           color="white"
           fontWeight="600"
-          borderRadius="md"
+          borderRadius="full"
+          py={6}
           shadow="0px 0px 10px rgba(255, 107, 138, 0.4)"
         >
-          {t('contact.send')}
+          {t('contact.send', 'Bhejo (Send) 💜')}
         </Button>
       </VStack>
     </Flex>
