@@ -50,30 +50,21 @@ const ChatMessages = ({ messages, isTyping }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          maxW="600px"
-          mx="auto"
-          mt={8}
+          alignSelf="flex-start"
+          maxW="85%"
+          mt={4}
         >
-          <Box
-            className="hm-glass-card"
-            p={6}
-            borderRadius="2xl"
-            border="1px solid var(--hm-border-glass)"
-            textAlign="center"
-          >
-            <VStack spacing={4} align="start">
-              <Text fontSize="lg" fontWeight="600" color="var(--hm-color-text-primary)">
-                {t('chat.welcome.greeting', 'Namaste 🙏 Welcome to your safe space.')}
-              </Text>
-              <Text fontSize="md" color="var(--hm-color-text-secondary)">
-                {t('chat.welcome.intro', 'I\'m here to listen — no judgment, no pressure, just support.')}
+          <Box className="hm-chat-bubble hm-chat-bubble-ai">
+            <VStack spacing={3} align="start">
+              <Text fontSize="md" whiteSpace="pre-wrap">
+                {t('chat.welcome.greeting', 'Hi there � I\'m here to listen and support you. This is a safe, anonymous space where you can share whatever\'s on your mind. How are you feeling today?')}
               </Text>
 
-              <Box w="full" textAlign="left">
+              <Box w="full" pt={2} borderTop="1px solid var(--hm-border-glass)">
                 <Text fontSize="sm" fontWeight="600" color="var(--hm-color-text-primary)" mb={2}>
                   {t('chat.welcome.youCanTitle', 'You can:')}
                 </Text>
-                <VStack align="start" spacing={1}>
+                <VStack align="start" spacing={1.5}>
                   <Text fontSize="sm" color="var(--hm-color-text-secondary)">
                     {t('chat.welcome.feature1', '💬 Type in Hindi, English, or Hinglish')}
                   </Text>
@@ -83,16 +74,11 @@ const ChatMessages = ({ messages, isTyping }) => {
                   <Text fontSize="sm" color="var(--hm-color-text-secondary)">
                     {t('chat.welcome.feature3', '🔊 Hear responses in your chosen voice')}
                   </Text>
+                  <Text fontSize="sm" color="var(--hm-color-text-secondary)">
+                    {t('chat.welcome.feature4', '👤 Talk to a real human counselor (paid) — Type "I want to talk to a human" or call +91 8105568665')}
+                  </Text>
                 </VStack>
               </Box>
-
-              <Text fontSize="sm" color="var(--hm-color-text-tertiary)" fontStyle="italic">
-                {t('chat.welcome.validation', 'Whatever you\'re feeling — stress, sadness, confusion, loneliness — it\'s okay. You\'re not alone.')}
-              </Text>
-
-              <Text fontSize="md" fontWeight="600" color="var(--hm-color-brand)" mt={2}>
-                {t('chat.welcome.question', 'Kya baat karni hai aaj? What\'s on your mind today?')}
-              </Text>
             </VStack>
           </Box>
         </MotionBox>

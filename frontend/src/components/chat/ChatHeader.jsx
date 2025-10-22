@@ -1,6 +1,6 @@
-import React from 'react';
-import { Box, Flex, VStack, HStack, Text } from '@chakra-ui/react';
-import { BsRobot } from 'react-icons/bs';
+import React, { useState } from 'react';
+import { Box, Flex, VStack, HStack, Text, IconButton, Collapse } from '@chakra-ui/react';
+import { BsRobot, BsInfoCircle } from 'react-icons/bs';
 import VoiceControls from './VoiceControls';
 import VoiceSelector from './VoiceSelector';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +21,7 @@ const ChatHeader = ({
   onVoiceChange,
 }) => {
   const { t } = useTranslation('common');
+  const [showInfo, setShowInfo] = useState(false);
 
   return (
     <Box
@@ -52,7 +53,7 @@ const ChatHeader = ({
               color="var(--hm-color-brand)"
             />
             <Text fontSize={["md", "lg", "xl"]} fontWeight="700" color="var(--hm-color-text-primary)">
-              {t('chat.header.title', 'Dil Ki Baat — Safe Space for You 💜')}
+              {t('chat.header.title', 'Safe Space for You 💜')}
             </Text>
           </HStack>
           <Text fontSize={["xs", "sm"]} color="var(--hm-color-text-secondary)" textAlign={["center", "center", "left"]}>
@@ -62,6 +63,15 @@ const ChatHeader = ({
 
         {/* Right: Controls */}
         <HStack spacing={2} w={["full", "full", "auto"]} justify={["center", "center", "flex-end"]}>
+          <IconButton
+            icon={<BsInfoCircle />}
+            variant="ghost"
+            size="sm"
+            onClick={() => setShowInfo(!showInfo)}
+            aria-label="Show info"
+            color="var(--hm-color-text-secondary)"
+            _hover={{ color: 'var(--hm-color-brand)' }}
+          />
           <VoiceSelector
             selectedVoiceId={selectedVoiceId}
             onVoiceChange={onVoiceChange}
@@ -77,6 +87,36 @@ const ChatHeader = ({
           />
         </HStack>
       </Flex>
+
+      {/* Collapsible Info Section */}
+      <Collapse in={showInfo} animateOpacity>
+        <Box
+          px={[3, 4, 6]}
+          pb={4}
+          borderTop="1px solid var(--hm-border-glass)"
+          pt={3}
+        >
+          <VStack align="start" spacing={2}>
+            <Text fontSize="sm" fontWeight="600" color="var(--hm-color-text-primary)">
+              {t('chat.welcome.youCanTitle', 'You can:')}
+            </Text>
+            <VStack align="start" spacing={1} pl={2}>
+              <Text fontSize="xs" color="var(--hm-color-text-secondary)">
+                {t('chat.welcome.feature1', '💬 Type in Hindi, English, or Hinglish')}
+              </Text>
+              <Text fontSize="xs" color="var(--hm-color-text-secondary)">
+                {t('chat.welcome.feature2', '🎙️ Speak in your language (click the mic)')}
+              </Text>
+              <Text fontSize="xs" color="var(--hm-color-text-secondary)">
+                {t('chat.welcome.feature3', '🔊 Hear responses in your chosen voice')}
+              </Text>
+              <Text fontSize="xs" color="var(--hm-color-text-secondary)">
+                {t('chat.welcome.feature4', '👤 Talk to a real human counselor (paid) — Type "I want to talk to a human" or call +91 8105568665')}
+              </Text>
+            </VStack>
+          </VStack>
+        </Box>
+      </Collapse>
     </Box>
   );
 };

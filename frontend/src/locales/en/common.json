@@ -81,8 +81,8 @@
   },
   "home": {
     "hero": {
-      "title": "Dil ki baat, apni bhasha mein — You're not alone anymore",
-      "subtitle": "India's first AI-powered emotional support chat in Hindi, English & 10+ Indian languages. Anonymous, safe, available 24/7. Talk, type, or speak — we listen with care.",
+      "title": "You're not alone anymore",
+      "subtitle": "India's first AI-powered emotional support chat in Hindi & English. Anonymous, safe, available 24/7. Talk, type, or speak — we listen with care.",
       "ctaPrimary": "Start talking now — it's free",
       "ctaSecondary": "Just listen, don't judge"
     },
@@ -96,8 +96,12 @@
         "desc": "Late night thoughts? Early morning anxiety? We're here round the clock — whenever your heart feels heavy."
       },
       "languages": {
-        "title": "Apni Bhasha Mein Baat Karein",
-        "desc": "Speak in Hindi, English, Hinglish, Tamil, Telugu, Bengali, Marathi, Gujarati, Kannada, Malayalam, Punjabi, Odia — whatever feels natural to you."
+        "title": "Speak in Your Language",
+        "desc": "Chat in Hindi, English, or Hinglish — whatever feels natural to you. We understand your language and emotions."
+      },
+      "humanSupport": {
+        "title": "Talk to Real Humans (Paid)",
+        "desc": "Need to talk to a real person? Connect with our trained counselors. Pricing starts at ₹299/session. Call +91 8105568665 (Mon-Fri, 10 AM - 6 PM IST) or email rghvndr99@gmail.com to book."
       },
       "voice": {
         "title": "Voice Chat & AI Voice Replies",
@@ -119,7 +123,8 @@
     "intro": {
       "title": "Why HearMe? Because mental health support in India should be simple, private, and in your language",
       "p1": "Exam stress keeping you up at night? Job pressure crushing you? Family expectations weighing heavy? Feeling lonely in a crowded city? Breakup pain? Money worries? We get it. Life in India is intense. And sometimes, you just need someone to listen — without advice, without judgment, without telling your family.",
-      "p2": "HearMe is India's first multilingual AI emotional support platform. No therapist appointments. No expensive sessions. No awkward video calls. Just open the chat, speak your heart in Hindi, English, or any Indian language, and feel lighter. Our AI is trained on Indian emotions, understands 'ghar ki baat,' and responds with warmth and care. It's like talking to a friend who truly gets you — available 24/7, completely free, and 100% confidential."
+      "p2": "HearMe offers FREE AI emotional support 24/7 in Hindi & English. No therapist appointments. No expensive sessions. Just open the chat, speak your heart, and feel lighter. Our AI is trained on Indian emotions, understands 'ghar ki baat,' and responds with warmth and care.",
+      "p3": "Need to talk to a real human? We also offer paid counseling sessions with trained professionals. Call +91 8105568665 (Mon-Fri, 10 AM - 6 PM IST) or email rghvndr99@gmail.com to book a session."
     },
     "trust": {
       "title": "Your Safety & Privacy — Our Promise",
@@ -230,43 +235,44 @@
     }
   },
   "volunteer": {
-    "title": "Kisi Ka Sahara Bano — Be Someone's Support 💜",
+    "title": "Be Someone's Support 💜",
     "intro1": "In India, mental health is still taboo. Families don't talk about it. Friends don't understand. But you can change that — one conversation at a time.",
     "intro2": "We'll train you on how to listen with empathy, without judgment. You'll be part of a caring community supporting mental wellness in Hindi, English, and Hinglish.",
     "apply": "Apply to Volunteer 💜",
     "benefits": {
-      "supportTitle": "Dil Ko Sukoon Do — Bring Peace to Hearts",
+      "supportTitle": "Bring Peace to Hearts",
       "supportDesc": "Your listening can be the difference between someone feeling alone and feeling understood. In India, where mental health support is scarce, your time is priceless.",
-      "experienceTitle": "Khud Ko Bhi Samjho — Understand Yourself Too",
+      "experienceTitle": "Understand Yourself Too",
       "experienceDesc": "Learn active listening, empathy, and emotional intelligence. These skills will transform your relationships, career, and self-awareness.",
-      "communityTitle": "Ek Parivaar Bano — Become Part of a Family",
+      "communityTitle": "Become Part of a Family",
       "communityDesc": "Connect with like-minded volunteers across India who believe mental wellness is a right, not a luxury. Together, we're breaking the stigma."
     },
     "form": {
-      "title": "Volunteer Application — Hum Aapka Intezaar Kar Rahe Hain 💜",
+      "title": "Volunteer Application 💜",
       "note": "**Note:** This form is for volunteering. If you need emotional support, please visit our Chat page.",
-      "name": "Aapka poora naam (Full name) *",
-      "email": "Aapka email (Email address) *",
+      "name": "Full name *",
+      "email": "Email address *",
       "phone": "Phone number (optional)",
-      "availability": "Kab free ho? (When are you available?) — e.g., Weekends, evenings",
-      "location": "Aap kahan rehte ho? (Your city)",
-      "skills": "Aapki skills (Your skills/expertise) — e.g., Psychology, counseling, languages",
-      "message": "Aap kyun volunteer karna chahte ho? (Why do you want to volunteer?) *",
-      "submit": "Apply Karo (Submit Application) 💜",
+      "availability": "When are you available? — e.g., Weekends, evenings",
+      "location": "Your city",
+      "skills": "Your skills/expertise — e.g., Psychology, counseling, languages",
+      "message": "Why do you want to volunteer? *",
+      "submit": "Submit Application 💜",
       "alertRequired": "⚠️ Please fill in all required fields (marked with *) 💜",
       "alertInvalidEmail": "⚠️ Please enter a valid email address so we can reach you 💜",
-      "alertThanks": "✅ Shukriya! Thank you for applying. We'll review your application and get back to you within 5-7 days. 💜"
+      "alertThanks": "✅ Thank you for applying. We'll review your application and get back to you within 5-7 days. 💜",
+      "submitting": "Submitting..."
     },
     "subtitle": "Join HearMe's mission to make mental wellness accessible across India. You don't need to be a therapist — just a kind, patient listener.",
     "whatYouDo": {
-      "title": "Aap Kya Karenge? (What You'll Do)",
+      "title": "What You'll Do",
       "point1": "🎧 Listen without judgment — let people share their truth",
       "point2": "💬 Respond with empathy — validate their feelings",
       "point3": "🔗 Guide gently — share resources when needed",
       "point4": "🔒 Maintain confidentiality — their trust is sacred"
     },
     "whoCanVolunteer": {
-      "title": "Kaun Volunteer Kar Sakta Hai? (Who Can Volunteer?)",
+      "title": "Who Can Volunteer?",
       "point1": "✅ You're 18+ years old",
       "point2": "✅ You can commit 2-4 hours per week",
       "point3": "✅ You're fluent in Hindi, English, or both",
@@ -355,14 +361,12 @@
       "crisisDesc": "If you're in crisis, please reach out immediately:\n\n🇮🇳 India:\n• AASRA: 9820466726\n• Vandrevala Foundation: 1860 2662 345\n• iCall: 9152987821\n\n🌍 International:\n• Suicide Prevention Lifeline: 988\n\nYou matter. Your life matters. Please reach out."
     },
     "welcome": {
-      "greeting": "Namaste 🙏 Welcome to your safe space.",
-      "intro": "I'm here to listen — no judgment, no pressure, just support.",
+      "greeting": "Hi there 👋 I'm here to listen and support you. This is a safe, anonymous space where you can share whatever's on your mind. How are you feeling today?",
       "youCanTitle": "You can:",
       "feature1": "💬 Type in Hindi, English, or Hinglish",
       "feature2": "🎙️ Speak in your language (click the mic)",
       "feature3": "🔊 Hear responses in your chosen voice",
-      "validation": "Whatever you're feeling — stress, sadness, confusion, loneliness — it's okay. You're not alone.",
-      "question": "What's on your mind today?"
+      "feature4": "👤 Talk to a real human counselor (paid) — Type \"I want to talk to a human\" or call +91 8105568665"
     },
     "placeholder": "Type or speak, we're listening 💜",
     "placeholderAlt": "Share what's on your mind... no judgment here",

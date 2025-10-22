@@ -14,10 +14,32 @@ const router = express.Router();
 const conversations = new Map();
 
 /**
+ * Welcome messages in different languages
+ */
+const WELCOME_MESSAGES = {
+  en: `Hi there 👋 I'm here to listen and support you. This is a safe, anonymous space where you can share whatever's on your mind. How are you feeling today?
+
+You can:
+💬 Type in Hindi, English, or Hinglish
+🎙️ Speak in your language (click the mic)
+🔊 Hear responses in your chosen voice
+👤 Talk to a real human counselor (paid) — Type "I want to talk to a human" or call +91 8105568665`,
+
+  hi: `नमस्ते 👋 मैं आपकी बात सुनने और समर्थन करने के लिए यहाँ हूँ। यह एक सुरक्षित, गुमनाम जगह है जहाँ आप अपने मन की बात साझा कर सकते हैं। आप कैसा महसूस कर रहे हैं?
+
+आप कर सकते हैं:
+💬 हिंदी, अंग्रेजी, या हिंग्लिश में टाइप करें
+🎙️ अपनी भाषा में बोलें (माइक पर क्लिक करें)
+🔊 अपनी पसंद की आवाज़ में जवाब सुनें
+👤 असली इंसान परामर्शदाता से बात करें (सशुल्क) — टाइप करें "मुझे किसी इंसान से बात करनी है" या +91 8105568665 पर कॉल करें`
+};
+
+/**
  * Start a new anonymous chat session
  */
 router.post('/session/start', async (req, res) => {
   try {
+    const { language = 'en' } = req.body;
     const sessionId = uuidv4();
     const conversation = {
       sessionId,
@@ -25,14 +47,16 @@ router.post('/session/start', async (req, res) => {
       startedAt: new Date(),
       lastActivity: new Date(),
       mood: 'neutral',
+      language, // Store user's language preference
     };
 
     conversations.set(sessionId, conversation);
 
-    // Generate a warm welcome message
+    // Get welcome message in user's language
+    const welcomeContent = WELCOME_MESSAGES[language] || WELCOME_MESSAGES.en;
     const welcomeMessage = {
       role: 'assistant',
-      content: "Hi there 👋 I'm here to listen and support you. This is a safe, anonymous space where you can share whatever's on your mind. How are you feeling today?",
+      content: welcomeContent,
       timestamp: new Date(),
     };
 

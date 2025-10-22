@@ -102,7 +102,11 @@ const Chat = () => {
     const startChatSession = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.post(`${API_URL}/api/ai-chat/session/start`);
+        // Get UI language preference
+        const uiLang = i18n.language || 'en';
+        const response = await axios.post(`${API_URL}/api/ai-chat/session/start`, {
+          language: uiLang
+        });
         setSessionId(response.data.sessionId);
         setMessages([response.data.message]);
       } catch (error) {
@@ -120,7 +124,7 @@ const Chat = () => {
     };
 
     startChatSession();
-  }, []);
+  }, [i18n.language]);
 
   /**
    * Send message to AI

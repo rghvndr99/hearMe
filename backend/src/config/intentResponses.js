@@ -49,34 +49,50 @@ export const INTENT_PATTERNS = {
       /\bnot\s+(a\s+)?bot\b/i,
       /\bactual\s+(person|human)\b/i,
       /\blive\s+(agent|person|support)\b/i,
+      // Hindi patterns
+      /\b(mujhe|main)\s+(kisi\s+)?(insaan|insan|vyakti|counselor|therapist)\s+(se\s+)?(baat\s+karni\s+hai|baat\s+karna\s+chahta|baat\s+karna\s+chahti)\b/i,
+      /\b(asli|real)\s+(insaan|insan|vyakti)\b/i,
+      /\b(human|insaan|insan)\s+(se\s+)?(baat|help|madad)\b/i,
+      /\bbot\s+nahi\b/i,
     ],
     // 👇 CUSTOMIZE YOUR RESPONSE HERE
     getResponse: (lang) => {
-      const { helplinePhone, helplinePhoneNumeric, crisisTextKeyword, crisisTextNumber } = CONTACT_INFO;
-      
+      const { helplinePhone, helplinePhoneNumeric, email } = CONTACT_INFO;
+
       const responses = {
         'English': `I understand you'd like to speak with a human counselor. While I'm here to listen and support you 24/7, if you need professional human support, please:
 
-📞 **Call our helpline:** ${helplinePhone} (${helplinePhoneNumeric})
-💬 **Text:** '${crisisTextKeyword}' to ${crisisTextNumber}
+📞 **Call:** ${helplinePhone}
+📧 **Email:** ${email}
+💰 **Pricing:** ₹299/session
 
-Our trained counselors are available to help you. Is there anything I can assist you with in the meantime?`,
+Our trained counselors are available Mon-Fri, 10 AM - 6 PM IST. Is there anything I can assist you with in the meantime?`,
+
+        'Hindi': `मैं समझता हूं कि आप किसी इंसान परामर्शदाता से बात करना चाहते हैं। जबकि मैं 24/7 सुनने और समर्थन करने के लिए यहां हूं, यदि आपको पेशेवर मानव सहायता की आवश्यकता है, तो कृपया:
+
+📞 **कॉल करें:** ${helplinePhone}
+📧 **ईमेल करें:** ${email}
+💰 **मूल्य:** ₹299/सत्र
+
+हमारे प्रशिक्षित परामर्शदाता सोम-शुक्र, सुबह 10 - शाम 6 IST उपलब्ध हैं। क्या इस बीच मैं आपकी कोई मदद कर सकता हूं?`,
 
         'Spanish': `Entiendo que te gustaría hablar con un consejero humano. Aunque estoy aquí para escucharte y apoyarte 24/7, si necesitas apoyo humano profesional:
 
-📞 **Llama a nuestra línea de ayuda:** ${helplinePhone} (${helplinePhoneNumeric})
-💬 **Envía un mensaje de texto:** '${crisisTextKeyword}' al ${crisisTextNumber}
+📞 **Llama:** ${helplinePhone}
+📧 **Email:** ${email}
+💰 **Precio:** ₹299/sesión
 
-Nuestros consejeros capacitados están disponibles para ayudarte. ¿Hay algo en lo que pueda ayudarte mientras tanto?`,
+Nuestros consejeros capacitados están disponibles Lun-Vie, 10 AM - 6 PM IST. ¿Hay algo en lo que pueda ayudarte mientras tanto?`,
 
         'French': `Je comprends que vous aimeriez parler à un conseiller humain. Bien que je sois là pour vous écouter et vous soutenir 24h/24 et 7j/7, si vous avez besoin d'un soutien humain professionnel:
 
-📞 **Appelez notre ligne d'assistance:** ${helplinePhone} (${helplinePhoneNumeric})
-💬 **Envoyez un SMS:** '${crisisTextKeyword}' au ${crisisTextNumber}
+📞 **Appelez:** ${helplinePhone}
+📧 **Email:** ${email}
+💰 **Prix:** ₹299/session
 
-Nos conseillers formés sont disponibles pour vous aider. Y a-t-il quelque chose que je puisse faire pour vous en attendant?`,
+Nos conseillers formés sont disponibles Lun-Ven, 10h - 18h IST. Y a-t-il quelque chose que je puisse faire pour vous en attendant?`,
       };
-      
+
       const baseLang = lang.split('(')[0].trim();
       return responses[baseLang] || responses['English'];
     }
