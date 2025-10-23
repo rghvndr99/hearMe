@@ -15,7 +15,8 @@ import { motion } from "framer-motion";
 import { Link as RouterLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import EmotionCarousel from "../components/home/EmotionCarousel";
-import { FaUserSecret, FaClock, FaGlobe, FaMicrophone, FaRobot, FaLifeRing, FaLock, FaUpload, FaUsers } from "react-icons/fa";
+import FeatureImageTiles from "../components/home/FeatureImageTiles";
+import { FaLock } from "react-icons/fa";
 
 
 const MotionBox = motion(Box);
@@ -34,25 +35,25 @@ const Home = () => {
       color="var(--hm-color-text-primary)"
       minH="100vh"
       position="relative"
-      overflow="hidden"
+      overflow="visible"
       px={[6, 10]}
-      pt="100px"
+      pt={0}
       pb={[12, 24]}
     >
 
-      {/* Hero Section */}
-      <VStack spacing={6} align="center" textAlign="center" zIndex={1} position="relative">
+      {/* Full-bleed Banner */}
+      <Box w="100vw" ml="calc(50% - 50vw)" mr="calc(50% - 50vw)" position="relative">
+        <EmotionCarousel />
+      </Box>
+
+      {/* Hero Text Block (after banner) */}
+      <VStack spacing={6} align="center" textAlign="center" zIndex={1} position="relative" mt={8}>
         <Heading fontSize={["3xl", "5xl", "6xl"]} fontWeight="800">
           {t('home.hero.title')}
         </Heading>
         <Text fontSize={["md", "lg"]} color="var(--hm-color-text-tertiary)" maxW="780px">
           {t('home.hero.subtitle')}
         </Text>
-
-        {/* Banner Image */
-        }
-        <EmotionCarousel />>
-
         <Stack direction={["column", "column", "row"]} spacing={4} w={["full", "full", "auto"]}>
           <Button
             as={RouterLink}
@@ -79,73 +80,75 @@ const Home = () => {
             {t('home.hero.ctaSecondary')}
           </Button>
         </Stack>
-
       </VStack>
 
-      {/* Key Features */}
-      <SimpleGrid columns={[1, 2, 3]} spacing={8} mt={20} zIndex={1} position="relative">
-        {[
-          { title: t('home.features.anon.title'), icon: FaUserSecret, desc: t('home.features.anon.desc') },
-          { title: t('home.features.availability.title'), icon: FaClock, desc: t('home.features.availability.desc') },
-          { title: t('home.features.languages.title'), icon: FaGlobe, desc: t('home.features.languages.desc') },
-          { title: t('home.features.voice.title'), icon: FaMicrophone, desc: t('home.features.voice.desc') },
-          { title: t('home.features.ai.title'), icon: FaRobot, desc: t('home.features.ai.desc') },
-          { title: t('home.features.humanSupport.title'), icon: FaUsers, desc: t('home.features.humanSupport.desc') },
-          { title: t('home.features.crisis.title'), icon: FaLifeRing, desc: t('home.features.crisis.desc') },
-          { title: t('home.features.voicePersonal.title'), icon: FaUpload, desc: t('home.features.voicePersonal.desc') },
-        ].map((f, i) => (
-          <Box
-            key={i}
-            className="hm-glass-card"
-            p={8}
-            borderRadius="xl"
-            textAlign="left"
-            transition="0.3s"
-            _hover={{ transform: "translateY(-5px)", borderColor: "var(--hm-color-brand)" }}
-          >
-            <HStack spacing={4} mb={3}>
-              <Box fontSize="2xl" color="var(--hm-color-brand)">
-                <f.icon />
-              </Box>
-              <Text fontSize="xl" fontWeight="600">{f.title}</Text>
-            </HStack>
-            <Text color="var(--hm-color-text-secondary)" fontSize="sm">
-              {f.desc}
-            </Text>
-          </Box>
-        ))}
-      </SimpleGrid>
+      {/* Image Feature Tiles */}
+      <Box zIndex={1} position="relative">
+        <FeatureImageTiles />
+      </Box>
 
-      {/* Introduction */}
-      <Box mt={24} position="relative" zIndex={1} maxW="900px">
-        <VStack align="start" spacing={4} className="hm-glass-card" p={[6,8]} borderRadius="xl">
-          <Heading fontSize={["xl","2xl"]}>{t('home.intro.title')}</Heading>
-          <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
-            {t('home.intro.p1')}
-          </Text>
-          <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
-            {t('home.intro.p2')}
-          </Text>
-          <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
-            {t('home.intro.p3')}
-          </Text>
-        </VStack>
+      {/* Why HearMe tile with right image */}
+      <Box mt={24} position="relative" zIndex={1} w="full">
+        <Stack direction={["column","row"]} spacing={[6,8]} className="hm-glass-card" p={[6,8]} borderRadius="xl" align="stretch">
+          {/* Left: Text content (same as before) */}
+          <VStack align="start" spacing={4} flex="1" minW={0}>
+            <Heading fontSize={["xl","2xl"]}>{t('home.intro.title')}</Heading>
+            <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
+              {t('home.intro.p1')}
+            </Text>
+            <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
+              {t('home.intro.p2')}
+            </Text>
+            <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
+              {t('home.intro.p3')}
+            </Text>
+          </VStack>
+
+          {/* Right: Image placeholder (you can replace the file later) */}
+          <Box flex={["none","0 0 33.333%"]} minW={0} display="flex" alignItems="center" justifyContent="center">
+            <Image
+              src="/images/why-hearMe.png"
+              alt="Why HearMe"
+              w="100%"
+              h="auto"
+              loading="lazy"
+              decoding="async"
+              onError={(e) => { const el = e.currentTarget; if (!el.dataset.fb) { el.dataset.fb = '1'; el.src = '/images/fallback.png'; } }}
+            />
+          </Box>
+        </Stack>
       </Box>
 
       {/* Trust & Safety */}
-      <Box mt={12} position="relative" zIndex={1} maxW="900px">
-        <VStack align="start" spacing={4} className="hm-glass-card" p={[6,8]} borderRadius="xl">
-          <HStack spacing={3}>
-            <Box color="var(--hm-color-brand)" fontSize="xl"><FaLock /></Box>
-            <Heading fontSize={["lg","xl"]}>{t('home.trust.title')}</Heading>
-          </HStack>
-          <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
-            {t('home.trust.p1')}
-          </Text>
-          <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
-            {t('home.trust.p2')}
-          </Text>
-        </VStack>
+      <Box mt={12} position="relative" zIndex={1} w="full">
+        <Stack direction={["column","row"]} spacing={[6,8]} className="hm-glass-card" p={[6,8]} borderRadius="xl" align="stretch">
+          {/* Left: Image (1/3 width) */}
+          <Box flex={["none","0 0 33.333%"]} minW={0} display="flex" alignItems="center" justifyContent="center">
+            <Image
+              src="/images/privacy-promise.png"
+              alt="Safety & Privacy"
+              w="100%"
+              h="auto"
+              loading="lazy"
+              decoding="async"
+              onError={(e) => { const el = e.currentTarget; if (!el.dataset.fb) { el.dataset.fb = '1'; el.src = '/images/fallback.png'; } }}
+            />
+          </Box>
+
+          {/* Right: Text content (2/3 width) */}
+          <VStack align="start" spacing={4} flex="1" minW={0}>
+            <HStack spacing={3}>
+              <Box color="var(--hm-color-brand)" fontSize="xl"><FaLock /></Box>
+              <Heading fontSize={["lg","xl"]}>{t('home.trust.title')}</Heading>
+            </HStack>
+            <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
+              {t('home.trust.p1')}
+            </Text>
+            <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
+              {t('home.trust.p2')}
+            </Text>
+          </VStack>
+        </Stack>
       </Box>
 
       {/* CTA Footer */}
