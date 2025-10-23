@@ -14,7 +14,8 @@ import {
 import { motion } from "framer-motion";
 import { Link as RouterLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { FaUserSecret, FaClock, FaGlobe, FaMicrophone, FaRobot, FaLifeRing, FaLock, FaUpload } from "react-icons/fa";
+import EmotionCarousel from "../components/home/EmotionCarousel";
+import { FaUserSecret, FaClock, FaGlobe, FaMicrophone, FaRobot, FaLifeRing, FaLock, FaUpload, FaUsers } from "react-icons/fa";
 
 
 const MotionBox = motion(Box);
@@ -50,19 +51,7 @@ const Home = () => {
 
         {/* Banner Image */
         }
-        <Box maxW="1100px" w="full" className="hm-glass-card-light" borderRadius="2xl" overflow="hidden" position="relative">
-          <Image
-            src={bannerSrc}
-            alt="Calming, supportive banner illustrating connection and emotional well-being — HearMe"
-            w="100%"
-            h={["180px","260px","360px"]}
-            objectFit="cover"
-            loading="lazy"
-            onError={() => { if (bannerSrc !== DEFAULT_BANNER_FALLBACK) setBannerSrc(DEFAULT_BANNER_FALLBACK); }}
-          />
-          {/* Subtle overlay to harmonize with themes and glass look */}
-          <Box position="absolute" inset={0} bg="linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0))" />
-        </Box>
+        <EmotionCarousel />>
 
         <Stack direction={["column", "column", "row"]} spacing={4} w={["full", "full", "auto"]}>
           <Button
@@ -101,6 +90,7 @@ const Home = () => {
           { title: t('home.features.languages.title'), icon: FaGlobe, desc: t('home.features.languages.desc') },
           { title: t('home.features.voice.title'), icon: FaMicrophone, desc: t('home.features.voice.desc') },
           { title: t('home.features.ai.title'), icon: FaRobot, desc: t('home.features.ai.desc') },
+          { title: t('home.features.humanSupport.title'), icon: FaUsers, desc: t('home.features.humanSupport.desc') },
           { title: t('home.features.crisis.title'), icon: FaLifeRing, desc: t('home.features.crisis.desc') },
           { title: t('home.features.voicePersonal.title'), icon: FaUpload, desc: t('home.features.voicePersonal.desc') },
         ].map((f, i) => (
@@ -135,6 +125,9 @@ const Home = () => {
           </Text>
           <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
             {t('home.intro.p2')}
+          </Text>
+          <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
+            {t('home.intro.p3')}
           </Text>
         </VStack>
       </Box>

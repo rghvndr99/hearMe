@@ -78,13 +78,13 @@ const Volunteer = () => {
       color="var(--hm-color-text-primary)"
       position="relative"
       overflow="hidden"
-      px={[6, 6, 12]}
+      px={[4, 6, 12]}
       pt="100px"
       pb={[12, 20]}
       textAlign="center"
     >
       {/* === PAGE CONTENT === */}
-      <VStack spacing={10} zIndex={1} maxW="900px">
+      <VStack spacing={10} zIndex={1} maxW="900px" w="full">
         {/* Heading Section */}
         <Heading
           as="h1"
