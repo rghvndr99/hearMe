@@ -14,6 +14,10 @@ backend/.env*
 # Runtime/uploads (generated at runtime)
 backend/uploads/
 
+
+# Local scripts (ignore per request)
+backend/scripts/
+
 # Local backup/scratch files
 frontend/src/pages/Chat.backup.jsx
 frontend/src/locales/**/common.json.backup
