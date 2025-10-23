@@ -1,3 +1,32 @@
 node_modules
 frontend/dist
 .env
+
+
+# macOS
+.DS_Store
+
+# Environment files (do not commit secrets)
+.env*
+frontend/.env*
+backend/.env*
+
+# Runtime/uploads (generated at runtime)
+backend/uploads/
+
+# Local backup/scratch files
+frontend/src/pages/Chat.backup.jsx
+frontend/src/locales/**/common.json.backup
+frontend/src/locales/**/common.json.*_backup
+frontend/src/locales/**/common.json.*backup
+
+# Content snapshot JSONs (keep local unless you want them versioned)
+FOUR_PAGES_NEW_CONTENT_*.json
+LOGIN_FOOTER_NEW_CONTENT_*.json
+NEW_HOME_CONTENT_*.json
+PROFILE_PAGES_NEW_CONTENT_*.json
+VOICEMATE_NEW_CONTENT_*.json
+VOICEMATE_SIGNEDIN_CONTENT_*.json
+
+# Local media scratch
+input.mp4
