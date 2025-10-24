@@ -25,6 +25,51 @@ const theme = extendTheme({
   colors: {
     // Override Chakra's default color scheme
   },
+  components: {
+    Input: {
+      defaultProps: { variant: 'outline' },
+      variants: {
+        outline: {
+          field: {
+            bg: 'var(--hm-bg-glass)',
+            border: '1px solid var(--hm-border-outline)',
+            color: 'var(--hm-color-text-primary)',
+            _placeholder: { color: 'var(--hm-color-placeholder)' },
+            _hover: { borderColor: 'var(--hm-border-outline)' },
+            _focus: { borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' },
+          },
+        },
+      },
+    },
+    Select: {
+      defaultProps: { variant: 'outline' },
+      variants: {
+        outline: {
+          field: {
+            bg: 'var(--hm-bg-glass)',
+            border: '1px solid var(--hm-border-outline)',
+            color: 'var(--hm-color-text-primary)',
+            _hover: { borderColor: 'var(--hm-border-outline)' },
+            _focus: { borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' },
+          },
+          icon: { color: 'var(--hm-color-text-secondary)' },
+        },
+      },
+    },
+    Textarea: {
+      defaultProps: { variant: 'outline' },
+      variants: {
+        outline: {
+          bg: 'var(--hm-bg-glass)',
+          border: '1px solid var(--hm-border-outline)',
+          color: 'var(--hm-color-text-primary)',
+          _placeholder: { color: 'var(--hm-color-placeholder)' },
+          _hover: { borderColor: 'var(--hm-border-outline)' },
+          _focus: { borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' },
+        },
+      },
+    },
+  },
   semanticTokens: {
     colors: {
       // Disable all Chakra semantic tokens

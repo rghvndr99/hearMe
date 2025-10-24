@@ -192,7 +192,7 @@ const Profile = () => {
                     value={user.username}
                     isReadOnly
                     bg="var(--hm-bg-glass)"
-                    borderColor="var(--hm-border-glass)"
+                    borderColor="var(--hm-border-outline)"
                     color="var(--hm-color-text-primary)"
                     _hover={{ borderColor: 'var(--hm-border-outline)' }}
                   />
@@ -204,7 +204,7 @@ const Profile = () => {
                     onChange={(e) => setForm(s => ({ ...s, name: e.target.value }))}
                     placeholder={t('profile.placeholders.name', 'Aapka poora naam (Your full name)')}
                     bg="var(--hm-bg-glass)"
-                    borderColor="var(--hm-border-glass)"
+                    borderColor="var(--hm-border-outline)"
                     color="var(--hm-color-text-primary)"
                     _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                     _hover={{ borderColor: 'var(--hm-border-outline)' }}
@@ -218,7 +218,7 @@ const Profile = () => {
                     onChange={(e) => setForm(s => ({ ...s, phone: e.target.value }))}
                     placeholder={t('profile.placeholders.phone', 'Phone number (optional) — e.g., +91 98765 43210')}
                     bg="var(--hm-bg-glass)"
-                    borderColor="var(--hm-border-glass)"
+                    borderColor="var(--hm-border-outline)"
                     color="var(--hm-color-text-primary)"
                     _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                     _hover={{ borderColor: 'var(--hm-border-outline)' }}
@@ -231,7 +231,7 @@ const Profile = () => {
                     value={form.language}
                     onChange={(e) => setForm(s => ({ ...s, language: e.target.value }))}
                     bg="var(--hm-bg-glass)"
-                    borderColor="var(--hm-border-glass)"
+                    borderColor="var(--hm-border-outline)"
                     color="var(--hm-color-text-primary)"
                     _hover={{ borderColor: 'var(--hm-border-outline)' }}
                     _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}

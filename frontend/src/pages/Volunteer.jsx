@@ -10,6 +10,7 @@ import {
   Icon,
   Input,
   Textarea,
+  Image,
   useToast,
   Alert,
   AlertIcon,
@@ -207,6 +208,17 @@ const Volunteer = () => {
         </Box>
 
         {/* Who Can Volunteer Section */}
+        {/* Full-width banner for Who Can Volunteer */}
+        <Image
+          src="/images/volunteer/who-can-volunteer-banner.png"
+          alt={t('volunteer.whoCanVolunteer.bannerAlt', 'Who can volunteer banner')}
+          w="full"
+          h="auto"
+          borderRadius="xl"
+          border="1px solid var(--hm-border-glass)"
+          mb={6}
+        />
+
         <Box pt={12} w="full" maxW="700px">
           <Heading
             as="h2"

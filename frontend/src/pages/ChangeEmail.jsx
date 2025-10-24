@@ -83,7 +83,7 @@ const ChangeEmail = () => {
                   onChange={(e) => setNewEmail(e.target.value)}
                   placeholder={t('changeEmail.placeholders.newEmail','you@example.com')}
                   bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-glass)"
+                  borderColor="var(--hm-border-outline)"
                   color="var(--hm-color-text-primary)"
                   _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                   _hover={{ borderColor: 'var(--hm-border-outline)' }}
@@ -98,7 +98,7 @@ const ChangeEmail = () => {
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   placeholder={t('changeEmail.placeholders.currentPassword', 'Enter your current password')}
                   bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-glass)"
+                  borderColor="var(--hm-border-outline)"
                   color="var(--hm-color-text-primary)"
                   _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                   _hover={{ borderColor: 'var(--hm-border-outline)' }}

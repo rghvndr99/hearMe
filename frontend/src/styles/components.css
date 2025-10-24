@@ -222,9 +222,9 @@
    ============================================ */
 
 .hm-input {
-  background: var(--hm-bg-input);
+  background: var(--hm-bg-glass);
   color: var(--hm-color-text-primary);
-  border: 1px solid var(--hm-border-subtle);
+  border: 1px solid var(--hm-border-outline);
   border-radius: 0.5rem;
   width: 100%;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -252,9 +252,9 @@
 }
 
 .hm-textarea {
-  background: var(--hm-bg-input);
+  background: var(--hm-bg-glass);
   color: var(--hm-color-text-primary);
-  border: 1px solid var(--hm-border-subtle);
+  border: 1px solid var(--hm-border-outline);
   border-radius: 0.5rem;
   width: 100%;
   resize: vertical;

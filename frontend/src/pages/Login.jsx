@@ -77,7 +77,7 @@ const Login = () => {
                   onChange={onChange}
                   placeholder={t('login.placeholders.usernameOrEmail','yourusername or you@example.com')}
                   bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-glass)"
+                  borderColor="var(--hm-border-outline)"
                   color="var(--hm-color-text-primary)"
                   _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                   _hover={{ borderColor: 'var(--hm-border-outline)' }}
@@ -93,8 +93,8 @@ const Login = () => {
                   onChange={onChange}
                   placeholder={t('login.placeholders.password','Enter your password')}
                   bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-glass)"
-                  color="var(--hm-color-text-primary)"
+                  borderColor="var(--hm-border-outline)"
+}                  color="var(--hm-color-text-primary)"
                   _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                   _hover={{ borderColor: 'var(--hm-border-outline)' }}
                   _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}

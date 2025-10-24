@@ -37,6 +37,7 @@
   --hm-gradient-bg-orange:radial-gradient(circle at bottom left, rgba(249,168,38,0.15), transparent 70%);
 
   /* Borders */
+  --hm-border-subtle: var(--hm-border-glass);
   --hm-border-outline:rgba(255,255,255,0.2);
 
   /* Hover States */
@@ -80,6 +81,7 @@
   --hm-gradient-bg-orange:radial-gradient(circle at bottom left, rgba(249,168,38,0.08), transparent 70%);
 
   /* Borders */
+  --hm-border-subtle: var(--hm-border-glass);
   --hm-border-outline:rgba(0,0,0,0.15);
 
   /* Hover States */
@@ -123,6 +125,7 @@
   --hm-gradient-bg-orange:radial-gradient(circle at bottom left, rgba(72,202,228,0.15), transparent 70%);
 
   /* Borders */
+  --hm-border-subtle: var(--hm-border-glass);
   --hm-border-outline:rgba(0,212,255,0.25);
 
   /* Hover States */
@@ -166,6 +169,7 @@
   --hm-gradient-bg-orange:radial-gradient(circle at bottom left, rgba(156,204,101,0.15), transparent 70%);
 
   /* Borders */
+  --hm-border-subtle: var(--hm-border-glass);
   --hm-border-outline:rgba(124,179,66,0.25);
 
   /* Hover States */
@@ -209,6 +213,7 @@
   --hm-gradient-bg-orange:radial-gradient(circle at bottom left, rgba(255,152,0,0.18), transparent 70%);
 
   /* Borders */
+  --hm-border-subtle: var(--hm-border-glass);
   --hm-border-outline:rgba(255,107,53,0.25);
 
   /* Hover States */
@@ -445,7 +450,7 @@ a:focus-visible {
 
 .hm-input {
   background: var(--hm-bg-glass);
-  border: 1px solid var(--hm-border-glass);
+  border: 1px solid var(--hm-border-outline);
   color: var(--hm-color-text-primary);
   font-size: 16px; /* Prevents iOS zoom */
   padding: 0.75rem 1rem;
@@ -475,7 +480,7 @@ a:focus-visible {
 /* Textarea */
 .hm-textarea {
   background: var(--hm-bg-glass);
-  border: 1px solid var(--hm-border-glass);
+  border: 1px solid var(--hm-border-outline);
   color: var(--hm-color-text-primary);
   font-size: 16px; /* Prevents iOS zoom */
   padding: 0.75rem 1rem;

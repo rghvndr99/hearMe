@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Flex, Heading, VStack, FormControl, FormLabel, Input, Button, useToast, Select, useColorModeValue } from '@chakra-ui/react';
+import { Box, Flex, Heading, VStack, FormControl, FormLabel, Input, Button, useToast, Select, Checkbox, FormErrorMessage, Link } from '@chakra-ui/react';
 import axios from 'axios';
 
 import { useNavigate } from 'react-router-dom';
@@ -19,16 +19,34 @@ const Register = () => {
     password: '',
     confirmPassword: '',
   });
+  const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
+  const [triedSubmit, setTriedSubmit] = useState(false);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
 
   const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const PRIVACY_PDF_URL = '/legal/privacy-policy.pdf';
+  const openPrivacyPdf = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(PRIVACY_PDF_URL, { method: 'HEAD' });
+      const url = res.ok ? PRIVACY_PDF_URL : '/privacy';
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } catch {
+      window.open('/privacy', '_blank', 'noopener,noreferrer');
+    }
+  };
+
 
   const submit = async (e) => {
     e.preventDefault();
     if (form.password !== form.confirmPassword) {
       return toast({ title: t('errors.passwordMismatch','Passwords do not match'), status: 'error', duration: 3000, isClosable: true });
+    }
+    if (!acceptedPrivacy) {
+      setTriedSubmit(true);
+      return toast({ title: t('auth.privacyRequired','Privacy Policy not accepted'), description: t('auth.privacyRequiredDesc','Please read and accept the Privacy Policy to continue.'), status: 'error', duration: 3000, isClosable: true });
     }
     try {
       setLoading(true);
@@ -72,7 +90,7 @@ const Register = () => {
                   onChange={onChange}
                   placeholder={t('placeholders.username','yourusername')}
                   bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-glass)"
+                  borderColor="var(--hm-border-outline)"
                   color="var(--hm-color-text-primary)"
                   _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                   _hover={{ borderColor: 'var(--hm-border-outline)' }}
@@ -87,7 +105,7 @@ const Register = () => {
                   onChange={onChange}
                   placeholder={t('placeholders.fullName','Full name')}
                   bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-glass)"
+                  borderColor="var(--hm-border-outline)"
                   color="var(--hm-color-text-primary)"
                   _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                   _hover={{ borderColor: 'var(--hm-border-outline)' }}
@@ -103,7 +121,7 @@ const Register = () => {
                   onChange={onChange}
                   placeholder={t('placeholders.email','you@example.com')}
                   bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-glass)"
+                  borderColor="var(--hm-border-outline)"
                   color="var(--hm-color-text-primary)"
                   _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                   _hover={{ borderColor: 'var(--hm-border-outline)' }}
@@ -118,7 +136,7 @@ const Register = () => {
                   onChange={onChange}
                   placeholder={t('placeholders.phone','+1 555 123 4567')}
                   bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-glass)"
+                  borderColor="var(--hm-border-outline)"
                   color="var(--hm-color-text-primary)"
                   _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                   _hover={{ borderColor: 'var(--hm-border-outline)' }}
@@ -132,7 +150,7 @@ const Register = () => {
                   value={form.language}
                   onChange={onChange}
                   bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-glass)"
+                  borderColor="var(--hm-border-outline)"
                   color="var(--hm-color-text-primary)"
                   _hover={{ borderColor: 'var(--hm-border-outline)' }}
                   _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
@@ -152,7 +170,7 @@ const Register = () => {
                   onChange={onChange}
                   placeholder={t('placeholders.passwordHint','At least 8 characters')}
                   bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-glass)"
+                  borderColor="var(--hm-border-outline)"
                   color="var(--hm-color-text-primary)"
                   _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                   _hover={{ borderColor: 'var(--hm-border-outline)' }}
@@ -167,12 +185,35 @@ const Register = () => {
                   value={form.confirmPassword}
                   onChange={onChange}
                   bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-glass)"
-                  color="var(--hm-color-text-primary)"
+                  borderColor="var(--hm-border-outline)"
+}                  color="var(--hm-color-text-primary)"
                   _hover={{ borderColor: 'var(--hm-border-outline)' }}
                   _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
                 />
               </FormControl>
+
+              {/* Privacy acceptance */}
+              <FormControl isRequired isInvalid={triedSubmit && !acceptedPrivacy}>
+                <Checkbox
+                  isChecked={acceptedPrivacy}
+                  onChange={(e) => setAcceptedPrivacy(e.target.checked)}
+                  colorScheme="purple"
+                >
+                  {t('auth.acceptPrivacyPrefix','I have read and agree to the')}{' '}
+                  <Link
+                    href="#"
+                    onClick={openPrivacyPdf}
+                    color="var(--hm-color-brand)"
+                    textDecoration="underline"
+                  >
+                    {t('footer.legal.privacy', 'Privacy Policy')}
+                  </Link>
+                </Checkbox>
+                <FormErrorMessage>
+                  {t('auth.privacyRequired','Privacy Policy not accepted')}
+                </FormErrorMessage>
+              </FormControl>
+
               <Button type="submit" isLoading={loading} bgGradient="var(--hm-gradient-cta)" color="white" _hover={{ opacity: 0.9 }}>{t('auth.register','Register')}</Button>
             </VStack>
           </form>

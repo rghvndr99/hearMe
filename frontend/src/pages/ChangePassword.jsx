@@ -88,7 +88,7 @@ const ChangePassword = () => {
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   placeholder={t('changePassword.placeholders.currentPassword', 'Enter your current password')}
                   bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-glass)"
+                  borderColor="var(--hm-border-outline)"
                   color="var(--hm-color-text-primary)"
                   _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                   _hover={{ borderColor: 'var(--hm-border-outline)' }}
@@ -103,7 +103,7 @@ const ChangePassword = () => {
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder={t('changePassword.placeholders.newPassword', 'At least 8 characters — make it strong! 💪')}
                   bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-glass)"
+                  borderColor="var(--hm-border-outline)"
                   color="var(--hm-color-text-primary)"
                   _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                   _hover={{ borderColor: 'var(--hm-border-outline)' }}
@@ -118,7 +118,7 @@ const ChangePassword = () => {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder={t('changePassword.placeholders.confirmPassword', 'Re-enter your new password')}
                   bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-glass)"
+                  borderColor="var(--hm-border-outline)"
                   color="var(--hm-color-text-primary)"
                   _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                   _hover={{ borderColor: 'var(--hm-border-outline)' }}
