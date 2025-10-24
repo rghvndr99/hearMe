@@ -34,6 +34,8 @@ import {
   Editable,
   EditableInput,
   EditablePreview,
+  Image,
+  Stack,
 } from '@chakra-ui/react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -967,67 +969,6 @@ export default function VoiceMate() {
             </SimpleGrid>
           </VStack>
 
-          {/* Social Proof Section */}
-          <VStack spacing={8} w="full" bg="var(--hm-color-bg-secondary)" p={[6, 8, 10]} borderRadius="2xl">
-            <Heading
-              as="h2"
-              fontSize={['xl', '2xl', '3xl']}
-              color="var(--hm-color-text-primary)"
-              textAlign="center"
-            >
-              {t('voicemate.socialProofTitle', 'Real Stories from Real Families')}
-            </Heading>
-
-            <SimpleGrid columns={[1, 1, 3]} spacing={6} w="full">
-              <Box
-                bg="var(--hm-color-bg)"
-                p={6}
-                borderRadius="xl"
-                border="1px solid var(--hm-border-glass)"
-              >
-                <VStack align="start" spacing={4}>
-                  <Text fontSize="sm" color="var(--hm-color-text-secondary)" fontStyle="italic" lineHeight="1.6">
-                    "{t('voicemate.testimonial1Quote', 'I work night shifts as a nurse. My 5-year-old daughter now hears my voice singing her lullaby every night, even when I\'m at the hospital. She sleeps peacefully knowing Maa is always there. VoiceTwin gave me my motherhood back.')}"
-                  </Text>
-                  <Text fontSize="sm" color="var(--hm-color-brand)" fontWeight="bold">
-                    — {t('voicemate.testimonial1Name', 'Priya S., Mumbai')}
-                  </Text>
-                </VStack>
-              </Box>
-
-              <Box
-                bg="var(--hm-color-bg)"
-                p={6}
-                borderRadius="xl"
-                border="1px solid var(--hm-border-glass)"
-              >
-                <VStack align="start" spacing={4}>
-                  <Text fontSize="sm" color="var(--hm-color-text-secondary)" fontStyle="italic" lineHeight="1.6">
-                    "{t('voicemate.testimonial2Quote', 'My parents in Delhi are 70+. I can\'t call them every day because of time zones. Now I send them voice messages in MY voice — \'Good morning Papa, take your medicine\' or \'Happy Diwali Maa, I love you.\' They play it on repeat. It\'s like I\'m there.')}"
-                  </Text>
-                  <Text fontSize="sm" color="var(--hm-color-brand)" fontWeight="bold">
-                    — {t('voicemate.testimonial2Name', 'Arjun M., California')}
-                  </Text>
-                </VStack>
-              </Box>
-
-              <Box
-                bg="var(--hm-color-bg)"
-                p={6}
-                borderRadius="xl"
-                border="1px solid var(--hm-border-glass)"
-              >
-                <VStack align="start" spacing={4}>
-                  <Text fontSize="sm" color="var(--hm-color-text-secondary)" fontStyle="italic" lineHeight="1.6">
-                    "{t('voicemate.testimonial3Quote', 'My father passed away last year. I had one voice recording of him singing my favorite song. VoiceTwin helped me preserve it. Now my kids can hear their grandfather\'s voice. It\'s the most precious gift I could give them.')}"
-                  </Text>
-                  <Text fontSize="sm" color="var(--hm-color-brand)" fontWeight="bold">
-                    — {t('voicemate.testimonial3Name', 'Sneha R., Bangalore')}
-                  </Text>
-                </VStack>
-              </Box>
-            </SimpleGrid>
-          </VStack>
 
           {/* FAQ Section */}
           <VStack spacing={8} w="full" maxW="900px">
@@ -1315,22 +1256,38 @@ export default function VoiceMate() {
               <TabPanel p={0}>
                 <VStack align="stretch" spacing={6}>
 
-                  {/* Tab Description */}
-                  <Box
-                    bg="var(--hm-color-bg-secondary)"
-                    p={4}
-                    borderRadius="lg"
-                    border="1px solid var(--hm-border-glass)"
-                  >
-                    <VStack align="start" spacing={2}>
-                      <Text fontSize="sm" color="var(--hm-color-text-secondary)">
-                        {t('voicemate.singleVoiceDesc', 'Record your own voice or upload an audio file. Perfect for creating your personal VoiceTwin.')}
-                      </Text>
-                      <Text fontSize="xs" color="var(--hm-color-text-tertiary)" fontStyle="italic">
-                        {t('voicemate.singleVoiceUseCase', 'Best for: Sending messages to family, bedtime stories for kids, voice notes to parents')}
-                      </Text>
-                    </VStack>
-                  </Box>
+                  {/* Tab Description: stacked layout (100% width each) */}
+                  <Flex direction="column" gap={4} align="stretch" mb={2}>
+                    <Box>
+                      <Image
+                        src="/images/single-voice.png"
+                        alt={t('voicemate.singleImageAlt','Single voice placeholder')}
+                        w="100%"
+                        h={["180px","220px","260px"]}
+                        objectFit="cover"
+                        borderRadius="lg"
+                        border="1px solid var(--hm-border-glass)"
+                      />
+                    </Box>
+                    <Box>
+                      <Box
+                        bg="var(--hm-color-bg-secondary)"
+                        p={4}
+                        borderRadius="lg"
+                        border="1px solid var(--hm-border-glass)"
+                      >
+                        <VStack align="start" spacing={2}>
+                          <Text fontSize="sm" color="var(--hm-color-text-secondary)">
+                            {t('voicemate.singleVoiceDesc', 'Record your own voice or upload an audio file. Perfect for creating your personal VoiceTwin.')}
+                          </Text>
+                          <Text fontSize="xs" color="var(--hm-color-text-tertiary)" fontStyle="italic">
+                            {t('voicemate.singleVoiceUseCase', 'Best for: Sending messages to family, bedtime stories for kids, voice notes to parents')}
+                          </Text>
+                        </VStack>
+                      </Box>
+                    </Box>
+                  </Flex>
+
 
                   {/* Recording Section */}
                   <Box>
@@ -1344,6 +1301,7 @@ export default function VoiceMate() {
                     {/* Record Button */}
                     <Box position="relative" display="inline-block" mb={4}>
                       <Box className={isRecording ? 'animate-pulse' : ''} position="absolute" inset={0} borderRadius="full" bgGradient="var(--hm-gradient-cta)" opacity={0.6} filter="blur(16px)" />
+
                       <Button
                         onClick={() => { if (!isRecording) startRecording(); else stopRecording(); }}
                         size="md"
@@ -1487,72 +1445,86 @@ export default function VoiceMate() {
               <TabPanel p={0}>
                 <VStack align="stretch" spacing={6}>
 
-                  {/* Tab Description */}
-                  <Box
-                    bg="var(--hm-color-bg-secondary)"
-                    p={4}
-                    borderRadius="lg"
-                    border="1px solid var(--hm-border-glass)"
-                  >
-                    <VStack align="start" spacing={3}>
-                      <Heading size="sm" color="var(--hm-color-text-primary)">
-                        {t('voicemate.multiSpeakerTitle', '👥 Extract Voices from Group Conversations')}
-                      </Heading>
-                      <Text fontSize="sm" color="var(--hm-color-text-secondary)">
-                        {t('voicemate.multiSpeakerSubtitle', 'Upload a family video or group recording. AI automatically separates each person\'s voice!')}
-                      </Text>
-
-                      <Box mt={2}>
-                        <Text fontSize="xs" fontWeight="600" color="var(--hm-color-text-tertiary)" mb={2}>
-                          {t('voicemate.multiSpeakerPerfectForTitle', 'Perfect For:')}
-                        </Text>
-                        <VStack align="start" spacing={1}>
-                          <Text fontSize="xs" color="var(--hm-color-text-muted)">
-                            {t('voicemate.multiSpeakerUse1', '🎥 Family videos (birthdays, weddings, festivals)')}
-                          </Text>
-                          <Text fontSize="xs" color="var(--hm-color-text-muted)">
-                            {t('voicemate.multiSpeakerUse2', '📹 Group conversations (preserve everyone\'s voice)')}
-                          </Text>
-                          <Text fontSize="xs" color="var(--hm-color-text-muted)">
-                            {t('voicemate.multiSpeakerUse3', '🎬 Old recordings (extract grandparents\' voices from family videos)')}
-                          </Text>
-                        </VStack>
-                      </Box>
-
+                  {/* Tab Description: stacked layout (100% width each) */}
+                  <Flex direction="column" gap={4} align="stretch" mb={2}>
+                    <Box>
                       <Box
-                        bg="var(--hm-color-bg)"
-                        p={3}
-                        borderRadius="md"
+                        bg="var(--hm-color-bg-secondary)"
+                        p={4}
+                        borderRadius="lg"
                         border="1px solid var(--hm-border-glass)"
-                        mt={2}
                       >
-                        <Text fontSize="xs" fontWeight="600" color="var(--hm-color-text-tertiary)" mb={2}>
-                          {t('voicemate.multiSpeakerHowTitle', 'How It Works:')}
-                        </Text>
-                        <VStack align="start" spacing={1}>
-                          <Text fontSize="xs" color="var(--hm-color-text-muted)">
-                            {t('voicemate.multiSpeakerStep1', '1. Upload video/audio file (MP4, MOV, MP3, WAV)')}
+                        <VStack align="start" spacing={3}>
+                          <Heading size="sm" color="var(--hm-color-text-primary)">
+                            {t('voicemate.multiSpeakerTitle', '👥 Extract Voices from Group Conversations')}
+                          </Heading>
+                          <Text fontSize="sm" color="var(--hm-color-text-secondary)">
+                            {t('voicemate.multiSpeakerSubtitle', 'Upload a family video or group recording. AI automatically separates each person\'s voice!')}
                           </Text>
-                          <Text fontSize="xs" color="var(--hm-color-text-muted)">
-                            {t('voicemate.multiSpeakerStep2', '2. AI analyzes and finds all speakers (takes 2-5 minutes)')}
-                          </Text>
-                          <Text fontSize="xs" color="var(--hm-color-text-muted)">
-                            {t('voicemate.multiSpeakerStep3', '3. Preview each voice separately')}
-                          </Text>
-                          <Text fontSize="xs" color="var(--hm-color-text-muted)">
-                            {t('voicemate.multiSpeakerStep4', '4. Choose which voices to save')}
-                          </Text>
-                          <Text fontSize="xs" color="var(--hm-color-text-muted)">
-                            {t('voicemate.multiSpeakerStep5', '5. Create VoiceTwins for each person!')}
+
+                          <Box mt={2}>
+                            <Text fontSize="xs" fontWeight="600" color="var(--hm-color-text-tertiary)" mb={2}>
+                              {t('voicemate.multiSpeakerPerfectForTitle', 'Perfect For:')}
+                            </Text>
+                            <VStack align="start" spacing={1}>
+                              <Text fontSize="xs" color="var(--hm-color-text-muted)">
+                                {t('voicemate.multiSpeakerUse1', '🎥 Family videos (birthdays, weddings, festivals)')}
+                              </Text>
+                              <Text fontSize="xs" color="var(--hm-color-text-muted)">
+                                {t('voicemate.multiSpeakerUse2', '📹 Group conversations (preserve everyone\'s voice)')}
+                              </Text>
+                              <Text fontSize="xs" color="var(--hm-color-text-muted)">
+                                {t('voicemate.multiSpeakerUse3', '🎬 Old recordings (extract grandparents\' voices from family videos)')}
+                              </Text>
+                            </VStack>
+                          </Box>
+
+                          <Box
+                            bg="var(--hm-color-bg)"
+                            p={3}
+                            borderRadius="md"
+                            border="1px solid var(--hm-border-glass)"
+                            mt={2}
+                          >
+                            <Text fontSize="xs" fontWeight="600" color="var(--hm-color-text-tertiary)" mb={2}>
+                              {t('voicemate.multiSpeakerHowTitle', 'How It Works:')}
+                            </Text>
+                            <VStack align="start" spacing={1}>
+                              <Text fontSize="xs" color="var(--hm-color-text-muted)">
+                                {t('voicemate.multiSpeakerStep1', '1. Upload video/audio file (MP4, MOV, MP3, WAV)')}
+                              </Text>
+                              <Text fontSize="xs" color="var(--hm-color-text-muted)">
+                                {t('voicemate.multiSpeakerStep2', '2. AI analyzes and finds all speakers (takes 2-5 minutes)')}
+                              </Text>
+                              <Text fontSize="xs" color="var(--hm-color-text-muted)">
+                                {t('voicemate.multiSpeakerStep3', '3. Preview each voice separately')}
+                              </Text>
+                              <Text fontSize="xs" color="var(--hm-color-text-muted)">
+                                {t('voicemate.multiSpeakerStep4', '4. Choose which voices to save')}
+                              </Text>
+                              <Text fontSize="xs" color="var(--hm-color-text-muted)">
+                                {t('voicemate.multiSpeakerStep5', '5. Create VoiceTwins for each person!')}
+                              </Text>
+                            </VStack>
+                          </Box>
+
+                          <Text fontSize="xs" color="var(--hm-color-text-tertiary)" fontStyle="italic" mt={2}>
+                            💡 {t('voicemate.multiSpeakerProTip', 'Pro Tip: Longer videos (2-5 minutes) work best. Each person should speak for at least 30 seconds.')}
                           </Text>
                         </VStack>
                       </Box>
-
-                      <Text fontSize="xs" color="var(--hm-color-text-tertiary)" fontStyle="italic" mt={2}>
-                        💡 {t('voicemate.multiSpeakerProTip', 'Pro Tip: Longer videos (2-5 minutes) work best. Each person should speak for at least 30 seconds.')}
-                      </Text>
-                    </VStack>
-                  </Box>
+                    </Box>
+                    <Box>
+                      <Image
+                        src="/images/group-voice.png"
+                        alt={t('voicemate.groupImageAlt','Group voices placeholder')}
+                        w="100%"
+                        h="auto"
+                        borderRadius="lg"
+                        border="1px solid var(--hm-border-glass)"
+                      />
+                    </Box>
+                  </Flex>
 
                   {/* File Upload */}
                   <Box>
@@ -1577,7 +1549,9 @@ export default function VoiceMate() {
                       w="full"
                       size="lg"
                     >
+
                       {diarizationFile?.name || t('voicemate.multiSpeakerUploadButton', '📤 Upload Group Recording')}
+
                     </Button>
                   </Box>
 

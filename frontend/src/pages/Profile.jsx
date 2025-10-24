@@ -119,7 +119,7 @@ const Profile = () => {
     >
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
         {/* Page Intro */}
-        <VStack spacing={2} textAlign="center" maxW="700px">
+        <VStack spacing={2} textAlign="center">
           <Heading
             as="h1"
             fontSize={["3xl", "4xl", "5xl"]}
@@ -134,7 +134,7 @@ const Profile = () => {
           </Text>
         </VStack>
 
-        <Box maxW="700px" mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
+        <Box mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
           <Stack direction={["column", "column", "row"]} justify="space-between" align={["stretch", "stretch", "center"]} mb={4} spacing={3}>
             <Heading size="md" color="var(--hm-color-text-primary)">{t('account.profile', 'Your Profile')}</Heading>
             <Stack direction={["column", "column", "row"]} spacing={2} w={["full", "full", "auto"]}>
@@ -250,7 +250,7 @@ const Profile = () => {
         </Box>
 
         {/* Security Note */}
-        <Box maxW="700px" mx="auto" w="full" p={4} bg="var(--hm-bg-glass)" borderRadius="lg" borderLeft="4px solid var(--hm-color-brand)">
+        <Box  mx="auto" w="full" p={4} bg="var(--hm-bg-glass)" borderRadius="lg" borderLeft="4px solid var(--hm-color-brand)">
           <Text fontSize="sm" color="var(--hm-color-text-secondary)" lineHeight="1.7">
             {t('profile.securityNote', '🔒 **Aapki Privacy Humari Zimmedari Hai:** Your data is encrypted and never shared with anyone. You\'re in control.')}
           </Text>

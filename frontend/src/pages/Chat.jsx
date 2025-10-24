@@ -258,7 +258,6 @@ const Chat = () => {
         position="relative"
         zIndex={1}
         mt="80px"
-        pt="80px"
       >
         {/* Messages */}
         <ChatMessages messages={messages} isTyping={isTyping} />

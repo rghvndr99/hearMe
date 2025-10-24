@@ -220,6 +220,58 @@
   --hm-hover-bg:rgba(255,107,53,0.1);
 }
 
+/* Notice board theme variables */
+:root, [data-theme="dark"] {
+  --hm-board-bg-start:#2B2620;
+  --hm-board-bg-end:#3A3128;
+  --hm-board-speckle:rgba(255,255,255,0.06);
+  --hm-board-frame:#C49A6C;
+  --hm-board-title: var(--hm-color-text-primary);
+  --hm-board-text: var(--hm-color-text-secondary);
+  --hm-board-pin: var(--hm-color-brand);
+}
+
+[data-theme="light"] {
+  --hm-board-bg-start:#F2E3C3;
+  --hm-board-bg-end:#E6CC9F;
+  --hm-board-speckle:rgba(0,0,0,0.06);
+  --hm-board-frame:#8B5E34;
+  --hm-board-title:#1A1A1A;
+  --hm-board-text:rgba(0,0,0,0.78);
+  --hm-board-pin: var(--hm-color-brand);
+}
+
+[data-theme="ocean"] {
+  --hm-board-bg-start:#0F2436;
+  --hm-board-bg-end:#15344A;
+  --hm-board-speckle:rgba(255,255,255,0.08);
+  --hm-board-frame:#0FA9CA;
+  --hm-board-title:#E0F7FF;
+  --hm-board-text:#A0D4E8;
+  --hm-board-pin: var(--hm-color-accent-orange);
+}
+
+[data-theme="forest"] {
+  --hm-board-bg-start:#162116;
+  --hm-board-bg-end:#1E2C1E;
+  --hm-board-speckle:rgba(255,255,255,0.07);
+  --hm-board-frame:#7CB342;
+  --hm-board-title:#E8F5E9;
+  --hm-board-text:#A5D6A7;
+  --hm-board-pin: var(--hm-color-accent-purple);
+}
+
+[data-theme="sunset"] {
+  --hm-board-bg-start:#2A1812;
+  --hm-board-bg-end:#3B2118;
+  --hm-board-speckle:rgba(255,255,255,0.08);
+  --hm-board-frame:#FF8A50;
+  --hm-board-title:#FFF4E6;
+  --hm-board-text:#FFCC80;
+  --hm-board-pin: var(--hm-color-accent-purple);
+}
+
+
 /* Smooth theme transitions */
 *{
   transition:background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
@@ -402,6 +454,46 @@ a:focus-visible {
     padding: 2rem;
   }
 }
+
+/* ========================================
+   NOTICE BOARD STYLES
+   ======================================== */
+.hm-notice-board {
+  position: relative;
+  /* Cork-like background with subtle speckles */
+  background:
+    radial-gradient(var(--hm-board-speckle) 1px, transparent 1px) 0 0/10px 10px,
+    linear-gradient(135deg, var(--hm-board-bg-start) 0%, var(--hm-board-bg-end) 100%);
+  border: 8px solid var(--hm-board-frame); /* wood-like frame */
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.15);
+}
+
+@media (min-width: 768px) {
+  .hm-notice-board { padding: 2rem; border-radius: 18px; }
+}
+
+/* Decorative pins */
+.hm-notice-board::before,
+.hm-notice-board::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--hm-board-pin);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+.hm-notice-board::before { left: 14px; }
+.hm-notice-board::after { right: 14px; }
+
+/* Text colors for content placed on the board */
+.hm-notice-board .hm-board-title { color: var(--hm-board-title); }
+.hm-notice-board .hm-board-text { color: var(--hm-board-text); }
+
+
 
 .hm-glass-card-light {
   background: var(--hm-bg-glass-light);

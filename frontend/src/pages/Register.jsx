@@ -78,7 +78,7 @@ const Register = () => {
       pb={[12, 20]}
     >
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
-        <Box maxW="500px" mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
+        <Box mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
           <Heading size="lg" mb={6} color="var(--hm-color-text-primary)">{t('auth.createAccount','Create your account')}</Heading>
           <form onSubmit={submit}>
             <VStack spacing={4} align="stretch">
@@ -186,7 +186,7 @@ const Register = () => {
                   onChange={onChange}
                   bg="var(--hm-bg-glass)"
                   borderColor="var(--hm-border-outline)"
-}                  color="var(--hm-color-text-primary)"
+                 color="var(--hm-color-text-primary)"
                   _hover={{ borderColor: 'var(--hm-border-outline)' }}
                   _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
                 />

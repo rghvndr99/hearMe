@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Box,
   Flex,
@@ -21,7 +21,7 @@ import {
   useDisclosure,
   Divider,
 } from "@chakra-ui/react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FiMenu } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
@@ -35,6 +35,11 @@ const Header= () => {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [authToken, setAuthToken] = useState(() => (typeof window !== 'undefined' ? localStorage.getItem('hm-token') : null));
+  const location = useLocation();
+  const loginHref = useMemo(() => {
+    const current = `${location.pathname}${location.search}${location.hash}`;
+    return `/login?redirect=${encodeURIComponent(current)}`;
+  }, [location]);
 
   useEffect(() => {
     const update = () => setAuthToken(typeof window !== 'undefined' ? localStorage.getItem('hm-token') : null);
@@ -45,6 +50,16 @@ const Header= () => {
       window.removeEventListener('hm-auth-changed', update);
     };
   }, []);
+
+  // Remember last non-auth route for post-login return
+  useEffect(() => {
+    try {
+      const path = `${location.pathname}${location.search}${location.hash}`;
+      if (location.pathname !== '/login') {
+        localStorage.setItem('hm-last-route', path);
+      }
+    } catch {}
+  }, [location]);
 
   const handleLogout = () => {
     try {
@@ -221,7 +236,7 @@ const Header= () => {
             </Menu>
           ) : (
             <>
-              <Button as={RouterLink} to="/login" variant="ghost" size="sm" color="var(--hm-color-text-muted)" _hover={{ color: 'var(--hm-color-brand)' }} display={["none", "inline-flex"]}>{t('nav.login', 'Login')}</Button>
+              <Button as={RouterLink} to={loginHref} variant="ghost" size="sm" color="var(--hm-color-text-muted)" _hover={{ color: 'var(--hm-color-brand)' }} display={["none", "inline-flex"]}>{t('nav.login', 'Login')}</Button>
               <Button as={RouterLink} to="/register"
                 bgGradient="var(--hm-gradient-cta)"
                 _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
@@ -497,7 +512,7 @@ const Header= () => {
               <VStack spacing={3} align="stretch" px={4} pt={2}>
                 <Button
                   as={RouterLink}
-                  to="/login"
+                  to={loginHref}
                   onClick={handleNavClick}
                   variant="outline"
                   size="lg"

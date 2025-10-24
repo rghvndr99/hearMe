@@ -51,6 +51,8 @@ const ChangePassword = lazy(() => import('./pages/ChangePassword'));
 const ChangeEmail = lazy(() => import('./pages/ChangeEmail'));
 const VoiceMate = lazy(() => import('./pages/VoiceMate'));
 
+const Privacy = lazy(() => import('./pages/Privacy'));
+
 function Loader() {
   return (
     <div
@@ -118,6 +120,8 @@ function App() {
               <Route path="/change-password" element={<ChangePassword />} />
               <Route path="/change-email" element={<ChangeEmail />} />
               <Route path="/voicemate" element={<VoiceMate />} />
+              <Route path="/privacy" element={<Privacy />} />
+
             </Routes>
           </Box>
         </Suspense>

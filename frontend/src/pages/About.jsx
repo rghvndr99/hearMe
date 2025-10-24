@@ -6,7 +6,13 @@ import {
   Text,
   VStack,
   SimpleGrid,
+  Stack,
+  Image,
 } from "@chakra-ui/react";
+
+// Safe local fallback image already present from carousel
+const FALLBACK_ABOUT_IMG = '/images/1.png';
+
 import { useTranslation } from "react-i18next";
 
 const About= () => {
@@ -27,44 +33,66 @@ const About= () => {
       textAlign="center"
     >
       {/* === PAGE CONTENT === */}
-      <VStack spacing={10} zIndex={1} maxW="800px">
-        <Heading
-          as="h1"
-          fontSize={["3xl", "5xl", "6xl"]}
-          fontWeight="800"
-          color="var(--hm-color-text-primary)"
-          lineHeight="1.2"
-        >
-          {t('about.title', 'Dil Ki Baat — We\'re Here to Listen 💜')}
-        </Heading>
+      <VStack spacing={10} zIndex={1} w="full" maxW="1200px" align="stretch">
+        {/* Hero: Text left, image right */}
+        <Stack direction={["column","row"]} spacing={[6,8]} className="hm-glass-card" p={[6,8]} borderRadius="xl" align="stretch">
+          <VStack align="start" spacing={4} flex="1" minW={0} textAlign="left">
+            <Heading
+              as="h1"
+              fontSize={["3xl", "5xl", "6xl"]}
+              fontWeight="800"
+              color="var(--hm-color-text-primary)"
+              lineHeight="1.2"
+            >
+              {t('about.title', 'Dil Ki Baat — We\'re Here to Listen 💜')}
+            </Heading>
 
-        <Text fontSize={["lg", "xl"]} color="var(--hm-color-text-secondary)" fontWeight="500" maxW="700px">
-          {t('about.subtitle', 'HearMe is India\'s safe space for mental wellness. Anonymous. Confidential. Judgment-free. In your language.')}
-        </Text>
+            <Text fontSize={["lg", "xl"]} color="var(--hm-color-text-secondary)" fontWeight="500">
+              {t('about.subtitle', 'HearMe is India\'s safe space for mental wellness. Anonymous. Confidential. Judgment-free. In your language.')}
+            </Text>
 
-        <VStack spacing={4} pt={4}>
-          <Text fontSize={["md","lg"]} color="var(--hm-color-text-tertiary)" lineHeight="1.8">
-            {t('about.p1', 'We know what it feels like when your mind is heavy...')}
-          </Text>
-          <Text fontSize={["md","lg"]} color="var(--hm-color-text-tertiary)" lineHeight="1.8">
-            {t('about.p2', 'HearMe is built for real life in India...')}
-          </Text>
-        </VStack>
+            <Text fontSize={["md","lg"]} color="var(--hm-color-text-tertiary)" lineHeight="1.8">
+              {t('about.p1', 'We know what it feels like when your mind is heavy...')}
+            </Text>
+            <Text fontSize={["md","lg"]} color="var(--hm-color-text-tertiary)" lineHeight="1.8">
+              {t('about.p2', 'HearMe is built for real life in India...')}
+            </Text>
+          </VStack>
+
+          {/* Right: Hero image (1/3 width) */}
+          <Box flex={["none","0 0 33.333%"]} minW={0} display="flex" alignItems="center" justifyContent="center">
+            <Image
+              src="/images/dil-ki-baat.png"
+              alt="About HearMe"
+              w="100%"
+              h="auto"
+              loading="lazy"
+              decoding="async"
+              onError={(e)=>{ const el=e.currentTarget; if(!el.dataset.fb){ el.dataset.fb='1'; el.src = FALLBACK_ABOUT_IMG; } }}
+            />
+          </Box>
+        </Stack>
 
         {/* Mission Section */}
-        <Box pt={10}>
-          <Heading
-            as="h2"
-            fontSize={["2xl", "3xl"]}
-            mb={4}
-            color="var(--hm-color-text-primary)"
-            fontWeight="700"
-          >
-            {t('about.mission.title', 'Our Mission: Dil Halka Karo 💜')}
-          </Heading>
-          <Text fontSize={["md","lg"]} color="var(--hm-color-text-secondary)" maxW="700px" mx="auto" lineHeight="1.8">
-            {t('about.mission.p', 'Make emotional support simple, private, and available 24/7...')}
-          </Text>
+        <Box pt={10} w="full">
+          <Stack direction={["column","row"]} spacing={[6,8]} className="hm-glass-card" p={[6,8]} borderRadius="xl" align="stretch">
+
+            {/* Right: Mission text */}
+            <VStack align="start" spacing={4} flex="1" minW={0}>
+              <Heading
+                as="h2"
+                fontSize={["2xl", "3xl"]}
+                mb={0}
+                color="var(--hm-color-text-primary)"
+                fontWeight="700"
+              >
+                {t('about.mission.title', 'Our Mission: Dil Halka Karo')}
+              </Heading>
+              <Text fontSize={["md","lg"]} color="var(--hm-color-text-secondary)" lineHeight="1.8">
+                {t('about.mission.p', 'Make emotional support simple, private, and available 24/7...')}
+              </Text>
+            </VStack>
+          </Stack>
         </Box>
 
         {/* Values & Who We Serve */}
@@ -94,19 +122,14 @@ const About= () => {
           </Box>
 
           <Box
-            className="hm-glass-card"
+            className="hm-glass-card-light"
             p={8}
             borderRadius="lg"
             transition="0.3s"
+
             _hover={{ borderColor: "var(--hm-color-brand)" }}
           >
-            <Heading
-              as="h3"
-              fontSize="2xl"
-              mb={3}
-              color="var(--hm-color-text-primary)"
-              fontWeight="700"
-            >
+            <Heading as="h3" fontSize="2xl" mb={3} color="var(--hm-color-text-primary)" fontWeight="700">
               {t('about.serve.title')}
             </Heading>
             <VStack align="start" spacing={2} color="var(--hm-color-text-secondary)">
@@ -140,7 +163,9 @@ const About= () => {
               transition="0.3s"
               _hover={{ borderColor: "var(--hm-color-brand)", transform: "translateY(-4px)" }}
             >
+
               <Text fontSize="2xl" mb={3} fontWeight="700" color="var(--hm-color-text-primary)">
+
                 {t('about.whyDifferent.card1Title', '🇮🇳 Built for India')}
               </Text>
               <Text color="var(--hm-color-text-secondary)" lineHeight="1.7">
@@ -150,12 +175,13 @@ const About= () => {
 
             {/* Card 2 - Your Voice, Your Way */}
             <Box
-              className="hm-glass-card"
+              className="hm-glass-card-light"
               p={8}
               borderRadius="xl"
               transition="0.3s"
               _hover={{ borderColor: "var(--hm-color-brand)", transform: "translateY(-4px)" }}
             >
+
               <Text fontSize="2xl" mb={3} fontWeight="700" color="var(--hm-color-text-primary)">
                 {t('about.whyDifferent.card2Title', '🎙️ Your Voice, Your Way')}
               </Text>
@@ -182,14 +208,14 @@ const About= () => {
 
             {/* Card 4 - Judgment-Free Zone */}
             <Box
-              className="hm-glass-card"
+              className="hm-glass-card-light"
               p={8}
               borderRadius="xl"
               transition="0.3s"
               _hover={{ borderColor: "var(--hm-color-brand)", transform: "translateY(-4px)" }}
             >
               <Text fontSize="2xl" mb={3} fontWeight="700" color="var(--hm-color-text-primary)">
-                {t('about.whyDifferent.card4Title', '💜 Judgment-Free Zone')}
+                {t('about.whyDifferent.card4Title', 'Judgment-Free Zone')}
               </Text>
               <Text color="var(--hm-color-text-secondary)" lineHeight="1.7">
                 {t('about.whyDifferent.card4Desc', 'Whatever you\'re feeling, it\'s valid. We\'re here to listen, not lecture...')}

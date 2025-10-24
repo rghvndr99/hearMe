@@ -60,7 +60,7 @@ const Contact = () => {
       {/* Contact Form Container */}
       <VStack
         spacing={8}
-        w={["100%", "450px"]}
+        w={["100%"]}
         className="hm-glass-card-light"
         borderRadius="xl"
         p={[6, 10]}

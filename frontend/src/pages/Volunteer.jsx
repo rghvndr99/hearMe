@@ -131,123 +131,113 @@ const Volunteer = () => {
         {/* Benefits Section */}
         <SimpleGrid columns={[1, 3]} spacing={8} pt={12} w="full">
           <Box
-            className="hm-glass-card"
+            className="hm-notice-board"
             borderRadius="xl"
             p={[6, 8]}
             transition="0.3s"
-            _hover={{ borderColor: "var(--hm-color-brand)" }}
+            _hover={{ transform: 'translateY(-2px)' }}
           >
             <Icon as={FaHeart} boxSize={8} color="var(--hm-color-brand)" mb={4} />
-            <Text fontSize="xl" fontWeight="600" mb={2} color="var(--hm-color-text-primary)">
+            <Text fontSize="xl" fontWeight="700" mb={2} color="var(--hm-board-title)">
               {t('volunteer.benefits.supportTitle', 'Dil Ko Sukoon Do — Bring Peace to Hearts')}
             </Text>
-            <Text color="var(--hm-color-text-secondary)" lineHeight="1.7">
+            <Text color="var(--hm-board-text)" lineHeight="1.7">
               {t('volunteer.benefits.supportDesc', 'Your listening can be the difference between someone feeling alone and feeling understood. In India, where mental health support is scarce, your time is priceless.')}
             </Text>
           </Box>
 
           <Box
-            className="hm-glass-card"
+            className="hm-notice-board"
             borderRadius="xl"
             p={[6, 8]}
             transition="0.3s"
-            _hover={{ borderColor: "var(--hm-color-brand)" }}
+            _hover={{ transform: 'translateY(-2px)' }}
           >
             <Icon as={FaUsers} boxSize={8} color="var(--hm-color-accent-orange)" mb={4} />
-            <Text fontSize="xl" fontWeight="600" mb={2} color="var(--hm-color-text-primary)">
+            <Text fontSize="xl" fontWeight="700" mb={2} color="var(--hm-board-title)">
               {t('volunteer.benefits.experienceTitle', 'Khud Ko Bhi Samjho — Understand Yourself Too')}
             </Text>
-            <Text color="var(--hm-color-text-secondary)" lineHeight="1.7">
+            <Text color="var(--hm-board-text)" lineHeight="1.7">
               {t('volunteer.benefits.experienceDesc', 'Learn active listening, empathy, and emotional intelligence. These skills will transform your relationships, career, and self-awareness.')}
             </Text>
           </Box>
 
           <Box
-            className="hm-glass-card"
+            className="hm-notice-board"
             borderRadius="xl"
             p={[6, 8]}
             transition="0.3s"
-            _hover={{ borderColor: "var(--hm-color-brand)" }}
+            _hover={{ transform: 'translateY(-2px)' }}
           >
             <Icon as={FaStar} boxSize={8} color="var(--hm-color-accent-purple)" mb={4} />
-            <Text fontSize="xl" fontWeight="600" mb={2} color="var(--hm-color-text-primary)">
+            <Text fontSize="xl" fontWeight="700" mb={2} color="var(--hm-board-title)">
               {t('volunteer.benefits.communityTitle', 'Ek Parivaar Bano — Become Part of a Family')}
             </Text>
-            <Text color="var(--hm-color-text-secondary)" lineHeight="1.7">
+            <Text color="var(--hm-board-text)" lineHeight="1.7">
               {t('volunteer.benefits.communityDesc', 'Connect with like-minded volunteers across India who believe mental wellness is a right, not a luxury. Together, we\'re breaking the stigma.')}
             </Text>
           </Box>
         </SimpleGrid>
 
-        {/* What You'll Do Section */}
-        <Box pt={12} w="full" maxW="700px">
-          <Heading
-            as="h2"
-            fontSize={["2xl", "3xl"]}
-            mb={6}
-            textAlign="center"
-            color="var(--hm-color-text-primary)"
-            fontWeight="700"
-          >
-            {t('volunteer.whatYouDo.title', 'Aap Kya Karenge? (What You\'ll Do)')}
-          </Heading>
-          <VStack align="start" spacing={3}>
-            <Text color="var(--hm-color-text-secondary)" fontSize="md">
-              {t('volunteer.whatYouDo.point1', '🎧 Listen without judgment — let people share their truth')}
-            </Text>
-            <Text color="var(--hm-color-text-secondary)" fontSize="md">
-              {t('volunteer.whatYouDo.point2', '💬 Respond with empathy — validate their feelings')}
-            </Text>
-            <Text color="var(--hm-color-text-secondary)" fontSize="md">
-              {t('volunteer.whatYouDo.point3', '🔗 Guide gently — share resources when needed')}
-            </Text>
-            <Text color="var(--hm-color-text-secondary)" fontSize="md">
-              {t('volunteer.whatYouDo.point4', '🔒 Maintain confidentiality — their trust is sacred')}
-            </Text>
-          </VStack>
-        </Box>
+        {/* What You'll Do + Who Can Volunteer (side by side on desktop) */}
+        <SimpleGrid columns={[1, 2]} spacing={8} pt={12} w="full">
+          <Box w="full">
+            <Heading
+              as="h2"
+              fontSize={["2xl", "3xl"]}
+              mb={6}
+              textAlign="center"
+              color="var(--hm-color-text-primary)"
+              fontWeight="700"
+            >
+              {t('volunteer.whatYouDo.title', 'Aap Kya Karenge? (What You\'ll Do)')}
+            </Heading>
+            <VStack align="start" spacing={3}>
+              <Text color="var(--hm-color-text-secondary)" fontSize="md">
+                {t('volunteer.whatYouDo.point1', '🎧 Listen without judgment — let people share their truth')}
+              </Text>
+              <Text color="var(--hm-color-text-secondary)" fontSize="md">
+                {t('volunteer.whatYouDo.point2', '💬 Respond with empathy — validate their feelings')}
+              </Text>
+              <Text color="var(--hm-color-text-secondary)" fontSize="md">
+                {t('volunteer.whatYouDo.point3', '🔗 Guide gently — share resources when needed')}
+              </Text>
+              <Text color="var(--hm-color-text-secondary)" fontSize="md">
+                {t('volunteer.whatYouDo.point4', '🔒 Maintain confidentiality — their trust is sacred')}
+              </Text>
+            </VStack>
+          </Box>
 
-        {/* Who Can Volunteer Section */}
-        {/* Full-width banner for Who Can Volunteer */}
-        <Image
-          src="/images/volunteer/who-can-volunteer-banner.png"
-          alt={t('volunteer.whoCanVolunteer.bannerAlt', 'Who can volunteer banner')}
-          w="full"
-          h="auto"
-          borderRadius="xl"
-          border="1px solid var(--hm-border-glass)"
-          mb={6}
-        />
-
-        <Box pt={12} w="full" maxW="700px">
-          <Heading
-            as="h2"
-            fontSize={["2xl", "3xl"]}
-            mb={6}
-            textAlign="center"
-            color="var(--hm-color-text-primary)"
-            fontWeight="700"
-          >
-            {t('volunteer.whoCanVolunteer.title', 'Kaun Volunteer Kar Sakta Hai? (Who Can Volunteer?)')}
-          </Heading>
-          <VStack align="start" spacing={3}>
-            <Text color="var(--hm-color-text-secondary)" fontSize="md">
-              {t('volunteer.whoCanVolunteer.point1', '✅ You\'re 18+ years old')}
-            </Text>
-            <Text color="var(--hm-color-text-secondary)" fontSize="md">
-              {t('volunteer.whoCanVolunteer.point2', '✅ You can commit 2-4 hours per week')}
-            </Text>
-            <Text color="var(--hm-color-text-secondary)" fontSize="md">
-              {t('volunteer.whoCanVolunteer.point3', '✅ You\'re fluent in Hindi, English, or both')}
-            </Text>
-            <Text color="var(--hm-color-text-secondary)" fontSize="md">
-              {t('volunteer.whoCanVolunteer.point4', '✅ You\'re empathetic, patient, and non-judgmental')}
-            </Text>
-            <Text color="var(--hm-color-text-secondary)" fontSize="md">
-              {t('volunteer.whoCanVolunteer.point5', '✅ You\'re willing to complete our training (free!)')}
-            </Text>
-          </VStack>
-        </Box>
+          <Box w="full">
+            <Heading
+              as="h2"
+              fontSize={["2xl", "3xl"]}
+              mb={6}
+              textAlign="center"
+              color="var(--hm-color-text-primary)"
+              fontWeight="700"
+            >
+              {t('volunteer.whoCanVolunteer.title', 'Kaun Volunteer Kar Sakta Hai? (Who Can Volunteer?)')}
+            </Heading>
+            <VStack align="start" spacing={3}>
+              <Text color="var(--hm-color-text-secondary)" fontSize="md">
+                {t('volunteer.whoCanVolunteer.point1', '✅ You\'re 18+ years old')}
+              </Text>
+              <Text color="var(--hm-color-text-secondary)" fontSize="md">
+                {t('volunteer.whoCanVolunteer.point2', '✅ You can commit 4-8 hours per day')}
+              </Text>
+              <Text color="var(--hm-color-text-secondary)" fontSize="md">
+                {t('volunteer.whoCanVolunteer.point3', '✅ You\'re fluent in Hindi, English, or both')}
+              </Text>
+              <Text color="var(--hm-color-text-secondary)" fontSize="md">
+                {t('volunteer.whoCanVolunteer.point4', '✅ You\'re empathetic, patient, and non-judgmental')}
+              </Text>
+              <Text color="var(--hm-color-text-secondary)" fontSize="md">
+                {t('volunteer.whoCanVolunteer.point5', '✅ You\'re willing to complete our training (free!)')}
+              </Text>
+            </VStack>
+          </Box>
+        </SimpleGrid>
 
         {/* === Volunteer Application Form === */}
         <Box
@@ -285,7 +275,12 @@ const Volunteer = () => {
               name="name"
               placeholder={t('volunteer.form.name', 'Aapka poora naam (Full name) *')}
               className="hm-input"
-              _focus={{ borderColor: "var(--hm-color-brand)" }}
+              bg="var(--hm-bg-glass)"
+              border="1px solid var(--hm-border-outline)"
+              color="var(--hm-color-text-primary)"
+              _placeholder={{ color: 'var(--hm-color-placeholder)' }}
+              _hover={{ borderColor: 'var(--hm-border-outline)' }}
+              _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
               value={form.name}
               onChange={handleChange}
             />
@@ -294,7 +289,12 @@ const Volunteer = () => {
               placeholder={t('volunteer.form.email', 'Aapka email (Email address) *')}
               type="email"
               className="hm-input"
-              _focus={{ borderColor: "var(--hm-color-brand)" }}
+              bg="var(--hm-bg-glass)"
+              border="1px solid var(--hm-border-outline)"
+              color="var(--hm-color-text-primary)"
+              _placeholder={{ color: 'var(--hm-color-placeholder)' }}
+              _hover={{ borderColor: 'var(--hm-border-outline)' }}
+              _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
               value={form.email}
               onChange={handleChange}
             />
@@ -302,7 +302,12 @@ const Volunteer = () => {
               name="phone"
               placeholder={t('volunteer.form.phone', 'Phone number (optional)')}
               className="hm-input"
-              _focus={{ borderColor: "var(--hm-color-brand)" }}
+              bg="var(--hm-bg-glass)"
+              border="1px solid var(--hm-border-outline)"
+              color="var(--hm-color-text-primary)"
+              _placeholder={{ color: 'var(--hm-color-placeholder)' }}
+              _hover={{ borderColor: 'var(--hm-border-outline)' }}
+              _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
               value={form.phone}
               onChange={handleChange}
             />
@@ -310,7 +315,12 @@ const Volunteer = () => {
               name="availability"
               placeholder={t('volunteer.form.availability', 'Kab free ho? (When are you available?) — e.g., Weekends, evenings')}
               className="hm-input"
-              _focus={{ borderColor: "var(--hm-color-brand)" }}
+              bg="var(--hm-bg-glass)"
+              border="1px solid var(--hm-border-outline)"
+              color="var(--hm-color-text-primary)"
+              _placeholder={{ color: 'var(--hm-color-placeholder)' }}
+              _hover={{ borderColor: 'var(--hm-border-outline)' }}
+              _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
               value={form.availability}
               onChange={handleChange}
             />
@@ -318,7 +328,12 @@ const Volunteer = () => {
               name="location"
               placeholder={t('volunteer.form.location', 'Aap kahan rehte ho? (Your city)')}
               className="hm-input"
-              _focus={{ borderColor: "var(--hm-color-brand)" }}
+              bg="var(--hm-bg-glass)"
+              border="1px solid var(--hm-border-outline)"
+              color="var(--hm-color-text-primary)"
+              _placeholder={{ color: 'var(--hm-color-placeholder)' }}
+              _hover={{ borderColor: 'var(--hm-border-outline)' }}
+              _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
               value={form.location}
               onChange={handleChange}
             />
@@ -326,7 +341,12 @@ const Volunteer = () => {
               name="skills"
               placeholder={t('volunteer.form.skills', 'Aapki skills (Your skills/expertise) — e.g., Psychology, counseling, languages')}
               className="hm-input"
-              _focus={{ borderColor: "var(--hm-color-brand)" }}
+              bg="var(--hm-bg-glass)"
+              border="1px solid var(--hm-border-outline)"
+              color="var(--hm-color-text-primary)"
+              _placeholder={{ color: 'var(--hm-color-placeholder)' }}
+              _hover={{ borderColor: 'var(--hm-border-outline)' }}
+              _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
               value={form.skills}
               onChange={handleChange}
             />
@@ -335,7 +355,12 @@ const Volunteer = () => {
               placeholder={t('volunteer.form.message', 'Aap kyun volunteer karna chahte ho? (Why do you want to volunteer?) *')}
               rows={5}
               className="hm-input"
-              _focus={{ borderColor: "var(--hm-color-brand)" }}
+              bg="var(--hm-bg-glass)"
+              border="1px solid var(--hm-border-outline)"
+              color="var(--hm-color-text-primary)"
+              _placeholder={{ color: 'var(--hm-color-placeholder)' }}
+              _hover={{ borderColor: 'var(--hm-border-outline)' }}
+              _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
               value={form.message}
               onChange={handleChange}
             />

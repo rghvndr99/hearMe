@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Flex, Heading, VStack, FormControl, FormLabel, Input, Button, useToast, Text, Link, useColorModeValue } from '@chakra-ui/react';
 import axios from 'axios';
 
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { useNavigate, useLocation, Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
@@ -14,6 +14,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -25,7 +26,18 @@ const Login = () => {
       localStorage.setItem('hm-token', data.token);
       try { window.dispatchEvent(new Event('hm-auth-changed')); } catch {}
       toast({ title: t('login.messages.welcomeBack', '✅ Khush aamdeed! Welcome back to your safe space. 💜'), status: 'success', duration: 2000, isClosable: true });
-      navigate('/profile');
+      // Post-login return logic
+      try {
+        const params = new URLSearchParams(location.search);
+        let redirect = params.get('redirect') || localStorage.getItem('hm-last-route') || '/';
+        // Basic sanitization: only allow in-app paths
+        if (typeof redirect !== 'string' || !redirect.startsWith('/')) {
+          redirect = '/';
+        }
+        navigate(redirect, { replace: true });
+      } catch {
+        navigate('/', { replace: true });
+      }
     } catch (err) {
       const msg = err?.response?.data?.error || t('login.messages.loginFailed', '❌ Oops! Login failed. Please check your username/email and password and try again. 💜');
       toast({ title: t('common.error','Error'), description: msg, status: 'error', duration: 4000, isClosable: true });
@@ -65,7 +77,7 @@ const Login = () => {
           </Text>
         </VStack>
 
-        <Box maxW="480px" mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
+        <Box mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
           <Heading size="md" mb={6} color="var(--hm-color-text-primary)">{t('login.formTitle','Login Karo — Sign In 💜')}</Heading>
           <form onSubmit={submit}>
             <VStack spacing={4} align="stretch">
@@ -94,7 +106,7 @@ const Login = () => {
                   placeholder={t('login.placeholders.password','Enter your password')}
                   bg="var(--hm-bg-glass)"
                   borderColor="var(--hm-border-outline)"
-}                  color="var(--hm-color-text-primary)"
+                  color="var(--hm-color-text-primary)"
                   _placeholder={{ color: 'var(--hm-color-placeholder)' }}
                   _hover={{ borderColor: 'var(--hm-border-outline)' }}
                   _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}

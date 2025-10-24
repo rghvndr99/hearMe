@@ -18,6 +18,7 @@ import ttsRouter from './routes/tts.js';
 import usersRouter from './routes/users.js';
 import voiceTwinRouter from './routes/voicetwin.js';
 import speakerDiarizationRouter from './routes/speakerDiarization.js';
+import storiesRouter from './routes/stories.js';
 
 // Get directory name in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -56,6 +57,7 @@ app.use('/api/tts', ttsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/voicetwin', voiceTwinRouter);
 app.use('/api/speaker-diarization', speakerDiarizationRouter);
+app.use('/api/stories', storiesRouter);
 
 const server = http.createServer(app);
 const io = new Server(server, {

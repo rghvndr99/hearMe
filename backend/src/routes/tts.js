@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/eleven', async (req, res) => {
   try {
-    const { text, voiceId } = req.body || {};
+    const { text, voiceId, voiceSettings, modelId } = req.body || {};
     if (!text || !String(text).trim()) {
       return res.status(400).json({ error: 'text is required' });
     }
@@ -22,12 +22,21 @@ router.post('/eleven', async (req, res) => {
 
     const url = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
 
+    // Sanitize voice settings (optional)
+    let voice_settings = undefined;
+    if (voiceSettings && typeof voiceSettings === 'object') {
+      const stability = Math.max(0, Math.min(1, Number(voiceSettings.stability ?? 0)));
+      const similarity_boost = Math.max(0, Math.min(1, Number(voiceSettings.similarity_boost ?? 0)));
+      voice_settings = { stability, similarity_boost };
+    }
+
     const response = await axios.post(
       url,
       {
         text: String(text),
-        model_id: 'eleven_multilingual_v2',
-        output_format: 'mp3_44100_128'
+        model_id: modelId || 'eleven_multilingual_v2',
+        output_format: 'mp3_44100_128',
+        ...(voice_settings ? { voice_settings } : {}),
       },
       {
         headers: {

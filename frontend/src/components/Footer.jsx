@@ -40,7 +40,7 @@ const Footer = () => {
             Hear<span className="hm-brand">Me</span>
           </Text>
           <Text color="var(--hm-color-text-secondary)" fontSize="md" maxW="800px" lineHeight="1.8">
-            {t('footer.tagline', 'Aapki awaaz, aapki kahani, aapka safe space. Mental health support jo samajhta hai aapko — judgment-free, anonymous, aur bilkul free. Aap akele nahi ho. 💜')}
+            {t('footer.tagline', 'Aapki awaaz, aapki kahani, aapka safe space. Mental health support jo samajhta hai aapko — judgment-free, anonymous, aur bilkul free. Aap akele nahi ho.')}
           </Text>
         </VStack>
 
@@ -80,7 +80,7 @@ const Footer = () => {
               {t('footer.crisis.heading', '🆘 Crisis Mein Ho? Turant Madad Yahan Hai')}
             </Heading>
             <Text fontSize="xs" color="var(--hm-color-text-secondary)" lineHeight="1.6" textAlign={["center", "center", "left"]}>
-              {t('footer.crisis.note', 'You\'re not alone. Help is just a call away. 💜')}
+              {t('footer.crisis.note', 'You\'re not alone. Help is just a call away.')}
             </Text>
             <VStack align={["center", "center", "start"]} spacing={2} pt={2}>
               <Link href="tel:9820466726" fontSize="sm" color="var(--hm-color-brand)" fontWeight="600" _hover={{ textDecoration: "underline" }}>
@@ -118,7 +118,7 @@ const Footer = () => {
           {/* Social & Contact */}
           <VStack align={["center", "center", "start"]} spacing={3}>
             <Heading size="sm" color="var(--hm-color-text-primary)" mb={2}>
-              {t('footer.social.heading', 'Humse Judo — Connect With Us 💜')}
+              {t('footer.social.heading', 'Humse Judo — Connect With Us')}
             </Heading>
             <HStack spacing={3} flexWrap="wrap" justify={["center", "center", "flex-start"]}>
               <IconButton
@@ -194,10 +194,10 @@ const Footer = () => {
         {/* Bottom Copyright */}
         <VStack spacing={2} textAlign="center">
           <Text fontSize="sm" color="var(--hm-color-text-secondary)" lineHeight="1.7">
-            {t('footer.copyright', `© ${currentYear} HearMe — Made with 💜 for India. Aapki mental health, humari zimmedari. Thank you for trusting us with your story.`, { year: currentYear })}
+            {t('footer.copyright', `© ${currentYear} HearMe — Made with  for India. Aapki mental health, humari zimmedari. Thank you for trusting us with your story.`, { year: currentYear })}
           </Text>
           <Text fontSize="xs" color="var(--hm-color-text-muted)">
-            {t('footer.madeWith', 'Made with 💜 for India')}
+            {t('footer.madeWith', 'Made with  for India')}
           </Text>
         </VStack>
       </VStack>

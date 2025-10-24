@@ -35,12 +35,11 @@ const ChatHeader = ({
       backdropFilter="blur(10px)"
       w={["100%", "100%", "76%"]}
       mx="auto"
+      p={4}
     >
       <Flex
         align="center"
         justify="space-between"
-        px={[3, 4, 6]}
-        py={[3, 3, 4]}
         flexDirection={["column", "column", "row"]}
         gap={[2, 2, 0]}
       >
