@@ -27,13 +27,7 @@ const __dirname = path.dirname(__filename);
 // Load .env from root directory
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
-// Verify OpenAI API key is loaded
-if (process.env.OPENAI_API_KEY) {
-  console.log('✅ OpenAI API Key loaded successfully');
-  console.log(`   Key starts with: ${process.env.OPENAI_API_KEY.substring(0, 10)}...`);
-} else {
-  console.warn('⚠️  WARNING: OPENAI_API_KEY not found in environment variables');
-}
+// OpenAI API Key presence check removed (no console output in production)
 
 const app = express();
 app.use(helmet());
@@ -70,7 +64,7 @@ const queue = [];
 const pairs = new Map();
 
 io.on('connection', (socket) => {
-  console.log('socket connected', socket.id);
+  // socket connected (log removed)
 
   socket.on('identify', (data) => {
     socket.data.sessionId = data.sessionId;
@@ -145,5 +139,5 @@ function matchQueue() {
 const PORT = process.env.PORT || 5001;
 mongoose
   .connect(process.env.MONGO_URI || 'mongodb://localhost:27017/hearme')
-  .then(() => server.listen(PORT, () => console.log(`Server listening on ${PORT}`)))
-  .catch((err) => console.error('Mongo error', err));
+  .then(() => server.listen(PORT))
+  .catch(() => {});

@@ -57,7 +57,7 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip }) => {
         if (res.ok) {
           const data = await res.json();
           const fetchedVoices = Array.isArray(data?.voices) ? data.voices : [];
-          console.log(`VoiceSelector: Loaded ${fetchedVoices.length} voices (${token ? 'user' : 'public'})`);
+
 
           // Add browser default as first option
           setVoices([
@@ -65,11 +65,11 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip }) => {
             ...fetchedVoices,
           ]);
         } else {
-          console.warn('VoiceSelector: Failed to fetch voices, status:', res.status);
+
           setVoices([browserDefaultVoice]);
         }
       } catch (e) {
-        console.error('Failed to load voices:', e);
+
         setVoices([browserDefaultVoice]);
       } finally {
         if (active) setLoading(false);

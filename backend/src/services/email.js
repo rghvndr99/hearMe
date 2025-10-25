@@ -69,9 +69,7 @@ export async function sendMail({ to, subject, html, text }) {
     }
     case 'LOG':
     default: {
-      // Development: log email to console
-      const payload = { to, from, subject, text, html };
-      console.log('📧 [LOG EMAIL]', JSON.stringify(payload, null, 2));
+      // Development: console logging removed
       return { logged: true };
     }
   }

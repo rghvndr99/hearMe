@@ -39,7 +39,7 @@ export const useChat = (onError) => {
         setQuickReplies(response.data.quickReplies);
       }
     } catch (error) {
-      console.error("Failed to initialize chat session:", error);
+
       if (onError) {
         onError({
           title: "Connection Error",
@@ -93,7 +93,7 @@ export const useChat = (onError) => {
 
       return aiMessage;
     } catch (error) {
-      console.error("Failed to send message:", error);
+
       if (onError) {
         onError({
           title: "Message Failed",

@@ -8,22 +8,38 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Set ffmpeg path (try common locations)
+// Resolve ffmpeg path from env/known locations and wire it for fluent-ffmpeg and CLI usage
+let FFMPEG_BIN = null;
 try {
-  const ffmpegPath = execSync('which ffmpeg', { encoding: 'utf8' }).trim();
-  if (ffmpegPath) {
-    ffmpeg.setFfmpegPath(ffmpegPath);
-    console.log(`✅ ffmpeg found at: ${ffmpegPath}`);
+  const envPath = process.env.FFMPEG_PATH;
+  if (envPath && fs.existsSync(envPath)) {
+    FFMPEG_BIN = envPath;
   }
-} catch (err) {
-  // Try common macOS Homebrew path
-  const homebrewPath = '/opt/homebrew/bin/ffmpeg';
-  if (fs.existsSync(homebrewPath)) {
-    ffmpeg.setFfmpegPath(homebrewPath);
-    console.log(`✅ ffmpeg found at: ${homebrewPath}`);
-  } else {
-    console.warn('⚠️  ffmpeg not found in PATH. Please install ffmpeg or set PATH.');
+} catch {}
+
+if (!FFMPEG_BIN) {
+  try {
+    const whichPath = execSync('which ffmpeg', { encoding: 'utf8' }).trim();
+    if (whichPath) FFMPEG_BIN = whichPath;
+  } catch {}
+}
+
+if (!FFMPEG_BIN) {
+  const candidates = [
+    '/opt/homebrew/bin/ffmpeg',
+    '/usr/local/bin/ffmpeg',
+    '/usr/bin/ffmpeg'
+  ];
+  for (const p of candidates) {
+    if (fs.existsSync(p)) { FFMPEG_BIN = p; break; }
   }
+}
+
+if (FFMPEG_BIN) {
+  try { ffmpeg.setFfmpegPath(FFMPEG_BIN); } catch {}
+  console.log(`✅ ffmpeg found at: ${FFMPEG_BIN}`);
+} else {
+  console.warn('⚠️  ffmpeg not found. Please install ffmpeg (e.g., brew install ffmpeg) or set FFMPEG_PATH.');
 }
 
 /**
@@ -91,9 +107,33 @@ export function extractSpeakerSegments(result) {
     throw new Error("No transcription channels found in Deepgram response.");
   }
 
-  const items = result.results.channels[0].alternatives[0].words;
+  let items = result.results.channels[0].alternatives[0].words || [];
 
-  console.log(`\n📊 Total words detected: ${items.length}`);
+  // Fallback to utterances if words are missing/empty
+  if (!items.length && Array.isArray(result.results?.utterances)) {
+    console.warn("⚠️  'words' missing in response; falling back to 'utterances'.");
+    for (const u of result.results.utterances) {
+      const spk = `SPK_${u.speaker ?? 0}`;
+      if (!speakers[spk]) speakers[spk] = [];
+      speakers[spk].push({ start: Number(u.start), end: Number(u.end) });
+    }
+
+    // Sort segments per speaker
+    Object.values(speakers).forEach(arr => arr.sort((a, b) => a.start - b.start));
+
+    console.log(`\n� Speaker segments extracted from utterances:`);
+    Object.entries(speakers).forEach(([speaker, segments]) => {
+      console.log(`   ${speaker}: ${segments.length} segments`);
+    });
+    return speakers;
+  }
+
+  console.log(`\n�📊 Total words detected: ${items.length}`);
+
+  // Ensure words are sorted and valid
+  items = items
+    .filter(w => Number.isFinite(w?.start) && Number.isFinite(w?.end))
+    .sort((a, b) => a.start - b.start);
 
   // Check if speaker diarization worked
   const uniqueSpeakers = new Set();
@@ -112,7 +152,7 @@ export function extractSpeakerSegments(result) {
   // Show word count per speaker
   console.log('\n📊 Words per speaker:');
   Object.entries(speakerWordCounts).forEach(([speaker, count]) => {
-    const percentage = ((count / items.length) * 100).toFixed(1);
+    const percentage = items.length ? ((count / items.length) * 100).toFixed(1) : '0.0';
     console.log(`   Speaker ${speaker}: ${count} words (${percentage}%)`);
   });
 
@@ -128,8 +168,15 @@ export function extractSpeakerSegments(result) {
   for (const word of items) {
     const speaker = `SPK_${word.speaker !== undefined ? word.speaker : 0}`;
     if (!speakers[speaker]) speakers[speaker] = [];
-    speakers[speaker].push({ start: word.start, end: word.end });
+    const start = Number(word.start);
+    const end = Number(word.end);
+    if (Number.isFinite(start) && Number.isFinite(end) && end > start) {
+      speakers[speaker].push({ start, end });
+    }
   }
+
+  // Sort segments per speaker
+  Object.values(speakers).forEach(arr => arr.sort((a, b) => a.start - b.start));
 
   console.log(`\n📋 Speaker segments extracted:`);
   Object.entries(speakers).forEach(([speaker, segments]) => {
@@ -152,66 +199,93 @@ export async function splitAndMergeSpeakers(audioPath, speakers, outputDir, temp
   await fs.ensureDir(outputDir);
 
   const outputFiles = [];
+  const MIN_SEGMENT_SEC = 0.05; // discard ultra-short segments (<50ms)
+  const MERGE_GAP_SEC = 0.75;   // merge if gap between segments <= 750ms
 
-  for (const [speaker, segments] of Object.entries(speakers)) {
+  for (const [speaker, rawSegments] of Object.entries(speakers)) {
     console.log(`🎙 Processing ${speaker}...`);
-    const tempFiles = [];
 
-    // Merge close segments (<0.5s apart)
+    // Normalize, validate, and sort segments
+    const segments = (rawSegments || [])
+      .filter(s => Number.isFinite(s?.start) && Number.isFinite(s?.end) && (s.end - s.start) > MIN_SEGMENT_SEC)
+      .sort((a, b) => a.start - b.start);
+
+    if (!segments.length) {
+      console.warn(`⚠️  Skipping ${speaker}: no valid segments`);
+      continue;
+    }
+
+    // Merge close/overlapping segments
     const merged = [];
     let current = segments[0];
     for (let i = 1; i < segments.length; i++) {
-      if (segments[i].start - current.end < 0.5) {
-        current.end = segments[i].end;
+      const seg = segments[i];
+      if (seg.start - current.end <= MERGE_GAP_SEC) {
+        current.end = Math.max(current.end, seg.end);
       } else {
         merged.push(current);
-        current = segments[i];
+        current = seg;
       }
     }
     merged.push(current);
 
-    // Extract and save each merged segment
+    // Extract temp files for merged segments
+    const tempFiles = [];
     for (let i = 0; i < merged.length; i++) {
       const seg = merged[i];
+      const dur = seg.end - seg.start;
+      if (dur <= MIN_SEGMENT_SEC) continue;
+
       const output = path.join(tempDir, `${speaker}_${i}.wav`);
-      await new Promise((resolve, reject) => {
-        ffmpeg(audioPath)
-          .setStartTime(seg.start)
-          .setDuration(seg.end - seg.start)
-          .output(output)
-          .on("end", resolve)
-          .on("error", reject)
-          .run();
-      });
-      tempFiles.push(output);
+      try {
+        await new Promise((resolve, reject) => {
+          ffmpeg(audioPath)
+            .setStartTime(seg.start)
+            .setDuration(dur)
+            .output(output)
+            .on("end", resolve)
+            .on("error", reject)
+            .run();
+        });
+        tempFiles.push(output);
+      } catch (e) {
+        console.error(`❌ Segment ${i} failed for ${speaker}:`, e.message);
+      }
     }
 
-    // Merge all segments into one long voice sample
+    if (!tempFiles.length) {
+      console.warn(`⚠️  Skipping ${speaker}: no temp files created`);
+      continue;
+    }
+
+    // Concat using absolute paths to avoid cwd issues
     const listFile = path.join(tempDir, `${speaker}_list.txt`);
-    const listContent = tempFiles.map(f => `file '${path.basename(f)}'`).join("\n");
+    const listContent = tempFiles
+      .map(f => `file '${path.resolve(f).replace(/'/g, "'\\''")}'`)
+      .join("\n");
     fs.writeFileSync(listFile, listContent);
 
     const finalOutput = path.join(outputDir, `${speaker}_merged.wav`);
 
-    // Use concat demuxer with re-encoding to ensure compatibility
     try {
-      // Use absolute paths to avoid path issues
       const absoluteListFile = path.resolve(listFile);
       const absoluteOutputFile = path.resolve(finalOutput);
 
+      if (!FFMPEG_BIN) {
+        throw new Error('ffmpeg not found. Install it (e.g., brew install ffmpeg) or set FFMPEG_PATH to the ffmpeg binary.');
+      }
       execSync(
-        `cd "${path.resolve(tempDir)}" && ffmpeg -y -f concat -safe 0 -i "${absoluteListFile}" -ar 16000 -ac 1 -c:a pcm_s16le "${absoluteOutputFile}"`,
+        `"${FFMPEG_BIN}" -y -f concat -safe 0 -i "${absoluteListFile}" -ar 16000 -ac 1 -c:a pcm_s16le "${absoluteOutputFile}"`,
         { stdio: 'inherit' }
       );
 
-      // Get file size and duration for verification
       const stats = fs.statSync(finalOutput);
       const sizeInMB = (stats.size / (1024 * 1024)).toFixed(2);
       const durationSeconds = (stats.size / (16000 * 2)).toFixed(2);
 
       console.log(`✅ ${speaker}: ${finalOutput}`);
       console.log(`   Size: ${sizeInMB} MB | Duration: ~${durationSeconds}s | Segments: ${tempFiles.length}`);
-      
+
       outputFiles.push({
         speaker,
         path: finalOutput,
@@ -262,6 +336,12 @@ export async function processSpeakerDiarization(inputPath, apiKey, options = {})
   } = options;
 
   console.log("🎬 Starting speaker diarization pipeline...\n");
+
+  if (!FFMPEG_BIN) {
+    throw new Error(
+      "ffmpeg is required but was not found. Please install ffmpeg (macOS: 'brew install ffmpeg', Ubuntu: 'sudo apt-get install ffmpeg', Windows: 'choco install ffmpeg') or set FFMPEG_PATH to the ffmpeg binary."
+    );
+  }
 
   // Step 1: Extract audio
   const audioPath = path.join(tempDir, 'extracted_audio.wav');

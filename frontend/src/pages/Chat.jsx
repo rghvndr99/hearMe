@@ -86,7 +86,7 @@ const Chat = () => {
         const voiceId = response.data?.user?.selectedVoiceId || 'browser';
         setSelectedVoiceId(voiceId);
       } catch (error) {
-        console.error('Error loading voice preference:', error);
+
         // Fallback to browser default
         setSelectedVoiceId('browser');
       }
@@ -110,7 +110,7 @@ const Chat = () => {
         setSessionId(response.data.sessionId);
         setMessages([response.data.message]);
       } catch (error) {
-        console.error('Error starting chat session:', error);
+
         toast({
           title: t('chat.toasts.connectionErrorTitle', 'Oops! Connection issue 😔'),
           description: t('chat.toasts.connectionErrorDesc', 'We couldn\'t connect. Please refresh the page. Your privacy is still protected.'),
@@ -171,7 +171,7 @@ const Chat = () => {
         });
       }
     } catch (error) {
-      console.error('Error sending message:', error);
+
       toast({
         title: t('chat.toasts.messageFailedTitle', 'Message didn\'t go through 😔'),
         description: t('chat.toasts.messageFailedDesc', 'No worries! Try sending again. Your message is safe with us.'),
@@ -229,9 +229,9 @@ const Chat = () => {
         { selectedVoiceId: voiceId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log('Voice preference saved:', voiceId);
+
     } catch (error) {
-      console.error('Error saving voice preference:', error);
+
       // Still update local state even if save fails
     }
   };

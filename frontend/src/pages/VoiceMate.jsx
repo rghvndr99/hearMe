@@ -22,13 +22,7 @@ import {
   Badge,
   Progress,
   Icon,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  ModalCloseButton,
+
   useDisclosure,
   Tooltip,
   Editable,
@@ -40,6 +34,7 @@ import {
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FiMic, FiUpload, FiCheck, FiX, FiUsers, FiEdit2, FiTrash2, FiPlay, FiPause, FiStar, FiClock, FiFolder } from 'react-icons/fi';
+import DeleteConfirmationModal from '../components/voicemate/DeleteConfirmationModal';
 
 export default function VoiceMate() {
   const { t } = useTranslation();
@@ -49,7 +44,7 @@ export default function VoiceMate() {
   // Auth state
   const token = typeof window !== 'undefined' ? localStorage.getItem('hm-token') : null;
   const [user, setUser] = useState(null);
-  const [loadingUser, setLoadingUser] = useState(!!token);
+
 
   // Tab state
   const [tabIndex, setTabIndex] = useState(0);
@@ -115,7 +110,7 @@ export default function VoiceMate() {
       } catch (e) {
         // ignore
       } finally {
-        if (active) setLoadingUser(false);
+
       }
     })();
     return () => {
@@ -148,11 +143,11 @@ export default function VoiceMate() {
           // Filter to show only user's custom voices (category === 'cloned')
           // Default ElevenLabs voices should not appear in "My Voices" section
           const userCustomVoices = allVoices.filter(v => v.category === 'cloned');
-          console.log(`VoiceMate: Loaded ${userCustomVoices.length} custom voices (filtered from ${allVoices.length} total)`);
+
           setVoices(userCustomVoices);
         }
       } catch (e) {
-        console.error('Failed to load voices:', e);
+
       } finally {
         if (active) setLoadingVoices(false);
       }
@@ -274,7 +269,7 @@ export default function VoiceMate() {
       const url = URL.createObjectURL(blob);
       setSpeakerAudioUrls(prev => ({ ...prev, [speakerId]: url }));
     } catch (e) {
-      console.error('Failed to load speaker audio:', e);
+
       toast({
         title: 'Audio Load Error',
         description: `Failed to load audio for ${speakerId}`,
@@ -1603,7 +1598,7 @@ export default function VoiceMate() {
                         </Text>
                       </VStack>
                       <VStack align="stretch" spacing={3}>
-                        {speakers.map((speaker, idx) => (
+                        {speakers.map((speaker) => (
                           <Card
                             key={speaker.speaker}
                             border="1px solid var(--hm-border-glass)"
@@ -1926,62 +1921,13 @@ export default function VoiceMate() {
         )}
 
         {/* Delete Confirmation Modal */}
-        <Modal isOpen={isDeleteModalOpen} onClose={onDeleteModalClose} isCentered>
-          <ModalOverlay backdropFilter="blur(4px)" />
-          <ModalContent
-            bg="var(--hm-bg-glass)"
-            borderColor="var(--hm-border-glass)"
-            border="1px solid"
-            backdropFilter="blur(10px)"
-          >
-            <ModalHeader color="var(--hm-color-text-primary)">
-              {t('voicemate.confirmDelete', 'Delete Voice?')}
-            </ModalHeader>
-            <ModalCloseButton color="var(--hm-color-text-muted)" />
-            <ModalBody>
-              <VStack align="start" spacing={3}>
-                <Text color="var(--hm-color-text-secondary)">
-                  {t('voicemate.deleteWarning', 'Are you sure you want to delete this voice? This action cannot be undone.')}
-                </Text>
-                {voiceToDelete && (
-                  <HStack
-                    p={3}
-                    bg="var(--hm-bg-glass)"
-                    borderRadius="md"
-                    border="1px solid var(--hm-border-glass)"
-                    w="full"
-                  >
-                    <Icon as={FiStar} color="var(--hm-color-brand)" />
-                    <Text fontWeight="600" color="var(--hm-color-text-primary)">
-                      {voiceToDelete.name}
-                    </Text>
-                  </HStack>
-                )}
-              </VStack>
-            </ModalBody>
-            <ModalFooter>
-              <HStack spacing={3}>
-                <Button
-                  variant="ghost"
-                  onClick={onDeleteModalClose}
-                  color="var(--hm-color-text-muted)"
-                  _hover={{ color: 'var(--hm-color-text-primary)', bg: 'var(--hm-bg-glass)' }}
-                >
-                  {t('voicemate.cancel', 'Cancel')}
-                </Button>
-                <Button
-                  bgGradient="linear(to-r, red.500, red.600)"
-                  color="white"
-                  _hover={{ bgGradient: 'linear(to-r, red.600, red.700)' }}
-                  onClick={handleDeleteVoice}
-                  isLoading={!!deletingVoiceId}
-                >
-                  {t('voicemate.deleteConfirm', 'Delete')}
-                </Button>
-              </HStack>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
+        <DeleteConfirmationModal
+          isOpen={isDeleteModalOpen}
+          onClose={onDeleteModalClose}
+          voice={voiceToDelete}
+          onConfirm={handleDeleteVoice}
+          isDeleting={!!deletingVoiceId}
+        />
 
         {/* How It Works */}
         <Box className="hm-glass-card p-6 rounded-2xl" p="20px" w="full" border="1px solid var(--hm-border-glass)" _hover={{ borderColor: 'var(--hm-color-brand)' }}>

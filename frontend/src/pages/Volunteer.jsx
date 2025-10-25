@@ -61,7 +61,7 @@ const Volunteer = () => {
       toast({ title: t('volunteer.form.alertThanks', '✅ Shukriya! Thank you for applying. We\'ll review your application and get back to you within 5-7 days. 💜'), status: "success", duration: 4000, isClosable: true });
       setForm({ name: "", email: "", phone: "", availability: "", location: "", skills: "", message: "" });
     } catch (err) {
-      console.error('Volunteer apply failed:', err);
+
       const desc = err?.response?.data?.error || 'Failed to submit application. Please try again.';
       toast({ title: 'Error', description: desc, status: "error", duration: 4000, isClosable: true });
     } finally {
