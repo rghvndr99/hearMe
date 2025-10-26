@@ -3,6 +3,8 @@ import multer from 'multer';
 import { ElevenLabsClient } from '@elevenlabs/elevenlabs-js';
 import auth from '../middleware/auth.js';
 import VoiceTwin from '../models/VoiceTwin.js';
+import Subscription from '../models/Subscription.js';
+import { getPlanConfig, FEATURE_FLAGS } from '../config/memberships.js';
 
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 15 * 1024 * 1024 } }); // 15MB in-memory
@@ -34,6 +36,24 @@ router.post('/upload', auth, upload.single('audio'), async (req, res) => {
   if (!allowed.has(req.file.mimetype)) {
     return res.status(400).json({ error: 'Unsupported audio type', mime: req.file.mimetype });
   }
+
+	  // Enforce membership limit for custom voices before calling external API
+	  const active = await Subscription.findOne({ userId, status: 'active' }).sort({ createdAt: -1 });
+	  const plan = active?.plan || 'free';
+	  const cfg = getPlanConfig(plan);
+	  const limit = cfg?.features?.voiceTwins?.limit ?? 0;
+	  const used = await VoiceTwin.countDocuments({ userId });
+  if (FEATURE_FLAGS?.enforce?.voiceTwinLimits !== false) {
+	  if (typeof limit === 'number' && used >= limit) {
+	    return res.status(403).json({
+	      error: 'VoiceTwin limit reached',
+	      usage: { used, limit },
+	      plan,
+	      message: `You have used ${used} of ${limit} custom voices for your ${plan} plan.`
+	    });
+  }
+	  }
+
 
     const contentType = req.file.mimetype || 'audio/webm';
     const filename = req.file.originalname || `sample-${Date.now()}.webm`;

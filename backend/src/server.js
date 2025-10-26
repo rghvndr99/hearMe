@@ -19,6 +19,7 @@ import usersRouter from './routes/users.js';
 import voiceTwinRouter from './routes/voicetwin.js';
 import speakerDiarizationRouter from './routes/speakerDiarization.js';
 import storiesRouter from './routes/stories.js';
+import subscriptionsRouter from './routes/subscriptions.js';
 
 // Get directory name in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -52,6 +53,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/voicetwin', voiceTwinRouter);
 app.use('/api/speaker-diarization', speakerDiarizationRouter);
 app.use('/api/stories', storiesRouter);
+app.use('/api/subscriptions', subscriptionsRouter);
 
 const server = http.createServer(app);
 const io = new Server(server, {

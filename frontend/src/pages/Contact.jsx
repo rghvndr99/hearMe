@@ -97,7 +97,9 @@ const Contact = () => {
             value={formData.name}
             onChange={handleInputChange}
             placeholder={t('contact.name', 'Aapka naam (Your name)')}
-            className="hm-input"
+            variant="outline"
+            border="1px solid var(--hm-border-outline)"
+            bg="var(--hm-color-bg)"
             _focus={{ borderColor: "var(--hm-color-brand)" }}
             _placeholder={{ color: "var(--hm-color-placeholder)" }}
             borderRadius="md"
@@ -109,7 +111,9 @@ const Contact = () => {
             value={formData.email}
             onChange={handleInputChange}
             placeholder={t('contact.email', 'Aapka email (Your email)')}
-            className="hm-input"
+            variant="outline"
+            border="1px solid var(--hm-border-outline)"
+            bg="var(--hm-color-bg)"
             _focus={{ borderColor: "var(--hm-color-brand)" }}
             _placeholder={{ color: "var(--hm-color-placeholder)" }}
             borderRadius="md"
@@ -120,7 +124,9 @@ const Contact = () => {
             value={formData.message}
             onChange={handleInputChange}
             placeholder={t('contact.message', 'Kya baat karni hai? (What would you like to share?)')}
-            className="hm-input"
+            variant="outline"
+            border="1px solid var(--hm-border-outline)"
+            bg="var(--hm-color-bg)"
             _focus={{ borderColor: "var(--hm-color-brand)" }}
             _placeholder={{ color: "var(--hm-color-placeholder)" }}
             borderRadius="md"

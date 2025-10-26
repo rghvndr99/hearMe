@@ -97,6 +97,8 @@ export const useSpeechSynthesis = (language, enabled = true, voiceId = 'browser'
 
       const audio = new Audio(audioUrl);
       audioRef.current = audio;
+      // Slightly slower playback for more natural pacing
+      try { audio.playbackRate = 0.95; } catch {}
 
       audio.onended = () => {
         setIsSpeaking(false);

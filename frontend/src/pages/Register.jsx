@@ -78,6 +78,10 @@ const Register = () => {
       pb={[12, 20]}
     >
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
+        <Heading size="xl" textAlign="center" color="var(--hm-color-text-primary)">
+          {t('auth.registerPage.heading', 'Join HearMe — private, judgment-free support in your language')}
+        </Heading>
+
         <Box mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
           <Heading size="lg" mb={6} color="var(--hm-color-text-primary)">{t('auth.createAccount','Create your account')}</Heading>
           <form onSubmit={submit}>

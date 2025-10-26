@@ -75,7 +75,7 @@ const ChatMessages = ({ messages, isTyping }) => {
                     {t('chat.welcome.feature3', '🔊 Hear responses in your chosen voice')}
                   </Text>
                   <Text fontSize="sm" color="var(--hm-color-text-secondary)">
-                    {t('chat.welcome.feature4', '👤 Talk to a real human counselor (paid) — Type "I want to talk to a human" or call +91 8105568665')}
+                    {t('chat.welcome.feature4', '👤 Talk to a real human counselor (paid) — Type "I want to talk to a human"')}
                   </Text>
                 </VStack>
               </Box>

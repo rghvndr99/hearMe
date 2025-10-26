@@ -11,7 +11,8 @@
     "about": "About",
     "resources": "Resources",
     "chat": "Chat",
-    "stories": "Success Stories",
+    "stories": "Stories",
+    "pricing": "Pricing",
     "contact": "Contact",
     "volunteer": "Volunteer",
     "joinNow": "Join Now",
@@ -650,6 +651,16 @@
       "nameRequired": "⚠️ Please enter your name so we know what to call you 💜",
       "sessionExpired": "⚠️ Session expired. Please login again to continue. 💜",
       "loadFailed": "❌ Oops! Failed to load profile. Please try again. 💜"
+    },
+    "subscription": {
+      "title": "Your Subscription",
+      "manage": "Manage Subscription",
+      "cancel": "Cancel Membership",
+      "cancelConfirm": "Are you sure you want to cancel your membership?",
+      "cancelled": "Membership cancelled",
+      "usageTitle": "Your usage",
+      "none": "You are on the Free plan. Upgrade anytime from Pricing.",
+      "since": "Active since"
     }
   },
   "changeEmail": {
@@ -700,6 +711,126 @@
       "passwordUpdated": "✅ Shabash! Password updated successfully. Your account is now more secure. 💜",
       "passwordsDontMatch": "⚠️ Oops! New passwords don't match. Please check and try again. 💜",
       "failed": "❌ Failed to change password. Please check your current password and try again. 💜"
+    }
+  },
+  "pricing": {
+    "title": "Mental support that listens in your voice — when it matters most.",
+    "subtitle": "Choose a plan that fits your rhythm: casual chat, deeper care, or full companionship.",
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "save30": "Save 20%",
+    "mo": "/mo",
+    "plans": {
+      "free": "Free",
+      "care": "Care",
+      "companion": "Companion"
+    },
+    "cta": {
+      "startFree": "Start Free",
+      "getCare": "Get Care",
+      "getCompanion": "Get Companion"
+    },
+    "features": {
+      "free": {
+        "0": "10 mins/week voice chat",
+        "1": "2 language (Hindi/English)",
+        "2": "Basic AI support",
+        "3": "Text+ default speakers access",
+        "4": "5 accesible themes"
+      },
+      "care": {
+        "0": "Everything as per free",
+        "1": "Create 2 custom Voices",
+        "2": "Emotion detection",
+        "3": "Personalised phone assistance for 30min per week"
+      },
+      "companion": {
+        "0":"Everything as per care",
+        "1": "Unlimited voice minutes",
+        "2": "5 voice clones",
+        "3": "All languages",
+        "4": "Full volunteer support",
+        "5": "Create Voices from a group video or audio",
+        "6": "Personalised phone assistance for 30min per day"
+      }
+    },
+    "messages": {
+      "planSelected": "Plan selected"
+    },
+    "promo": {
+      "headline": "Special Offer: Get Companion Plan at ₹399/mo for 3 months!",
+      "sub": "Use code",
+      "tail": "at checkout. Valid till Sunday 11:59 PM."
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": "What is a VoiceTwin?",
+      "a1": "VoiceTwin allows you to clone your own or a loved one's voice to chat with AI in that voice.",
+      "q2": "Can I talk in Hindi or other languages?",
+      "a2": "Yes, HearMe supports Hindi, English, and many regional languages for maximum comfort.",
+      "q3": "Do I need to pay to use HearMe?",
+      "a3": "You can start with the Free plan. Paid plans unlock more voice minutes, features, and volunteer access.",
+      "q4": "Are my conversations private?",
+      "a4": "Absolutely. All chats are encrypted, private, and anonymous. Your emotions are safe with us.",
+      "q5": "What if I run out of voice minutes?",
+      "a5": "You can easily top up using our wallet recharge options anytime."
+    }
+  }
+,
+  "payment": {
+    "title": "Complete your subscription",
+    "status": {
+      "pending": {
+        "title": "Make payment",
+        "desc": "Select a payment method and confirm to complete your purchase."
+      },
+      "success": {
+        "title": "Payment successful",
+        "desc": "Your subscription to {{plan}} ({{billing}}) is active."
+      },
+      "failed": {
+        "title": "Payment failed",
+        "desc": "We couldn't process your payment. Try again or choose a different method."
+      },
+      "cancelled": {
+        "title": "Payment cancelled",
+        "desc": "You cancelled the payment. No charges were made."
+      }
+    },
+    "labels": {
+      "plan": "Plan",
+      "billing": "Billing",
+      "amount": "Amount"
+    },
+    "methods": {
+      "title": "Choose a payment method",
+      "upi": "UPI",
+      "card": "Card",
+      "netbanking": "Netbanking",
+      "unavailable": "This method is currently unavailable"
+    },
+    "actions": {
+      "confirm": "Make Payment",
+      "cancel": "Cancel",
+      "profile": "Go to Profile",
+      "chat": "Go to Chat",
+      "pricing": "Back to Pricing",
+      "tryAgain": "Try Again",
+      "home": "Go Home",
+      "receipt": "View Receipt"
+    },
+    "redirect": "Redirecting in {{s}}s...",
+    "toast": {
+      "processing": "Processing payment...",
+      "success": "Payment successful"
+    },
+    "upi": {
+      "title": "Pay via UPI",
+      "scan": "Scan this QR in your UPI app",
+      "openApp": "Open in UPI app",
+      "copyId": "Copy UPI ID",
+      "idLabel": "PhonePe ID",
+      "markPaid": "I've completed the payment"
     }
   }
 }
