@@ -19,6 +19,7 @@ const ChatHeader = ({
   onVoiceToggle,
   selectedVoiceId,
   onVoiceChange,
+  micDisabled = false,
 }) => {
   const { t } = useTranslation('common');
   const [showInfo, setShowInfo] = useState(false);
@@ -104,13 +105,15 @@ const ChatHeader = ({
                 {t('chat.welcome.feature1', '💬 Type in Hindi, English, or Hinglish')}
               </Text>
               <Text fontSize="xs" color="var(--hm-color-text-secondary)">
-                {t('chat.welcome.feature2', '🎙️ Speak in your language (click the mic)')}
+                {micDisabled
+                  ? t('chat.mic.disabledFree', '3a4 Microphone is disabled on the free plan. Upgrade to enable voice input.')
+                  : t('chat.welcome.feature2', '🎙️ Speak in your language (click the mic)')}
               </Text>
               <Text fontSize="xs" color="var(--hm-color-text-secondary)">
                 {t('chat.welcome.feature3', '🔊 Hear responses in your chosen voice')}
               </Text>
               <Text fontSize="xs" color="var(--hm-color-text-secondary)">
-                {t('chat.welcome.feature4', '👤 Talk to a real human counselor (paid) — Type "I want to talk to a human" or call +91 8105568665')}
+                {t('chat.welcome.feature4', '👤 Talk to a real human counselor (paid) — Type "I want to talk to a human"')}
               </Text>
             </VStack>
           </VStack>

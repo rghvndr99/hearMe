@@ -3,6 +3,15 @@ import axios from 'axios';
 
 const router = express.Router();
 
+
+// Default expressive settings for more human-like speech
+const DEFAULT_VOICE_SETTINGS = {
+  stability: 0.35,           // lower stability increases natural variation
+  similarity_boost: 0.7,     // keep close to reference voice
+  style: 0.6,                // add emotional/expressive style
+  use_speaker_boost: true,   // richer timbre
+};
+
 router.post('/eleven', async (req, res) => {
   try {
     const { text, voiceId, voiceSettings, modelId } = req.body || {};
@@ -22,12 +31,20 @@ router.post('/eleven', async (req, res) => {
 
     const url = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
 
-    // Sanitize voice settings (optional)
-    let voice_settings = undefined;
+    // Build voice settings (merge defaults with provided)
+    let voice_settings = { ...DEFAULT_VOICE_SETTINGS };
     if (voiceSettings && typeof voiceSettings === 'object') {
-      const stability = Math.max(0, Math.min(1, Number(voiceSettings.stability ?? 0)));
-      const similarity_boost = Math.max(0, Math.min(1, Number(voiceSettings.similarity_boost ?? 0)));
-      voice_settings = { stability, similarity_boost };
+      const toNum = (v, def) => {
+        const n = Number(v);
+        return Number.isFinite(n) ? n : def;
+      };
+      const stability = Math.max(0, Math.min(1, toNum(voiceSettings.stability, DEFAULT_VOICE_SETTINGS.stability)));
+      const similarity_boost = Math.max(0, Math.min(1, toNum(voiceSettings.similarity_boost, DEFAULT_VOICE_SETTINGS.similarity_boost)));
+      const style = Math.max(0, Math.min(1, toNum(voiceSettings.style, DEFAULT_VOICE_SETTINGS.style)));
+      const use_speaker_boost = typeof voiceSettings.use_speaker_boost === 'boolean'
+        ? voiceSettings.use_speaker_boost
+        : DEFAULT_VOICE_SETTINGS.use_speaker_boost;
+      voice_settings = { stability, similarity_boost, style, use_speaker_boost };
     }
 
     const response = await axios.post(
@@ -36,7 +53,7 @@ router.post('/eleven', async (req, res) => {
         text: String(text),
         model_id: modelId || 'eleven_multilingual_v2',
         output_format: 'mp3_44100_128',
-        ...(voice_settings ? { voice_settings } : {}),
+        voice_settings,
       },
       {
         headers: {

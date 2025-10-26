@@ -50,6 +50,10 @@ const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 const ChangePassword = lazy(() => import('./pages/ChangePassword'));
 const ChangeEmail = lazy(() => import('./pages/ChangeEmail'));
 const VoiceMate = lazy(() => import('./pages/VoiceMate'));
+const Pricing = lazy(() => import('./pages/Pricing'));
+const Payment = lazy(() => import('./pages/Payment'));
+
+
 
 const Privacy = lazy(() => import('./pages/Privacy'));
 
@@ -119,6 +123,9 @@ function App() {
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/change-password" element={<ChangePassword />} />
               <Route path="/change-email" element={<ChangeEmail />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/payment" element={<Payment />} />
+
               <Route path="/voicemate" element={<VoiceMate />} />
               <Route path="/privacy" element={<Privacy />} />
 

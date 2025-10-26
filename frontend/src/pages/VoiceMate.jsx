@@ -240,7 +240,12 @@ export default function VoiceMate() {
       });
 
       const data = await resp.json().catch(() => ({}));
-      if (!resp.ok) throw new Error(data?.error || 'Upload failed');
+      if (!resp.ok) {
+        const err = new Error(data?.message || data?.error || 'Upload failed');
+        err.code = resp.status;
+        err.payload = data;
+        throw err;
+      }
 
       toast({ title: t('voicemate.ready', 'Your VoiceTwin is ready!'), status: 'success' });
       setSuccess(true);
@@ -248,7 +253,13 @@ export default function VoiceMate() {
       setSelectedFile(null);
       setVoiceName('');
     } catch (e) {
-      toast({ title: t('voicemate.uploadError', 'Could not create VoiceTwin'), description: String(e?.message || e), status: 'error' });
+      const serverMsg = e?.payload?.message || e?.message || String(e);
+      const limitReached = e?.code === 403 || String(e?.payload?.error || e?.message || '').toLowerCase().includes('limit');
+      toast({
+        title: limitReached ? t('voicemate.limitTitle', 'Voice limit reached') : t('voicemate.uploadError', 'Could not create VoiceTwin'),
+        description: serverMsg,
+        status: 'error'
+      });
     } finally {
       setProcessing(false);
     }
@@ -507,15 +518,35 @@ export default function VoiceMate() {
           body: form,
         });
 
-        if (uploadResp.ok) successCount++;
+        const body = await uploadResp.json().catch(() => ({}));
+        if (!uploadResp.ok) {
+          if (uploadResp.status === 403) {
+            toast({
+              title: t('voicemate.limitTitle', 'Voice limit reached'),
+              description: body?.message || body?.error || t('voicemate.limitDesc', 'You have reached your plan’s limit for custom voices.'),
+              status: 'error',
+            });
+            return;
+          }
+          toast({
+            title: t('voicemate.uploadError', 'Could not create VoiceTwin'),
+            description: body?.message || body?.error || `${uploadResp.status}`,
+            status: 'error',
+          });
+          continue;
+        }
+
+        successCount++;
       }
 
-      toast({ title: t('voicemate.voicesCreated', `Created ${successCount} voice(s)!`), status: 'success' });
-      setSuccess(true);
-      setSpeakers([]);
-      setSelectedSpeakers(new Set());
-      setSpeakerNames({});
-      setDiarizationFile(null);
+      if (successCount > 0) {
+        toast({ title: t('voicemate.voicesCreated', `Created ${successCount} voice(s)!`), status: 'success' });
+        setSuccess(true);
+        setSpeakers([]);
+        setSelectedSpeakers(new Set());
+        setSpeakerNames({});
+        setDiarizationFile(null);
+      }
     } catch (e) {
       toast({ title: t('voicemate.processError', 'Processing failed'), description: String(e?.message || e), status: 'error' });
     } finally {

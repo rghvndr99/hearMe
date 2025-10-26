@@ -152,6 +152,13 @@ const Header= () => {
           >
             {t('nav.stories')}
           </Link>
+          <Link as={RouterLink} to="/pricing"
+            _hover={{ color: "var(--hm-color-brand)" }}
+            color="var(--hm-color-text-muted)"
+            fontWeight="500"
+          >
+            {t('nav.pricing', 'Pricing')}
+          </Link>
           <Link as={RouterLink} to="/contact"
             _hover={{ color: "var(--hm-color-brand)" }}
             color="var(--hm-color-text-muted)"
@@ -345,6 +352,23 @@ const Header= () => {
               alignItems="center"
             >
               {t('nav.stories')}
+            </Link>
+            <Link
+              as={RouterLink}
+              to="/pricing"
+              onClick={handleNavClick}
+              py={3}
+              px={4}
+              borderRadius="md"
+              _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}
+              color="var(--hm-color-text-primary)"
+              fontWeight="500"
+              fontSize="lg"
+              minH="48px"
+              display="flex"
+              alignItems="center"
+            >
+              {t('nav.pricing', 'Pricing')}
             </Link>
             <Link
               as={RouterLink}

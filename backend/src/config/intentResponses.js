@@ -29,7 +29,9 @@ export const CONTACT_INFO = {
   
   // Website and email (optional)
   website: 'https://hearme.com',
-  email: 'rghvndr99@gmail.com',
+  email: 'rghvndr999@gmail.com',
+  // Preferred trigger phrase a user can send to request human help
+  supportTriggerPhrase: 'HearMe: Need support',
 };
 
 // ========================================
@@ -57,14 +59,13 @@ export const INTENT_PATTERNS = {
     ],
     // 👇 CUSTOMIZE YOUR RESPONSE HERE
     getResponse: (lang) => {
-      const { helplinePhone, helplinePhoneNumeric, email } = CONTACT_INFO;
+      const { helplinePhone, email } = CONTACT_INFO;
 
       const responses = {
         'English': `I understand you'd like to speak with a human counselor. While I'm here to listen and support you 24/7, if you need professional human support, please:
 
 📞 **Call:** ${helplinePhone}
-📧 **Email:** ${email}
-💰 **Pricing:** ₹299/session
+💰 **Pricing:** ₹99/session
 
 Our trained counselors are available Mon-Fri, 10 AM - 6 PM IST. Is there anything I can assist you with in the meantime?`,
 
@@ -72,7 +73,7 @@ Our trained counselors are available Mon-Fri, 10 AM - 6 PM IST. Is there anythin
 
 📞 **कॉल करें:** ${helplinePhone}
 📧 **ईमेल करें:** ${email}
-💰 **मूल्य:** ₹299/सत्र
+💰 **मूल्य:** ₹99/सत्र
 
 हमारे प्रशिक्षित परामर्शदाता सोम-शुक्र, सुबह 10 - शाम 6 IST उपलब्ध हैं। क्या इस बीच मैं आपकी कोई मदद कर सकता हूं?`,
 
@@ -80,7 +81,7 @@ Our trained counselors are available Mon-Fri, 10 AM - 6 PM IST. Is there anythin
 
 📞 **Llama:** ${helplinePhone}
 📧 **Email:** ${email}
-💰 **Precio:** ₹299/sesión
+💰 **Precio:** ₹99/sesión
 
 Nuestros consejeros capacitados están disponibles Lun-Vie, 10 AM - 6 PM IST. ¿Hay algo en lo que pueda ayudarte mientras tanto?`,
 
@@ -88,7 +89,7 @@ Nuestros consejeros capacitados están disponibles Lun-Vie, 10 AM - 6 PM IST. ¿
 
 📞 **Appelez:** ${helplinePhone}
 📧 **Email:** ${email}
-💰 **Prix:** ₹299/session
+💰 **Prix:** ₹99/session
 
 Nos conseillers formés sont disponibles Lun-Ven, 10h - 18h IST. Y a-t-il quelque chose que je puisse faire pour vous en attendant?`,
       };
@@ -269,6 +270,24 @@ Puedes compartir libremente y de forma segura. Todo lo que me digas queda entre 
   //   }
   // },
 };
+
+// Provide a dynamic, plan-aware response for the "talk to human" intent
+export function buildTalkToHumanResponse(lang = 'English', { isPaid = false, supportTriggerPhrase = 'HearMe: Need support' } = {}) {
+  const baseLang = (lang || 'English').split('(')[0].trim();
+
+  if (baseLang === 'Hindi') {
+    if (isPaid) {
+      return `मैं समझता/समझती हूँ कि आप किसी इंसान परामर्शदाता से बात करना चाहते हैं। आप पेड प्लान पर हैं, इसलिए मैं अभी हमारी काउंसलर टीम को सूचित कर रहा/रही हूँ। उपलब्धता के अनुसार कोई काउंसलर कुछ मिनटों में आपसे संपर्क करेगा/करेगी। इस बीच, आप अपनी बात यहाँ साझा कर सकते हैं — मैं सुनने के लिए मौजूद हूँ।`;
+    }
+    return `मैं समझता/समझती हूँ कि आप किसी इंसान परामर्शदाता से बात करना चाहते हैं। कृपया एक छोटा संदेश भेजें जिसकी शुरुआत “${supportTriggerPhrase}” से हो। हमारी टीम उपलब्धता के अनुसार आपसे संपर्क करेगी। तब तक, मैं 24/7 यहाँ सुनने और सहायता करने के लिए हूँ।`;
+  }
+
+  // Default to English
+  if (isPaid) {
+    return `Got it — you’d like to speak with a human counselor. Because you’re on a paid plan, I’ll notify our counselor team now. Someone will reach out shortly (usually within a few minutes), depending on availability. In the meantime, I’m here with you — feel free to keep sharing.`;
+  }
+  return `I hear you — you’d like to speak with a human counselor. Please send a short note that starts with “${supportTriggerPhrase}” and our team will get back to you as per availability. While you wait, I’m here 24/7 to listen and support you.`;
+}
 
 // ========================================
 // HELPER FUNCTION

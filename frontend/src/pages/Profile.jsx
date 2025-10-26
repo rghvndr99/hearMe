@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Flex, Heading, Text, VStack, HStack, Stack, Button, useToast, FormControl, FormLabel, Input, Select, useColorModeValue } from '@chakra-ui/react';
+import { Box, Flex, Heading, Text, VStack, HStack, Stack, Button, useToast, FormControl, FormLabel, Input, Select, Progress, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalCloseButton } from '@chakra-ui/react';
 import axios from 'axios';
 
 import { useTranslation } from 'react-i18next';
@@ -27,6 +27,13 @@ const Profile = () => {
   const [form, setForm] = useState({ name: '', phone: '', language: '' });
 
   const [saving, setSaving] = useState(false);
+
+  const [subscription, setSubscription] = useState(null);
+  const [planConfig, setPlanConfig] = useState(null);
+  const [usage, setUsage] = useState(null);
+  const [subLoading, setSubLoading] = useState(false);
+
+  const { isOpen: isCancelOpen, onOpen: onCancelOpen, onClose: onCancelClose } = useDisclosure();
 
   const handleStartEdit = () => {
     if (!user) return;
@@ -71,6 +78,7 @@ const Profile = () => {
       const msg = err?.response?.data?.error || t('errors.updateFailed', 'Failed to update profile');
       toast({ title: msg, status: 'error', duration: 3000, isClosable: true });
     } finally {
+
       setSaving(false);
     }
   };
@@ -95,13 +103,60 @@ const Profile = () => {
           try { localStorage.removeItem('hm-token'); window.dispatchEvent(new Event('hm-auth-changed')); } catch {}
           navigate('/login');
         } else {
+
+
           toast({ title: t('profile.messages.loadFailed','❌ Oops! Failed to load profile. Please try again. 💜'), status: 'error', duration: 3000, isClosable: true });
         }
       } finally {
         setLoading(false);
       }
+
+
     })();
   }, []);
+  // Load subscription for the current user from API
+  useEffect(() => {
+    const token = localStorage.getItem('hm-token');
+    if (!token) return;
+    const load = async () => {
+      try {
+        setSubLoading(true);
+        const { data } = await axios.get(`${API_URL}/api/subscriptions/me`, { headers: { Authorization: `Bearer ${token}` } });
+        setSubscription(data.subscription || null);
+        setPlanConfig(data.config || null);
+        setUsage(data.usage || null);
+      } catch (err) {
+        // ignore; keep UI graceful
+      } finally {
+        setSubLoading(false);
+      }
+    };
+    load();
+    const handler = () => load();
+    window.addEventListener('hm-subscription-changed', handler);
+    return () => window.removeEventListener('hm-subscription-changed', handler);
+  }, []);
+
+
+
+  async function handleCancelMembership() {
+    const token = localStorage.getItem('hm-token');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+    try {
+      setSubLoading(true);
+      await axios.patch(`${API_URL}/api/subscriptions/cancel`, {}, { headers: { Authorization: `Bearer ${token}` } });
+      toast({ title: t('profile.subscription.cancelled', 'Membership cancelled'), status: 'success', duration: 2000 });
+      window.dispatchEvent(new Event('hm-subscription-changed'));
+    } catch (err) {
+      const msg = err?.response?.data?.error || t('errors.updateFailed', 'Failed to update profile');
+      toast({ title: msg, status: 'error', duration: 2500 });
+    } finally {
+      setSubLoading(false);
+    }
+  }
 
   return (
     <Flex
@@ -116,7 +171,7 @@ const Profile = () => {
       px={[6, 12]}
       pt="100px"
       pb={[12, 20]}
-    >
+        >
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
         {/* Page Intro */}
         <VStack spacing={2} textAlign="center">
@@ -230,6 +285,7 @@ const Profile = () => {
                   <Select
                     value={form.language}
                     onChange={(e) => setForm(s => ({ ...s, language: e.target.value }))}
+
                     bg="var(--hm-bg-glass)"
                     borderColor="var(--hm-border-outline)"
                     color="var(--hm-color-text-primary)"
@@ -249,12 +305,99 @@ const Profile = () => {
           )}
         </Box>
 
+        {/* Subscription Section */}
+        {!loading && user && (
+          <Box mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
+            <Stack direction={["column", "column", "row"]} justify="space-between" align={["stretch", "stretch", "center"]} mb={4} spacing={3}>
+              <Heading size="md" color="var(--hm-color-text-primary)">{t('profile.subscription.title', 'Your Subscription')}</Heading>
+              <Stack direction={["column", "column", "row"]} spacing={2} w={["full", "full", "auto"]}>
+                <Button as={RouterLink} to="/pricing" className="hm-button-primary" w={["full", "full", "auto"]} minH="48px">
+                  {t('profile.subscription.manage', 'Manage Subscription')}
+                </Button>
+                {subscription && subscription.status === 'active' && (
+                  <Button
+                    variant="outline"
+                    borderColor="var(--hm-border-outline)"
+                    color="var(--hm-color-text-primary)"
+                    _hover={{ bg: 'var(--hm-bg-glass)' }}
+                    onClick={onCancelOpen}
+                    isLoading={subLoading}
+                    w={["full", "full", "auto"]}
+                    minH="48px"
+                  >
+                    {t('profile.subscription.cancel', 'Cancel Membership')}
+                  </Button>
+                )}
+              </Stack>
+            </Stack>
+            {subscription ? (
+              <VStack align="stretch" spacing={3}>
+                <HStack justify="space-between"><Text className="hm-text-secondary">{t('payment.labels.plan','Plan')}</Text><Text color="var(--hm-color-text-primary)" fontWeight="600">{t(`pricing.plans.${subscription.plan}`, subscription.plan)}</Text></HStack>
+                <HStack justify="space-between"><Text className="hm-text-secondary">{t('payment.labels.billing','Billing')}</Text><Text color="var(--hm-color-text-primary)" fontWeight="600">{t(`pricing.${subscription.billing}`, subscription.billing)}</Text></HStack>
+                <HStack justify="space-between"><Text className="hm-text-secondary">{t('payment.labels.amount','Amount')}</Text><Text color="var(--hm-color-text-primary)" fontWeight="700">₹{subscription.price}</Text></HStack>
+                <HStack justify="space-between"><Text className="hm-text-secondary">{t('profile.subscription.since','Active since')}</Text><Text color="var(--hm-color-text-primary)">{new Date(subscription.activatedAt).toLocaleString()}</Text></HStack>
+
+                {usage && planConfig && (
+                  <Box mt={4} p={4} bg="var(--hm-bg-glass)" borderRadius="lg">
+                    <Text className="hm-text-secondary" mb={2}>{t('profile.subscription.usageTitle', 'Your usage')}</Text>
+                    <HStack justify="space-between">
+                      <Text className="hm-text-secondary">{planConfig.features?.voiceTwins?.label || 'Custom voices'}</Text>
+                      <Text color="var(--hm-color-text-primary)" fontWeight="700">
+                        {(usage.voiceTwins?.used ?? 0)} / {(usage.voiceTwins?.limit ?? planConfig.features?.voiceTwins?.limit ?? 0)}
+                      </Text>
+                    </HStack>
+                    <Progress
+                      value={(() => { const u = usage?.voiceTwins?.used ?? 0; const l = usage?.voiceTwins?.limit ?? planConfig?.features?.voiceTwins?.limit ?? 0; return l > 0 ? Math.min(100, (u / l) * 100) : 0; })()}
+                      size="sm"
+                      mt={2}
+                      bg="var(--hm-bg-glass)"
+                      sx={{ '& > div': { background: 'var(--hm-color-brand)' } }}
+                    />
+                  </Box>
+                )}
+              </VStack>
+            ) : (
+              <Box>
+                <Text className="hm-text-secondary">
+                  {t('profile.subscription.none', 'You are on the Free plan. Upgrade anytime from Pricing.')}
+                </Text>
+              </Box>
+            )}
+          </Box>
+        )}
+
+
         {/* Security Note */}
         <Box  mx="auto" w="full" p={4} bg="var(--hm-bg-glass)" borderRadius="lg" borderLeft="4px solid var(--hm-color-brand)">
           <Text fontSize="sm" color="var(--hm-color-text-secondary)" lineHeight="1.7">
             {t('profile.securityNote', '🔒 **Aapki Privacy Humari Zimmedari Hai:** Your data is encrypted and never shared with anyone. You\'re in control.')}
           </Text>
         </Box>
+
+        {/* Cancel Membership Confirmation Modal */}
+        <Modal isOpen={isCancelOpen} onClose={onCancelClose} isCentered>
+          <ModalOverlay bg="rgba(0,0,0,0.72)" backdropFilter="blur(2px)" />
+          <ModalContent bg="var(--hm-color-bg)" color="var(--hm-color-text-primary)" border="1px solid var(--hm-border-outline)">
+            <ModalHeader>{t('profile.subscription.cancel', 'Cancel Membership')}</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Text className="hm-text-secondary">
+                {t('profile.subscription.cancelConfirm', 'Are you sure you want to cancel your membership?')}
+              </Text>
+            </ModalBody>
+            <ModalFooter>
+              <Stack direction="row" spacing={3}>
+                <Button variant="ghost" onClick={onCancelClose} color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)' }}>
+                  {t('common.cancel', 'Cancel')}
+                </Button>
+                <Button onClick={async () => { await handleCancelMembership(); onCancelClose(); }} isLoading={subLoading} bgGradient="var(--hm-gradient-cta)" color="white" _hover={{ opacity: 0.9 }}>
+                  {t('profile.subscription.cancel', 'Cancel Membership')}
+                </Button>
+              </Stack>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+
       </VStack>
     </Flex>
   );
