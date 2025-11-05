@@ -24,6 +24,7 @@ const ChatInput = ({
   onVoiceToggle,
   disabled = false,
   placeholder,
+  micDisabled = false,
 }) => {
   const { t } = useTranslation('common');
 
@@ -90,9 +91,12 @@ const ChatInput = ({
         {/* Voice Input Button */}
         <Tooltip
           label={
-            isListening
-              ? t('chat.tooltips.stopListening', '✋ Stop listening (click again to speak)')
-              : t('chat.tooltips.startListening', '🎙️ Speak in Hindi, English, or Hinglish — we understand all')
+            micDisabled
+              ? t('chat.mic.upgradeToEnable', 'Microphone is disabled on the free plan. Upgrade to enable voice input.')
+              : (isListening
+                ? t('chat.tooltips.stopListening', '✋ Stop listening (click again to speak)')
+                : t('chat.tooltips.startListening', '🎙️ Speak in Hindi, English, or Hinglish — we understand all')
+              )
           }
         >
           <IconButton
@@ -107,11 +111,14 @@ const ChatInput = ({
               bg: isListening ? 'red.600' : 'var(--hm-bg-glass)'
             }}
             aria-label={
-              isListening
-                ? t('chat.aria.stopListening', 'Stop voice input')
-                : t('chat.aria.startVoice', 'Start voice input in your language')
+              micDisabled
+                ? t('chat.mic.upgradeToEnable', 'Upgrade to enable microphone')
+                : (isListening
+                  ? t('chat.aria.stopListening', 'Stop voice input')
+                  : t('chat.aria.startVoice', 'Start voice input in your language')
+                )
             }
-            isDisabled={disabled}
+            isDisabled={disabled || micDisabled}
           />
         </Tooltip>
 
