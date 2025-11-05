@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Box, Flex, useToast, Text, HStack, Progress, Button } from "@chakra-ui/react";
+import { useState, useEffect, useRef } from "react";
+import { Box, Flex, useToast, Text, HStack, Progress, Button, Switch } from "@chakra-ui/react";
 import { FiAlertCircle } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
@@ -49,15 +49,25 @@ const Chat = () => {
   const [isAuthed, setIsAuthed] = useState(false);
   const [flags, setFlags] = useState(null);
 
+  // Talk/Chat mode: when enabled, we auto-start mic and auto-send transcripts
+  const [talkMode, setTalkMode] = useState(false);
+  // Ref to call sendMessage from recognition callback without re-creating hook
+  const sendMessageRef = useRef(null);
+
 
   // Speech recognition hook
   const {
     isListening,
     toggleListening,
+    startListening,
+    stopListening,
   } = useSpeechRecognition(
     currentLanguage.code,
     (transcript) => {
       setInputMessage(transcript);
+      if (talkMode && sendMessageRef.current) {
+        sendMessageRef.current(transcript);
+      }
     },
     (error) => {
       toast({
@@ -76,6 +86,25 @@ const Chat = () => {
     voiceEnabled,
     selectedVoiceId
   );
+  // Auto-manage listening when Talk mode is enabled
+  useEffect(() => {
+    if (talkMode) {
+      // Stop listening while AI is speaking or request is in-flight
+      if ((isSpeaking || isTyping) && isListening) {
+        try { stopListening(); } catch {}
+      }
+      // Ensure mic is listening when idle and allowed
+      if (!micDisabled && !isSpeaking && !isTyping && !isListening) {
+        try { startListening(); } catch {}
+      }
+    } else {
+      // Ensure mic is off when Talk mode is disabled
+      if (isListening) {
+        try { stopListening(); } catch {}
+      }
+    }
+  }, [talkMode, micDisabled, isListening, isTyping, isSpeaking, startListening, stopListening]);
+
 
   /**
    * Load user's voice preference from backend
@@ -320,6 +349,12 @@ const Chat = () => {
     }
   };
 
+  // Keep a fresh reference for auto-send in Talk mode
+  useEffect(() => {
+    sendMessageRef.current = sendMessage;
+  }, [sendMessage]);
+
+
   /**
    * Handle key press in input
    */
@@ -460,6 +495,21 @@ const Chat = () => {
           </Box>
         )}
 
+
+        {/* Mode toggle: Chat <-> Talk */}
+        <Box px={6} pb={2}>
+          <HStack justify="flex-end" spacing={3}>
+            <Text fontSize="sm" color="var(--hm-color-text-secondary)">{t('chat.mode.chat', 'Chat')}</Text>
+            <Switch
+              colorScheme="purple"
+              size="md"
+              isChecked={talkMode}
+              onChange={(e) => setTalkMode(e.target.checked)}
+              isDisabled={micDisabled}
+            />
+            <Text fontSize="sm" color="var(--hm-color-text-secondary)">{t('chat.mode.talk', 'Talk')}</Text>
+          </HStack>
+        </Box>
 
         {/* Input with bottom spacing */}
         <Box pb={4}>
