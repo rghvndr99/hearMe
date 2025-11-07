@@ -13,38 +13,15 @@ import {
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { FaWater, FaTree, FaPalette } from 'react-icons/fa';
 import { MdColorLens } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 
-const themes = [
-  {
-    id: 'dark',
-    name: 'Dark Mode',
-    icon: FiMoon,
-    description: 'Neo Expressionist',
-  },
-  {
-    id: 'light',
-    name: 'Light Mode',
-    icon: FiSun,
-    description: 'Soft & Warm',
-  },
-  {
-    id: 'ocean',
-    name: 'Ocean',
-    icon: FaWater,
-    description: 'Cool & Calming',
-  },
-  {
-    id: 'forest',
-    name: 'Forest',
-    icon: FaTree,
-    description: 'Natural & Grounding',
-  },
-  {
-    id: 'sunset',
-    name: 'Sunset',
-    icon: FaPalette,
-    description: 'Warm & Energetic',
-  },
+
+const THEME_DEFS = [
+  { id: 'dark', icon: FiMoon, nameKey: 'themes.dark.name', nameFallback: 'Dark Mode', descKey: 'themes.dark.description', descFallback: 'Neo Expressionist' },
+  { id: 'light', icon: FiSun, nameKey: 'themes.light.name', nameFallback: 'Light Mode', descKey: 'themes.light.description', descFallback: 'Soft & Warm' },
+  { id: 'ocean', icon: FaWater, nameKey: 'themes.ocean.name', nameFallback: 'Ocean', descKey: 'themes.ocean.description', descFallback: 'Cool & Calming' },
+  { id: 'forest', icon: FaTree, nameKey: 'themes.forest.name', nameFallback: 'Forest', descKey: 'themes.forest.description', descFallback: 'Natural & Grounding' },
+  { id: 'sunset', icon: FaPalette, nameKey: 'themes.sunset.name', nameFallback: 'Sunset', descKey: 'themes.sunset.description', descFallback: 'Warm & Energetic' },
 ];
 
 const ThemeToggle = () => {
@@ -68,6 +45,13 @@ const ThemeToggle = () => {
     const colorScheme = (themeId === 'light') ? 'light' : 'dark';
     document.documentElement.style.colorScheme = colorScheme;
   };
+
+  const { t } = useTranslation('common');
+  const themes = THEME_DEFS.map(def => ({
+    ...def,
+    name: t(def.nameKey, def.nameFallback),
+    description: t(def.descKey, def.descFallback),
+  }));
 
   const activeTheme = themes.find((t) => t.id === currentTheme) || themes[0];
 

@@ -733,7 +733,7 @@
     "features": {
       "free": {
         "0": "10 mins/week voice chat",
-        "1": "2 language (Hindi/English)",
+        "1": "2 languages (Hindi/English)",
         "2": "Basic AI support",
         "3": "Text+ default speakers access",
         "4": "5 accesible themes"
@@ -760,7 +760,13 @@
     "promo": {
       "headline": "Special Offer: Get Companion Plan at ₹399/mo for 3 months!",
       "sub": "Use code",
-      "tail": "at checkout. Valid till Sunday 11:59 PM."
+      "tail": "at checkout. Valid till Sunday 11:59 PM.",
+      "gating": "Promo: chat minutes not enforced yet"
+    },
+    "assurance": {
+      "cancel": "Cancel anytime — your remaining period will be refunded back to you.",
+      "upgrade": "Upgrade anytime — what you've already paid will be adjusted towards the higher plan.",
+      "upi": "UPI secure payments with PhonePe"
     },
     "faq": {
       "title": "Frequently Asked Questions",
@@ -832,5 +838,12 @@
       "idLabel": "PhonePe ID",
       "markPaid": "I've completed the payment"
     }
+  },
+  "themes": {
+    "dark": { "name": "Dark Mode", "description": "Neo Expressionist" },
+    "light": { "name": "Light Mode", "description": "Soft & Warm" },
+    "ocean": { "name": "Ocean", "description": "Cool & Calming" },
+    "forest": { "name": "Forest", "description": "Natural & Grounding" },
+    "sunset": { "name": "Sunset", "description": "Warm & Energetic" }
   }
 }

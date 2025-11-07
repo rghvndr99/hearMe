@@ -1,6 +1,6 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ChakraProvider, Box } from '@chakra-ui/react';
 import theme from './theme';
 import './styles.css';
@@ -8,6 +8,8 @@ import './styles/components.css';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import ChatBubble from './components/ChatBubble';
+import { useTranslation } from 'react-i18next';
+
 
 import i18n from './i18n';
 // Keep <html lang> in sync with selected language
@@ -53,6 +55,102 @@ const VoiceMate = lazy(() => import('./pages/VoiceMate'));
 const Pricing = lazy(() => import('./pages/Pricing'));
 const Payment = lazy(() => import('./pages/Payment'));
 
+
+function RouteMetaSetter() {
+  const { pathname } = useLocation();
+  const { t } = useTranslation('common');
+
+  useEffect(() => {
+    const metaMap = {
+      '/': {
+        title: t('meta.home.title', 'HearMe — Support that listens'),
+        description: t('meta.home.description', 'Chat or talk in Hindi and English with an empathetic AI and volunteers.'),
+      },
+      '/chat': {
+        title: t('meta.chat.title', 'Chat — HearMe'),
+        description: t('meta.chat.description', 'Start a caring conversation in Hindi or English. Talk or type; we listen.'),
+      },
+      '/stories': {
+        title: t('meta.stories.title', 'Stories — HearMe'),
+        description: t('meta.stories.description', 'Real stories of resilience and healing from our community.'),
+      },
+      '/volunteer': {
+        title: t('meta.volunteer.title', 'Volunteer — HearMe'),
+        description: t('meta.volunteer.description', 'Join as a caring listener and support people when it matters.'),
+      },
+      '/resources': {
+        title: t('meta.resources.title', 'Resources — HearMe'),
+        description: t('meta.resources.description', 'Guides and tools for mental well-being in Hindi and English.'),
+      },
+      '/about': {
+        title: t('meta.about.title', 'About — HearMe'),
+        description: t('meta.about.description', 'Why we built HearMe and how we support you compassionately.'),
+      },
+      '/contact': {
+        title: t('meta.contact.title', 'Contact — HearMe'),
+        description: t('meta.contact.description', 'Reach our team for questions, feedback, or support.'),
+      },
+      '/login': {
+        title: t('meta.login.title', 'Login — HearMe'),
+        description: t('meta.login.description', 'Sign in to access your conversations, settings, and membership.'),
+      },
+      '/register': {
+        title: t('meta.register.title', 'Register — HearMe'),
+        description: t('meta.register.description', 'Create your account to start chatting or talking with HearMe.'),
+      },
+      '/profile': {
+        title: t('meta.profile.title', 'Profile — HearMe'),
+        description: t('meta.profile.description', 'Manage your account, language, and voice preferences.'),
+      },
+      '/forgot-password': {
+        title: t('meta.forgot.title', 'Forgot Password — HearMe'),
+        description: t('meta.forgot.description', 'Recover access to your HearMe account securely.'),
+      },
+      '/reset-password': {
+        title: t('meta.reset.title', 'Reset Password — HearMe'),
+        description: t('meta.reset.description', 'Set a new password to protect your account.'),
+      },
+      '/change-password': {
+        title: t('meta.changePassword.title', 'Change Password — HearMe'),
+        description: t('meta.changePassword.description', 'Update your account password securely.'),
+      },
+      '/change-email': {
+        title: t('meta.changeEmail.title', 'Change Email — HearMe'),
+        description: t('meta.changeEmail.description', 'Update your email address for sign-in and notifications.'),
+      },
+      '/pricing': {
+        title: t('meta.pricing.title', 'Pricing — HearMe'),
+        description: t('meta.pricing.description', 'Choose a plan that fits your rhythm: Free, Care, or Companion.'),
+      },
+      '/payment': {
+        title: t('meta.payment.title', 'Payment — HearMe'),
+        description: t('meta.payment.description', 'Secure UPI payment to activate your HearMe membership.'),
+      },
+      '/voicemate': {
+        title: t('meta.voicemate.title', 'VoiceMate — HearMe'),
+        description: t('meta.voicemate.description', 'Create and manage your personalized voice for conversations.'),
+      },
+      '/privacy': {
+        title: t('meta.privacy.title', 'Privacy — HearMe'),
+        description: t('meta.privacy.description', 'Learn how we protect your data and conversations.'),
+      },
+    };
+
+    const meta = metaMap[pathname] || { title: 'HearMe', description: 'Mental health support in Hindi and English.' };
+    try {
+      document.title = meta.title;
+      let tag = document.querySelector('meta[name="description"]');
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute('name', 'description');
+        document.head.appendChild(tag);
+      }
+      tag.setAttribute('content', meta.description);
+    } catch {}
+  }, [pathname, t]);
+
+  return null;
+}
 
 
 const Privacy = lazy(() => import('./pages/Privacy'));
@@ -106,6 +204,7 @@ function App() {
     <ChakraProvider theme={theme}>
       <Router>
         <Header />
+        <RouteMetaSetter />
         <Suspense fallback={<Loader />}>
           <Box as="main" w={["100%","80%"]} mx="auto" px={[6,8]}>
             <Routes>

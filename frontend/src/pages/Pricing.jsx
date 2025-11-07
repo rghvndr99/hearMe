@@ -1,6 +1,6 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Box, Flex, Heading, Text, SimpleGrid, Button, Switch, HStack, VStack, Image, Icon } from '@chakra-ui/react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FiCheckCircle, FiShield, FiMic, FiUsers, FiRotateCcw, FiTrendingUp, FiSmartphone } from 'react-icons/fi';
 
@@ -23,9 +23,9 @@ const PLANS = {
       priceSuffixFallback: '/mo',
       features: [
         '10 mins/week voice chat',
-        '1 language (Hindi/English)',
+        '2 languages (Hindi/English)',
         'Basic AI support',
-        'Text-only volunteer access',
+        'Text+ default speakers access',
       ],
       ctaKey: 'pricing.cta.startFree',
       ctaFallback: 'Start Free',
@@ -77,9 +77,9 @@ const PLANS = {
       priceSuffixFallback: '/mo',
       features: [
         '10 mins/week voice chat',
-        '1 language (Hindi/English)',
+        '2 languages (Hindi/English)',
         'Basic AI support',
-        'Text-only volunteer access',
+        'Text+ default speakers access',
       ],
       ctaKey: 'pricing.cta.startFree',
       ctaFallback: 'Start Free',
@@ -125,17 +125,8 @@ const PLANS = {
 export default function Pricing() {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
-  const location = useLocation();
 
-
-  // Guard: redirect to login when not authenticated
-  useEffect(() => {
-    const token = localStorage.getItem('hm-token');
-    if (!token) {
-      const current = `${location.pathname}${location.search}${location.hash}`;
-      navigate(`/login?redirect=${encodeURIComponent(current)}`);
-    }
-  }, []);
+  // Pricing page is public. Auth is enforced when user attempts to buy.
 
   const [billing, setBilling] = useState('monthly');
   const plans = useMemo(() => PLANS[billing], [billing]);
@@ -228,7 +219,7 @@ export default function Pricing() {
         {/* Feature gating promo */}
         <Box mb={4} p={3} border="1px solid var(--hm-border-subtle)" borderRadius="0.75rem" bg="var(--hm-bg-glass)">
           <Text className="hm-text-secondary">
-            {t('pricing.promo.gating','Promo: Chat minutes and microphone access are open to all plans for a limited time. Voice creation remains a premium feature.')}
+            {t('pricing.promo.gating','Promo: chat minutes not enforced yet')}
           </Text>
         </Box>
 
@@ -236,7 +227,7 @@ export default function Pricing() {
         {/* Plans */}
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
           {plans.map((p) => (
-            <Box key={p.id} className="hm-card hm-card-hover" borderColor={p.featured ? 'var(--hm-color-brand)' : 'var(--hm-border-subtle)'} borderWidth={p.featured ? '2px' : '1px'}>
+            <Box key={p.id} className="hm-card hm-card-hover" textAlign="left" borderColor={p.featured ? 'var(--hm-color-brand)' : 'var(--hm-border-subtle)'} borderWidth={p.featured ? '2px' : '1px'}>
               <VStack align="start" spacing={3}>
                 {p.featured && (
                   <Text fontSize="xs" color="var(--hm-color-brand)" bg="var(--hm-bg-glass)" px={2} py={1} borderRadius="full">
@@ -271,11 +262,11 @@ export default function Pricing() {
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4}>
             <HStack align="start" spacing={2}>
               <Icon as={FiRotateCcw} color="var(--hm-color-brand)" mt="2px" />
-              <Text className="hm-text-secondary">{t('pricing.assurance.cancel','Cancel anytime with prorated refund')}</Text>
+              <Text className="hm-text-secondary">{t('pricing.assurance.cancel','Cancel anytime — your remaining period will be refunded back to you.')}</Text>
             </HStack>
             <HStack align="start" spacing={2}>
               <Icon as={FiTrendingUp} color="var(--hm-color-brand)" mt="2px" />
-              <Text className="hm-text-secondary">{t('pricing.assurance.upgrade','Upgrade anytime — credit adjusted')}</Text>
+              <Text className="hm-text-secondary">{t('pricing.assurance.upgrade','Upgrade anytime — what you\'ve already paid will be adjusted towards the higher plan.')}</Text>
             </HStack>
             <HStack align="start" spacing={2}>
               <Icon as={FiSmartphone} color="var(--hm-color-brand)" mt="2px" />
