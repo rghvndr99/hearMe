@@ -147,6 +147,13 @@ const Home = () => {
             <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
               {t('home.trust.p2')}
             </Text>
+            <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
+              {t('pricing.disclaimer.anonymous','Connect anonymously — choose what you share and how you show up.')}
+            </Text>
+            <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
+              {t('pricing.disclaimer.storageChoice','You decide whether to store your chats/messages.')}
+            </Text>
+
           </VStack>
         </Stack>
       </Box>

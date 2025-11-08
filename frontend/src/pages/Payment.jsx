@@ -143,6 +143,12 @@ export default function Payment() {
             <Text className="hm-text-tertiary">
               {t('payment.subtitle.more3','You can cancel anytime and get a refund for the remaining period, or upgrade anytime with credit adjusted towards the higher plan.')}
             </Text>
+            <Text className="hm-text-tertiary">
+              {t('pricing.disclaimer.anonymous','Connect anonymously — choose what you share and how you show up.')}
+            </Text>
+            <Text className="hm-text-tertiary">
+              {t('pricing.disclaimer.storageChoice','You decide whether to store your chats/messages.')}
+            </Text>
           </VStack>
 
           <Box border="1px solid var(--hm-border-subtle)" borderRadius="0.75rem" overflow="hidden">
@@ -281,6 +287,9 @@ export default function Payment() {
 
             {isSuccess && (
               <VStack align="stretch" spacing={3} mt={2}>
+                <Text className="hm-text-tertiary">{t('pricing.disclaimer.anonymous','Connect anonymously — choose what you share and how you show up.')}</Text>
+                <Text className="hm-text-tertiary">{t('pricing.disclaimer.storageChoice','You decide whether to store your chats/messages.')}</Text>
+
                 <Text className="hm-text-tertiary">{t('payment.redirect', 'Redirecting in {{s}}s...', { s: countdown })}</Text>
                 <HStack spacing={3} flexWrap="wrap">
                   <Button as={RouterLink} to="/profile" className="hm-button-primary" leftIcon={<FiUser />}>{t('payment.actions.profile', 'Go to Profile')}</Button>

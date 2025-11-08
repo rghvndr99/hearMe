@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const SubscriptionSchema = new mongoose.Schema(
   {
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
-    plan: { type: String, enum: ['free', 'care', 'companion'], required: true },
+    plan: { type: String, enum: ['free', 'creator', 'care', 'companion', 'family'], required: true },
     billing: { type: String, enum: ['monthly', 'annual'], required: true },
     price: { type: Number, required: true, min: 0 },
     method: { type: String, required: true, default: 'upi' },

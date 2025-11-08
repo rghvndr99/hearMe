@@ -20,6 +20,9 @@ import voiceTwinRouter from './routes/voicetwin.js';
 import speakerDiarizationRouter from './routes/speakerDiarization.js';
 import storiesRouter from './routes/stories.js';
 import subscriptionsRouter from './routes/subscriptions.js';
+import pricingRouter from './routes/pricing.js';
+import walletRouter from './routes/wallet.js';
+import bookingsRouter from './routes/bookings.js';
 
 // Get directory name in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -54,6 +57,9 @@ app.use('/api/voicetwin', voiceTwinRouter);
 app.use('/api/speaker-diarization', speakerDiarizationRouter);
 app.use('/api/stories', storiesRouter);
 app.use('/api/subscriptions', subscriptionsRouter);
+app.use('/api', pricingRouter);
+app.use('/api', walletRouter);
+app.use('/api', bookingsRouter);
 
 const server = http.createServer(app);
 const io = new Server(server, {

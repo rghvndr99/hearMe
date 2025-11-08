@@ -1,0 +1,347 @@
+{
+  "version": "2025-11-07-v2",
+  "currency": "INR",
+  "meta": {
+    "description": "HearMe growth-first pricing model. Free-first access to chat, themes and basic voices. Monetize human care, custom voice creation and usage.",
+    "author": "HearMe Product",
+    "generated_at": "2025-11-07T00:00:00+05:30"
+  },
+  "plans": [
+  {
+  "plan_id": "free",
+  "anonymous_allowed": true,
+  "billing_cycle_days": 7,
+  "currency": "INR",
+  "description": "Full access to core HearMe experience: unlimited AI chat, themes, and default voices. Includes 2-3 trial human care sessions to showcase the platform.",
+  "display_name": "Free",
+  "features": {
+    "ai_chat_text": "unlimited",
+    "voice": {
+      "default_voices_in_library": 5,
+      "create_voice_clone": true,
+      "voice_clone_from_group_allowed": false,
+      "group_voice_clone": 1,
+      "group_voice_clone_steady:": false,
+      "voice_clone_from_audio": 1,
+      "voice_clone_steady": false,
+      "custom_voice_use_minutes_per_month": 20 
+    },
+    "human_care": {
+      "available": true,
+      "trial_sessions_total": 3,
+      "sessions_per_month": 0,
+      "session_mode": [
+        "scheduled"
+      ],
+      "priority": "none",
+      "notes": "Random listener for trial sessions. Scheduling required. No guaranteed immediate slot."
+    },
+    "emotion_insights": "basic_per_session",
+    "chat_memory": {
+      "enabled": false,
+      "scope": "session-only"
+    },
+    "storage": {
+      "voice_storage_days": 0,
+      "chat_storage_days": 0
+    },
+    "support_level": "community_email"
+  },
+  "price": 0,
+  "short_name": "Free",
+  "ui": {
+    "badge": "Start Free",
+    "cta_text": "Start Using Free"
+  }
+},
+{
+  "plan_id": "creator",
+  "anonymous_allowed": true,
+  "billing_cycle_days": 30,
+  "currency": "INR",
+  "description": "For users who want to create and use their own voice. Includes one custom voice clone and a monthly quota for using that voice.",
+  "display_name": "Creator",
+  "features": {
+    "ai_chat_text": "unlimited",
+    "voice": {
+      "default_voices_in_library": 10,
+      "create_voice_clone": true,
+      "voice_clone_from_group_allowed": true,
+      "group_voice_clone": 1,
+      "group_voice_clone_steady:": true,
+      "voice_clone_from_audio": 1,
+      "voice_clone_steady": true,
+      "custom_voice_use_minutes_per_month": 300   
+    },
+    "human_care": {
+      "available": true,
+      "sessions_per_month": 5,
+      "session_mode": [
+        "scheduled",
+        "on-call"
+      ],
+      "priority": "none",
+      "notes": "Human care not included; users can buy ad-hoc human sessions or upgrade."
+    },
+    "emotion_insights": "basic_dashboard",
+    "chat_memory": {
+      "enabled": true,
+      "scope": 30
+    },
+    "storage": {
+      "voice_storage_days": 30,
+      "chat_storage_days": 30
+    },
+    "support_level": "email"
+  },
+  "price": 199,
+  "short_name": "Creator",
+  "ui": {
+    "badge": "Best for Creators",
+    "cta_text": "Subscribe Creator"
+  }
+},
+{
+  "plan_id": "care",
+  "anonymous_allowed": true,
+  "billing_cycle_days": 30,
+  "currency": "INR",
+  "description": "Designed for people who want real human connection. Includes scheduled human care sessions and enhanced emotion insights.",
+  "display_name": "Care",
+  "features": {
+    "ai_chat_text": "unlimited",
+    "voice": {
+      "default_voices_in_library": 20,
+      "create_voice_clone": true,
+      "voice_clone_from_group_allowed": true,
+      "group_voice_clone": 2,
+      "group_voice_clone_steady:": true,
+      "voice_clone_from_audio": 3,
+      "voice_clone_steady": true,
+      "custom_voice_use_minutes_per_month": 600   
+    },
+    "human_care": {
+      "available": true,
+      "sessions_per_month": 10,
+      "session_duration_minutes_default": 15,
+      "session_mode": [
+        "voice_scheduled",
+        "text_scheduled"
+      ],
+      "scheduling_priority": "medium",
+      "preferred_listener_option": false,
+      "requires_temp_contact": true,
+      "notes": "Scheduled voice/text sessions. Temporary contact stored for reminders and deleted after TTL."
+    },
+    "emotion_insights": "enhanced_trends",
+    "chat_memory": {
+      "enabled": true,
+      "scope": 90
+    },
+    "storage": {
+      "voice_storage_days": 90,
+      "chat_storage_days": 90
+    },
+    "support_level": "priority_chat"
+  },
+  "price": 299,
+  "short_name": "Care",
+  "ui": {
+    "badge": "Care Plan",
+    "cta_text": "Subscribe Care"
+  }
+},
+{
+  "plan_id": "companion",
+  "anonymous_allowed": false,
+  "billing_cycle_days": 30,
+  "currency": "INR",
+  "description": "Continuity-first plan. Persistent emotional memory, preferred listener matching, priority scheduling and multiple custom voices.",
+  "display_name": "Companion",
+  "features": {
+    "ai_chat_text": "unlimited",
+    "voice": {
+      "default_voices_in_library": 20,
+      "create_voice_clone": true,
+      "voice_clone_from_group_allowed": true,
+      "group_voice_clone": 4,
+      "group_voice_clone_steady:": true,
+      "voice_clone_from_audio": 4,
+      "voice_clone_steady": true,
+      "custom_voice_use_minutes_per_month": 1000   
+    },
+    "human_care": {
+      "available": true,
+      "sessions_per_month": 15,
+      "session_duration_minutes_default": 20,
+      "session_mode": [
+        "voice_priority",
+        "text_priority"
+      ],
+      "scheduling_priority": "high",
+      "preferred_listener_option": true,
+      "requires_temp_contact": true,
+      "notes": "Priority slots, ability to request same listener and receive follow-ups."
+    },
+    "emotion_insights": "deep_personalized",
+    "chat_memory": {
+      "enabled": true,
+      "scope": "365_days"
+    },
+    "storage": {
+      "voice_storage_days": 365,
+      "chat_storage_days": 365,
+      "emotional_journal": true
+    },
+    "support_level": "direct_priority"
+  },
+  "price": 499,
+  "short_name": "Companion",
+  "ui": {
+    "badge": "Premium",
+    "cta_text": "Subscribe Companion"
+  }
+}
+  ],
+  "wallet_packs": [
+    {
+      "pack_id": "mini_49",
+      "display_name": "Mini Pack",
+      "price": 49,
+      "currency": "INR",
+      "credits_minutes": 100,
+      "applies_to": ["custom_voice_usage", "ai_voice_usages", "voice_clone_creation"],
+      "consumable": true,
+      "description": "Small top-up for 100 voice minutes."
+    },
+    {
+      "pack_id": "standard_99",
+      "display_name": "Standard Pack",
+      "price": 99,
+      "currency": "INR",
+      "credits_minutes": 300,
+      "applies_to":["custom_voice_usage", "ai_voice_usages", "voice_clone_creation"],
+      "consumable": true,
+      "description": "300 minutes top-up and option to apply one-time voice clone add-on discount."
+    },
+    {
+      "pack_id": "pro_199",
+      "display_name": "Pro Pack",
+      "price": 199,
+      "currency": "INR",
+      "credits_minutes": 700,
+      "applies_to": ["custom_voice_usage", "ai_voice_usages", "voice_clone_creation", "emotion_insights"],
+      "consumable": true,
+      "description": "700 minutes plus access to basic emotion graph features for anonymous users."
+    }
+  ],
+  "addons": [
+    {
+      "addon_id": "voice_clone_99",
+      "display_name": "Extra Voice Clone",
+      "price": 99,
+      "currency": "INR",
+      "description": "Add one additional custom voice clone (non-commercial).",
+      "consumable": false
+    },
+    {
+      "addon_id": "human_call_extra_79",
+      "display_name": "Extra Human Call (15min)",
+      "price": 79,
+      "currency": "INR",
+      "description": "One scheduled 15-minute human care voice call (ad-hoc purchase).",
+      "consumable": true
+    },
+    {
+      "addon_id": "express_slot_49",
+      "display_name": "Express Call Slot",
+      "price": 49,
+      "currency": "INR",
+      "description": "Attempt to get an earlier available slot for a scheduled human care session.",
+      "consumable": true
+    }
+  ],
+  "ui_texts": {
+    "tagline": "HearMe listens. HearMe feels. HearMe connects.",
+    "anonymous_banner": "No account required. Start hearing and being heard — instantly.",
+    "free_call_offer": "New users get 2–3 free scheduled human care trials to feel HearMe.",
+    "upgrade_nudge_after_trials": "You’ve experienced HearMe with trials. Upgrade to keep the same listener and continue your journey.",
+    "wallet_cta": "Add minutes (no signup required)"
+  },
+  "settings": {
+    "contact_info_ttl_seconds": 604800,
+    "trial_human_sessions_default": 3,
+    "anonymous_user_token_prefix": "usr_",
+    "default_currency": "INR",
+    "wallet_autorenew_threshold_minutes": 50,
+    "wallet_autorenew_default_pack_id": "mini_49",
+    "max_anonymous_saved_minutes": 10000,
+    "scheduling": {
+      "min_lead_time_minutes": 30,
+      "max_bookable_days_out": 30,
+      "default_session_duration_minutes": 15,
+      "session_duration_options_minutes": [10, 15, 20, 30]
+    },
+    "voice_storage_policy_days": {
+      "free_voice_store_days": 0,
+      "creator_voice_store_days": 30,
+      "care_voice_store_days": 90,
+      "companion_voice_store_days": 365
+    },
+    "pricing_related_flags": {
+      "free_core_access": true,
+      "monetize_voice_creation": true,
+      "monetize_custom_voice_usage": true,
+      "monetize_human_care": true
+    }
+  },
+  "example_user_documents": {
+    "anonymous_example": {
+      "user_id": "usr_aaaaaaaa1111",
+      "is_anonymous": true,
+      "current_plan_id": "free",
+      "wallet": {
+        "balance_minutes": 30,
+        "transactions": []
+      },
+      "trial_human_calls_remaining": 3,
+      "voices": [],
+      "settings": {
+        "language": "hi",
+        "theme": "Emotional"
+      }
+    },
+    "creator_example": {
+      "user_id": "usr_bbbbbbbb2222",
+      "is_anonymous": false,
+      "nickname": "Moonlight",
+      "current_plan_id": "creator",
+      "wallet": {
+        "balance_minutes": 420,
+        "transactions": [
+          {
+            "txn_id": "txn_20251107_1001",
+            "pack_id": "standard_99",
+            "amount": 99,
+            "currency": "INR",
+            "timestamp": "2025-11-07T09:00:00+05:30"
+          }
+        ]
+      },
+      "voices": [
+        {
+          "voice_id": "vc_001",
+          "label": "My Voice 1",
+          "created_on": "2025-11-01T12:00:00+05:30",
+          "quality": "hd",
+          "minutes_used_month_to_date": 75
+        }
+      ],
+      "trial_human_calls_remaining": 0,
+      "settings": {
+        "language": "en",
+        "theme": "Warm"
+      }
+    }
+  }
+}

@@ -33,6 +33,25 @@ const Profile = () => {
   const [usage, setUsage] = useState(null);
   const [subLoading, setSubLoading] = useState(false);
 
+  // Helpers for membership cycle/formatting
+  const formatDateTime = (d) => {
+    try { return new Date(d).toLocaleString(); } catch { return '-'; }
+  };
+  const addMonths = (date, n) => { const d = new Date(date); d.setMonth(d.getMonth() + n); return d; };
+  const addYears = (date, n) => { const d = new Date(date); d.setFullYear(d.getFullYear() + n); return d; };
+  const computeNextBilling = (activatedAt, billing) => {
+    if (!activatedAt || !billing) return null;
+    let next;
+    if (billing === 'annual') next = addYears(activatedAt, 1);
+    else next = addMonths(activatedAt, 1);
+    const now = new Date();
+    // If already past, roll forward until future (handles old activations)
+    let guard = 0;
+    while (next <= now && guard < 36) { next = billing === 'annual' ? addYears(next, 1) : addMonths(next, 1); guard++; }
+    return next;
+  };
+  const firstOfNextMonth = () => { const now = new Date(); return new Date(now.getFullYear(), now.getMonth()+1, 1, 0,0,0,0); };
+
   const { isOpen: isCancelOpen, onOpen: onCancelOpen, onClose: onCancelClose } = useDisclosure();
 
   const handleStartEdit = () => {
@@ -330,16 +349,26 @@ const Profile = () => {
                 )}
               </Stack>
             </Stack>
+            <VStack align="stretch" spacing={1} mb={3}>
+              <Text className="hm-text-tertiary">{t('pricing.disclaimer.anonymous','Connect anonymously — choose what you share and how you show up.')}</Text>
+              <Text className="hm-text-tertiary">{t('pricing.disclaimer.storageChoice','You decide whether to store your chats/messages.')}</Text>
+            </VStack>
+
             {subscription ? (
               <VStack align="stretch" spacing={3}>
                 <HStack justify="space-between"><Text className="hm-text-secondary">{t('payment.labels.plan','Plan')}</Text><Text color="var(--hm-color-text-primary)" fontWeight="600">{t(`pricing.plans.${subscription.plan}`, subscription.plan)}</Text></HStack>
                 <HStack justify="space-between"><Text className="hm-text-secondary">{t('payment.labels.billing','Billing')}</Text><Text color="var(--hm-color-text-primary)" fontWeight="600">{t(`pricing.${subscription.billing}`, subscription.billing)}</Text></HStack>
                 <HStack justify="space-between"><Text className="hm-text-secondary">{t('payment.labels.amount','Amount')}</Text><Text color="var(--hm-color-text-primary)" fontWeight="700">₹{subscription.price}</Text></HStack>
+                <HStack justify="space-between"><Text className="hm-text-secondary">{t('profile.subscription.status','Status')}</Text><Text color="var(--hm-color-text-primary)" fontWeight="600">{subscription.status}</Text></HStack>
+                <HStack justify="space-between"><Text className="hm-text-secondary">{t('profile.subscription.nextBilling','Next billing')}</Text><Text color="var(--hm-color-text-primary)">{(() => { const d = computeNextBilling(subscription.activatedAt, subscription.billing); return d ? d.toLocaleString() : '-'; })()}</Text></HStack>
+
                 <HStack justify="space-between"><Text className="hm-text-secondary">{t('profile.subscription.since','Active since')}</Text><Text color="var(--hm-color-text-primary)">{new Date(subscription.activatedAt).toLocaleString()}</Text></HStack>
 
                 {usage && planConfig && (
                   <Box mt={4} p={4} bg="var(--hm-bg-glass)" borderRadius="lg">
                     <Text className="hm-text-secondary" mb={2}>{t('profile.subscription.usageTitle', 'Your usage')}</Text>
+
+                    {/* Voice Twins usage */}
                     <HStack justify="space-between">
                       <Text className="hm-text-secondary">{planConfig.features?.voiceTwins?.label || 'Custom voices'}</Text>
                       <Text color="var(--hm-color-text-primary)" fontWeight="700">
@@ -353,6 +382,24 @@ const Profile = () => {
                       bg="var(--hm-bg-glass)"
                       sx={{ '& > div': { background: 'var(--hm-color-brand)' } }}
                     />
+
+                    {/* Chat minutes usage */}
+                    <HStack justify="space-between" mt={4}>
+                      <Text className="hm-text-secondary">
+                        {(planConfig.features?.chatMinutes?.label || 'Chat minutes')} {(() => { const p = usage?.chatMinutes?.period || planConfig?.features?.chatMinutes?.period; return p && p !== 'unlimited' ? `(${p})` : ''; })()}
+                      </Text>
+                      <Text color="var(--hm-color-text-primary)" fontWeight="700">
+                        {(() => { const l = usage?.chatMinutes?.limit ?? planConfig?.features?.chatMinutes?.limit ?? 0; const u = usage?.chatMinutes?.used ?? 0; return l === -1 ? t('profile.subscription.unlimited','Unlimited') : `${u} / ${l}`; })()}
+                      </Text>
+                    </HStack>
+                    {(() => { const l = usage?.chatMinutes?.limit ?? planConfig?.features?.chatMinutes?.limit ?? 0; const u = usage?.chatMinutes?.used ?? 0; return l > 0 ? (
+                      <Progress value={Math.min(100, (u / l) * 100)} size="sm" mt={2} bg="var(--hm-bg-glass)" sx={{ '& > div': { background: 'var(--hm-color-brand)' } }} />
+                    ) : null; })()}
+
+                    {/* Reset info for monthly */}
+                    <Text className="hm-text-tertiary" mt={2}>
+                      {(() => { const p = usage?.chatMinutes?.period || planConfig?.features?.chatMinutes?.period; if (p === 'month') { const d = firstOfNextMonth(); return t('profile.subscription.resetsOn','Resets on') + ' ' + d.toLocaleDateString(); } if (p === 'week') { return t('profile.subscription.resetsWeekly','Resets on a rolling weekly window'); } return ''; })()}
+                    </Text>
                   </Box>
                 )}
               </VStack>

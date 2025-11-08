@@ -715,10 +715,6 @@
   },
   "pricing": {
     "title": "Mental support that listens in your voice — when it matters most.",
-    "subtitle": "Choose a plan that fits your rhythm: casual chat, deeper care, or full companionship.",
-    "monthly": "Monthly",
-    "annual": "Annual",
-    "save30": "Save 20%",
     "mo": "/mo",
     "plans": {
       "free": "Free",
@@ -768,6 +764,69 @@
       "upgrade": "Upgrade anytime — what you've already paid will be adjusted towards the higher plan.",
       "upi": "UPI secure payments with PhonePe"
     },
+    "disclaimer": {
+      "anonymous": "Connect anonymously — choose what you share and how you show up.",
+      "storageChoice": "You decide whether to store your chats/messages."
+    },
+
+    "featuresDoc": {
+      "title": "Understand each feature",
+      "subtitle": "What each perk means and how it helps you",
+      "voiceMinutes": {
+        "title": "Voice minutes",
+        "desc": "Time you can talk to the AI with your voice. Each minute equals real-time conversation. Free plans have smaller pools; paid plans include more."
+      },
+      "voiceClones": {
+        "title": "Voice clones (VoiceTwins)",
+        "desc": "Create custom voices that sound like you or loved ones. Use them in chat for familiar, comforting conversations."
+      },
+      "emotionInsights": {
+        "title": "Emotion insights",
+        "desc": "AI detects tone and sentiment to respond with empathy. Higher tiers unlock deeper nuance and trends across sessions."
+      },
+      "volunteerSupport": {
+        "title": "Volunteer support",
+        "desc": "Talk to trained human volunteers when needed. Higher tiers unlock more frequent calls or priority access."
+      },
+      "languages": {
+        "title": "Languages",
+        "desc": "Chat in Hindi, English, and more. Higher tiers unlock all supported languages."
+      },
+      "chatMemory": {
+        "title": "Chat memory",
+        "desc": "Your AI remembers context across sessions for continuity. Longer memory helps deeper, consistent care."
+      },
+      "defaultVoices": {
+        "title": "Default voices",
+        "desc": "Library of ready-made voices to pick the mood and style you like. Available across plans."
+      },
+      "voiceVault": {
+        "title": "VoiceVault legacy",
+        "desc": "Securely store voices and memories. With higher tiers, add custom tones and more controls."
+      }
+,
+      "aiChatText": {
+        "title": "Text chat",
+        "desc": "Unlimited chatting — express your thoughts in words anytime. HearMe listens with patience, whether you write in English or Hindi."
+      },
+      "customVoiceMinutes": {
+        "title": "Custom voice minutes",
+        "desc": "These are minutes where you can use your own cloned voice while talking. Hear yourself or your loved one's voice responding — it feels personal, warm, and real."
+      },
+      "voiceFromVideo": {
+        "title": "Voice from video / audio",
+        "desc": "Upload a video or an old audio clip, and HearMe can carefully extract and recreate that voice — keeping the memories of your loved ones close forever."
+      },
+      "storage": {
+        "title": "Storage & retention",
+        "desc": "HearMe keeps your voice and chat history safe and private. For free users, data is temporary; for subscribers, it's stored longer so your emotional journey stays preserved."
+      },
+      "supportLevel": {
+        "title": "Support level",
+        "desc": "From quick help to personal calls — support grows with your plan. Our team and volunteers are always there to guide, listen, or just be there when you need someone."
+      }
+    },
+
     "faq": {
       "title": "Frequently Asked Questions",
       "q1": "What is a VoiceTwin?",

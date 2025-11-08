@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import { Box, Flex, Heading, Text, SimpleGrid, Button, Switch, HStack, VStack, Image, Icon } from '@chakra-ui/react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Box, Heading, Text, SimpleGrid, Button, HStack, VStack, Image, Icon, Spinner, Switch } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FiCheckCircle, FiShield, FiMic, FiUsers, FiRotateCcw, FiTrendingUp, FiSmartphone } from 'react-icons/fi';
@@ -12,115 +12,6 @@ import { FiCheckCircle, FiShield, FiMic, FiUsers, FiRotateCcw, FiTrendingUp, FiS
 
 const currency = (n) => `₹${n}`;
 
-const PLANS = {
-  monthly: [
-    {
-      id: 'free',
-      nameKey: 'pricing.plans.free',
-      nameFallback: 'Free',
-      price: 0,
-      priceSuffixKey: 'pricing.mo',
-      priceSuffixFallback: '/mo',
-      features: [
-        '10 mins/week voice chat',
-        '2 languages (Hindi/English)',
-        'Basic AI support',
-        'Text+ default speakers access',
-      ],
-      ctaKey: 'pricing.cta.startFree',
-      ctaFallback: 'Start Free',
-    },
-    {
-      id: 'care',
-      nameKey: 'pricing.plans.care',
-      nameFallback: 'Care',
-      price: 299,
-      priceSuffixKey: 'pricing.mo',
-      priceSuffixFallback: '/mo',
-      features: [
-        '300 mins/month',
-        '2 voice clones',
-        'Emotion detection',
-        'Volunteer calls (2/week)',
-        '3 tone themes',
-      ],
-      featured: true,
-      ctaKey: 'pricing.cta.getCare',
-      ctaFallback: 'Get Care',
-    },
-    {
-      id: 'companion',
-      nameKey: 'pricing.plans.companion',
-      nameFallback: 'Companion',
-      price: 499,
-      priceSuffixKey: 'pricing.mo',
-      priceSuffixFallback: '/mo',
-      features: [
-        'Unlimited voice minutes',
-        '5 voice clones',
-        'All languages',
-        'Full volunteer support',
-        'VoiceVault legacy + custom tones',
-      ],
-      ctaKey: 'pricing.cta.getCompanion',
-      ctaFallback: 'Get Companion',
-    },
-  ],
-  annual: [
-    // ~30% off per month equivalent
-    {
-      id: 'free',
-      nameKey: 'pricing.plans.free',
-      nameFallback: 'Free',
-      price: 0,
-      priceSuffixKey: 'pricing.mo',
-      priceSuffixFallback: '/mo',
-      features: [
-        '10 mins/week voice chat',
-        '2 languages (Hindi/English)',
-        'Basic AI support',
-        'Text+ default speakers access',
-      ],
-      ctaKey: 'pricing.cta.startFree',
-      ctaFallback: 'Start Free',
-    },
-    {
-      id: 'care',
-      nameKey: 'pricing.plans.care',
-      nameFallback: 'Care',
-      price: 240, // 299 * 0.8 ≈ 209
-      priceSuffixKey: 'pricing.mo',
-      priceSuffixFallback: '/mo',
-      features: [
-        '300 mins/month',
-        '2 voice clones',
-        'Emotion detection',
-        'Volunteer calls (2/week)',
-        '3 tone themes',
-      ],
-      featured: true,
-      ctaKey: 'pricing.cta.getCare',
-      ctaFallback: 'Get Care',
-    },
-    {
-      id: 'companion',
-      nameKey: 'pricing.plans.companion',
-      nameFallback: 'Companion',
-      price: 400, // 499 * 0.8 ≈ 349
-      priceSuffixKey: 'pricing.mo',
-      priceSuffixFallback: '/mo',
-      features: [
-        'Unlimited voice minutes',
-        '5 voice clones',
-        'All languages',
-        'Full volunteer support',
-        'VoiceVault legacy + custom tones',
-      ],
-      ctaKey: 'pricing.cta.getCompanion',
-      ctaFallback: 'Get Companion',
-    },
-  ],
-};
 
 export default function Pricing() {
   const { t } = useTranslation('common');
@@ -128,16 +19,276 @@ export default function Pricing() {
 
   // Pricing page is public. Auth is enforced when user attempts to buy.
 
+  const [remote, setRemote] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const supportsAnnual = import.meta.env.VITE_ENABLE_ANNUAL_PLANS === 'true';
   const [billing, setBilling] = useState('monthly');
-  const plans = useMemo(() => PLANS[billing], [billing]);
+  const annualDiscount = Number(import.meta.env.VITE_ANNUAL_DISCOUNT || '0.2');
+  const discountPercent = Math.round(annualDiscount * 100);
+
+  useEffect(() => {
+    const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+    let alive = true;
+    (async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/pricing`);
+        if (!res.ok) throw new Error('pricing fetch failed');
+        const json = await res.json();
+        if (alive) setRemote(json);
+      } catch (e) {
+        // swallow; fallback to static
+      } finally {
+        if (alive) setLoading(false);
+      }
+    })();
+    return () => { alive = false; };
+  }, []);
+  // Build exhaustive, human-readable bullets from plan.features (no truncation)
+  function buildFeatureBullets(f) {
+    const bullets = [];
+    const v = f?.voice || {};
+
+    // Text chat
+    if (f?.ai_chat_text === 'unlimited') bullets.push('Unlimited text chat');
+    else if (typeof f?.ai_chat_text === 'number') bullets.push(`${f.ai_chat_text} text messages/month`);
+
+    // Voice minutes with default voices (legacy key)
+    if (f?.ai_chat_voice_with_default_voices === 'unlimited') {
+      bullets.push('Unlimited voice minutes');
+    } else if (typeof f?.ai_chat_voice_with_default_voices === 'number') {
+      bullets.push(`${f.ai_chat_voice_with_default_voices} voice minutes/month`);
+    }
+
+    // Default voices library size (new nested or legacy)
+    if (typeof v?.default_voices_in_library === 'number') {
+      bullets.push(`${v.default_voices_in_library} default voices in library`);
+    } else if (typeof f?.default_voices_in_library === 'number') {
+      bullets.push(`${f.default_voices_in_library} default voices in library`);
+    }
+
+    // Voice cloning (new nested model)
+    if (typeof v?.group_voice_clone === 'number' && v.group_voice_clone > 0) bullets.push(` ${v.group_voice_clone} voice clones allowed from a video or audio`);
+    const steadyGroup = v['group_voice_clone_steady'] ?? v['group_voice_clone_steady:'];
+    if (typeof v?.voice_clone_from_audio === 'number' && v.voice_clone_from_audio > 0) bullets.push(` ${v.voice_clone_from_audio} voice clones from instant or recorded audio`);
+    if (v?.voice_clone_steady === true || steadyGroup === true) {
+      bullets.push('Voice clones will be saved for future');
+    }
+    else {
+      bullets.push('Voice clones will not be saved');
+    }
+
+    // Voice cloning (legacy top-level)
+    if (f?.voice_cloning_allowed === true) {
+      if (typeof f?.voice_clones_included === 'number') {
+        bullets.push(`${f.voice_clones_included} voice clones included`);
+      } else {
+        bullets.push('Voice cloning allowed');
+      }
+    } else if (f && f.voice_cloning_allowed === false) {
+      bullets.push('Custom voice cloning not included');
+    }
+
+    // Custom voice usage minutes (per-user or shared)
+    if (v?.custom_voice_use_minutes_per_month === 'unlimited') {
+      bullets.push('Unlimited custom voice usage');
+    }
+    if (f?.custom_voice_use_minutes_per_month === 'unlimited') {
+      bullets.push('Unlimited custom voice usage');
+    }
+
+    // Create voices from video/audio (legacy)
+    if (f?.voice_from_video_allowed === true) {
+      bullets.push('Create voices from video/audio');
+    }
+
+    // Human care / human support
+    if (f?.human_care?.available) {
+      const hc = f.human_care;
+
+      // Summary: availability and scheduling capability
+      const modes = Array.isArray(hc.session_mode) ? hc.session_mode.map((m)=>String(m)) : [];
+      const hasScheduled = modes.some(m => m.includes('scheduled'));
+      const hasOnCall = modes.some(m => m.includes('on-call'));
+      if (hasScheduled || hasOnCall) {
+        const caps = [];
+        if (hasScheduled) caps.push('scheduled');
+        if (hasOnCall) caps.push('on-call');
+        bullets.push(`Human Support: ${caps.join(' and ')}`);
+      }
+
+      if (typeof hc.sessions_per_month === 'number' && hc.sessions_per_month > 0) {
+        bullets.push(`${hc.sessions_per_month} Human care sessions per month`);
+      }
+      if (hc.trial_sessions_total != null && typeof hc.trial_sessions_total === 'number') {
+        bullets.push(`Trial human care sessions: ${hc.trial_sessions_total}`);
+      }
+    } else if (f?.human_care && f.human_care.available === false) {
+      bullets.push('Human support: Not available');
+    }
+
+    if (f?.storage?.chat_storage_days != null) {
+      bullets.push(`Chats will be stored for ${f.storage.chat_storage_days} days`);
+    }
+
+    return bullets;
+  }
+
+
+  const plans = useMemo(() => {
+    if (!remote?.plans?.length) return [];
+    return remote.plans.map((p) => {
+      const cycleDays = p.billing_cycle_days || 30;
+      const computedPrice = supportsAnnual && billing === 'annual'
+        ? Math.round(p.price * (1 - annualDiscount))
+        : p.price;
+      return {
+        id: p.plan_id,
+        name: p.display_name,
+        price: computedPrice,
+        cycleDays,
+        featuresBullets: buildFeatureBullets(p.features || {}),
+        ctaText: p.ui?.cta_text || null,
+        badge: p.ui?.badge || null,
+        featured: p.ui?.featured === true,
+      };
+    });
+  }, [remote, supportsAnnual, billing, annualDiscount]);
+
+  const featureDocs = useMemo(() => {
+const docMap = {
+  voiceMinutes: {
+    icon: FiMic,
+    titleKey: 'pricing.featuresDoc.voiceMinutes.title',
+    title: 'Voice minutes',
+    descKey: 'pricing.featuresDoc.voiceMinutes.desc',
+    desc: 'Talk freely with HearMe — your voice companion. These are the total minutes you can spend talking using either default or your own created voices.'
+  },
+
+  defaultVoices: {
+    icon: FiMic,
+    titleKey: 'pricing.featuresDoc.defaultVoices.title',
+    title: 'Default voices',
+    descKey: 'pricing.featuresDoc.defaultVoices.desc',
+    desc: 'Beautiful, ready-to-use voices already inside HearMe — calm, warm, or energetic — so you can start speaking and listening without setting up anything.'
+  },
+
+  voiceClones: {
+    icon: FiUsers,
+    titleKey: 'pricing.featuresDoc.voiceClones.title',
+    title: 'Voice cloning (VoiceTwins)',
+    descKey: 'pricing.featuresDoc.voiceClones.desc',
+    desc: 'Record your own voice or a loved one’s, and HearMe will create a digital “VoiceTwin.” You can even clone voices from family videos or recordings (with consent). It’s like keeping a voice memory alive.'
+  },
+
+  customVoiceMinutes: {
+    icon: FiMic,
+    titleKey: 'pricing.featuresDoc.customVoiceMinutes.title',
+    title: 'Custom voice minutes',
+    descKey: 'pricing.featuresDoc.customVoiceMinutes.desc',
+    desc: 'These are minutes where you can use your own cloned voice while talking. Hear yourself or your loved one’s voice responding — it feels personal, warm, and real.'
+  },
+
+  volunteerSupport: {
+    icon: FiSmartphone,
+    titleKey: 'pricing.featuresDoc.volunteerSupport.title',
+    title: 'Human / volunteer support',
+    descKey: 'pricing.featuresDoc.volunteerSupport.desc',
+    desc: 'Sometimes, only a real human touch can help. HearMe connects you with kind volunteers — people who listen without judging and speak from the heart.'
+  },
+
+  chatMemory: {
+    icon: FiRotateCcw,
+    titleKey: 'pricing.featuresDoc.chatMemory.title',
+    title: 'Chat memory',
+    descKey: 'pricing.featuresDoc.chatMemory.desc',
+    desc: 'HearMe remembers your feelings and important talks — only if you choose. For paid users, this helps our AI and listeners understand your journey better and respond with more care.'
+  },
+
+  aiChatText: {
+    icon: FiRotateCcw,
+    titleKey: 'pricing.featuresDoc.aiChatText.title',
+    title: 'Text chat',
+    descKey: 'pricing.featuresDoc.aiChatText.desc',
+    desc: 'Unlimited chatting — express your thoughts in words anytime. HearMe listens with patience, whether you write in English or Hindi.'
+  },
+
+  voiceFromVideo: {
+    icon: FiMic,
+    titleKey: 'pricing.featuresDoc.voiceFromVideo.title',
+    title: 'Voice from video / audio',
+    descKey: 'pricing.featuresDoc.voiceFromVideo.desc',
+    desc: 'Upload a video or an old audio clip, and HearMe can carefully extract and recreate that voice — keeping the memories of your loved ones close forever.'
+  },
+
+  storage: {
+    icon: FiShield,
+    titleKey: 'pricing.featuresDoc.storage.title',
+    title: 'Storage & retention',
+    descKey: 'pricing.featuresDoc.storage.desc',
+    desc: 'HearMe keeps your voice and chat history safe and private. For free users, data is temporary; for subscribers, it’s stored longer so your emotional journey stays preserved.'
+  },
+
+  supportLevel: {
+    icon: FiUsers,
+    titleKey: 'pricing.featuresDoc.supportLevel.title',
+    title: 'Support level',
+    descKey: 'pricing.featuresDoc.supportLevel.desc',
+    desc: 'From quick help to personal calls — support grows with your plan. Our team and volunteers are always there to guide, listen, or just be there when you need someone.'
+  }
+};
+
+
+    const keys = new Set();
+    (remote?.plans || []).forEach((p) => {
+      const f = p.features || {};
+      const v = f.voice || {};
+      if ('ai_chat_text' in f) keys.add('aiChatText');
+      if ('ai_chat_voice_with_default_voices' in f) keys.add('voiceMinutes'); // legacy
+
+      // Voice library / cloning (nested)
+      if ('default_voices_in_library' in v) keys.add('defaultVoices');
+      if ('create_voice_clone' in v || 'voice_clone_from_audio' in v || 'group_voice_clone' in v || 'voice_clone_steady' in v || 'voice_clone_from_group_allowed' in v || 'group_voice_clone_steady' in v || 'group_voice_clone_steady:' in v) {
+        keys.add('voiceClones');
+      }
+      if ('voice_clone_from_audio' in v) keys.add('voiceFromVideo');
+      if ('custom_voice_use_minutes_per_month' in v) keys.add('customVoiceMinutes');
+
+      // Legacy top-level fallbacks
+      if ('default_voices_in_library' in f) keys.add('defaultVoices');
+      if ('voice_cloning_allowed' in f || 'voice_clones_included' in f) keys.add('voiceClones');
+      if ('custom_voice_use_minutes_per_month' in f) keys.add('customVoiceMinutes');
+      if ('custom_voice_use_minutes_shared_per_month' in f) keys.add('customVoiceMinutesShared');
+      if ('voice_from_video_allowed' in f) keys.add('voiceFromVideo');
+      if ('members_included' in f) keys.add('membersIncluded');
+
+      // Other groups
+      if ('human_care' in f) keys.add('volunteerSupport');
+      if ('emotion_insights' in f) keys.add('emotionInsights');
+      if ('chat_memory' in f) keys.add('chatMemory');
+      if ('themes' in f) keys.add('themes');
+      if ('support_level' in f) keys.add('supportLevel');
+      if ('storage' in f) keys.add('storage');
+    });
+
+    if (!keys.size) {
+      // Fallback to a small default list if nothing detected
+      return [
+        { k: 'voiceMinutes', ...docMap.voiceMinutes },
+        { k: 'voiceClones', ...docMap.voiceClones },
+        { k: 'emotionInsights', ...docMap.emotionInsights },
+        { k: 'volunteerSupport', ...docMap.volunteerSupport },
+        { k: 'chatMemory', ...docMap.chatMemory },
+        { k: 'defaultVoices', ...docMap.defaultVoices },
+      ];
+    }
+
+    return Array.from(keys).map((k) => ({ k, ...docMap[k] })).filter(Boolean);
+  }, [remote, t]);
+
 
   const title = t(
     'pricing.title',
     'Mental support that listens in your voice — when it matters most.'
-  );
-  const subtitle = t(
-    'pricing.subtitle',
-    'Choose a plan that fits your rhythm: casual chat, deeper care, or full companionship.'
   );
 
   const onSelectPlan = (planId) => {
@@ -149,10 +300,11 @@ export default function Pricing() {
     }
     const selected = plans.find(pl => pl.id === planId);
     const amount = selected?.price ?? 0;
+    const billingParam = supportsAnnual ? billing : 'monthly';
     if (planId === 'free') {
       navigate('/chat');
     } else {
-      navigate(`/payment?plan=${encodeURIComponent(planId)}&billing=${encodeURIComponent(billing)}&price=${encodeURIComponent(amount)}&status=pending`);
+      navigate(`/payment?plan=${encodeURIComponent(planId)}&billing=${encodeURIComponent(billingParam)}&price=${encodeURIComponent(amount)}&status=pending`);
     }
 
   };
@@ -203,53 +355,50 @@ export default function Pricing() {
           </Box>
         </SimpleGrid>
 
-        <Heading as="h1" className="hm-heading-primary" mb={2}>{title}</Heading>
-        <Text className="hm-text-secondary" mb={6}>{subtitle}</Text>
+        <Heading as="h1" className="hm-heading-primary" mb={6}>{title}</Heading>
 
-        {/* Billing toggle */}
-        <HStack spacing={4} justify="center" mb={8} color="var(--hm-color-text-secondary)">
-          <Text className="hm-text-tertiary">{t('pricing.monthly','Monthly')}</Text>
-          <Switch colorScheme="orange" isChecked={billing==='annual'} onChange={(e)=>setBilling(e.target.checked?'annual':'monthly')} />
-          <HStack spacing={2}>
-            <Text className="hm-text-tertiary">{t('pricing.annual','Annual')}</Text>
-            <Text className="hm-text-tertiary" color="var(--hm-color-brand)">{t('pricing.save30','Save 20%')}</Text>
+
+        {loading && !remote && (
+          <HStack spacing={2} justify="center" mb={3}>
+            <Spinner size="sm" />
+            <Text className="hm-text-tertiary">{t('pricing.loading','Loading latest plans...')}</Text>
           </HStack>
-        </HStack>
-
-        {/* Feature gating promo */}
-        <Box mb={4} p={3} border="1px solid var(--hm-border-subtle)" borderRadius="0.75rem" bg="var(--hm-bg-glass)">
-          <Text className="hm-text-secondary">
-            {t('pricing.promo.gating','Promo: chat minutes not enforced yet')}
-          </Text>
-        </Box>
-
+        )}
+        {supportsAnnual && (
+          <HStack spacing={4} justify="center" mb={8} color="var(--hm-color-text-secondary)">
+            <Text className="hm-text-tertiary">{t('pricing.monthly','Monthly')}</Text>
+            <Switch colorScheme="orange" isChecked={billing==='annual'} onChange={(e)=>setBilling(e.target.checked?'annual':'monthly')} />
+            <HStack spacing={2}>
+              <Text className="hm-text-tertiary">{t('pricing.annual','Annual')}</Text>
+              <Text className="hm-text-tertiary" color="var(--hm-color-brand)">{t('pricing.save30', `Save ${discountPercent}%`)}</Text>
+            </HStack>
+          </HStack>
+        )}
 
         {/* Plans */}
-        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
           {plans.map((p) => (
             <Box key={p.id} className="hm-card hm-card-hover" textAlign="left" borderColor={p.featured ? 'var(--hm-color-brand)' : 'var(--hm-border-subtle)'} borderWidth={p.featured ? '2px' : '1px'}>
               <VStack align="start" spacing={3}>
                 {p.featured && (
                   <Text fontSize="xs" color="var(--hm-color-brand)" bg="var(--hm-bg-glass)" px={2} py={1} borderRadius="full">
-                    {t('pricing.mostPopular','Most popular')}
+                    {p.badge || t('pricing.mostPopular','Most popular')}
                   </Text>
                 )}
 
-                <Heading as="h3" size="md" color="var(--hm-color-text-primary)">{t(p.nameKey, p.nameFallback)}</Heading>
+                <Heading as="h3" size="md" color="var(--hm-color-text-primary)">{p.name}</Heading>
                 <Box>
-                  <Heading as="div" size="lg" color="var(--hm-color-text-primary)">{currency(p.price)}<Text as="span" fontSize="md" color="var(--hm-color-text-secondary)">{t(p.priceSuffixKey, p.priceSuffixFallback)}</Text></Heading>
+                  <Heading as="div" size="lg" color="var(--hm-color-text-primary)">{currency(p.price)}<Text as="span" fontSize="md" color="var(--hm-color-text-secondary)">{p.cycleDays === 30 ? t('pricing.mo','/mo') : `/${p.cycleDays}d`}</Text></Heading>
                 </Box>
                 <VStack align="start" spacing={2} mt={2}>
-                  {p.features.map((f, idx) => (
+                  {p.featuresBullets.map((f, idx) => (
                     <HStack key={idx} align="start" spacing={2}>
                       <Icon as={FiCheckCircle} color="var(--hm-color-brand)" mt="2px" boxSize={4} />
-
-
-                      <Text className="hm-text-secondary">{t(`pricing.features.${p.id}.${idx}`, f)}</Text>
+                      <Text className="hm-text-secondary">{f}</Text>
                     </HStack>
                   ))}
                 </VStack>
-                <Button className="hm-button-primary" onClick={() => onSelectPlan(p.id)}>{t(p.ctaKey, p.ctaFallback)}</Button>
+                <Button className="hm-button-primary" onClick={() => onSelectPlan(p.id)}>{p.ctaText || t('pricing.cta.select','Select plan')}</Button>
               </VStack>
             </Box>
           ))}
@@ -278,16 +427,40 @@ export default function Pricing() {
 
         {/* Promo banner */}
         <Box mt={8} border="1px solid var(--hm-border-subtle)" borderRadius="0.75rem" p={4} bg="var(--hm-bg-glass)">
-          <Text className="hm-text-secondary">
-            ✨ {t('pricing.promo.headline', 'Special Offer: Get Companion Plan at ₹399/mo for 3 months!')}<br/>
-            <Text as="span" className="hm-text-tertiary">{t('pricing.promo.sub','Use code')} <b>CAREME75</b> {t('pricing.promo.tail','at checkout. Valid till Sunday 11:59 PM.')}</Text>
+        {/* Feature explanations */}
+        <Box textAlign="center">
+          <Heading as="h2" className="hm-heading-secondary" mb={2}>
+            {t('pricing.featuresDoc.title','Understand each feature')}
+          </Heading>
+          <Text className="hm-text-secondary" mb={6}>
+            {t('pricing.featuresDoc.subtitle','What each perk means and how it helps you')}
           </Text>
+          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4} textAlign="left">
+            {featureDocs.map(fd => (
+              <Box key={fd.k} className="hm-card" p={4}>
+                <HStack align="start" spacing={3}>
+                  <Icon as={fd.icon} color="var(--hm-color-brand)" mt="3px" />
+                  <VStack align="start" spacing={1}>
+                    <Text fontWeight="600" color="var(--hm-color-text-primary)">
+                      {t(`pricing.featuresDoc.${fd.k}.title`, fd.title)}
+                    </Text>
+                    <Text className="hm-text-tertiary">
+                      {t(`pricing.featuresDoc.${fd.k}.desc`, fd.desc)}
+                    </Text>
+                  </VStack>
+                </HStack>
+              </Box>
+            ))}
+          </SimpleGrid>
+        </Box>
+
         </Box>
 
         {/* FAQ */}
         <Box mt={12} textAlign="center">
           <Heading as="h2" className="hm-heading-secondary" mb={6}>{t('pricing.faq.title','Frequently Asked Questions')}</Heading>
           <VStack spacing={3} align="stretch">
+
             {[
               {
                 q: 'What is a VoiceTwin?',
