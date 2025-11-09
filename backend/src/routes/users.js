@@ -42,7 +42,17 @@ function validateEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+// Generate a friendly anonymous alias (weighted with Indian names too)
+function generateAlias(prefLang = 'en') {
+  const en = ['Alex','Sam','Taylor','Jordan','Casey','Morgan','Riley','Avery','Jamie','Chris'];
+  const hi = ['Aarav','Anya','Kabir','Maya','Vivaan','Ira','Reyansh','Anika','Arjun','Riya','Naman'];
+  const pool = (String(prefLang).startsWith('hi')) ? hi : hi.concat(en);
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+// Shape user object for the client
 function publicUser(u) {
+  const displayName = u.name || u.nickname || u.username || 'Friend';
   return {
     id: u._id,
     username: u.username,
@@ -53,8 +63,37 @@ function publicUser(u) {
     selectedVoiceId: u.selectedVoiceId || 'browser',
     createdAt: u.createdAt,
     updatedAt: u.updatedAt,
+    // Anonymous flags
+    isAnonymous: !!u.is_anonymous,
+    nickname: u.nickname || null,
+    displayName,
   };
 }
+// POST /api/users/anonymous  -> create ephemeral anonymous account and issue JWT
+router.post('/anonymous', async (req, res) => {
+  try {
+    const pref = (req.body?.language || req.body?.uiLanguage || 'en').toString();
+    const alias = generateAlias(pref);
+
+    const user = await User.create({
+      is_anonymous: true,
+      nickname: alias,
+      name: alias,
+      language: pref === 'hi' ? 'hi-IN' : 'en-US',
+      current_plan_id: 'free',
+      anon_expires_at: new Date(Date.now() + (parseInt(process.env.ANON_TTL_HOURS || '24', 10) * 3600 * 1000)),
+      // Optional ephemeral auto-expiry marker (cleanup fallback)
+      settings: { ...(typeof req.body?.settings === 'object' ? req.body.settings : {}), anon: true },
+    });
+
+    const token = jwt.sign({ sub: user._id, role: 'anon', anon: true }, process.env.JWT_SECRET || 'secret', { expiresIn: '12h' });
+    return res.status(201).json({ token, user: publicUser(user) });
+  } catch (err) {
+    console.error('Anonymous create error:', err);
+    return res.status(500).json({ error: 'Failed to create anonymous user' });
+  }
+});
+
 
 // POST /api/users/register
 router.post('/register', async (req, res) => {
@@ -152,6 +191,31 @@ router.get('/me', auth, async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch profile' });
   }
 });
+// PATCH /api/users/me  (update limited profile fields)
+router.patch('/me', auth, async (req, res) => {
+  try {
+    const userId = req.user?.sub || req.user?.id;
+    if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    if (user.is_anonymous) {
+      return res.status(403).json({ error: 'Anonymous users cannot edit profile. Create an account to continue.' });
+    }
+
+    const { name, phone, language } = req.body || {};
+    if (typeof name === 'string' && name.trim()) user.name = name.trim().slice(0, 120);
+    if (typeof phone === 'string') user.phone = phone.trim().slice(0, 40);
+    if (typeof language === 'string' && language.trim()) user.language = language.trim();
+
+    await user.save({ validateBeforeSave: false });
+    return res.json({ user: publicUser(user) });
+  } catch (err) {
+    console.error('Update /me error:', err);
+    return res.status(500).json({ error: 'Failed to update profile' });
+  }
+});
+
 
 // POST /api/users/forgot-password
 router.post('/forgot-password', forgotPasswordLimiter, async (req, res) => {

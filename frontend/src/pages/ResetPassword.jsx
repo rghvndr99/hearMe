@@ -57,7 +57,7 @@ const ResetPassword = () => {
       pb={[12, 20]}
     >
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
-        <Box maxW="500px" mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
+        <Box maxW="500px" mx="auto" w="full" p={6} className="hm-glass-card hm-cid-reset-password-form" data-cid="reset-password-form" borderRadius="2xl">
           <Heading size="lg" mb={6} color="var(--hm-color-text-primary)">Reset Password</Heading>
           <form onSubmit={submit}>
             <VStack spacing={4} align="stretch">

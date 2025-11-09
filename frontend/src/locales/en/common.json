@@ -652,6 +652,9 @@
       "sessionExpired": "⚠️ Session expired. Please login again to continue. 💜",
       "loadFailed": "❌ Oops! Failed to load profile. Please try again. 💜"
     },
+    "anon": {
+      "notice": "You are using HearMe anonymously. Some features are limited and profile edits are disabled. Create an account to save your progress and unlock more features."
+    },
     "subscription": {
       "title": "Your Subscription",
       "manage": "Manage Subscription",

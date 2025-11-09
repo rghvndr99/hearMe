@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Input, IconButton, Tooltip, HStack, Badge, Box } from '@chakra-ui/react';
+import { Flex, Textarea, IconButton, Tooltip, HStack, Badge, Box } from '@chakra-ui/react';
 import { FiSend, FiMic, FiMicOff } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
 
@@ -25,16 +25,18 @@ const ChatInput = ({
   disabled = false,
   placeholder,
   micDisabled = false,
+  cid,
 }) => {
   const { t } = useTranslation('common');
 
   return (
     <Flex
       direction="column"
-      p={6}
-      borderTop="1px solid var(--hm-border-glass)"
-      className="hm-glass-card"
-      gap={3}
+      p={{ base: 3 }}
+      className={`hm-glass-card${cid ? ` hm-cid-${cid}` : ''}`}
+      gap={{ base: 2, md: 3 }}
+      border="none"
+      data-cid={cid}
     >
       {/* Listening Indicator */}
       {isListening && (
@@ -62,9 +64,9 @@ const ChatInput = ({
         </HStack>
       )}
 
-      {/* Input Row */}
-      <HStack spacing={2}>
-        <Input
+      {/* Textarea with mobile overlay actions */}
+      <Box position="relative">
+        <Textarea
           value={value}
           onChange={onChange}
           onKeyPress={onKeyPress}
@@ -73,11 +75,14 @@ const ChatInput = ({
               ? t('chat.placeholderListening', 'Bol rahe hain... We\'re listening 🎙️')
               : (placeholder || t('chat.placeholder', 'Kuch bhi bolo... Type or speak, we\'re listening 💜'))
           }
-          size="lg"
+          minH="150px"
+          resize="vertical"
           variant="filled"
           bg="var(--hm-bg-input)"
           color="var(--hm-color-text-primary)"
           border="1px solid var(--hm-border-subtle)"
+          pr="88px"
+          pb="56px"
           _hover={{ borderColor: "var(--hm-color-brand)" }}
           _focus={{
             borderColor: "var(--hm-color-brand)",
@@ -88,6 +93,70 @@ const ChatInput = ({
           className="hm-input"
         />
 
+        {/* Mobile overlay actions (no extra row space) */}
+        <HStack
+          spacing={2}
+          position="absolute"
+          bottom="8px"
+          right="8px"
+          display="flex"
+        >
+          <Tooltip
+            label={
+              micDisabled
+                ? t('chat.mic.upgradeToEnable', 'Microphone is disabled on the free plan. Upgrade to enable voice input.')
+                : (isListening
+                  ? t('chat.tooltips.stopListening', '✋ Stop listening (click again to speak)')
+                  : t('chat.tooltips.startListening', '🎙️ Speak in Hindi, English, or Hinglish — we understand all')
+                )
+            }
+          >
+            <IconButton
+              icon={isListening ? <FiMicOff /> : <FiMic />}
+              onClick={onVoiceToggle}
+              variant={isListening ? 'solid' : 'ghost'}
+              size="md"
+              color={isListening ? 'white' : 'var(--hm-color-text-muted)'}
+              bg={isListening ? 'red.500' : 'transparent'}
+              _hover={{
+                color: isListening ? 'white' : 'var(--hm-color-brand)',
+                bg: isListening ? 'red.600' : 'var(--hm-bg-glass)'
+              }}
+              aria-label={
+                micDisabled
+                  ? t('chat.mic.upgradeToEnable', 'Upgrade to enable microphone')
+                  : (isListening
+                    ? t('chat.aria.stopListening', 'Stop voice input')
+                    : t('chat.aria.startVoice', 'Start voice input in your language')
+                  )
+              }
+              isDisabled={disabled || micDisabled}
+            />
+          </Tooltip>
+
+          <Tooltip label={t('chat.tooltips.sendMessage', 'Send (or press Enter) 💬')}>
+            <IconButton
+              icon={<FiSend />}
+              onClick={onSend}
+              size="md"
+              bgGradient="var(--hm-gradient-cta)"
+              color="white"
+              _hover={{ opacity: 0.9 }}
+              _disabled={{
+                bgGradient: 'none',
+                bg: 'var(--hm-bg-glass)',
+                color: 'var(--hm-color-text-muted)',
+                opacity: 0.5
+              }}
+              aria-label={t('chat.aria.send', 'Send your message to HearMe AI')}
+              isDisabled={disabled || !value.trim() || isListening}
+            />
+          </Tooltip>
+        </HStack>
+      </Box>
+
+      {/* Buttons row */}
+      <HStack spacing={2} justify="flex-end" display="none">
         {/* Voice Input Button */}
         <Tooltip
           label={

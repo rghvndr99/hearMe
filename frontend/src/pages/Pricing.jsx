@@ -310,11 +310,11 @@ const docMap = {
   };
 
   return (
-    <Box className="hm-page-container">
+    <Box className="hm-page-container hm-cid-pricing-root" data-cid="pricing-root">
       <Box className="hm-section" textAlign="center">
 
         {/* Hero banner */}
-        <Box border="1px solid var(--hm-border-subtle)" borderRadius="0.75rem" overflow="hidden" mb={6}>
+        <Box border="1px solid var(--hm-border-subtle)" borderRadius="0.75rem" overflow="hidden" mb={6} className="hm-cid-pricing-banner" data-cid="pricing-banner">
           <Image
             src="/images/why-hearMe.png"
             alt={t('pricing.bannerAlt','Why HearMe — care that listens')}
@@ -376,7 +376,7 @@ const docMap = {
         )}
 
         {/* Plans */}
-        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6} className="hm-cid-pricing-plans" data-cid="pricing-plans">
           {plans.map((p) => (
             <Box key={p.id} className="hm-card hm-card-hover" textAlign="left" borderColor={p.featured ? 'var(--hm-color-brand)' : 'var(--hm-border-subtle)'} borderWidth={p.featured ? '2px' : '1px'}>
               <VStack align="start" spacing={3}>

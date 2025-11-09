@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
  * @param {Function} props.onVoiceToggle - Voice toggle callback
  * @param {string} props.selectedVoiceId - Currently selected voice ID for TTS
  * @param {Function} props.onVoiceChange - Voice change callback
+ * @param {string} [props.subtitle] - Optional subtitle (e.g., anonymous display name)
  */
 const ChatHeader = ({
   voiceEnabled,
@@ -20,6 +21,7 @@ const ChatHeader = ({
   selectedVoiceId,
   onVoiceChange,
   micDisabled = false,
+  subtitle = '',
 }) => {
   const { t } = useTranslation('common');
   const [showInfo, setShowInfo] = useState(false);
@@ -56,6 +58,11 @@ const ChatHeader = ({
               {t('chat.header.title', 'Safe Space for You 💜')}
             </Text>
           </HStack>
+          {subtitle ? (
+            <Text fontSize={["xs", "sm"]} color="var(--hm-color-text-secondary)" textAlign={["center", "center", "left"]}>
+              {subtitle}
+            </Text>
+          ) : null}
           <Text fontSize={["xs", "sm"]} color="var(--hm-color-text-secondary)" textAlign={["center", "center", "left"]}>
             {t('chat.header.anonConf', '100% Anonymous. 100% Confidential. 100% Judgment-Free.')}
           </Text>
@@ -111,9 +118,6 @@ const ChatHeader = ({
               </Text>
               <Text fontSize="xs" color="var(--hm-color-text-secondary)">
                 {t('chat.welcome.feature3', '🔊 Hear responses in your chosen voice')}
-              </Text>
-              <Text fontSize="xs" color="var(--hm-color-text-secondary)">
-                {t('chat.welcome.feature4', '👤 Talk to a real human counselor (paid) — Type "I want to talk to a human"')}
               </Text>
             </VStack>
           </VStack>

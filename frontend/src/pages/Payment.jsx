@@ -37,19 +37,21 @@ export default function Payment() {
   const [method, setMethod] = useState(params.get('method') || 'upi');
   const [countdown, setCountdown] = useState(8);
   const [qrLoaded, setQrLoaded] = useState(false);
+  const [price, setPrice] = useState(initialPrice);
+
 
   const upiPayUrl = useMemo(() => {
-    const amt = Math.max(0, Number(initialPrice) || 0).toFixed(2);
+    const amt = Math.max(0, Number(price) || 0).toFixed(2);
     const tn = `HearMe ${t(`pricing.plans.${plan}`, plan)} (${t(`pricing.${billing}`, billing)})`;
     return `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent('HearMe')}&am=${encodeURIComponent(amt)}&cu=INR&tn=${encodeURIComponent(tn)}`;
-  }, [UPI_ID, initialPrice, plan, billing, t]);
+  }, [UPI_ID, price, plan, billing, t]);
 
   // Prefer PhonePe app when available
   const phonePePayUrl = useMemo(() => {
-    const amt = Math.max(0, Number(initialPrice) || 0).toFixed(2);
+    const amt = Math.max(0, Number(price) || 0).toFixed(2);
     const tn = `HearMe ${t(`pricing.plans.${plan}`, plan)} (${t(`pricing.${billing}`, billing)})`;
     return `phonepe://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent('HearMe')}&am=${encodeURIComponent(amt)}&cu=INR&tn=${encodeURIComponent(tn)}`;
-  }, [UPI_ID, initialPrice, plan, billing, t]);
+  }, [UPI_ID, price, plan, billing, t]);
 
   const upiQrUrl = useMemo(() => {
     // Primary generator (no dependency install needed)
@@ -95,6 +97,25 @@ export default function Payment() {
     }
   }, [isSuccess, countdown]);
 
+  // Fallback: if deep-linked without price param, fetch authoritative price from API
+  useEffect(() => {
+    const hasPriceParam = params.get('price');
+    if (!hasPriceParam) {
+      fetch(`${API_URL}/api/plans/${plan}`)
+        .then((res) => (res.ok ? res.json() : Promise.reject()))
+        .then((data) => {
+          let p = Number(data?.price ?? 0);
+          const enableAnnual = import.meta.env.VITE_ENABLE_ANNUAL_PLANS === 'true';
+          const disc = Number(import.meta.env.VITE_ANNUAL_DISCOUNT || '0.2');
+          if (billing === 'annual' && enableAnnual) {
+            p = Math.round(p * (1 - disc));
+          }
+          setPrice(p);
+        })
+        .catch(() => {});
+    }
+  }, [plan, billing, location.search]);
+
   const planLabel = t(`pricing.plans.${plan}`, plan);
   const billingLabel = t(`pricing.${billing}`, billing.charAt(0).toUpperCase() + billing.slice(1));
 
@@ -109,7 +130,7 @@ export default function Payment() {
   const handleMarkPaid = async () => {
     const token = localStorage.getItem('hm-token');
     try {
-      const payload = { plan, billing, price: initialPrice, method: 'upi', upiId: UPI_ID };
+      const payload = { plan, billing, price: price, method: 'upi', upiId: UPI_ID };
       if (token) {
         await axios.post(`${API_URL}/api/subscriptions`, payload, { headers: { Authorization: `Bearer ${token}` } });
       } else {
@@ -129,7 +150,7 @@ export default function Payment() {
   const handleRetry = () => setStatus('pending');
 
   return (
-    <Box className="hm-page-container">
+    <Box className="hm-page-container hm-cid-payment-root" data-cid="payment-root">
       <Box className="hm-section" maxW="720px" mx="auto">
         <VStack spacing={4} align="stretch">
           <Heading as="h1" className="hm-heading-primary">{t('payment.title', 'Payment')}</Heading>
@@ -161,7 +182,7 @@ export default function Payment() {
           </Box>
 
 
-          <Box className="hm-card" p={5}>
+          <Box className="hm-card hm-cid-payment-card" data-cid="payment-card" p={5}>
             {/* Status header */}
             <HStack spacing={3} align="center">
               <Icon
@@ -202,7 +223,7 @@ export default function Payment() {
             </HStack>
             <HStack justify="space-between" mb={4}>
               <Text className="hm-text-secondary">{t('payment.labels.amount', 'Amount')}</Text>
-              <Text color="var(--hm-color-text-primary)" fontWeight="700">{currency(initialPrice)}</Text>
+              <Text color="var(--hm-color-text-primary)" fontWeight="700">{currency(price)}</Text>
             </HStack>
 
             {isPending && (

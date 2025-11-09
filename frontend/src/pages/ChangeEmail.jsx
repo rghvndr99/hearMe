@@ -72,7 +72,7 @@ const ChangeEmail = () => {
           </Text>
         </VStack>
 
-        <Box maxW="500px" mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
+        <Box maxW="500px" mx="auto" w="full" p={6} className="hm-glass-card hm-cid-change-email-form" data-cid="change-email-form" borderRadius="2xl">
           <form onSubmit={submit}>
             <VStack spacing={4} align="stretch">
               <FormControl isRequired>

@@ -17,8 +17,11 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const logout = () => {
-    try { localStorage.removeItem('hm-token'); window.dispatchEvent(new Event('hm-auth-changed')); } catch {}
-
+    try {
+      localStorage.removeItem('hm-token');
+      sessionStorage.removeItem('hm-anon-token');
+      window.dispatchEvent(new Event('hm-auth-changed'));
+    } catch {}
     navigate('/login');
   };
 
@@ -103,7 +106,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('hm-token');
+    const token = localStorage.getItem('hm-token') || sessionStorage.getItem('hm-anon-token');
 
     if (!token) {
       navigate('/login');
@@ -119,20 +122,17 @@ const Profile = () => {
         const code = err?.response?.status;
         if (code === 401) {
           toast({ title: t('profile.messages.sessionExpired','⚠️ Session expired. Please login again to continue. 💜'), status: 'warning', duration: 3000, isClosable: true });
-          try { localStorage.removeItem('hm-token'); window.dispatchEvent(new Event('hm-auth-changed')); } catch {}
+          try { localStorage.removeItem('hm-token'); sessionStorage.removeItem('hm-anon-token'); window.dispatchEvent(new Event('hm-auth-changed')); } catch {}
           navigate('/login');
         } else {
-
-
           toast({ title: t('profile.messages.loadFailed','❌ Oops! Failed to load profile. Please try again. 💜'), status: 'error', duration: 3000, isClosable: true });
         }
       } finally {
         setLoading(false);
       }
-
-
     })();
   }, []);
+
   // Load subscription for the current user from API
   useEffect(() => {
     const token = localStorage.getItem('hm-token');
@@ -208,11 +208,11 @@ const Profile = () => {
           </Text>
         </VStack>
 
-        <Box mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
+        <Box mx="auto" w="full" p={6} className="hm-glass-card hm-cid-profile-card" data-cid="profile-card" borderRadius="2xl">
           <Stack direction={["column", "column", "row"]} justify="space-between" align={["stretch", "stretch", "center"]} mb={4} spacing={3}>
             <Heading size="md" color="var(--hm-color-text-primary)">{t('account.profile', 'Your Profile')}</Heading>
             <Stack direction={["column", "column", "row"]} spacing={2} w={["full", "full", "auto"]}>
-              {!loading && user && !editMode && (
+              {!loading && user && !editMode && !user.isAnonymous && (
                 <Button variant="outline" borderColor="var(--hm-border-outline)" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)' }} onClick={handleStartEdit} w={["full", "full", "auto"]} minH="48px">{t('profile.buttons.edit', 'Edit Karo (Edit)')}</Button>
               )}
               <Button variant="outline" borderColor="var(--hm-border-outline)" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-bg-glass)' }} onClick={logout} w={["full", "full", "auto"]} minH="48px">{t('profile.buttons.logout', 'Logout Karo (Sign Out)')}</Button>
@@ -221,40 +221,49 @@ const Profile = () => {
           {loading && <Text color="var(--hm-color-text-secondary)">{t('common.loading', 'Loading...')}</Text>}
           {!loading && user && !editMode && (
             <VStack align="stretch" spacing={3}>
-              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('profile.fields.username', 'Username (Aapka unique naam)')}</Text><Text color="var(--hm-color-text-primary)">{user.username}</Text></HStack>
-              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('profile.fields.name', 'Naam (Your name)')}</Text><Text color="var(--hm-color-text-primary)">{user.name}</Text></HStack>
-              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('profile.fields.email', 'Email address')}</Text><Text color="var(--hm-color-text-primary)">{user.email}</Text></HStack>
+              {user.isAnonymous && (
+                <Box p={3} bg="var(--hm-bg-glass)" borderLeft="4px solid var(--hm-color-brand)" borderRadius="md">
+                  <Text className="hm-text-secondary">
+                    {t('profile.anon.notice', 'You are using HearMe anonymously. Some features are limited and profile edits are disabled. Create an account to save your progress and unlock more features.')}
+                  </Text>
+                </Box>
+              )}
+              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('profile.fields.username', 'Username (Aapka unique naam)')}</Text><Text color="var(--hm-color-text-primary)">{user.username || '-'}</Text></HStack>
+              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('profile.fields.name', 'Naam (Your name)')}</Text><Text color="var(--hm-color-text-primary)">{user.name || user.displayName || '-'}</Text></HStack>
+              <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('profile.fields.email', 'Email address')}</Text><Text color="var(--hm-color-text-primary)">{user.email || '-'}</Text></HStack>
               <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('profile.fields.phone', 'Phone number (optional)')}</Text><Text color="var(--hm-color-text-primary)">{user.phone || '-'}</Text></HStack>
               <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('profile.fields.language', 'Pasandida bhasha (Preferred language)')}</Text><Text color="var(--hm-color-text-primary)">{user.language}</Text></HStack>
               <HStack justify="space-between"><Text color="var(--hm-color-text-secondary)">{t('profile.fields.memberSince', 'Member since (Aap kab se saath ho)')}</Text><Text color="var(--hm-color-text-primary)">{new Date(user.createdAt).toLocaleString()}</Text></HStack>
-              <Stack direction={["column", "column", "row"]} pt={2} spacing={3} justify={["stretch", "stretch", "flex-end"]} w="full">
-                <Button
-                  as={RouterLink}
-                  to="/change-email"
-                  size="sm"
-                  variant="outline"
-                  borderColor="var(--hm-color-brand)"
-                  color="var(--hm-color-brand)"
-                  _hover={{ bg: 'var(--hm-color-brand)', color: 'white' }}
-                  w={["full", "full", "auto"]}
-                  minH="48px"
-                >
-                  {t('profile.buttons.changeEmail', 'Change Email')}
-                </Button>
-                <Button
-                  as={RouterLink}
-                  to="/change-password"
-                  size="sm"
-                  variant="outline"
-                  borderColor="var(--hm-color-brand)"
-                  color="var(--hm-color-brand)"
-                  _hover={{ bg: 'var(--hm-color-brand)', color: 'white' }}
-                  w={["full", "full", "auto"]}
-                  minH="48px"
-                >
-                  {t('profile.buttons.changePassword', 'Change Password')}
-                </Button>
-              </Stack>
+              {!user.isAnonymous && (
+                <Stack direction={["column", "column", "row"]} pt={2} spacing={3} justify={["stretch", "stretch", "flex-end"]} w="full">
+                  <Button
+                    as={RouterLink}
+                    to="/change-email"
+                    size="sm"
+                    variant="outline"
+                    borderColor="var(--hm-color-brand)"
+                    color="var(--hm-color-brand)"
+                    _hover={{ bg: 'var(--hm-color-brand)', color: 'white' }}
+                    w={["full", "full", "auto"]}
+                    minH="48px"
+                  >
+                    {t('profile.buttons.changeEmail', 'Change Email')}
+                  </Button>
+                  <Button
+                    as={RouterLink}
+                    to="/change-password"
+                    size="sm"
+                    variant="outline"
+                    borderColor="var(--hm-color-brand)"
+                    color="var(--hm-color-brand)"
+                    _hover={{ bg: 'var(--hm-color-brand)', color: 'white' }}
+                    w={["full", "full", "auto"]}
+                    minH="48px"
+                  >
+                    {t('profile.buttons.changePassword', 'Change Password')}
+                  </Button>
+                </Stack>
+              )}
             </VStack>
           )}
           {!loading && user && editMode && (
@@ -326,7 +335,7 @@ const Profile = () => {
 
         {/* Subscription Section */}
         {!loading && user && (
-          <Box mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
+          <Box mx="auto" w="full" p={6} className="hm-glass-card hm-cid-profile-subscription-card" data-cid="profile-subscription-card" borderRadius="2xl">
             <Stack direction={["column", "column", "row"]} justify="space-between" align={["stretch", "stretch", "center"]} mb={4} spacing={3}>
               <Heading size="md" color="var(--hm-color-text-primary)">{t('profile.subscription.title', 'Your Subscription')}</Heading>
               <Stack direction={["column", "column", "row"]} spacing={2} w={["full", "full", "auto"]}>
@@ -415,7 +424,7 @@ const Profile = () => {
 
 
         {/* Security Note */}
-        <Box  mx="auto" w="full" p={4} bg="var(--hm-bg-glass)" borderRadius="lg" borderLeft="4px solid var(--hm-color-brand)">
+        <Box  mx="auto" w="full" p={4} bg="var(--hm-bg-glass)" borderRadius="lg" borderLeft="4px solid var(--hm-color-brand)" className="hm-cid-profile-security-note" data-cid="profile-security-note">
           <Text fontSize="sm" color="var(--hm-color-text-secondary)" lineHeight="1.7">
             {t('profile.securityNote', '🔒 **Aapki Privacy Humari Zimmedari Hai:** Your data is encrypted and never shared with anyone. You\'re in control.')}
           </Text>

@@ -41,9 +41,11 @@ const ForgotPassword = () => {
       px={[6, 12]}
       pt="100px"
       pb={[12, 20]}
+      className="hm-cid-forgot-password-root"
+      data-cid="forgot-password-root"
     >
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
-        <Box maxW="500px" mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
+        <Box maxW="500px" mx="auto" w="full" p={6} className="hm-glass-card hm-cid-forgot-password-form" data-cid="forgot-password-form" borderRadius="2xl">
           <Heading size="lg" mb={6} color="var(--hm-color-text-primary)">Forgot Password</Heading>
           <form onSubmit={submit}>
             <VStack spacing={4} align="stretch">

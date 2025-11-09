@@ -612,11 +612,13 @@ export default function VoiceMate() {
         overflow="hidden"
         pt="100px"
         pb={[12, 20]}
+        className="hm-cid-voicemate-root"
+        data-cid="voicemate-root"
       >
         <VStack spacing={[12, 16, 20]} zIndex={1} maxW="1200px" w="full" px={[6, 8, 12]}>
 
           {/* Hero Section */}
-          <VStack spacing={6} textAlign="center" maxW="900px">
+          <VStack spacing={6} textAlign="center" maxW="900px" className="hm-cid-voicemate-hero" data-cid="voicemate-hero">
             <Heading
               as="h1"
               fontSize={['2xl', '3xl', '4xl', '5xl']}
@@ -666,7 +668,7 @@ export default function VoiceMate() {
           </VStack>
 
           {/* Emotional Story Section */}
-          <VStack spacing={8} w="full">
+          <VStack spacing={8} w="full" className="hm-cid-voicemate-use-cases" data-cid="voicemate-use-cases">
             <VStack spacing={3} textAlign="center">
               <Heading
                 as="h2"
@@ -684,7 +686,7 @@ export default function VoiceMate() {
               </Text>
             </VStack>
 
-            <SimpleGrid columns={[1, 1, 3]} spacing={6} w="full">
+            <SimpleGrid columns={[1, 1, 3]} spacing={6} w="full" className="hm-cid-voicemate-use-cases-grid" data-cid="voicemate-use-cases-grid">
               {/* Use Case 1: Working Parent */}
               <Box
                 className="hm-glass-card"
@@ -757,7 +759,7 @@ export default function VoiceMate() {
           </VStack>
 
           {/* How It Works Section */}
-          <VStack spacing={8} w="full" bg="var(--hm-color-bg-secondary)" p={[6, 8, 10]} borderRadius="2xl">
+          <VStack spacing={8} w="full" bg="var(--hm-color-bg-secondary)" p={[6, 8, 10]} borderRadius="2xl" className="hm-cid-voicemate-how-it-works" data-cid="voicemate-how-it-works">
             <Heading
               as="h2"
               fontSize={['xl', '2xl', '3xl']}
@@ -767,7 +769,7 @@ export default function VoiceMate() {
               {t('voicemate.howItWorksTitle', 'Create Your VoiceTwin in 3 Simple Steps')}
             </Heading>
 
-            <SimpleGrid columns={[1, 1, 3]} spacing={8} w="full">
+            <SimpleGrid columns={[1, 1, 3]} spacing={8} w="full" className="hm-cid-voicemate-how-steps" data-cid="voicemate-how-steps">
               {/* Step 1 */}
               <VStack spacing={4} textAlign="center">
                 <Box
@@ -843,7 +845,7 @@ export default function VoiceMate() {
           </VStack>
 
           {/* Trust & Privacy Section */}
-          <VStack spacing={8} w="full">
+          <VStack spacing={8} w="full" className="hm-cid-voicemate-trust" data-cid="voicemate-trust">
             <Heading
               as="h2"
               fontSize={['xl', '2xl', '3xl']}
@@ -853,7 +855,7 @@ export default function VoiceMate() {
               {t('voicemate.trustTitle', 'Your Voice, Your Privacy — Sacred and Secure')}
             </Heading>
 
-            <SimpleGrid columns={[1, 2, 4]} spacing={6} w="full">
+            <SimpleGrid columns={[1, 2, 4]} spacing={6} w="full" className="hm-cid-voicemate-trust-grid" data-cid="voicemate-trust-grid">
               <VStack spacing={3} align="start">
                 <Text fontSize="2xl">🔒</Text>
                 <Heading size="sm" color="var(--hm-color-text-primary)">
@@ -897,7 +899,7 @@ export default function VoiceMate() {
           </VStack>
 
           {/* Benefits Section */}
-          <VStack spacing={8} w="full">
+          <VStack spacing={8} w="full" className="hm-cid-voicemate-benefits" data-cid="voicemate-benefits">
             <Heading
               as="h2"
               fontSize={['xl', '2xl', '3xl']}
@@ -907,7 +909,7 @@ export default function VoiceMate() {
               {t('voicemate.benefitsTitle', 'Why Thousands of Indians Trust VoiceTwin')}
             </Heading>
 
-            <SimpleGrid columns={[1, 2, 3]} spacing={6} w="full">
+            <SimpleGrid columns={[1, 2, 3]} spacing={6} w="full" className="hm-cid-voicemate-benefits-grid" data-cid="voicemate-benefits-grid">
               <Box
                 className="hm-glass-card"
                 p={6}
@@ -997,7 +999,7 @@ export default function VoiceMate() {
 
 
           {/* FAQ Section */}
-          <VStack spacing={8} w="full" maxW="900px">
+          <VStack spacing={8} w="full" maxW="900px" className="hm-cid-voicemate-faq" data-cid="voicemate-faq">
             <Heading
               as="h2"
               fontSize={['xl', '2xl', '3xl']}
@@ -1007,7 +1009,7 @@ export default function VoiceMate() {
               {t('voicemate.faqTitle', 'Frequently Asked Questions')}
             </Heading>
 
-            <VStack spacing={4} w="full" align="stretch">
+            <VStack spacing={4} w="full" align="stretch" className="hm-cid-voicemate-faq-list" data-cid="voicemate-faq-list">
               <Box
                 className="hm-glass-card"
                 p={5}
@@ -1117,6 +1119,8 @@ export default function VoiceMate() {
             borderRadius="2xl"
             border="1px solid var(--hm-color-brand)"
             textAlign="center"
+            className="hm-cid-voicemate-final-cta"
+            data-cid="voicemate-final-cta"
           >
             <Heading
               as="h2"
@@ -1181,10 +1185,12 @@ export default function VoiceMate() {
       px={[6, 12]}
       pt="100px"
       pb={[12, 20]}
+      className="hm-cid-voicemate-root"
+      data-cid="voicemate-root"
     >
-      <VStack spacing={8} zIndex={1} maxW="900px" w="full">
+      <VStack spacing={8} zIndex={1} maxW="900px" w="full" className="hm-cid-voicemate-auth" data-cid="voicemate-auth">
         {/* Hero Section */}
-        <Box className="hm-glass-card p-8 rounded-2xl" p="20px" w="full" border="1px solid var(--hm-border-glass)" _hover={{ borderColor: 'var(--hm-color-brand)' }} bgGradient="var(--hm-gradient-cta-soft)">
+        <Box className="hm-glass-card p-8 rounded-2xl hm-cid-voicemate-auth-hero-card" data-cid="voicemate-auth-hero-card" p="20px" w="full" border="1px solid var(--hm-border-glass)" _hover={{ borderColor: 'var(--hm-color-brand)' }} bgGradient="var(--hm-gradient-cta-soft)">
           <VStack align="start" spacing={4}>
             <Heading size="lg" color="var(--hm-color-text-primary)">
               {t('voicemate.userHero', 'Hey {{name}}, Apni Awaaz Ko Amar Banao! 🎙️', { name: user?.name || t('voicemate.user', 'Friend') })}
@@ -1207,7 +1213,7 @@ export default function VoiceMate() {
         </Box>
 
         {/* Tabbed Interface */}
-        <Box className="hm-glass-card p-6 rounded-2xl" p="20px" w="full" border="1px solid var(--hm-border-glass)" _hover={{ borderColor: 'var(--hm-color-brand)' }}>
+        <Box className="hm-glass-card p-6 rounded-2xl hm-cid-voicemate-tabs" data-cid="voicemate-tabs" p="20px" w="full" border="1px solid var(--hm-border-glass)" _hover={{ borderColor: 'var(--hm-color-brand)' }}>
           <Tabs index={tabIndex} onChange={setTabIndex} variant="unstyled">
             <TabList
               mb={6}
@@ -1228,6 +1234,8 @@ export default function VoiceMate() {
                   borderRadius: '4px',
                 },
               }}
+              className="hm-cid-voicemate-tabs-list"
+              data-cid="voicemate-tabs-list"
             >
               <Tab
                 _selected={{

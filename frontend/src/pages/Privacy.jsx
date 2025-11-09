@@ -34,11 +34,13 @@ const Privacy = () => {
       pt="100px"
       pb={[12, 20]}
       textAlign="left"
+      className="hm-cid-privacy-root"
+      data-cid="privacy-root"
     >
       <VStack spacing={10} zIndex={1} w="full" maxW="1200px" align="stretch">
 
         {/* Page Header */}
-        <Stack direction={["column", "row"]} spacing={[6, 8]} className="hm-glass-card" p={[6, 8]} borderRadius="xl" align="stretch">
+        <Stack direction={["column", "row"]} spacing={[6, 8]} className="hm-glass-card hm-cid-privacy-header" data-cid="privacy-header" p={[6, 8]} borderRadius="xl" align="stretch">
           <VStack align="start" spacing={3} flex="1" minW={0}>
             <Heading as="h1" fontSize={["3xl", "4xl", "5xl"]} fontWeight="800" color="var(--hm-color-text-primary)" lineHeight="1.2">
               {t("privacy.title", "Privacy Policy")}

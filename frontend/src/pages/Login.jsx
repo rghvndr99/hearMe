@@ -59,6 +59,8 @@ const Login = () => {
       px={[6, 12]}
       pt="100px"
       pb={[12, 20]}
+      className="hm-cid-login-root"
+      data-cid="login-root"
     >
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
         {/* Page Intro */}
@@ -77,7 +79,7 @@ const Login = () => {
           </Text>
         </VStack>
 
-        <Box mx="auto" w="full" p={6} className="hm-glass-card" borderRadius="2xl">
+        <Box mx="auto" w="full" p={6} className="hm-glass-card hm-cid-login-form" data-cid="login-form" borderRadius="2xl">
           <Heading size="md" mb={6} color="var(--hm-color-text-primary)">{t('login.formTitle','Login Karo — Sign In 💜')}</Heading>
           <form onSubmit={submit}>
             <VStack spacing={4} align="stretch">

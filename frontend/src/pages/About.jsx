@@ -31,6 +31,8 @@ const About= () => {
       pt="100px"
       pb={[12, 20]}
       textAlign="center"
+      className="hm-cid-about-root"
+      data-cid="about-root"
     >
       {/* === PAGE CONTENT === */}
       <VStack spacing={10} zIndex={1} w="full" maxW="1200px" align="stretch">

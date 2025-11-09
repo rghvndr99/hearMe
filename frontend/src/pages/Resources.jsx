@@ -25,6 +25,8 @@ const Resources = () => {
       pt="100px"
       pb={[12, 20]}
       textAlign="center"
+      className="hm-cid-resources-root"
+      data-cid="resources-root"
     >
       {/* === PAGE CONTENT === */}
       <VStack spacing={12} zIndex={1} maxW="800px">
@@ -41,12 +43,13 @@ const Resources = () => {
         <SimpleGrid columns={[1]} spacing={8} w="full">
           {/* If you need urgent help (India) */}
           <Box
-            className="hm-glass-card"
+            className="hm-glass-card hm-cid-resources-urgent"
             borderRadius="xl"
             p={[6, 10]}
             textAlign="left"
             transition="0.3s"
             _hover={{ borderColor: "var(--hm-color-brand)" }}
+            data-cid="resources-urgent"
           >
             <Heading
               as="h2"
@@ -79,12 +82,13 @@ const Resources = () => {
 
           {/* Professional Help */}
           <Box
-            className="hm-glass-card"
+            className="hm-glass-card hm-cid-resources-professional"
             borderRadius="xl"
             p={[6, 10]}
             textAlign="left"
             transition="0.3s"
             _hover={{ borderColor: "var(--hm-color-brand)" }}
+            data-cid="resources-professional"
           >
             <Heading
               as="h2"

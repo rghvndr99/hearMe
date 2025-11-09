@@ -3,6 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
 import Subscription from '../models/Subscription.js';
 import ChatSession from '../models/ChatSession.js';
+import User from '../models/User.js';
+import Session from '../models/Session.js';
+
+
 import { getPlanConfig, FEATURE_FLAGS } from '../config/memberships.js';
 import {
   analyzeSentiment,
@@ -97,16 +101,14 @@ const WELCOME_MESSAGES = {
 You can:
 💬 Type in Hindi, English, or Hinglish
 🎙️ Speak in your language (click the mic)
-🔊 Hear responses in your chosen voice
-👤 Talk to a real human counselor (paid) — Type "I want to talk to a human"`,
+🔊 Hear responses in your chosen voice`,
 
   hi: `नमस्ते 👋 मैं आपकी बात सुनने और समर्थन करने के लिए यहाँ हूँ। यह एक सुरक्षित, गुमनाम जगह है जहाँ आप अपने मन की बात साझा कर सकते हैं। आप कैसा महसूस कर रहे हैं?
 
 आप कर सकते हैं:
 💬 हिंदी, अंग्रेजी, या हिंग्लिश में टाइप करें
 🎙️ अपनी भाषा में बोलें (माइक पर क्लिक करें)
-🔊 अपनी पसंद की आवाज़ में जवाब सुनें
-👤 असली इंसान परामर्शदाता से बात करें (सशुल्क) — टाइप करें "मुझे किसी इंसान से बात करनी है"`
+🔊 अपनी पसंद की आवाज़ में जवाब सुनें"`
 };
 
 /**
@@ -494,7 +496,8 @@ router.post('/session/end', async (req, res) => {
       finalMood: conversation.mood,
     };
 
-    // Persist session end if linked to a user
+    // Persist session end if linked to a user and cleanup anonymous data
+    let userDeleted = false;
     try {
       const userId = conversation.userId || getUserIdFromReq(req);
       if (userId) {
@@ -507,6 +510,20 @@ router.post('/session/end', async (req, res) => {
           open.status = 'closed';
           await open.save({ validateBeforeSave: false });
         }
+        // If this was an anonymous user, delete their data entirely
+        try {
+          const u = await User.findById(userId).select('is_anonymous');
+          if (u && u.is_anonymous) {
+            const cs = await ChatSession.find({ userId }).select('sessionId');
+            const ids = (cs || []).map((x) => x.sessionId).concat([sessionId]).filter(Boolean);
+            await Session.deleteMany({ sessionId: { $in: Array.from(new Set(ids)) } });
+            await ChatSession.deleteMany({ userId });
+            await User.deleteOne({ _id: userId });
+            userDeleted = true;
+          }
+        } catch (e2) {
+          // ignore anon cleanup errors
+        }
       }
     } catch (e) {
       // ignore persistence errors
@@ -515,7 +532,7 @@ router.post('/session/end', async (req, res) => {
     // Clean up in-memory
     conversations.delete(sessionId);
 
-    res.json(sessionData);
+    res.json({ ...sessionData, userDeleted });
   } catch (error) {
     console.error('Error ending session:', error);
     res.status(500).json({ error: 'Failed to end session' });

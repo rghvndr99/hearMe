@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema(
     phone: { type: String, required: false, trim: true },
     is_anonymous: { type: Boolean, default: false },
     nickname: { type: String },
+    anon_expires_at: { type: Date },
 
     language: { type: String, required: false, default: 'en-US' },
     selectedVoiceId: { type: String, required: false, default: 'browser' },
@@ -62,6 +63,9 @@ const UserSchema = new mongoose.Schema(
 
 // TTL index for contact_temp.expires_at (expires exactly at the given time)
 UserSchema.index({ 'contact_temp.expires_at': 1 }, { expireAfterSeconds: 0 });
+
+// TTL index for anonymous users auto-expiry (expires exactly at anon_expires_at)
+UserSchema.index({ anon_expires_at: 1 }, { expireAfterSeconds: 0, partialFilterExpression: { is_anonymous: true } });
 
 UserSchema.index({ username: 1 }, { unique: true, sparse: true });
 UserSchema.index({ email: 1 }, { unique: true, sparse: true });

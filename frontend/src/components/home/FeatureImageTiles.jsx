@@ -30,7 +30,7 @@ export default function FeatureImageTiles() {
   ];
 
   return (
-    <SimpleGrid columns={[1, 2]} spacing={[6, 8]} mt={20}>
+    <SimpleGrid columns={[1, 2]} spacing={[6, 8]} mt={20} className="hm-cid-home-feature-tiles-grid" data-cid="home-feature-tiles-grid">
       {items.map(({ key }) => {
         const title = t(`home.features.${key}.title`);
         const desc = t(`home.features.${key}.desc`);
@@ -43,7 +43,7 @@ export default function FeatureImageTiles() {
             border="1px solid var(--hm-color-border)"
             bg="var(--hm-color-card, rgba(255,255,255,0.04))"
             transition="transform 0.25s ease, box-shadow 0.25s ease"
-            _hover={{ transform: 'translateY(-4px)', boxShadow: 'lg' }}
+            _hover={{ transform: 'translateY(-4px)', boxShadow: 'lg' }} className={`hm-cid-home-feature-${key}`} data-cid={`home-feature-${key}` }
           >
             <Image
               src={img}
@@ -60,8 +60,8 @@ export default function FeatureImageTiles() {
             />
 
             <VStack align="start" spacing={3} p={[5, 6]}>
-              <Heading fontSize={["lg","xl"]} fontWeight="700">{title}</Heading>
-              <Text fontSize={["sm","md"]} color="var(--hm-color-text-secondary)">{desc}</Text>
+              <Heading fontSize={["lg","xl"]} fontWeight="700" className={`hm-cid-home-feature-title-${key}`} data-cid={`home-feature-title-${key}`}>{title}</Heading>
+              <Text fontSize={["sm","md"]} color="var(--hm-color-text-secondary)" className={`hm-cid-home-feature-desc-${key}`} data-cid={`home-feature-desc-${key}`}>{desc}</Text>
             </VStack>
           </Box>
         );

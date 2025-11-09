@@ -20,6 +20,7 @@ import {
   DrawerCloseButton,
   useDisclosure,
   Divider,
+  Portal,
 } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -34,6 +35,9 @@ const Header= () => {
   const { t, i18n } = useTranslation('common');
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const langMenu = useDisclosure();
+  const accountMenu = useDisclosure();
+  const drawerLangMenu = useDisclosure();
   const [authToken, setAuthToken] = useState(() => (typeof window !== 'undefined' ? localStorage.getItem('hm-token') : null));
   const location = useLocation();
   const loginHref = useMemo(() => {
@@ -88,6 +92,8 @@ const Header= () => {
         backdropFilter="blur(10px)"
         borderBottom="1px solid var(--hm-border-glass)"
         boxShadow="0 4px 20px rgba(0,0,0,0.3)"
+        className="hm-cid-header-root"
+        data-cid="header-root"
       >
         <Flex
           justify="space-between"
@@ -108,10 +114,12 @@ const Header= () => {
             minW="48px"
             minH="48px"
             _hover={{ color: 'var(--hm-color-brand)' }}
+            className="hm-cid-header-menu-button"
+            data-cid="header-menu-button"
           />
 
           {/* Brand / Logo */}
-          <Link as={RouterLink} to="/" _hover={{ textDecoration: 'none' }}>
+          <Link as={RouterLink} to="/" _hover={{ textDecoration: 'none' }} className="hm-cid-header-brand" data-cid="header-brand">
             <Text
               fontSize={["xl", "2xl"]}
               fontWeight="800"
@@ -123,7 +131,7 @@ const Header= () => {
           </Link>
 
         {/* Desktop Navigation Links */}
-        <HStack spacing={[4, 8]} display={["none", "none", "flex"]}>
+        <HStack spacing={[4, 8]} display={["none", "none", "flex"]} className="hm-cid-header-nav-desktop" data-cid="header-nav-desktop">
           <Link as={RouterLink} to="/about"
             _hover={{ color: "var(--hm-color-brand)" }}
             color="var(--hm-color-text-muted)"
@@ -172,41 +180,51 @@ const Header= () => {
         </HStack>
 
         {/* Desktop: Theme Toggle & CTA */}
-        <HStack spacing={2} display={["none", "none", "flex"]}>
+        <HStack spacing={2} display={["none", "none", "flex"]} className="hm-cid-header-cta-desktop" data-cid="header-cta-desktop">
           <ThemeToggle />
           {/* Language selector */}
-          <Menu>
-            <MenuButton as={Button} variant="ghost" size="sm" color="var(--hm-color-text-muted)" _hover={{ color: 'var(--hm-color-brand)' }}>🌐 {i18n.language?.toUpperCase()}</MenuButton>
-            <MenuList
-              bg="var(--hm-bg-glass-strong)"
-              borderWidth="1px"
-              borderColor="var(--hm-border-glass)"
-              backdropFilter="blur(20px)"
-              boxShadow="0 8px 24px rgba(0, 0, 0, 0.3)"
-            >
-              {['en','hi'].map(lng => (
-                <MenuItem
-                  key={lng}
-                  bg="transparent"
-                  color={lng === i18n.language ? 'var(--hm-color-brand)' : 'var(--hm-color-text-primary)'}
-                  fontWeight={lng === i18n.language ? '700' : '500'}
-                  _hover={{ color: 'var(--hm-color-brand)', bg: 'var(--hm-hover-bg)' }}
-                  onClick={() => {
-                    i18n.changeLanguage(lng);
-                    const map = { en: 'en-US', hi: 'hi-IN' };
-                    const chatLang = map[lng] || 'en-US';
-                    localStorage.setItem('hm-language', chatLang);
-                    localStorage.setItem('hm-ui-language', lng);
-                  }}
-                >
-                  {t(`language.${lng}`)}
-                </MenuItem>
-              ))}
-            </MenuList>
+          <Menu isOpen={langMenu.isOpen} onOpen={langMenu.onOpen} onClose={langMenu.onClose}>
+            <MenuButton as={Button} variant="outline" size="sm" color="var(--hm-color-text-primary)" bg="var(--hm-bg-glass)" borderColor="var(--hm-border-glass)" _hover={{ color: 'var(--hm-color-brand)', bg: 'var(--hm-bg-glass-strong)' }} className="hm-cid-header-lang" data-cid="header-lang">🌐 {i18n.language?.toUpperCase()}</MenuButton>
+            {langMenu.isOpen && (
+              <Portal>
+                <Box position="fixed" inset={0} bg="rgba(0,0,0,0.6)" backdropFilter="blur(2px)" zIndex={1490} onClick={langMenu.onClose} />
+              </Portal>
+            )}
+            <Portal>
+              <MenuList
+                bg="var(--hm-bg-glass-strong)"
+                color="var(--hm-color-text-primary)"
+                borderWidth="1px"
+                borderColor="var(--hm-border-glass)"
+                backdropFilter="blur(20px)"
+                boxShadow="0 8px 24px rgba(0, 0, 0, 0.3)"
+                zIndex={1500}
+              >
+                {['en','hi'].map(lng => (
+                  <MenuItem
+                    key={lng}
+                    bg="transparent"
+                    color={lng === i18n.language ? 'white' : 'var(--hm-color-text-primary)'}
+                    fontWeight={lng === i18n.language ? '700' : '500'}
+                    _hover={{ color: 'var(--hm-color-brand)', bg: 'var(--hm-hover-bg)' }}
+                    onClick={() => {
+                      i18n.changeLanguage(lng);
+                      const map = { en: 'en-US', hi: 'hi-IN' };
+                      const chatLang = map[lng] || 'en-US';
+                      localStorage.setItem('hm-language', chatLang);
+                      localStorage.setItem('hm-ui-language', lng);
+                    }}
+                    minH="48px"
+                  >
+                    {t(`language.${lng}`)}
+                  </MenuItem>
+                ))}
+              </MenuList>
+            </Portal>
           </Menu>
           {/* Auth Links */}
           {authToken ? (
-            <Menu>
+            <Menu isOpen={accountMenu.isOpen} onOpen={accountMenu.onOpen} onClose={accountMenu.onClose}>
               <MenuButton
                 as={Button}
                 variant="outline"
@@ -217,29 +235,38 @@ const Header= () => {
               >
                 {t('nav.account', 'Account')}
               </MenuButton>
-              <MenuList
-                bg="var(--hm-bg-glass-strong)"
-                borderWidth="1px"
-                borderColor="var(--hm-border-glass)"
-                backdropFilter="blur(20px)"
-                boxShadow="0 8px 24px rgba(0, 0, 0, 0.3)"
-              >
-                <MenuItem as={RouterLink} to="/profile" bg="transparent" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}>
-                  {t('nav.profile', 'Profile')}
-                </MenuItem>
-                <MenuItem as={RouterLink} to="/voicemate" bg="transparent" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}>
-                  {t('nav.voiceMate', 'VoiceMate')}
-                </MenuItem>
-                <MenuItem as={RouterLink} to="/change-password" bg="transparent" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}>
-                  {t('nav.changePassword', 'Change Password')}
-                </MenuItem>
-                <MenuItem as={RouterLink} to="/change-email" bg="transparent" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}>
-                  {t('nav.changeEmail', 'Change Email')}
-                </MenuItem>
-                <MenuItem onClick={() => { try { localStorage.removeItem('hm-token'); setAuthToken(null); window.dispatchEvent(new Event('hm-auth-changed')); } catch {} navigate('/login'); }} bg="transparent" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}>
-                  {t('nav.logout', 'Logout')}
-                </MenuItem>
-              </MenuList>
+              {accountMenu.isOpen && (
+                <Portal>
+                  <Box position="fixed" inset={0} bg="rgba(0,0,0,0.6)" backdropFilter="blur(2px)" zIndex={1490} onClick={accountMenu.onClose} />
+                </Portal>
+              )}
+              <Portal>
+                <MenuList
+                  bg="var(--hm-bg-glass-strong)"
+                  color="var(--hm-color-text-primary)"
+                  borderWidth="1px"
+                  borderColor="var(--hm-border-glass)"
+                  backdropFilter="blur(20px)"
+                  boxShadow="0 8px 24px rgba(0, 0, 0, 0.3)"
+                  zIndex={1500}
+                >
+                  <MenuItem as={RouterLink} to="/profile" bg="transparent" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}>
+                    {t('nav.profile', 'Profile')}
+                  </MenuItem>
+                  <MenuItem as={RouterLink} to="/voicemate" bg="transparent" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}>
+                    {t('nav.voiceMate', 'VoiceMate')}
+                  </MenuItem>
+                  <MenuItem as={RouterLink} to="/change-password" bg="transparent" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}>
+                    {t('nav.changePassword', 'Change Password')}
+                  </MenuItem>
+                  <MenuItem as={RouterLink} to="/change-email" bg="transparent" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}>
+                    {t('nav.changeEmail', 'Change Email')}
+                  </MenuItem>
+                  <MenuItem onClick={() => { try { localStorage.removeItem('hm-token'); setAuthToken(null); window.dispatchEvent(new Event('hm-auth-changed')); } catch {} navigate('/login'); }} bg="transparent" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}>
+                    {t('nav.logout', 'Logout')}
+                  </MenuItem>
+                </MenuList>
+              </Portal>
             </Menu>
           ) : (
             <>
@@ -274,7 +301,7 @@ const Header= () => {
     {/* Mobile Navigation Drawer */}
     <Drawer isOpen={isOpen} placement="left" onClose={onClose} size="full">
       <DrawerOverlay bg="rgba(0, 0, 0, 0.7)" backdropFilter="blur(4px)" />
-      <DrawerContent bg="var(--hm-color-bg)" color="var(--hm-color-text-primary)">
+      <DrawerContent bg="var(--hm-color-bg)" color="var(--hm-color-text-primary)" className="hm-cid-header-drawer" data-cid="header-drawer">
         <DrawerCloseButton size="lg" mt={2} mr={2} minW="48px" minH="48px" />
         <DrawerHeader borderBottomWidth="1px" borderColor="var(--hm-border-glass)">
           <Text fontSize="2xl" fontWeight="800">
@@ -282,8 +309,8 @@ const Header= () => {
           </Text>
         </DrawerHeader>
 
-        <DrawerBody pt={6}>
-          <VStack spacing={1} align="stretch">
+        <DrawerBody pt={6} className="hm-cid-header-drawer-body" data-cid="header-drawer-body">
+          <VStack spacing={1} align="stretch" className="hm-cid-header-drawer-links" data-cid="header-drawer-links">
             {/* Navigation Links */}
             <Link
               as={RouterLink}
@@ -408,7 +435,7 @@ const Header= () => {
             <Divider my={4} borderColor="var(--hm-border-glass)" />
 
             {/* Theme & Language */}
-            <VStack spacing={2} align="stretch" px={4}>
+            <VStack spacing={2} align="stretch" px={4} className="hm-cid-header-drawer-settings" data-cid="header-drawer-settings">
               <HStack spacing={3} py={2} justify="space-between">
                 <Text fontSize="md" color="var(--hm-color-text-primary)" fontWeight="500">{t('nav.theme', 'Theme')}</Text>
                 <ThemeToggle />
@@ -416,10 +443,10 @@ const Header= () => {
 
               <HStack spacing={3} py={2} justify="space-between">
                 <Text fontSize="md" color="var(--hm-color-text-primary)" fontWeight="500">{t('nav.language', 'Language')}</Text>
-                <Menu>
+                <Menu isOpen={drawerLangMenu.isOpen} onOpen={drawerLangMenu.onOpen} onClose={drawerLangMenu.onClose}>
                   <MenuButton
                     as={Button}
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
                     minH="48px"
                     fontWeight="500"
@@ -430,33 +457,42 @@ const Header= () => {
                   >
                     {i18n.language?.toUpperCase()}
                   </MenuButton>
-                  <MenuList
-                    bg="var(--hm-bg-glass-strong)"
-                    borderWidth="1px"
-                    borderColor="var(--hm-border-glass)"
-                    backdropFilter="blur(20px)"
-                    boxShadow="0 8px 24px rgba(0, 0, 0, 0.3)"
-                  >
-                    {['en','hi'].map(lng => (
-                      <MenuItem
-                        key={lng}
-                        bg="transparent"
-                        color={lng === i18n.language ? 'var(--hm-color-brand)' : 'var(--hm-color-text-primary)'}
-                        fontWeight={lng === i18n.language ? '700' : '500'}
-                        _hover={{ color: 'var(--hm-color-brand)', bg: 'var(--hm-hover-bg)' }}
-                        onClick={() => {
-                          i18n.changeLanguage(lng);
-                          const map = { en: 'en-US', hi: 'hi-IN' };
-                          const chatLang = map[lng] || 'en-US';
-                          localStorage.setItem('hm-language', chatLang);
-                          localStorage.setItem('hm-ui-language', lng);
-                        }}
-                        minH="48px"
-                      >
-                        {t(`language.${lng}`)}
-                      </MenuItem>
-                    ))}
-                  </MenuList>
+                  {drawerLangMenu.isOpen && (
+                    <Portal>
+                      <Box position="fixed" inset={0} bg="rgba(0,0,0,0.6)" backdropFilter="blur(2px)" zIndex={1490} onClick={drawerLangMenu.onClose} />
+                    </Portal>
+                  )}
+                  <Portal>
+                    <MenuList
+                      bg="var(--hm-bg-glass-strong)"
+                      color="var(--hm-color-text-primary)"
+                      borderWidth="1px"
+                      borderColor="var(--hm-border-glass)"
+                      backdropFilter="blur(20px)"
+                      boxShadow="0 8px 24px rgba(0, 0, 0, 0.3)"
+                      zIndex={1500}
+                    >
+                      {['en','hi'].map(lng => (
+                        <MenuItem
+                          key={lng}
+                          bg="transparent"
+                          color={lng === i18n.language ? 'white' : 'var(--hm-color-text-primary)'}
+                          fontWeight={lng === i18n.language ? '700' : '500'}
+                          _hover={{ color: 'var(--hm-color-brand)', bg: 'var(--hm-hover-bg)' }}
+                          onClick={() => {
+                            i18n.changeLanguage(lng);
+                            const map = { en: 'en-US', hi: 'hi-IN' };
+                            const chatLang = map[lng] || 'en-US';
+                            localStorage.setItem('hm-language', chatLang);
+                            localStorage.setItem('hm-ui-language', lng);
+                          }}
+                          minH="48px"
+                        >
+                          {t(`language.${lng}`)}
+                        </MenuItem>
+                      ))}
+                    </MenuList>
+                  </Portal>
                 </Menu>
               </HStack>
             </VStack>
@@ -465,7 +501,7 @@ const Header= () => {
 
             {/* Auth Section */}
             {authToken ? (
-              <VStack spacing={1} align="stretch">
+              <VStack spacing={1} align="stretch" className="hm-cid-header-drawer-auth" data-cid="header-drawer-auth">
                 <Link
                   as={RouterLink}
                   to="/profile"
@@ -533,7 +569,7 @@ const Header= () => {
                 </Button>
               </VStack>
             ) : (
-              <VStack spacing={3} align="stretch" px={4} pt={2}>
+              <VStack spacing={3} align="stretch" px={4} pt={2} className="hm-cid-header-drawer-cta" data-cid="header-drawer-cta">
                 <Button
                   as={RouterLink}
                   to={loginHref}

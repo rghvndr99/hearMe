@@ -49,7 +49,7 @@ export default function EmotionCarousel() {
   const prev = () => scrollTo(index - 1);
 
   return (
-    <Box position="relative" w="100%" h="100%" minH="188px" maxW="100%" ml={0} borderRadius="0" overflow="hidden">
+    <Box position="relative" w="100%" h="100%" minH="188px" maxW="100%" ml={0} borderRadius="0" overflow="hidden" className="hm-cid-home-carousel" data-cid="home-carousel">
       {/* Scroll track */}
       <HStack
         ref={trackRef} h="100%"
@@ -103,15 +103,15 @@ export default function EmotionCarousel() {
       {/* Controls */}
       <IconButton aria-label="Previous" icon={<FaChevronLeft />} onClick={prev}
                   position="absolute" top="50%" left={3} transform="translateY(-50%)" borderRadius="full"
-                  bg="blackAlpha.500" color="white" _hover={{ bg: 'blackAlpha.700' }} />
+                  bg="blackAlpha.500" color="white" _hover={{ bg: 'blackAlpha.700' }} data-cid="home-carousel-prev" className="hm-cid-home-carousel-prev" />
       <IconButton aria-label="Next" icon={<FaChevronRight />} onClick={next}
                   position="absolute" top="50%" right={3} transform="translateY(-50%)" borderRadius="full"
-                  bg="blackAlpha.500" color="white" _hover={{ bg: 'blackAlpha.700' }} />
+                  bg="blackAlpha.500" color="white" _hover={{ bg: 'blackAlpha.700' }} data-cid="home-carousel-next" className="hm-cid-home-carousel-next" />
 
       {/* Dots */}
-      <HStack position="absolute" bottom={3} left="50%" transform="translateX(-50%)" spacing={2}>
+      <HStack position="absolute" bottom={3} left="50%" transform="translateX(-50%)" spacing={2} className="hm-cid-home-carousel-dots" data-cid="home-carousel-dots">
         {slides.map((_, i) => (
-          <Box key={i} as="button" onClick={() => scrollTo(i)} w={i === index ? 6 : 2} h={2} borderRadius="full" bg={i === index ? 'white' : 'whiteAlpha.700'} aria-label={`Go to slide ${i+1}`}>
+          <Box key={i} as="button" onClick={() => scrollTo(i)} w={i === index ? 6 : 2} h={2} borderRadius="full" bg={i === index ? 'white' : 'whiteAlpha.700'} aria-label={`Go to slide ${i+1}`} data-cid={`home-carousel-dot-${i}`} className="hm-cid-home-carousel-dot">
             <VisuallyHidden>Slide {i + 1}</VisuallyHidden>
           </Box>
         ))}

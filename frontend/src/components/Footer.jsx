@@ -30,12 +30,13 @@ const Footer = () => {
       bg="var(--hm-color-bg)"
       color="var(--hm-color-text-muted)"
       overflow="hidden"
-      className="hm-border-top"
+      className="hm-border-top hm-cid-footer-root"
+      data-cid="footer-root"
     >
       <VStack spacing={12} maxW="1200px" mx="auto" px={[6, 8]} zIndex={1}>
 
         {/* Top Section: Brand + Tagline */}
-        <VStack spacing={4} textAlign="center" w="full">
+        <VStack spacing={4} textAlign="center" w="full" className="hm-cid-footer-brand" data-cid="footer-brand">
           <Text fontSize="3xl" fontWeight="700" color="var(--hm-color-text-primary)">
             Hear<span className="hm-brand">Me</span>
           </Text>
@@ -47,10 +48,10 @@ const Footer = () => {
         <Divider borderColor="var(--hm-border-glass)" />
 
         {/* Main Content Grid */}
-        <SimpleGrid columns={[1, 1, 3]} spacing={10} w="full">
+        <SimpleGrid columns={[1, 1, 3]} spacing={10} w="full" className="hm-cid-footer-grid" data-cid="footer-grid">
 
           {/* Navigation Links */}
-          <VStack align={["center", "center", "start"]} spacing={3}>
+          <VStack align={["center", "center", "start"]} spacing={3} className="hm-cid-footer-links" data-cid="footer-links">
             <Heading size="sm" color="var(--hm-color-text-primary)" mb={2}>
               {t('footer.navigation.heading', 'Quick Links')}
             </Heading>
@@ -75,7 +76,7 @@ const Footer = () => {
           </VStack>
 
           {/* Crisis Resources */}
-          <VStack align={["center", "center", "start"]} spacing={3}>
+          <VStack align={["center", "center", "start"]} spacing={3} className="hm-cid-footer-crisis" data-cid="footer-crisis">
             <Heading size="sm" color="var(--hm-color-text-primary)" mb={2}>
               {t('footer.crisis.heading', '🆘 Crisis Mein Ho? Turant Madad Yahan Hai')}
             </Heading>
@@ -116,7 +117,7 @@ const Footer = () => {
           </VStack>
 
           {/* Social & Contact */}
-          <VStack align={["center", "center", "start"]} spacing={3}>
+          <VStack align={["center", "center", "start"]} spacing={3} className="hm-cid-footer-social" data-cid="footer-social">
             <Heading size="sm" color="var(--hm-color-text-primary)" mb={2}>
               {t('footer.social.heading', 'Humse Judo — Connect With Us')}
             </Heading>
@@ -192,7 +193,7 @@ const Footer = () => {
         <Divider borderColor="var(--hm-border-glass)" />
 
         {/* Bottom Copyright */}
-        <VStack spacing={2} textAlign="center">
+        <VStack spacing={2} textAlign="center" className="hm-cid-footer-copyright" data-cid="footer-copyright">
           <Text fontSize="sm" color="var(--hm-color-text-secondary)" lineHeight="1.7">
             {t('footer.copyright', `© ${currentYear} HearMe — Made with  for India. Aapki mental health, humari zimmedari. Thank you for trusting us with your story.`, { year: currentYear })}
           </Text>

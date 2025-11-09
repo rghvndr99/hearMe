@@ -83,6 +83,8 @@ const Volunteer = () => {
       pt="100px"
       pb={[12, 20]}
       textAlign="center"
+      className="hm-cid-volunteer-root"
+      data-cid="volunteer-root"
     >
       {/* === PAGE CONTENT === */}
       <VStack spacing={10} zIndex={1} maxW="900px" w="full">
@@ -129,7 +131,7 @@ const Volunteer = () => {
         </Button>
 
         {/* Benefits Section */}
-        <SimpleGrid columns={[1, 3]} spacing={8} pt={12} w="full">
+        <SimpleGrid columns={[1, 3]} spacing={8} pt={12} w="full" className="hm-cid-volunteer-benefits" data-cid="volunteer-benefits">
           <Box
             className="hm-notice-board"
             borderRadius="xl"
@@ -244,10 +246,11 @@ const Volunteer = () => {
           id="volunteer-form"
           w="full"
           mt={16}
-          className="hm-glass-card"
+          className="hm-glass-card hm-cid-volunteer-form"
           borderRadius="xl"
           p={[6, 10]}
           textAlign="left"
+          data-cid="volunteer-form"
         >
           {submitted && (
             <Alert status="success" borderRadius="md" mb={4}>

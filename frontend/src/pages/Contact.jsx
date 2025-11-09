@@ -54,6 +54,8 @@ const Contact = () => {
       px={6}
       pt="100px"
       pb={12}
+      className="hm-cid-contact-root"
+      data-cid="contact-root"
     >
       {/* Background gradients - Neo Expressionist */}
 
@@ -61,10 +63,11 @@ const Contact = () => {
       <VStack
         spacing={8}
         w={["100%"]}
-        className="hm-glass-card-light"
+        className="hm-glass-card-light hm-cid-contact-form"
         borderRadius="xl"
         p={[6, 10]}
         zIndex={1}
+        data-cid="contact-form"
       >
         <VStack spacing={4} textAlign="center">
           <Heading fontSize={["3xl", "4xl"]} fontWeight="700" color="var(--hm-color-text-primary)">

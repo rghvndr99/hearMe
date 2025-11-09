@@ -11,24 +11,33 @@ const MotionBox = motion(Box);
  * @param {Array} props.messages - Array of message objects
  * @param {boolean} props.isTyping - Whether AI is typing
  */
-const ChatMessages = ({ messages, isTyping }) => {
+const ChatMessages = ({ messages, isTyping, userDisplayName, isAnonymous }) => {
   const { t } = useTranslation('common');
-  const messagesEndRef = useRef(null);
+  const containerRef = useRef(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  const scrollToBottom = (smooth = true) => {
+    const el = containerRef.current;
+    if (!el) return;
+    el.scrollTo({ top: el.scrollHeight, behavior: smooth ? 'smooth' : 'auto' });
   };
 
   useEffect(() => {
-    scrollToBottom();
+    // Initial jump to bottom without animation
+    scrollToBottom(false);
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom(true);
   }, [messages, isTyping]);
 
   return (
     <VStack
+      ref={containerRef}
       flex={1}
       overflowY="auto"
       spacing={4}
       p={6}
+      pb={6}
       align="stretch"
       className="hm-chat-messages"
       css={{
@@ -51,7 +60,6 @@ const ChatMessages = ({ messages, isTyping }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           alignSelf="flex-start"
-          maxW="85%"
           mt={4}
         >
           <Box className="hm-chat-bubble hm-chat-bubble-ai">
@@ -60,7 +68,7 @@ const ChatMessages = ({ messages, isTyping }) => {
                 {t('chat.welcome.greeting', 'Hi there � I\'m here to listen and support you. This is a safe, anonymous space where you can share whatever\'s on your mind. How are you feeling today?')}
               </Text>
 
-              <Box w="full" pt={2} borderTop="1px solid var(--hm-border-glass)">
+              <Box w="full" pt={0}>
                 <Text fontSize="sm" fontWeight="600" color="var(--hm-color-text-primary)" mb={2}>
                   {t('chat.welcome.youCanTitle', 'You can:')}
                 </Text>
@@ -73,9 +81,6 @@ const ChatMessages = ({ messages, isTyping }) => {
                   </Text>
                   <Text fontSize="sm" color="var(--hm-color-text-secondary)">
                     {t('chat.welcome.feature3', '🔊 Hear responses in your chosen voice')}
-                  </Text>
-                  <Text fontSize="sm" color="var(--hm-color-text-secondary)">
-                    {t('chat.welcome.feature4', '👤 Talk to a real human counselor (paid) — Type "I want to talk to a human"')}
                   </Text>
                 </VStack>
               </Box>
@@ -93,7 +98,6 @@ const ChatMessages = ({ messages, isTyping }) => {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
             alignSelf={message.role === "user" ? "flex-end" : "flex-start"}
-            maxW="75%"
           >
             <Box
               className={
@@ -102,6 +106,9 @@ const ChatMessages = ({ messages, isTyping }) => {
                   : "hm-chat-bubble hm-chat-bubble-ai"
               }
             >
+              {message.role === "user" && isAnonymous && userDisplayName ? (
+                <Text fontSize="xs" fontWeight="600" color="var(--hm-color-text-secondary)" mb={1} textAlign="right">{userDisplayName}</Text>
+              ) : null}
               <Text fontSize="md" whiteSpace="pre-wrap">
                 {message.content}
               </Text>
@@ -127,7 +134,6 @@ const ChatMessages = ({ messages, isTyping }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           alignSelf="flex-start"
-          maxW="75%"
         >
           <Box className="hm-chat-bubble hm-chat-bubble-ai">
             <HStack spacing={2}>
@@ -140,7 +146,6 @@ const ChatMessages = ({ messages, isTyping }) => {
         </MotionBox>
       )}
 
-      <div ref={messagesEndRef} />
     </VStack>
   );
 };
