@@ -651,19 +651,6 @@ export default function VoiceMate() {
               >
                 {t('voicemate.ctaSignIn', 'Create My VoiceTwin — Free, 60 Seconds')}
               </Button>
-              <Button
-                size="lg"
-                borderRadius="full"
-                variant="outline"
-                borderColor="var(--hm-color-brand)"
-                color="var(--hm-color-brand)"
-                _hover={{ bg: 'var(--hm-color-brand)', color: 'white', transform: 'translateY(-2px)' }}
-                transition="all 0.3s ease"
-                px={8}
-                w={["full", "full", "auto"]}
-              >
-                {t('voicemate.ctaDemo', 'Hear a Demo First')}
-              </Button>
             </Stack>
           </VStack>
 
@@ -936,7 +923,7 @@ export default function VoiceMate() {
                 <VStack align="start" spacing={3}>
                   <Text fontSize="2xl">🌏</Text>
                   <Heading size="sm" color="var(--hm-color-text-primary)">
-                    {t('voicemate.benefit2Title', 'Works in All Indian Languages')}
+                    {t('voicemate.benefit2Title', 'Works in All Indian Languages (Experimental)')}
                   </Heading>
                   <Text fontSize="sm" color="var(--hm-color-text-secondary)">
                     {t('voicemate.benefit2Desc', 'Hindi, English, Hinglish, Tamil, Telugu, Bengali, Marathi, Gujarati, Kannada, Malayalam, Punjabi, Odia — speak in any language. VoiceTwin learns YOUR voice, not a generic accent.')}

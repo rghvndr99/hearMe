@@ -67,7 +67,15 @@ const Header= () => {
 
   const handleLogout = () => {
     try {
+      // Clear both auth and any existing anonymous session token so a fresh alias is created next time
       localStorage.removeItem('hm-token');
+      try { sessionStorage.removeItem('hm-anon-token'); } catch {}
+      // Best-effort cleanup of anon usage meters
+      try {
+        Object.keys(localStorage).forEach((k) => {
+          if (k && k.startsWith('hm-anon-usedMs-')) localStorage.removeItem(k);
+        });
+      } catch {}
       setAuthToken(null);
       window.dispatchEvent(new Event('hm-auth-changed'));
     } catch {}
@@ -91,7 +99,7 @@ const Header= () => {
         bg="var(--hm-header-bg)"
         backdropFilter="blur(10px)"
         borderBottom="1px solid var(--hm-border-glass)"
-        boxShadow="0 4px 20px rgba(0,0,0,0.3)"
+        boxShadow="var(--hm-shadow-header, 0 4px 20px rgba(0,0,0,0.3))"
         className="hm-cid-header-root"
         data-cid="header-root"
       >
@@ -187,7 +195,7 @@ const Header= () => {
             <MenuButton as={Button} variant="outline" size="sm" color="var(--hm-color-text-primary)" bg="var(--hm-bg-glass)" borderColor="var(--hm-border-glass)" _hover={{ color: 'var(--hm-color-brand)', bg: 'var(--hm-bg-glass-strong)' }} className="hm-cid-header-lang" data-cid="header-lang">🌐 {i18n.language?.toUpperCase()}</MenuButton>
             {langMenu.isOpen && (
               <Portal>
-                <Box position="fixed" inset={0} bg="rgba(0,0,0,0.6)" backdropFilter="blur(2px)" zIndex={1490} onClick={langMenu.onClose} />
+                <Box position="fixed" inset={0} bg="var(--hm-overlay-bg, rgba(0,0,0,0.6))" backdropFilter="blur(2px)" zIndex={1490} onClick={langMenu.onClose} />
               </Portal>
             )}
             <Portal>
@@ -197,7 +205,7 @@ const Header= () => {
                 borderWidth="1px"
                 borderColor="var(--hm-border-glass)"
                 backdropFilter="blur(20px)"
-                boxShadow="0 8px 24px rgba(0, 0, 0, 0.3)"
+                boxShadow="var(--hm-shadow-popover, 0 8px 24px rgba(0, 0, 0, 0.3))"
                 zIndex={1500}
               >
                 {['en','hi'].map(lng => (
@@ -237,7 +245,7 @@ const Header= () => {
               </MenuButton>
               {accountMenu.isOpen && (
                 <Portal>
-                  <Box position="fixed" inset={0} bg="rgba(0,0,0,0.6)" backdropFilter="blur(2px)" zIndex={1490} onClick={accountMenu.onClose} />
+                  <Box position="fixed" inset={0} bg="var(--hm-overlay-bg, rgba(0,0,0,0.6))" backdropFilter="blur(2px)" zIndex={1490} onClick={accountMenu.onClose} />
                 </Portal>
               )}
               <Portal>
@@ -247,7 +255,7 @@ const Header= () => {
                   borderWidth="1px"
                   borderColor="var(--hm-border-glass)"
                   backdropFilter="blur(20px)"
-                  boxShadow="0 8px 24px rgba(0, 0, 0, 0.3)"
+                  boxShadow="var(--hm-shadow-popover, 0 8px 24px rgba(0, 0, 0, 0.3))"
                   zIndex={1500}
                 >
                   <MenuItem as={RouterLink} to="/profile" bg="transparent" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}>
@@ -262,7 +270,7 @@ const Header= () => {
                   <MenuItem as={RouterLink} to="/change-email" bg="transparent" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}>
                     {t('nav.changeEmail', 'Change Email')}
                   </MenuItem>
-                  <MenuItem onClick={() => { try { localStorage.removeItem('hm-token'); setAuthToken(null); window.dispatchEvent(new Event('hm-auth-changed')); } catch {} navigate('/login'); }} bg="transparent" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}>
+                  <MenuItem onClick={() => { try { localStorage.removeItem('hm-token'); try { sessionStorage.removeItem('hm-anon-token'); } catch {} try { Object.keys(localStorage).forEach((k) => { if (k && k.startsWith('hm-anon-usedMs-')) localStorage.removeItem(k); }); } catch {} setAuthToken(null); window.dispatchEvent(new Event('hm-auth-changed')); } catch {} navigate('/login'); }} bg="transparent" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}>
                     {t('nav.logout', 'Logout')}
                   </MenuItem>
                 </MenuList>
@@ -290,7 +298,7 @@ const Header= () => {
       <MotionBox
         h="2px"
         w="100%"
-        bgGradient="linear(to-r, rgba(103,80,164,0.6), rgba(247,107,138,0.8))"
+        bgGradient="var(--hm-header-glow, linear(to-r, rgba(103,80,164,0.6), rgba(247,107,138,0.8)))"
         animate={{
           opacity: [0.4, 1, 0.4],
         }}
@@ -300,7 +308,7 @@ const Header= () => {
 
     {/* Mobile Navigation Drawer */}
     <Drawer isOpen={isOpen} placement="left" onClose={onClose} size="full">
-      <DrawerOverlay bg="rgba(0, 0, 0, 0.7)" backdropFilter="blur(4px)" />
+      <DrawerOverlay bg="var(--hm-overlay-bg-strong, rgba(0,0,0,0.7))" backdropFilter="blur(4px)" />
       <DrawerContent bg="var(--hm-color-bg)" color="var(--hm-color-text-primary)" className="hm-cid-header-drawer" data-cid="header-drawer">
         <DrawerCloseButton size="lg" mt={2} mr={2} minW="48px" minH="48px" />
         <DrawerHeader borderBottomWidth="1px" borderColor="var(--hm-border-glass)">
@@ -459,7 +467,7 @@ const Header= () => {
                   </MenuButton>
                   {drawerLangMenu.isOpen && (
                     <Portal>
-                      <Box position="fixed" inset={0} bg="rgba(0,0,0,0.6)" backdropFilter="blur(2px)" zIndex={1490} onClick={drawerLangMenu.onClose} />
+                      <Box position="fixed" inset={0} bg="var(--hm-overlay-bg, rgba(0,0,0,0.6))" backdropFilter="blur(2px)" zIndex={1490} onClick={drawerLangMenu.onClose} />
                     </Portal>
                   )}
                   <Portal>
@@ -469,7 +477,7 @@ const Header= () => {
                       borderWidth="1px"
                       borderColor="var(--hm-border-glass)"
                       backdropFilter="blur(20px)"
-                      boxShadow="0 8px 24px rgba(0, 0, 0, 0.3)"
+                      boxShadow="var(--hm-shadow-popover, 0 8px 24px rgba(0, 0, 0, 0.3))"
                       zIndex={1500}
                     >
                       {['en','hi'].map(lng => (

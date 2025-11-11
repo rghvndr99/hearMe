@@ -53,6 +53,7 @@ export const useAuth = () => {
    */
   const login = useCallback((newToken, userData) => {
     localStorage.setItem('hm-token', newToken);
+    try { sessionStorage.removeItem('hm-anon-token'); } catch {}
     setToken(newToken);
     setUser(userData);
   }, []);
@@ -62,6 +63,9 @@ export const useAuth = () => {
    */
   const logout = useCallback(() => {
     localStorage.removeItem('hm-token');
+    try { sessionStorage.removeItem('hm-anon-token'); } catch {}
+    try { Object.keys(localStorage).forEach((k) => { if (k && k.startsWith('hm-anon-usedMs-')) localStorage.removeItem(k); }); } catch {}
+    try { window.dispatchEvent(new Event('hm-auth-changed')); } catch {}
     setToken(null);
     setUser(null);
   }, []);
