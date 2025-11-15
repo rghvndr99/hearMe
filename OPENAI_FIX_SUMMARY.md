@@ -9,7 +9,7 @@ OpenAIError: Missing credentials. Please pass an `apiKey`, or set the `OPENAI_AP
 ## Root Causes
 
 ### 1. **Incorrect .env File Location**
-- The `.env` file was in the root directory: `/Users/rdixit/Documents/hearme-fullstack-no-docker-v2/.env`
+- The `.env` file was in the root directory: `/Users/rdixit/Documents/voicelap-fullstack-no-docker-v2/.env`
 - The `dotenv.config()` in `backend/src/server.js` was looking for `.env` in the backend directory by default
 
 ### 2. **Early OpenAI Client Initialization**

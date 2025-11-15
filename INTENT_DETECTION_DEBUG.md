@@ -47,8 +47,8 @@ This will show you all the intent patterns being tested.
    ```
    I understand you'd like to speak with a human counselor. While I'm here to listen and support you 24/7, if you need professional human support, please:
 
-   📞 **Call our helpline:** 1-800-HEARME (1-800-432-7631)
-   💬 **Text:** 'HEARME' to 741741
+   📞 **Call our helpline:** 1-800-VOICELAP (1-800-432-7631)
+   💬 **Text:** 'VOICELAP' to 741741
 
    Our trained counselors are available to help you. Is there anything I can assist you with in the meantime?
    ```
@@ -222,7 +222,7 @@ Expected: Crisis hotline numbers (911, 988, etc.)
 ### **3. Pricing**
 ```
 Message: "How much does this cost?"
-Expected: "HearMe is completely free!"
+Expected: "VoiceLap is completely free!"
 ```
 
 ### **4. Hours**

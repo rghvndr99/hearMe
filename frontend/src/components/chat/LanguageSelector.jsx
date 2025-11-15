@@ -32,10 +32,10 @@ const LanguageSelector = ({ selectedLanguage, onLanguageChange, tooltip }) => {
         leftIcon={<FiGlobe />}
         rightIcon={<FiChevronDown />}
         title={tooltip}
-        color="var(--hm-color-text-primary)"
-        bg="var(--hm-bg-glass)"
-        borderColor="var(--hm-border-glass)"
-        _hover={{ color: 'var(--hm-color-brand)', bg: 'var(--hm-bg-glass-strong)' }}
+        color="var(--vl-color-text-primary)"
+        bg="var(--vl-bg-glass)"
+        borderColor="var(--vl-border-glass)"
+        _hover={{ color: 'var(--vl-color-brand)', bg: 'var(--vl-bg-glass-strong)' }}
       >
         <HStack spacing={2}>
           <Text>{selectedLanguage.flag}</Text>
@@ -61,9 +61,9 @@ const LanguageSelector = ({ selectedLanguage, onLanguageChange, tooltip }) => {
           <MenuList
             maxH="400px"
             overflowY="auto"
-            bg="var(--hm-bg-glass-strong)"
-            color="var(--hm-color-text-primary)"
-            borderColor="var(--hm-border-glass)"
+            bg="var(--vl-bg-glass-strong)"
+            color="var(--vl-color-text-primary)"
+            borderColor="var(--vl-border-glass)"
             backdropFilter="blur(12px)"
             borderWidth="1px"
             zIndex={10010}
@@ -72,10 +72,10 @@ const LanguageSelector = ({ selectedLanguage, onLanguageChange, tooltip }) => {
               <MenuItem
                 key={lang.code}
                 onClick={() => onLanguageChange(lang)}
-                color={selectedLanguage.code === lang.code ? 'white' : 'var(--hm-color-text-primary)'}
+                color={selectedLanguage.code === lang.code ? 'white' : 'var(--vl-color-text-primary)'}
                 fontWeight={selectedLanguage.code === lang.code ? '700' : '500'}
-                bg={selectedLanguage.code === lang.code ? 'var(--hm-color-brand)' : 'transparent'}
-                _hover={{ bg: selectedLanguage.code === lang.code ? 'var(--hm-color-brand)' : 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}
+                bg={selectedLanguage.code === lang.code ? 'var(--vl-color-brand)' : 'transparent'}
+                _hover={{ bg: selectedLanguage.code === lang.code ? 'var(--vl-color-brand)' : 'var(--vl-hover-bg)', color: 'var(--vl-color-brand)' }}
               >
                 <HStack spacing={3}>
                   <Text fontSize="lg">{lang.flag}</Text>

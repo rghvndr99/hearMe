@@ -2,7 +2,7 @@
 
 ## ✅ What Was Implemented
 
-Your HearMe application now has an **intelligent intent detection system** that intercepts user messages BEFORE sending them to OpenAI's API.
+Your VoiceLap application now has an **intelligent intent detection system** that intercepts user messages BEFORE sending them to OpenAI's API.
 
 ---
 
@@ -135,7 +135,7 @@ Custom Response Generated
        ↓
 "I understand you'd like to speak with a human counselor.
 📞 Call: 1-800-YOUR-NUMBER
-💬 Text: 'HEARME' to 741741"
+💬 Text: 'VOICELAP' to 741741"
        ↓
 Sent to User (OpenAI NOT called)
 ```
@@ -265,7 +265,7 @@ Now users asking "Do you accept insurance?" get instant answers!
 - Faster responses
 - Your contact info in responses
 
-**Your HearMe app is now smarter, faster, and more cost-effective!** 🎉
+**Your VoiceLap app is now smarter, faster, and more cost-effective!** 🎉
 
 ---
 

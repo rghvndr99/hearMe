@@ -1,4 +1,4 @@
-# 💜 hearMe - Mental Health Support Platform
+# 💜 voiceLap - Mental Health Support Platform
 
 A fullstack web application providing anonymous, peer-to-peer mental health support through AI-powered chat and volunteer listeners.
 
@@ -70,8 +70,8 @@ A fullstack web application providing anonymous, peer-to-peer mental health supp
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/rghvndr99/hearMe.git
-   cd hearMe
+   git clone https://github.com/rghvndr99/voiceLap.git
+   cd voiceLap
    ```
 
 2. **Install all dependencies**
@@ -130,7 +130,7 @@ npm run build
 ## 🗂️ Project Structure (Refactored & Modularized)
 
 ```
-hearMe/
+voiceLap/
 ├── backend/                 # Node.js/Express backend
 │   ├── src/
 │   │   ├── routes/         # API route definitions (thin layer)
@@ -200,7 +200,7 @@ Create a `.env` at the repository root for the backend, and `frontend/.env` for 
 #### Backend environment (root .env)
 ```env
 PORT=5001
-MONGO_URI=mongodb://localhost:27017/hearme
+MONGO_URI=mongodb://localhost:27017/voicelap
 OPENAI_API_KEY=your-openai-key
 ELEVENLABS_API_KEY=your-elevenlabs-api-key
 JWT_SECRET=your-super-secret-jwt-key
@@ -232,7 +232,7 @@ Quick test (backend only):
 ```bash
 curl -X POST http://localhost:5001/api/tts/eleven \
   -H "Content-Type: application/json" \
-  -d '{"text":"Hello from HearMe!"}' \
+  -d '{"text":"Hello from VoiceLap!"}' \
   --output /tmp/tts-test.mp3
 ```
 
@@ -247,9 +247,9 @@ The forgot/reset password flow sends an email with a secure reset link. Email de
 1) Configure environment (root .env)
 ```env
 # Email delivery
-APP_NAME=HearMe
+APP_NAME=VoiceLap
 EMAIL_PROVIDER=RESEND            # LOG | RESEND | SENDGRID | SES
-EMAIL_FROM="HearMe <onboarding@resend.dev>"  # Quick test sender for Resend
+EMAIL_FROM="VoiceLap <onboarding@resend.dev>"  # Quick test sender for Resend
 RESEND_API_KEY=your_resend_api_key
 ```
 

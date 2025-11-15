@@ -30,7 +30,7 @@ export const useSpeechSynthesis = (language, enabled = true, voiceId = 'browser'
     }
 
     // Load TTS engine preference
-    const savedEngine = localStorage.getItem('hm-tts-engine');
+    const savedEngine = localStorage.getItem('vl-tts-engine');
     if (savedEngine) {
       setTtsEngine(savedEngine);
     }
@@ -168,7 +168,7 @@ export const useSpeechSynthesis = (language, enabled = true, voiceId = 'browser'
    */
   const changeTtsEngine = useCallback((engine) => {
     setTtsEngine(engine);
-    localStorage.setItem('hm-tts-engine', engine);
+    localStorage.setItem('vl-tts-engine', engine);
   }, []);
 
   return {

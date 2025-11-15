@@ -29,7 +29,7 @@ const ThemeToggle = () => {
 
   useEffect(() => {
     // Load saved theme from localStorage
-    const savedTheme = localStorage.getItem('hm-theme') || 'dark';
+    const savedTheme = localStorage.getItem('vl-theme') || 'dark';
     setCurrentTheme(savedTheme);
     document.documentElement.setAttribute('data-theme', savedTheme);
     // Sync color-scheme
@@ -40,7 +40,7 @@ const ThemeToggle = () => {
   const handleThemeChange = (themeId) => {
     setCurrentTheme(themeId);
     document.documentElement.setAttribute('data-theme', themeId);
-    localStorage.setItem('hm-theme', themeId);
+    localStorage.setItem('vl-theme', themeId);
     // Sync color-scheme
     const colorScheme = (themeId === 'light') ? 'light' : 'dark';
     document.documentElement.style.colorScheme = colorScheme;
@@ -60,39 +60,39 @@ const ThemeToggle = () => {
       <MenuButton
         as={Button}
         variant="ghost"
-        color="var(--hm-color-text-muted)"
-        _hover={{ bg: 'var(--hm-hover-bg)' }}
-        _active={{ bg: 'var(--hm-bg-glass)' }}
+        color="var(--vl-color-text-muted)"
+        _hover={{ bg: 'var(--vl-hover-bg)' }}
+        _active={{ bg: 'var(--vl-bg-glass)' }}
         leftIcon={<Icon as={activeTheme.icon} />}
         size="sm"
       >
         <Text display={{ base: 'none', md: 'inline' }}>{activeTheme.name}</Text>
       </MenuButton>
       <MenuList
-        bg="var(--hm-color-bg)"
-        borderColor="var(--hm-border-glass)"
-        className="hm-glass-card"
+        bg="var(--vl-color-bg)"
+        borderColor="var(--vl-border-glass)"
+        className="vl-glass-card"
       >
         {themes.map((theme) => (
           <MenuItem
             key={theme.id}
             onClick={() => handleThemeChange(theme.id)}
-            bg={currentTheme === theme.id ? 'var(--hm-bg-glass-strong)' : 'transparent'}
-            _hover={{ bg: 'var(--hm-hover-bg)' }}
-            color="var(--hm-color-text-primary)"
+            bg={currentTheme === theme.id ? 'var(--vl-bg-glass-strong)' : 'transparent'}
+            _hover={{ bg: 'var(--vl-hover-bg)' }}
+            color="var(--vl-color-text-primary)"
           >
             <HStack spacing={3} w="full">
-              <Icon as={theme.icon} color="var(--hm-color-brand)" />
+              <Icon as={theme.icon} color="var(--vl-color-brand)" />
               <Box flex="1">
                 <Text fontWeight="600" fontSize="sm">
                   {theme.name}
                 </Text>
-                <Text fontSize="xs" color="var(--hm-color-text-secondary)">
+                <Text fontSize="xs" color="var(--vl-color-text-secondary)">
                   {theme.description}
                 </Text>
               </Box>
               {currentTheme === theme.id && (
-                <Icon as={MdColorLens} color="var(--hm-color-brand)" />
+                <Icon as={MdColorLens} color="var(--vl-color-brand)" />
               )}
             </HStack>
           </MenuItem>

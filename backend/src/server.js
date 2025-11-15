@@ -146,6 +146,6 @@ function matchQueue() {
 
 const PORT = process.env.PORT || 5001;
 mongoose
-  .connect(process.env.MONGO_URI || 'mongodb://localhost:27017/hearme')
+  .connect(process.env.MONGO_URI || 'mongodb://localhost:27017/voicelap')
   .then(() => server.listen(PORT))
   .catch(() => {});

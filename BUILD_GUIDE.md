@@ -1,4 +1,4 @@
-# 🏗️ HearMe Application - Build & Deployment Guide
+# 🏗️ VoiceLap Application - Build & Deployment Guide
 
 ## 📋 Table of Contents
 1. [Development Setup](#development-setup)
@@ -150,7 +150,7 @@ VITE_API_URL=https://your-backend-url.onrender.com
 ```yaml
 services:
   - type: web
-    name: hearme-backend
+    name: voicelap-backend
     env: node
     buildCommand: cd backend && npm install
     startCommand: cd backend && npm start
@@ -224,8 +224,8 @@ npm run build-all
 
 ```bash
 # Using SCP
-scp -r backend/ user@your-server.com:/var/www/hearme/
-scp -r frontend/dist/ user@your-server.com:/var/www/hearme/frontend/
+scp -r backend/ user@your-server.com:/var/www/voicelap/
+scp -r frontend/dist/ user@your-server.com:/var/www/voicelap/frontend/
 ```
 
 #### **3. Server Setup (Ubuntu/Debian):**
@@ -245,18 +245,18 @@ sudo npm install -g pm2
 sudo apt-get install nginx
 
 # Navigate to backend
-cd /var/www/hearme/backend
+cd /var/www/voicelap/backend
 npm install --production
 
 # Start backend with PM2
-pm2 start src/server.js --name hearme-backend
+pm2 start src/server.js --name voicelap-backend
 pm2 save
 pm2 startup
 ```
 
 #### **4. Configure Nginx:**
 
-Create `/etc/nginx/sites-available/hearme`:
+Create `/etc/nginx/sites-available/voicelap`:
 
 ```nginx
 # Backend API
@@ -279,7 +279,7 @@ server {
     listen 80;
     server_name yourdomain.com www.yourdomain.com;
 
-    root /var/www/hearme/frontend/dist;
+    root /var/www/voicelap/frontend/dist;
     index index.html;
 
     location / {
@@ -296,7 +296,7 @@ server {
 
 Enable the site:
 ```bash
-sudo ln -s /etc/nginx/sites-available/hearme /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/voicelap /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 ```

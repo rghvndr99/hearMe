@@ -28,7 +28,7 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip, cid }) => {
   const { t } = useTranslation('common');
   const [voices, setVoices] = useState([]);
   const [loading, setLoading] = useState(false);
-  const token = typeof window !== 'undefined' ? localStorage.getItem('hm-token') : null;
+  const token = typeof window !== 'undefined' ? localStorage.getItem('vl-token') : null;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   // Fetch user's saved voices or public voices for anonymous users
@@ -96,13 +96,13 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip, cid }) => {
         leftIcon={loading ? <Spinner size="xs" /> : <FiHeadphones />}
         rightIcon={<FiChevronDown />}
         title={tooltip}
-        color="var(--hm-color-text-primary)"
-        bg="var(--hm-bg-glass)"
-        borderColor="var(--hm-border-glass)"
-        _hover={{ color: 'var(--hm-color-brand)', bg: 'var(--hm-bg-glass-strong)' }}
+        color="var(--vl-color-text-primary)"
+        bg="var(--vl-bg-glass)"
+        borderColor="var(--vl-border-glass)"
+        _hover={{ color: 'var(--vl-color-brand)', bg: 'var(--vl-bg-glass-strong)' }}
         isDisabled={loading}
         minH="44px"
-        className={`hm-cid-${cid || 'voiceSelector'}`}
+        className={`vl-cid-${cid || 'voiceSelector'}`}
         data-cid={cid || 'voiceSelector'}
       >
         <HStack spacing={2}>
@@ -128,9 +128,9 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip, cid }) => {
           <MenuList
             maxH="400px"
             overflowY="auto"
-            bg="var(--hm-bg-glass-strong)"
-            color="var(--hm-color-text-primary)"
-            borderColor="var(--hm-border-glass)"
+            bg="var(--vl-bg-glass-strong)"
+            color="var(--vl-color-text-primary)"
+            borderColor="var(--vl-border-glass)"
             borderWidth="1px"
             backdropFilter="blur(12px)"
             boxShadow="0 12px 28px rgba(0, 0, 0, 0.45)"
@@ -146,12 +146,12 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip, cid }) => {
                 <MenuItem
                   key={voiceId}
                   onClick={() => onVoiceChange(voiceId)}
-                  color={isSelected ? 'white' : 'var(--hm-color-text-primary)'}
+                  color={isSelected ? 'white' : 'var(--vl-color-text-primary)'}
                   fontWeight={isSelected ? '700' : '500'}
-                  bg={isSelected ? 'var(--hm-color-brand)' : 'transparent'}
+                  bg={isSelected ? 'var(--vl-color-brand)' : 'transparent'}
                   _hover={{
-                    bg: isSelected ? 'var(--hm-color-brand)' : 'var(--hm-hover-bg)',
-                    color: isSelected ? 'white' : 'var(--hm-color-brand)'
+                    bg: isSelected ? 'var(--vl-color-brand)' : 'var(--vl-hover-bg)',
+                    color: isSelected ? 'white' : 'var(--vl-color-brand)'
                   }}
                   minH="48px"
                 >
@@ -161,8 +161,8 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip, cid }) => {
                         <FiStar
                           size={14}
                           style={{
-                            color: 'var(--hm-color-brand)',
-                            fill: 'var(--hm-color-brand)'
+                            color: 'var(--vl-color-brand)',
+                            fill: 'var(--vl-color-brand)'
                           }}
                         />
                       )}
@@ -171,7 +171,7 @@ const VoiceSelector = ({ selectedVoiceId, onVoiceChange, tooltip, cid }) => {
                     {voice.provider === 'elevenlabs' && (
                       <Text
                         fontSize="xs"
-                        color={isCloned ? 'var(--hm-color-brand)' : 'var(--hm-color-text-secondary)'}
+                        color={isCloned ? 'var(--vl-color-brand)' : 'var(--vl-color-text-secondary)'}
                         fontWeight={isCloned ? '600' : '400'}
                       >
                         {isCloned ? 'Custom Voice' : isPremade ? 'Default' : 'ElevenLabs'}

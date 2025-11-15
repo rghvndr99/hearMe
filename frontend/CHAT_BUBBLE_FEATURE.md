@@ -15,7 +15,7 @@ A floating chat bubble component that appears on all pages (except the chat page
 
 ### 🎨 Visual Design
 - **Circular Button**: 60px × 60px round button
-- **Gradient Background**: Uses theme gradient (`--hm-gradient-cta`)
+- **Gradient Background**: Uses theme gradient (`--vl-gradient-cta`)
 - **Chat Icon**: FaComments icon (28px) in white
 - **Pulse Animation**: Animated ring that pulses continuously
 - **Box Shadow**: Glowing shadow with brand color
@@ -96,7 +96,7 @@ Added to `main.jsx` App component:
 {
   size: "lg",
   isRound: true,
-  bgGradient: "var(--hm-gradient-cta)",
+  bgGradient: "var(--vl-gradient-cta)",
   color: "white",
   w: "60px",
   h: "60px",
@@ -108,7 +108,7 @@ Added to `main.jsx` App component:
 ### Hover State
 ```jsx
 _hover={{
-  bgGradient: "var(--hm-gradient-cta-hover)",
+  bgGradient: "var(--vl-gradient-cta-hover)",
   transform: "scale(1.1)"
 }}
 ```
@@ -125,7 +125,7 @@ _active={{
 {
   position: "absolute",
   borderRadius: "full",
-  border: "2px solid var(--hm-color-brand)",
+  border: "2px solid var(--vl-color-brand)",
   animate: {
     scale: [1, 1.3, 1],
     opacity: [0.6, 0, 0.6]
@@ -142,9 +142,9 @@ _active={{
 ## Theme Integration
 
 ### Color Variables Used
-- `--hm-gradient-cta`: Button background gradient
-- `--hm-gradient-cta-hover`: Hover state gradient
-- `--hm-color-brand`: Pulse ring border color
+- `--vl-gradient-cta`: Button background gradient
+- `--vl-gradient-cta-hover`: Hover state gradient
+- `--vl-color-brand`: Pulse ring border color
 
 ### Theme Adaptation
 The chat bubble automatically adapts to all 5 themes:

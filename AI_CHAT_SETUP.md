@@ -1,7 +1,7 @@
 # AI-Powered Anonymous Chat Setup Guide
 
 ## Overview
-The HearMe chat system provides anonymous, AI-powered mental health support using OpenAI's GPT-4 model. Users can have empathetic, mood-aware conversations without any registration or personal information.
+The VoiceLap chat system provides anonymous, AI-powered mental health support using OpenAI's GPT-4 model. Users can have empathetic, mood-aware conversations without any registration or personal information.
 
 ---
 

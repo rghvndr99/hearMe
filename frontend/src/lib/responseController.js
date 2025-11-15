@@ -1,4 +1,4 @@
-// HearMe Emotional & Multilingual AI Response Controller
+// VoiceLap Emotional & Multilingual AI Response Controller
 // Builds a TTS-ready payload (without making network calls)
 // Input:
 // {

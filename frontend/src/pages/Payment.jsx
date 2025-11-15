@@ -13,12 +13,12 @@ export default function Payment() {
   const location = useLocation();
   const toast = useToast();
   const upiModal = useDisclosure();
-  const UPI_ID = 'hearme@ybl';
+  const UPI_ID = 'voicelap@ybl';
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
   // Auth guard
   useEffect(() => {
-    const token = localStorage.getItem('hm-token');
+    const token = localStorage.getItem('vl-token');
     if (!token) {
       const current = `${location.pathname}${location.search}${location.hash}`;
       navigate(`/login?redirect=${encodeURIComponent(current)}`);
@@ -42,15 +42,15 @@ export default function Payment() {
 
   const upiPayUrl = useMemo(() => {
     const amt = Math.max(0, Number(price) || 0).toFixed(2);
-    const tn = `HearMe ${t(`pricing.plans.${plan}`, plan)} (${t(`pricing.${billing}`, billing)})`;
-    return `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent('HearMe')}&am=${encodeURIComponent(amt)}&cu=INR&tn=${encodeURIComponent(tn)}`;
+    const tn = `VoiceLap ${t(`pricing.plans.${plan}`, plan)} (${t(`pricing.${billing}`, billing)})`;
+    return `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent('VoiceLap')}&am=${encodeURIComponent(amt)}&cu=INR&tn=${encodeURIComponent(tn)}`;
   }, [UPI_ID, price, plan, billing, t]);
 
   // Prefer PhonePe app when available
   const phonePePayUrl = useMemo(() => {
     const amt = Math.max(0, Number(price) || 0).toFixed(2);
-    const tn = `HearMe ${t(`pricing.plans.${plan}`, plan)} (${t(`pricing.${billing}`, billing)})`;
-    return `phonepe://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent('HearMe')}&am=${encodeURIComponent(amt)}&cu=INR&tn=${encodeURIComponent(tn)}`;
+    const tn = `VoiceLap ${t(`pricing.plans.${plan}`, plan)} (${t(`pricing.${billing}`, billing)})`;
+    return `phonepe://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent('VoiceLap')}&am=${encodeURIComponent(amt)}&cu=INR&tn=${encodeURIComponent(tn)}`;
   }, [UPI_ID, price, plan, billing, t]);
 
   const upiQrUrl = useMemo(() => {
@@ -128,16 +128,16 @@ export default function Payment() {
   };
 
   const handleMarkPaid = async () => {
-    const token = localStorage.getItem('hm-token');
+    const token = localStorage.getItem('vl-token');
     try {
       const payload = { plan, billing, price: price, method: 'upi', upiId: UPI_ID };
       if (token) {
         await axios.post(`${API_URL}/api/subscriptions`, payload, { headers: { Authorization: `Bearer ${token}` } });
       } else {
         // Fallback to local storage if somehow not logged in
-        localStorage.setItem('hm-subscription', JSON.stringify({ ...payload, activatedAt: new Date().toISOString() }));
+        localStorage.setItem('vl-subscription', JSON.stringify({ ...payload, activatedAt: new Date().toISOString() }));
       }
-      window.dispatchEvent(new Event('hm-subscription-changed'));
+      window.dispatchEvent(new Event('vl-subscription-changed'));
       upiModal.onClose();
       setStatus('success');
       toast({ title: t('payment.toast.success', 'Payment successful'), status: 'success', duration: 1500 });
@@ -150,29 +150,29 @@ export default function Payment() {
   const handleRetry = () => setStatus('pending');
 
   return (
-    <Box className="hm-page-container hm-cid-payment-root" data-cid="payment-root">
-      <Box className="hm-section" maxW="720px" mx="auto">
+    <Box className="vl-page-container vl-cid-payment-root" data-cid="payment-root">
+      <Box className="vl-section" maxW="720px" mx="auto">
         <VStack spacing={4} align="stretch">
-          <Heading as="h1" className="hm-heading-primary">{t('payment.title', 'Payment')}</Heading>
+          <Heading as="h1" className="vl-heading-primary">{t('payment.title', 'Payment')}</Heading>
           <VStack align="stretch" spacing={1}>
-            <Text className="hm-text-tertiary">
+            <Text className="vl-text-tertiary">
               {t('payment.subtitle.more1','Your payment unlocks premium features like extra voice minutes, custom VoiceTwins, and emotion-aware responses.')}
             </Text>
-            <Text className="hm-text-tertiary">
+            <Text className="vl-text-tertiary">
               {t('payment.subtitle.more2','It helps us keep your conversations private and secure, and improve our AI for more natural, multilingual chats.')}
             </Text>
-            <Text className="hm-text-tertiary">
+            <Text className="vl-text-tertiary">
               {t('payment.subtitle.more3','You can cancel anytime and get a refund for the remaining period, or upgrade anytime with credit adjusted towards the higher plan.')}
             </Text>
-            <Text className="hm-text-tertiary">
+            <Text className="vl-text-tertiary">
               {t('pricing.disclaimer.anonymous','Connect anonymously — choose what you share and how you show up.')}
             </Text>
-            <Text className="hm-text-tertiary">
+            <Text className="vl-text-tertiary">
               {t('pricing.disclaimer.storageChoice','You decide whether to store your chats/messages.')}
             </Text>
           </VStack>
 
-          <Box border="1px solid var(--hm-border-subtle)" borderRadius="0.75rem" overflow="hidden">
+          <Box border="1px solid var(--vl-border-subtle)" borderRadius="0.75rem" overflow="hidden">
             <Image
               src="/images/payment.png"
               alt={t('payment.bannerAlt', 'Secure UPI payments with PhonePe')}
@@ -182,15 +182,15 @@ export default function Payment() {
           </Box>
 
 
-          <Box className="hm-card hm-cid-payment-card" data-cid="payment-card" p={5}>
+          <Box className="vl-card vl-cid-payment-card" data-cid="payment-card" p={5}>
             {/* Status header */}
             <HStack spacing={3} align="center">
               <Icon
                 as={isSuccess ? FiCheckCircle : isFailed ? FiXCircle : isCancelled ? FiAlertTriangle : FiAlertTriangle}
-                color={isSuccess ? 'var(--hm-color-success)' : 'var(--hm-color-brand)'}
+                color={isSuccess ? 'var(--vl-color-success)' : 'var(--vl-color-brand)'}
                 boxSize={6}
               />
-              <Heading as="h2" size="md" color="var(--hm-color-text-primary)">
+              <Heading as="h2" size="md" color="var(--vl-color-text-primary)">
                 {isSuccess
                   ? t('payment.status.success.title', 'Payment successful')
                   : isFailed
@@ -200,7 +200,7 @@ export default function Payment() {
                   : t('payment.status.pending.title', 'Confirm your payment')}
               </Heading>
             </HStack>
-            <Text className="hm-text-tertiary" mt={2}>
+            <Text className="vl-text-tertiary" mt={2}>
               {isSuccess
                 ? t('payment.status.success.desc', 'Your subscription to {{plan}} ({{billing}}) is active.', { plan: planLabel, billing: billingLabel })
                 : isFailed
@@ -210,42 +210,42 @@ export default function Payment() {
                 : t('payment.status.pending.desc', 'Select a payment method and confirm to complete your purchase.')}
             </Text>
 
-            <Divider my={4} borderColor="var(--hm-border-subtle)" />
+            <Divider my={4} borderColor="var(--vl-border-subtle)" />
 
             {/* Details */}
             <HStack justify="space-between" mb={2}>
-              <Text className="hm-text-secondary">{t('payment.labels.plan', 'Plan')}</Text>
-              <Text color="var(--hm-color-text-primary)" fontWeight="600">{planLabel}</Text>
+              <Text className="vl-text-secondary">{t('payment.labels.plan', 'Plan')}</Text>
+              <Text color="var(--vl-color-text-primary)" fontWeight="600">{planLabel}</Text>
             </HStack>
             <HStack justify="space-between" mb={2}>
-              <Text className="hm-text-secondary">{t('payment.labels.billing', 'Billing')}</Text>
-              <Text color="var(--hm-color-text-primary)" fontWeight="600">{billingLabel}</Text>
+              <Text className="vl-text-secondary">{t('payment.labels.billing', 'Billing')}</Text>
+              <Text color="var(--vl-color-text-primary)" fontWeight="600">{billingLabel}</Text>
             </HStack>
             <HStack justify="space-between" mb={4}>
-              <Text className="hm-text-secondary">{t('payment.labels.amount', 'Amount')}</Text>
-              <Text color="var(--hm-color-text-primary)" fontWeight="700">{currency(price)}</Text>
+              <Text className="vl-text-secondary">{t('payment.labels.amount', 'Amount')}</Text>
+              <Text color="var(--vl-color-text-primary)" fontWeight="700">{currency(price)}</Text>
             </HStack>
 
             {isPending && (
               <>
-                <Box mt={3} p={3} border="1px solid var(--hm-border-subtle)" bg="var(--hm-bg-glass)" borderRadius="0.75rem">
+                <Box mt={3} p={3} border="1px solid var(--vl-border-subtle)" bg="var(--vl-bg-glass)" borderRadius="0.75rem">
                   <VStack align="stretch" spacing={2}>
                     <HStack align="start" spacing={3}>
-                      <Icon as={FiRotateCcw} color="var(--hm-color-brand)" mt="3px" />
-                      <Text className="hm-text-secondary">
+                      <Icon as={FiRotateCcw} color="var(--vl-color-brand)" mt="3px" />
+                      <Text className="vl-text-secondary">
                         {t('payment.assurance.cancelRefund','Cancel anytime — your remaining period will be refunded back to you.')}
                       </Text>
                     </HStack>
                     <HStack align="start" spacing={3}>
-                      <Icon as={FiTrendingUp} color="var(--hm-color-brand)" mt="3px" />
-                      <Text className="hm-text-secondary">
+                      <Icon as={FiTrendingUp} color="var(--vl-color-brand)" mt="3px" />
+                      <Text className="vl-text-secondary">
                         {t('payment.assurance.upgradeCredit','Upgrade anytime — what you\'ve already paid will be adjusted towards the higher plan.')}
                       </Text>
                     </HStack>
                   </VStack>
                 </Box>
 
-                <Text mb={2} className="hm-text-secondary">{t('payment.methods.title', 'Choose a payment method')}</Text>
+                <Text mb={2} className="vl-text-secondary">{t('payment.methods.title', 'Choose a payment method')}</Text>
                 <RadioGroup onChange={setMethod} value={method}>
                   <Stack direction="row" spacing={6}>
                     <Radio value="upi">{t('payment.methods.upi', 'UPI')}</Radio>
@@ -256,16 +256,16 @@ export default function Payment() {
             {/* UPI Modal */}
             <Modal isOpen={upiModal.isOpen} onClose={upiModal.onClose} isCentered>
               <ModalOverlay bg="rgba(0,0,0,0.72)" backdropFilter="blur(2px)" />
-              <ModalContent bg="var(--hm-bg-glass-strong)" borderColor="var(--hm-border-glass)" borderWidth="1px">
-                <ModalHeader color="var(--hm-color-text-primary)">{t('payment.upi.title','Pay via UPI')}</ModalHeader>
+              <ModalContent bg="var(--vl-bg-glass-strong)" borderColor="var(--vl-border-glass)" borderWidth="1px">
+                <ModalHeader color="var(--vl-color-text-primary)">{t('payment.upi.title','Pay via UPI')}</ModalHeader>
                 <ModalBody>
                   <VStack spacing={4} align="center">
-                    <Text className="hm-text-secondary" textAlign="center">{t('payment.upi.scan','Scan this QR in your UPI app')}</Text>
-                    <Box p={3} border="1px solid var(--hm-border-outline)" borderRadius="md" bg="var(--hm-color-bg)">
+                    <Text className="vl-text-secondary" textAlign="center">{t('payment.upi.scan','Scan this QR in your UPI app')}</Text>
+                    <Box p={3} border="1px solid var(--vl-border-outline)" borderRadius="md" bg="var(--vl-color-bg)">
                       <Box position="relative" w="240px" h="240px">
                         {!qrLoaded && (
                           <Center position="absolute" inset={0}>
-                            <Spinner thickness="3px" speed="0.6s" color="var(--hm-color-brand)" size="lg" />
+                            <Spinner thickness="3px" speed="0.6s" color="var(--vl-color-brand)" size="lg" />
                           </Center>
                         )}
                         <img
@@ -283,39 +283,39 @@ export default function Payment() {
                       </Box>
                     </Box>
                     <HStack spacing={2}>
-                      <Button size="sm" variant="outline" borderColor="var(--hm-border-outline)" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }} onClick={async () => {
+                      <Button size="sm" variant="outline" borderColor="var(--vl-border-outline)" color="var(--vl-color-text-primary)" _hover={{ bg: 'var(--vl-hover-bg)', color: 'var(--vl-color-brand)' }} onClick={async () => {
                         try { await navigator.clipboard?.writeText(UPI_ID); toast({ title: t('payment.upi.copyId','Copy UPI ID') + ' ✓', status: 'success', duration: 1200 }); } catch {}
                       }}>{t('payment.upi.copyId','Copy UPI ID')}</Button>
                     </HStack>
                     <HStack spacing={3}>
-                      <Button className="hm-button-primary" onClick={handleOpenUpi}>{t('payment.upi.openApp','Open in UPI app')}</Button>
-                      <Button variant="outline" borderColor="var(--hm-border-outline)" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }} onClick={handleMarkPaid}>{t('payment.upi.markPaid',"I've completed the payment")}</Button>
+                      <Button className="vl-button-primary" onClick={handleOpenUpi}>{t('payment.upi.openApp','Open in UPI app')}</Button>
+                      <Button variant="outline" borderColor="var(--vl-border-outline)" color="var(--vl-color-text-primary)" _hover={{ bg: 'var(--vl-hover-bg)', color: 'var(--vl-color-brand)' }} onClick={handleMarkPaid}>{t('payment.upi.markPaid',"I've completed the payment")}</Button>
                     </HStack>
                   </VStack>
                 </ModalBody>
                 <ModalFooter>
-                  <Button variant="ghost" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }} onClick={upiModal.onClose}>{t('common.close','Close')}</Button>
+                  <Button variant="ghost" color="var(--vl-color-text-primary)" _hover={{ bg: 'var(--vl-hover-bg)', color: 'var(--vl-color-brand)' }} onClick={upiModal.onClose}>{t('common.close','Close')}</Button>
                 </ModalFooter>
               </ModalContent>
             </Modal>
 
                 <HStack spacing={3} mt={4}>
-                  <Button className="hm-button-primary" onClick={handleConfirm} rightIcon={<FiArrowRight />}>{t('payment.actions.confirm', 'Confirm Payment')}</Button>
-                  <Button variant="outline" borderColor="var(--hm-border-outline)" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }} onClick={() => setStatus('cancelled')}>{t('payment.actions.cancel', 'Cancel')}</Button>
+                  <Button className="vl-button-primary" onClick={handleConfirm} rightIcon={<FiArrowRight />}>{t('payment.actions.confirm', 'Confirm Payment')}</Button>
+                  <Button variant="outline" borderColor="var(--vl-border-outline)" color="var(--vl-color-text-primary)" _hover={{ bg: 'var(--vl-hover-bg)', color: 'var(--vl-color-brand)' }} onClick={() => setStatus('cancelled')}>{t('payment.actions.cancel', 'Cancel')}</Button>
                 </HStack>
               </>
             )}
 
             {isSuccess && (
               <VStack align="stretch" spacing={3} mt={2}>
-                <Text className="hm-text-tertiary">{t('pricing.disclaimer.anonymous','Connect anonymously — choose what you share and how you show up.')}</Text>
-                <Text className="hm-text-tertiary">{t('pricing.disclaimer.storageChoice','You decide whether to store your chats/messages.')}</Text>
+                <Text className="vl-text-tertiary">{t('pricing.disclaimer.anonymous','Connect anonymously — choose what you share and how you show up.')}</Text>
+                <Text className="vl-text-tertiary">{t('pricing.disclaimer.storageChoice','You decide whether to store your chats/messages.')}</Text>
 
-                <Text className="hm-text-tertiary">{t('payment.redirect', 'Redirecting in {{s}}s...', { s: countdown })}</Text>
+                <Text className="vl-text-tertiary">{t('payment.redirect', 'Redirecting in {{s}}s...', { s: countdown })}</Text>
                 <HStack spacing={3} flexWrap="wrap">
-                  <Button as={RouterLink} to="/profile" className="hm-button-primary" leftIcon={<FiUser />}>{t('payment.actions.profile', 'Go to Profile')}</Button>
-                  <Button as={RouterLink} to="/chat" variant="outline" borderColor="var(--hm-border-outline)" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }} leftIcon={<FiMessageCircle />}>{t('payment.actions.chat', 'Go to Chat')}</Button>
-                  <Button as={RouterLink} to="/pricing" variant="ghost" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}>{t('payment.actions.pricing', 'Back to Pricing')}</Button>
+                  <Button as={RouterLink} to="/profile" className="vl-button-primary" leftIcon={<FiUser />}>{t('payment.actions.profile', 'Go to Profile')}</Button>
+                  <Button as={RouterLink} to="/chat" variant="outline" borderColor="var(--vl-border-outline)" color="var(--vl-color-text-primary)" _hover={{ bg: 'var(--vl-hover-bg)', color: 'var(--vl-color-brand)' }} leftIcon={<FiMessageCircle />}>{t('payment.actions.chat', 'Go to Chat')}</Button>
+                  <Button as={RouterLink} to="/pricing" variant="ghost" color="var(--vl-color-text-primary)" _hover={{ bg: 'var(--vl-hover-bg)', color: 'var(--vl-color-brand)' }}>{t('payment.actions.pricing', 'Back to Pricing')}</Button>
                 </HStack>
               </VStack>
             )}
@@ -323,10 +323,10 @@ export default function Payment() {
             {(isFailed || isCancelled) && (
               <HStack spacing={3} mt={2}>
                 {isFailed && (
-                  <Button className="hm-button-primary" onClick={handleRetry}>{t('payment.actions.tryAgain', 'Try Again')}</Button>
+                  <Button className="vl-button-primary" onClick={handleRetry}>{t('payment.actions.tryAgain', 'Try Again')}</Button>
                 )}
-                <Button as={RouterLink} to="/pricing" variant="outline" borderColor="var(--hm-border-outline)" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }}>{t('payment.actions.pricing', 'Back to Pricing')}</Button>
-                <Button as={RouterLink} to="/" variant="ghost" color="var(--hm-color-text-primary)" _hover={{ bg: 'var(--hm-hover-bg)', color: 'var(--hm-color-brand)' }} leftIcon={<FiHome />}>{t('payment.actions.home', 'Go Home')}</Button>
+                <Button as={RouterLink} to="/pricing" variant="outline" borderColor="var(--vl-border-outline)" color="var(--vl-color-text-primary)" _hover={{ bg: 'var(--vl-hover-bg)', color: 'var(--vl-color-brand)' }}>{t('payment.actions.pricing', 'Back to Pricing')}</Button>
+                <Button as={RouterLink} to="/" variant="ghost" color="var(--vl-color-text-primary)" _hover={{ bg: 'var(--vl-hover-bg)', color: 'var(--vl-color-brand)' }} leftIcon={<FiHome />}>{t('payment.actions.home', 'Go Home')}</Button>
               </HStack>
             )}
           </Box>

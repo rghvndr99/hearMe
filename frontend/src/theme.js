@@ -31,12 +31,12 @@ const theme = extendTheme({
       variants: {
         outline: {
           field: {
-            bg: 'var(--hm-bg-glass)',
-            border: '1px solid var(--hm-border-outline)',
-            color: 'var(--hm-color-text-primary)',
-            _placeholder: { color: 'var(--hm-color-placeholder)' },
-            _hover: { borderColor: 'var(--hm-border-outline)' },
-            _focus: { borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' },
+            bg: 'var(--vl-bg-glass)',
+            border: '1px solid var(--vl-border-outline)',
+            color: 'var(--vl-color-text-primary)',
+            _placeholder: { color: 'var(--vl-color-placeholder)' },
+            _hover: { borderColor: 'var(--vl-border-outline)' },
+            _focus: { borderColor: 'var(--vl-color-brand)', boxShadow: '0 0 0 1px var(--vl-color-brand)' },
           },
         },
       },
@@ -46,13 +46,13 @@ const theme = extendTheme({
       variants: {
         outline: {
           field: {
-            bg: 'var(--hm-bg-glass)',
-            border: '1px solid var(--hm-border-outline)',
-            color: 'var(--hm-color-text-primary)',
-            _hover: { borderColor: 'var(--hm-border-outline)' },
-            _focus: { borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' },
+            bg: 'var(--vl-bg-glass)',
+            border: '1px solid var(--vl-border-outline)',
+            color: 'var(--vl-color-text-primary)',
+            _hover: { borderColor: 'var(--vl-border-outline)' },
+            _focus: { borderColor: 'var(--vl-color-brand)', boxShadow: '0 0 0 1px var(--vl-color-brand)' },
           },
-          icon: { color: 'var(--hm-color-text-secondary)' },
+          icon: { color: 'var(--vl-color-text-secondary)' },
         },
       },
     },
@@ -60,12 +60,12 @@ const theme = extendTheme({
       defaultProps: { variant: 'outline' },
       variants: {
         outline: {
-          bg: 'var(--hm-bg-glass)',
-          border: '1px solid var(--hm-border-outline)',
-          color: 'var(--hm-color-text-primary)',
-          _placeholder: { color: 'var(--hm-color-placeholder)' },
-          _hover: { borderColor: 'var(--hm-border-outline)' },
-          _focus: { borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' },
+          bg: 'var(--vl-bg-glass)',
+          border: '1px solid var(--vl-border-outline)',
+          color: 'var(--vl-color-text-primary)',
+          _placeholder: { color: 'var(--vl-color-placeholder)' },
+          _hover: { borderColor: 'var(--vl-border-outline)' },
+          _focus: { borderColor: 'var(--vl-color-brand)', boxShadow: '0 0 0 1px var(--vl-color-brand)' },
         },
       },
     },

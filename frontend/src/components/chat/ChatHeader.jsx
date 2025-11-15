@@ -33,8 +33,8 @@ const ChatHeader = ({
       left={0}
       right={0}
       zIndex={998}
-      borderBottom="1px solid var(--hm-border-glass)"
-      className="hm-glass-card"
+      borderBottom="1px solid var(--vl-border-glass)"
+      className="vl-glass-card"
       backdropFilter="blur(10px)"
       w={["100%", "100%", "76%"]}
       mx="auto"
@@ -52,18 +52,18 @@ const ChatHeader = ({
             <Box
               as={BsRobot}
               fontSize={["20px", "24px"]}
-              color="var(--hm-color-brand)"
+              color="var(--vl-color-brand)"
             />
-            <Text fontSize={["md", "lg", "xl"]} fontWeight="700" color="var(--hm-color-text-primary)">
+            <Text fontSize={["md", "lg", "xl"]} fontWeight="700" color="var(--vl-color-text-primary)">
               {t('chat.header.title', 'Safe Space for You 💜')}
             </Text>
           </HStack>
           {subtitle ? (
-            <Text fontSize={["xs", "sm"]} color="var(--hm-color-text-secondary)" textAlign={["center", "center", "left"]}>
+            <Text fontSize={["xs", "sm"]} color="var(--vl-color-text-secondary)" textAlign={["center", "center", "left"]}>
               {subtitle}
             </Text>
           ) : null}
-          <Text fontSize={["xs", "sm"]} color="var(--hm-color-text-secondary)" textAlign={["center", "center", "left"]}>
+          <Text fontSize={["xs", "sm"]} color="var(--vl-color-text-secondary)" textAlign={["center", "center", "left"]}>
             {t('chat.header.anonConf', '100% Anonymous. 100% Confidential. 100% Judgment-Free.')}
           </Text>
         </VStack>
@@ -76,8 +76,8 @@ const ChatHeader = ({
             size="sm"
             onClick={() => setShowInfo(!showInfo)}
             aria-label="Show info"
-            color="var(--hm-color-text-secondary)"
-            _hover={{ color: 'var(--hm-color-brand)' }}
+            color="var(--vl-color-text-secondary)"
+            _hover={{ color: 'var(--vl-color-brand)' }}
           />
           <VoiceSelector
             selectedVoiceId={selectedVoiceId}
@@ -100,23 +100,23 @@ const ChatHeader = ({
         <Box
           px={[3, 4, 6]}
           pb={4}
-          borderTop="1px solid var(--hm-border-glass)"
+          borderTop="1px solid var(--vl-border-glass)"
           pt={3}
         >
           <VStack align="start" spacing={2}>
-            <Text fontSize="sm" fontWeight="600" color="var(--hm-color-text-primary)">
+            <Text fontSize="sm" fontWeight="600" color="var(--vl-color-text-primary)">
               {t('chat.welcome.youCanTitle', 'You can:')}
             </Text>
             <VStack align="start" spacing={1} pl={2}>
-              <Text fontSize="xs" color="var(--hm-color-text-secondary)">
+              <Text fontSize="xs" color="var(--vl-color-text-secondary)">
                 {t('chat.welcome.feature1', '💬 Type in Hindi, English, or Hinglish')}
               </Text>
-              <Text fontSize="xs" color="var(--hm-color-text-secondary)">
+              <Text fontSize="xs" color="var(--vl-color-text-secondary)">
                 {micDisabled
                   ? t('chat.mic.disabledFree', '3a4 Microphone is disabled on the free plan. Upgrade to enable voice input.')
                   : t('chat.welcome.feature2', '🎙️ Speak in your language (click the mic)')}
               </Text>
-              <Text fontSize="xs" color="var(--hm-color-text-secondary)">
+              <Text fontSize="xs" color="var(--vl-color-text-secondary)">
                 {t('chat.welcome.feature3', '🔊 Hear responses in your chosen voice')}
               </Text>
             </VStack>

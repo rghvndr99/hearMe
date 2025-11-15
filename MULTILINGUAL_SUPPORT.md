@@ -1,7 +1,7 @@
 # Multi-Language Support - Global Mental Health Chat
 
 ## 🌍 Overview
-HearMe now supports **20+ languages** with **automatic language detection** for both voice input and output, making mental health support accessible to users worldwide. The system automatically detects your browser language and selects it for you, creating a truly personalized and comfortable experience from the first moment.
+VoiceLap now supports **20+ languages** with **automatic language detection** for both voice input and output, making mental health support accessible to users worldwide. The system automatically detects your browser language and selects it for you, creating a truly personalized and comfortable experience from the first moment.
 
 ---
 
@@ -442,7 +442,7 @@ router.post('/message', async (req, res) => {
 
 ## 🎉 Summary
 
-HearMe now supports **20+ languages** for:
+VoiceLap now supports **20+ languages** for:
 - ✅ Voice input (speech-to-text)
 - ✅ Voice output (text-to-speech)
 - ✅ AI responses

@@ -32,17 +32,17 @@ const QuickReplies = ({ replies, onReplyClick, disabled = false }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ delay: index * 0.1 }}
-            color="var(--hm-color-text-primary)"
-            borderColor="var(--hm-border-glass)"
-            bg="var(--hm-bg-glass)"
+            color="var(--vl-color-text-primary)"
+            borderColor="var(--vl-border-glass)"
+            bg="var(--vl-bg-glass)"
             _hover={{
-              borderColor: 'var(--hm-color-brand)',
-              color: 'var(--hm-color-brand)',
-              bg: 'var(--hm-bg-glass)'
+              borderColor: 'var(--vl-color-brand)',
+              color: 'var(--vl-color-brand)',
+              bg: 'var(--vl-bg-glass)'
             }}
             _active={{
-              bg: 'var(--hm-bg-glass)',
-              borderColor: 'var(--hm-color-brand)'
+              bg: 'var(--vl-bg-glass)',
+              borderColor: 'var(--vl-color-brand)'
             }}
           >
             {reply}

@@ -290,7 +290,7 @@ router.post('/message', async (req, res) => {
       // Build contextual response for specific intents
       if (detectedIntent.intent === 'talkToHuman') {
         const planForHuman = await getActivePlan(userId);
-        const phrase = (CONTACT_INFO && CONTACT_INFO.supportTriggerPhrase) ? CONTACT_INFO.supportTriggerPhrase : 'HearMe: Need support';
+        const phrase = (CONTACT_INFO && CONTACT_INFO.supportTriggerPhrase) ? CONTACT_INFO.supportTriggerPhrase : 'VoiceLap: Need support';
         aiResponseContent = buildTalkToHumanResponse(userLanguage, {
           isPaid: planForHuman && planForHuman !== 'free',
           supportTriggerPhrase: phrase,

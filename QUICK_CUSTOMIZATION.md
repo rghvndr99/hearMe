@@ -16,7 +16,7 @@ export const CONTACT_INFO = {
   helplinePhoneNumeric: '1-800-968-7686',       // Numeric version
   
   crisisTextNumber: '741741',                    // Text line number
-  crisisTextKeyword: 'HEARME',                   // Keyword to text
+  crisisTextKeyword: 'VOICELAP',                   // Keyword to text
   
   emergencyNumber: '911',                        // Emergency services
   suicidePreventionLine: '988',                  // Crisis hotline

@@ -23,41 +23,41 @@ const About= () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg="var(--hm-color-bg)"
-      color="var(--hm-color-text-primary)"
+      bg="var(--vl-color-bg)"
+      color="var(--vl-color-text-primary)"
       position="relative"
       overflow="hidden"
       px={[6, 12]}
       pt="100px"
       pb={[12, 20]}
       textAlign="center"
-      className="hm-cid-about-root"
+      className="vl-cid-about-root"
       data-cid="about-root"
     >
       {/* === PAGE CONTENT === */}
       <VStack spacing={10} zIndex={1} w="full" maxW="1200px" align="stretch">
         {/* Hero: Text left, image right */}
-        <Stack direction={["column","row"]} spacing={[6,8]} className="hm-glass-card" p={[6,8]} borderRadius="xl" align="stretch">
+        <Stack direction={["column","row"]} spacing={[6,8]} className="vl-glass-card" p={[6,8]} borderRadius="xl" align="stretch">
           <VStack align="start" spacing={4} flex="1" minW={0} textAlign="left">
             <Heading
               as="h1"
               fontSize={["3xl", "5xl", "6xl"]}
               fontWeight="800"
-              color="var(--hm-color-text-primary)"
+              color="var(--vl-color-text-primary)"
               lineHeight="1.2"
             >
               {t('about.title', 'Dil Ki Baat — We\'re Here to Listen 💜')}
             </Heading>
 
-            <Text fontSize={["lg", "xl"]} color="var(--hm-color-text-secondary)" fontWeight="500">
-              {t('about.subtitle', 'HearMe is India\'s safe space for mental wellness. Anonymous. Confidential. Judgment-free. In your language.')}
+            <Text fontSize={["lg", "xl"]} color="var(--vl-color-text-secondary)" fontWeight="500">
+              {t('about.subtitle', 'VoiceLap is India\'s safe space for mental wellness. Anonymous. Confidential. Judgment-free. In your language.')}
             </Text>
 
-            <Text fontSize={["md","lg"]} color="var(--hm-color-text-tertiary)" lineHeight="1.8">
+            <Text fontSize={["md","lg"]} color="var(--vl-color-text-tertiary)" lineHeight="1.8">
               {t('about.p1', 'We know what it feels like when your mind is heavy...')}
             </Text>
-            <Text fontSize={["md","lg"]} color="var(--hm-color-text-tertiary)" lineHeight="1.8">
-              {t('about.p2', 'HearMe is built for real life in India...')}
+            <Text fontSize={["md","lg"]} color="var(--vl-color-text-tertiary)" lineHeight="1.8">
+              {t('about.p2', 'VoiceLap is built for real life in India...')}
             </Text>
           </VStack>
 
@@ -65,7 +65,7 @@ const About= () => {
           <Box flex={["none","0 0 33.333%"]} minW={0} display="flex" alignItems="center" justifyContent="center">
             <Image
               src="/images/dil-ki-baat.png"
-              alt="About HearMe"
+              alt="About VoiceLap"
               w="100%"
               h="auto"
               loading="lazy"
@@ -77,7 +77,7 @@ const About= () => {
 
         {/* Mission Section */}
         <Box pt={10} w="full">
-          <Stack direction={["column","row"]} spacing={[6,8]} className="hm-glass-card" p={[6,8]} borderRadius="xl" align="stretch">
+          <Stack direction={["column","row"]} spacing={[6,8]} className="vl-glass-card" p={[6,8]} borderRadius="xl" align="stretch">
 
             {/* Right: Mission text */}
             <VStack align="start" spacing={4} flex="1" minW={0}>
@@ -85,12 +85,12 @@ const About= () => {
                 as="h2"
                 fontSize={["2xl", "3xl"]}
                 mb={0}
-                color="var(--hm-color-text-primary)"
+                color="var(--vl-color-text-primary)"
                 fontWeight="700"
               >
                 {t('about.mission.title', 'Our Mission: Dil Halka Karo')}
               </Heading>
-              <Text fontSize={["md","lg"]} color="var(--hm-color-text-secondary)" lineHeight="1.8">
+              <Text fontSize={["md","lg"]} color="var(--vl-color-text-secondary)" lineHeight="1.8">
                 {t('about.mission.p', 'Make emotional support simple, private, and available 24/7...')}
               </Text>
             </VStack>
@@ -100,22 +100,22 @@ const About= () => {
         {/* Values & Who We Serve */}
         <SimpleGrid columns={[1, 2]} spacing={10} pt={10} w="full">
           <Box
-            className="hm-glass-card"
+            className="vl-glass-card"
             p={8}
             borderRadius="lg"
             transition="0.3s"
-            _hover={{ borderColor: "var(--hm-color-brand)" }}
+            _hover={{ borderColor: "var(--vl-color-brand)" }}
           >
             <Heading
               as="h3"
               fontSize="2xl"
               mb={3}
-              color="var(--hm-color-text-primary)"
+              color="var(--vl-color-text-primary)"
               fontWeight="700"
             >
               {t('about.values.title')}
             </Heading>
-            <VStack align="start" spacing={2} color="var(--hm-color-text-secondary)">
+            <VStack align="start" spacing={2} color="var(--vl-color-text-secondary)">
               <Text>{t('about.values.empathy')}</Text>
               <Text>{t('about.values.privacy')}</Text>
               <Text>{t('about.values.inclusivity')}</Text>
@@ -124,17 +124,17 @@ const About= () => {
           </Box>
 
           <Box
-            className="hm-glass-card-light"
+            className="vl-glass-card-light"
             p={8}
             borderRadius="lg"
             transition="0.3s"
 
-            _hover={{ borderColor: "var(--hm-color-brand)" }}
+            _hover={{ borderColor: "var(--vl-color-brand)" }}
           >
-            <Heading as="h3" fontSize="2xl" mb={3} color="var(--hm-color-text-primary)" fontWeight="700">
+            <Heading as="h3" fontSize="2xl" mb={3} color="var(--vl-color-text-primary)" fontWeight="700">
               {t('about.serve.title')}
             </Heading>
-            <VStack align="start" spacing={2} color="var(--hm-color-text-secondary)">
+            <VStack align="start" spacing={2} color="var(--vl-color-text-secondary)">
               <Text>{t('about.serve.students')}</Text>
               <Text>{t('about.serve.professionals')}</Text>
               <Text>{t('about.serve.caregivers')}</Text>
@@ -143,83 +143,83 @@ const About= () => {
           </Box>
         </SimpleGrid>
 
-        {/* Why HearMe Is Different Section */}
+        {/* Why VoiceLap Is Different Section */}
         <Box pt={16} w="full">
           <Heading
             as="h2"
             fontSize={["2xl", "3xl"]}
             mb={8}
             textAlign="center"
-            color="var(--hm-color-text-primary)"
+            color="var(--vl-color-text-primary)"
             fontWeight="700"
           >
-            {t('about.whyDifferent.title', 'Why HearMe Is Different')}
+            {t('about.whyDifferent.title', 'Why VoiceLap Is Different')}
           </Heading>
 
           <SimpleGrid columns={[1, 2]} spacing={8} w="full">
             {/* Card 1 - Built for India */}
             <Box
-              className="hm-glass-card"
+              className="vl-glass-card"
               p={8}
               borderRadius="xl"
               transition="0.3s"
-              _hover={{ borderColor: "var(--hm-color-brand)", transform: "translateY(-4px)" }}
+              _hover={{ borderColor: "var(--vl-color-brand)", transform: "translateY(-4px)" }}
             >
 
-              <Text fontSize="2xl" mb={3} fontWeight="700" color="var(--hm-color-text-primary)">
+              <Text fontSize="2xl" mb={3} fontWeight="700" color="var(--vl-color-text-primary)">
 
                 {t('about.whyDifferent.card1Title', '🇮🇳 Built for India')}
               </Text>
-              <Text color="var(--hm-color-text-secondary)" lineHeight="1.7">
+              <Text color="var(--vl-color-text-secondary)" lineHeight="1.7">
                 {t('about.whyDifferent.card1Desc', 'We understand Indian family dynamics, cultural pressures, and language needs...')}
               </Text>
             </Box>
 
             {/* Card 2 - Your Voice, Your Way */}
             <Box
-              className="hm-glass-card-light"
+              className="vl-glass-card-light"
               p={8}
               borderRadius="xl"
               transition="0.3s"
-              _hover={{ borderColor: "var(--hm-color-brand)", transform: "translateY(-4px)" }}
+              _hover={{ borderColor: "var(--vl-color-brand)", transform: "translateY(-4px)" }}
             >
 
-              <Text fontSize="2xl" mb={3} fontWeight="700" color="var(--hm-color-text-primary)">
+              <Text fontSize="2xl" mb={3} fontWeight="700" color="var(--vl-color-text-primary)">
                 {t('about.whyDifferent.card2Title', '🎙️ Your Voice, Your Way')}
               </Text>
-              <Text color="var(--hm-color-text-secondary)" lineHeight="1.7">
+              <Text color="var(--vl-color-text-secondary)" lineHeight="1.7">
                 {t('about.whyDifferent.card2Desc', 'Type in English, speak in Hindi, mix both — we get it...')}
               </Text>
             </Box>
 
             {/* Card 3 - Truly Anonymous */}
             <Box
-              className="hm-glass-card"
+              className="vl-glass-card"
               p={8}
               borderRadius="xl"
               transition="0.3s"
-              _hover={{ borderColor: "var(--hm-color-brand)", transform: "translateY(-4px)" }}
+              _hover={{ borderColor: "var(--vl-color-brand)", transform: "translateY(-4px)" }}
             >
-              <Text fontSize="2xl" mb={3} fontWeight="700" color="var(--hm-color-text-primary)">
+              <Text fontSize="2xl" mb={3} fontWeight="700" color="var(--vl-color-text-primary)">
                 {t('about.whyDifferent.card3Title', '🔒 Truly Anonymous')}
               </Text>
-              <Text color="var(--hm-color-text-secondary)" lineHeight="1.7">
+              <Text color="var(--vl-color-text-secondary)" lineHeight="1.7">
                 {t('about.whyDifferent.card3Desc', 'No login required for chat. No data sold. Ever...')}
               </Text>
             </Box>
 
             {/* Card 4 - Judgment-Free Zone */}
             <Box
-              className="hm-glass-card-light"
+              className="vl-glass-card-light"
               p={8}
               borderRadius="xl"
               transition="0.3s"
-              _hover={{ borderColor: "var(--hm-color-brand)", transform: "translateY(-4px)" }}
+              _hover={{ borderColor: "var(--vl-color-brand)", transform: "translateY(-4px)" }}
             >
-              <Text fontSize="2xl" mb={3} fontWeight="700" color="var(--hm-color-text-primary)">
+              <Text fontSize="2xl" mb={3} fontWeight="700" color="var(--vl-color-text-primary)">
                 {t('about.whyDifferent.card4Title', 'Judgment-Free Zone')}
               </Text>
-              <Text color="var(--hm-color-text-secondary)" lineHeight="1.7">
+              <Text color="var(--vl-color-text-secondary)" lineHeight="1.7">
                 {t('about.whyDifferent.card4Desc', 'Whatever you\'re feeling, it\'s valid. We\'re here to listen, not lecture...')}
               </Text>
             </Box>

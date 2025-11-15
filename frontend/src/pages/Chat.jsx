@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Box, Flex, useToast, Text, HStack, Progress, Button, Switch, IconButton, Collapse, VStack } from "@chakra-ui/react";
+import { Box, Flex, useToast, Text, HStack, Progress, Button, Switch, IconButton, Collapse, VStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalCloseButton } from "@chakra-ui/react";
 import { FiAlertCircle } from "react-icons/fi";
 import { BsRobot, BsInfoCircle } from "react-icons/bs";
 import { useTranslation } from "react-i18next";
@@ -33,7 +33,7 @@ const Chat = () => {
   const toast = useToast();
 
   // Get current language from i18n (synced with Header)
-  const currentLanguage = LANGUAGES.find(lang => lang.code === (localStorage.getItem('hm-language') || 'en-US')) || LANGUAGES[0];
+  const currentLanguage = LANGUAGES.find(lang => lang.code === (localStorage.getItem('vl-language') || 'en-US')) || LANGUAGES[0];
 
   // Chat state
   const [sessionId, setSessionId] = useState(null);
@@ -55,8 +55,9 @@ const Chat = () => {
 
   const [userDisplayName, setUserDisplayName] = useState('');
   const [isAnonymousUser, setIsAnonymousUser] = useState(false);
+  const [showLimitModal, setShowLimitModal] = useState(false);
 
-  const getAuthToken = () => (localStorage.getItem('hm-token') || sessionStorage.getItem('hm-anon-token'));
+  const getAuthToken = () => (localStorage.getItem('vl-token') || sessionStorage.getItem('vl-anon-token'));
 
   // Talk/Chat mode: when enabled, we auto-start mic and auto-send transcripts
   const [talkMode, setTalkMode] = useState(false);
@@ -159,7 +160,7 @@ const Chat = () => {
    */
   useEffect(() => {
     const loadSubscription = async () => {
-      const token = localStorage.getItem('hm-token');
+      const token = localStorage.getItem('vl-token');
       setIsAuthed(!!token);
       if (!token) {
         // Promo: mic gating disabled for anonymous users as well
@@ -223,14 +224,14 @@ const Chat = () => {
         const uiLang = i18n.language || 'en';
 
         // If not logged in and no anon token yet, create an anonymous user
-        let token = localStorage.getItem('hm-token');
+        let token = localStorage.getItem('vl-token');
         if (!token) {
-          token = sessionStorage.getItem('hm-anon-token');
+          token = sessionStorage.getItem('vl-anon-token');
           if (!token) {
             try {
               const anonResp = await axios.post(`${API_URL}/api/users/anonymous`, { language: i18n.language || 'en' });
               token = anonResp.data?.token;
-              if (token) sessionStorage.setItem('hm-anon-token', token);
+              if (token) sessionStorage.setItem('vl-anon-token', token);
               const u = anonResp.data?.user;
               if (u) {
                 if (u.displayName) {
@@ -255,7 +256,7 @@ const Chat = () => {
         setSessionId(sid);
         setMessages([response.data.message]);
         if (!token) {
-          try { localStorage.setItem(`hm-anon-usedMs-${sid}`, '0'); } catch {}
+          try { localStorage.setItem(`vl-anon-usedMs-${sid}`, '0'); } catch {}
           setAnonUsedMs(0);
           // Promo: mic gating disabled for anonymous users
           setMicDisabled(false);
@@ -300,16 +301,10 @@ const Chat = () => {
       // Anonymous session gating via localStorage (client-side UX)
       if (!token) {
         try {
-          const usedMsStr = localStorage.getItem(`hm-anon-usedMs-${sessionId}`) || '0';
+          const usedMsStr = localStorage.getItem(`vl-anon-usedMs-${sessionId}`) || '0';
           const usedMs = parseInt(usedMsStr, 10) || 0;
           if (usedMs >= ANON_LIMIT_MS) {
-            toast({
-              title: t('chat.toasts.limitReachedTitle', 'Limit reached'),
-              description: t('chat.toasts.anonLimitReached', 'You\'ve used 5 minutes of anonymous chat. Sign in to continue.'),
-              status: 'info',
-              duration: 5000,
-              isClosable: true,
-            });
+            setShowLimitModal(true);
             return;
           }
         } catch {}
@@ -337,7 +332,7 @@ const Chat = () => {
       // Update anonymous usage from server-accurate engaged time
       if (!token && typeof sessionEngagedMs === 'number') {
         try {
-          localStorage.setItem(`hm-anon-usedMs-${sessionId}`, String(sessionEngagedMs));
+          localStorage.setItem(`vl-anon-usedMs-${sessionId}`, String(sessionEngagedMs));
           setAnonUsedMs(sessionEngagedMs);
           if (sessionEngagedMs >= ANON_LIMIT_MS * 0.8 && sessionEngagedMs < ANON_LIMIT_MS) {
             toast({
@@ -435,7 +430,7 @@ const Chat = () => {
   const handleVoiceChange = async (voiceId) => {
     setSelectedVoiceId(voiceId);
 
-    const token = localStorage.getItem('hm-token');
+    const token = localStorage.getItem('vl-token');
     if (!token) {
       // Not logged in - just update local state
       return;
@@ -488,7 +483,7 @@ const Chat = () => {
   return (
     <Box
       h={{ base: 'auto', md: '90vh' }}
-      bg="var(--hm-color-bg)"
+      bg="var(--vl-color-bg)"
       position="relative"
       overflow={{ base: 'visible', md: 'hidden' }}
     >
@@ -508,7 +503,7 @@ const Chat = () => {
           position={{ base: 'sticky', md: 'static' }}
           top={{ base: 0, md: undefined }}
           zIndex={3}
-          bg="var(--hm-color-bg)"
+          bg="var(--vl-color-bg)"
           px={6}
           py={3}
           data-cid="chat-mobile-input-bar"
@@ -530,7 +525,7 @@ const Chat = () => {
             onKeyPress={handleKeyPress}
             isListening={isListening}
             onVoiceToggle={toggleListening}
-            disabled={isLoading}
+            disabled={isLoading || (!isAuthed && anonUsedMs >= ANON_LIMIT_MS)}
             placeholder={t('chat.placeholder', 'Type your message...')}
             micDisabled={micDisabled}
             cid="chat-input-mobile"
@@ -550,23 +545,23 @@ const Chat = () => {
         </Box>
 
         {/* Section B: Right panel (30%) */}
-        <Flex w={{ base: '100%', md: '30%' }} h={{ base: 'auto', md: 'full' }} direction="column" px={6} py={4} borderLeft={{ base: 'none', md: '1px solid var(--hm-border-glass)' }} order={{ base: 2, md: 1 }}>
+        <Flex w={{ base: '100%', md: '30%' }} h={{ base: 'auto', md: 'full' }} direction="column" px={6} py={4} borderLeft={{ base: 'none', md: '1px solid var(--vl-border-glass)' }} order={{ base: 2, md: 1 }}>
           {/* B.1 — Sticky Top: settings, usage, CTAs, info */}
-          <Box as="section" position={{ base: 'static', md: 'sticky' }} top={{ md: 0 }} bg="var(--hm-color-bg)" zIndex={2} pb={2} order={{ base: 1, md: 0 }}>
+          <Box as="section" position={{ base: 'static', md: 'sticky' }} top={{ md: 0 }} bg="var(--vl-color-bg)" zIndex={2} pb={2} order={{ base: 1, md: 0 }}>
             {/* B.1 Header: title, anon note, voice controls, info */}
-            <Box className="hm-glass-card" border="1px solid var(--hm-border-glass)" borderRadius="md" p={3} mb={3}>
+            <Box className="vl-glass-card" border="1px solid var(--vl-border-glass)" borderRadius="md" p={3} mb={3}>
               <VStack align="stretch" spacing={2}>
                 <HStack justify="space-between" align="flex-start">
                   <HStack spacing={2}>
-                    <Box as={BsRobot} fontSize={["18px","20px"]} color="var(--hm-color-brand)" />
+                    <Box as={BsRobot} fontSize={["18px","20px"]} color="var(--vl-color-brand)" />
                     <VStack align="start" spacing={0}>
-                      <Text fontSize={["sm","md"]} fontWeight="700" color="var(--hm-color-text-primary)">
+                      <Text fontSize={["sm","md"]} fontWeight="700" color="var(--vl-color-text-primary)">
                         {t('chat.header.title', 'Safe Space for You 💜')}
                       </Text>
                       {headerSubtitle ? (
-                        <Text fontSize={["xs","sm"]} color="var(--hm-color-text-secondary)">{headerSubtitle}</Text>
+                        <Text fontSize={["xs","sm"]} color="var(--vl-color-text-secondary)">{headerSubtitle}</Text>
                       ) : null}
-                      <Text fontSize={["xs","sm"]} color="var(--hm-color-text-secondary)">
+                      <Text fontSize={["xs","sm"]} color="var(--vl-color-text-secondary)">
                         {t('chat.header.anonConf', '100% Anonymous. 100% Confidential. 100% Judgment-Free.')}
                       </Text>
                     </VStack>
@@ -577,8 +572,8 @@ const Chat = () => {
                     size="sm"
                     onClick={() => setShowInfo(!showInfo)}
                     aria-label="Show info"
-                    color="var(--hm-color-text-secondary)"
-                    _hover={{ color: 'var(--hm-color-brand)' }}
+                    color="var(--vl-color-text-secondary)"
+                    _hover={{ color: 'var(--vl-color-brand)' }}
                   />
                 </HStack>
                 <HStack justify="flex-end" spacing={2}>
@@ -598,13 +593,13 @@ const Chat = () => {
                   />
                 </HStack>
                 <Collapse in={showInfo} animateOpacity>
-                  <Box pt={2} borderTop="1px solid var(--hm-border-glass)">
+                  <Box pt={2} borderTop="1px solid var(--vl-border-glass)">
                     <VStack align="start" spacing={1}>
-                      <Text fontSize="sm" fontWeight="600" color="var(--hm-color-text-primary)">{t('chat.welcome.youCanTitle', 'You can:')}</Text>
+                      <Text fontSize="sm" fontWeight="600" color="var(--vl-color-text-primary)">{t('chat.welcome.youCanTitle', 'You can:')}</Text>
                       <VStack align="start" spacing={1} pl={2}>
-                        <Text fontSize="xs" color="var(--hm-color-text-secondary)">{t('chat.welcome.feature1', '💬 Type in Hindi, English, or Hinglish')}</Text>
-                        <Text fontSize="xs" color="var(--hm-color-text-secondary)">{micDisabled ? t('chat.mic.disabledFree', 'Microphone is disabled on the free plan. Upgrade to enable voice input.') : t('chat.welcome.feature2', '🎙️ Speak in your language (click the mic)')}</Text>
-                        <Text fontSize="xs" color="var(--hm-color-text-secondary)">{t('chat.welcome.feature3', '🔊 Hear responses in your chosen voice')}</Text>
+                        <Text fontSize="xs" color="var(--vl-color-text-secondary)">{t('chat.welcome.feature1', '💬 Type in Hindi, English, or Hinglish')}</Text>
+                        <Text fontSize="xs" color="var(--vl-color-text-secondary)">{micDisabled ? t('chat.mic.disabledFree', 'Microphone is disabled on the free plan. Upgrade to enable voice input.') : t('chat.welcome.feature2', '🎙️ Speak in your language (click the mic)')}</Text>
+                        <Text fontSize="xs" color="var(--vl-color-text-secondary)">{t('chat.welcome.feature3', '🔊 Hear responses in your chosen voice')}</Text>
                       </VStack>
                     </VStack>
                   </Box>
@@ -614,10 +609,10 @@ const Chat = () => {
 
 
             {/* CRM Contact CTA */}
-            <Box className="hm-glass-card" border="1px solid var(--hm-border-glass)" borderRadius="md" p={3} mb={3}>
+            <Box className="vl-glass-card" border="1px solid var(--vl-border-glass)" borderRadius="md" p={3} mb={3}>
               <HStack justify="space-between" align="center">
-                <Text fontSize="sm" color="var(--hm-color-text-secondary)">{t('chat.crm.ctaTitle', 'Need to talk to a human?')}</Text>
-                <Button as={RouterLink} to="/contact" size="xs" bg="var(--hm-color-brand)" color="white" _hover={{ opacity: 0.9 }}>
+                <Text fontSize="sm" color="var(--vl-color-text-secondary)">{t('chat.crm.ctaTitle', 'Need to talk to a human?')}</Text>
+                <Button as={RouterLink} to="/contact" size="xs" bg="var(--vl-color-brand)" color="white" _hover={{ opacity: 0.9 }}>
                   {t('chat.crm.ctaButton', 'Contact CRM')}
                 </Button>
               </HStack>
@@ -628,16 +623,16 @@ const Chat = () => {
               chatUsage ? (
                 (flags?.enforce?.chatLimits === false) ? (
                   <Box pb={2}>
-                    <Text fontSize="sm" color="var(--hm-color-text-secondary)">{t('chat.promo.unmetered', 'Promo: chat minutes not enforced yet')}</Text>
+                    <Text fontSize="sm" color="var(--vl-color-text-secondary)">{t('chat.promo.unmetered', 'Promo: chat minutes not enforced yet')}</Text>
                   </Box>
                 ) : (
                   (typeof chatUsage.limit === 'number' && chatUsage.limit >= 0) ? (
                     <Box pb={2}>
                       <HStack justify="space-between" mb={1}>
-                        <Text fontSize="sm" color="var(--hm-color-text-secondary)">
+                        <Text fontSize="sm" color="var(--vl-color-text-secondary)">
                           {t('profile.usage.chatMinutes', 'Chat minutes')} — {chatUsage.used}/{chatUsage.limit} {chatUsage.period === 'week' ? t('profile.usage.thisWeek', 'this week') : t('profile.usage.thisMonth', 'this month')}
                         </Text>
-                        <Button as={RouterLink} to="/pricing" size="xs" variant="outline" color="var(--hm-color-text-primary)" borderColor="var(--hm-border-subtle)" _hover={{ borderColor: 'var(--hm-color-brand)', color: 'var(--hm-color-brand)' }}>
+                        <Button as={RouterLink} to="/pricing" size="xs" variant="outline" color="var(--vl-color-text-primary)" borderColor="var(--vl-border-subtle)" _hover={{ borderColor: 'var(--vl-color-brand)', color: 'var(--vl-color-brand)' }}>
                           {t('chat.usage.upgradePrompt', 'Upgrade for more')}
                         </Button>
                       </HStack>
@@ -650,7 +645,7 @@ const Chat = () => {
                     </Box>
                   ) : (
                     <Box pb={2}>
-                      <Text fontSize="sm" color="var(--hm-color-text-secondary)">{t('chat.usage.unlimited', 'Unlimited chat')}</Text>
+                      <Text fontSize="sm" color="var(--vl-color-text-secondary)">{t('chat.usage.unlimited', 'Unlimited chat')}</Text>
                     </Box>
                   )
                 )
@@ -658,10 +653,10 @@ const Chat = () => {
             ) : (
               <Box pb={2}>
                 <HStack justify="space-between" mb={1}>
-                  <Text fontSize="sm" color="var(--hm-color-text-secondary)">{`${formatMs(anonUsedMs)} / 5:00 ${t('chat.usage.used', 'used')}`}</Text>
+                  <Text fontSize="sm" color="var(--vl-color-text-secondary)">{`${formatMs(anonUsedMs)} / 5:00 ${t('chat.usage.used', 'used')}`}</Text>
                   <HStack>
-                    <Button as={RouterLink} to="/login" size="xs" variant="outline" color="var(--hm-color-text-primary)" borderColor="var(--hm-border-subtle)" _hover={{ borderColor: 'var(--hm-color-brand)', color: 'var(--hm-color-brand)' }}>{t('auth.signIn', 'Sign in')}</Button>
-                    <Button as={RouterLink} to="/pricing" size="xs" variant="outline" color="var(--hm-color-text-primary)" borderColor="var(--hm-border-subtle)" _hover={{ borderColor: 'var(--hm-color-brand)', color: 'var(--hm-color-brand)' }}>{t('chat.usage.upgradePrompt', 'See plans')}</Button>
+                    <Button as={RouterLink} to="/login" size="xs" variant="outline" color="var(--vl-color-text-primary)" borderColor="var(--vl-border-subtle)" _hover={{ borderColor: 'var(--vl-color-brand)', color: 'var(--vl-color-brand)' }}>{t('auth.signIn', 'Sign in')}</Button>
+                    <Button as={RouterLink} to="/pricing" size="xs" variant="outline" color="var(--vl-color-text-primary)" borderColor="var(--vl-border-subtle)" _hover={{ borderColor: 'var(--vl-color-brand)', color: 'var(--vl-color-brand)' }}>{t('chat.usage.upgradePrompt', 'See plans')}</Button>
                   </HStack>
                 </HStack>
                 <Progress
@@ -676,7 +671,7 @@ const Chat = () => {
             {/* Mode toggle: Chat <-> Talk */}
             <Box pb={2}>
               <HStack justify="flex-end" spacing={3}>
-                <Text fontSize="sm" color="var(--hm-color-text-secondary)">{t('chat.mode.chat', 'Chat')}</Text>
+                <Text fontSize="sm" color="var(--vl-color-text-secondary)">{t('chat.mode.chat', 'Chat')}</Text>
                 <Switch
                   colorScheme="purple"
                   size="md"
@@ -684,7 +679,7 @@ const Chat = () => {
                   onChange={(e) => setTalkMode(e.target.checked)}
                   isDisabled={micDisabled}
                 />
-                <Text fontSize="sm" color="var(--hm-color-text-secondary)">{t('chat.mode.talk', 'Talk')}</Text>
+                <Text fontSize="sm" color="var(--vl-color-text-secondary)">{t('chat.mode.talk', 'Talk')}</Text>
               </HStack>
             </Box>
           </Box>
@@ -712,7 +707,7 @@ const Chat = () => {
               onKeyPress={handleKeyPress}
               isListening={isListening}
               onVoiceToggle={toggleListening}
-              disabled={isLoading}
+              disabled={isLoading || (!isAuthed && anonUsedMs >= ANON_LIMIT_MS)}
               placeholder={t('chat.placeholder', 'Type your message...')}
               micDisabled={micDisabled}
               cid="chat-input-desktop"
@@ -720,6 +715,57 @@ const Chat = () => {
           </Box>
         </Flex>
       </Flex>
+
+      {/* Anonymous Limit Reached Modal */}
+      <Modal isOpen={showLimitModal} onClose={() => setShowLimitModal(false)} isCentered>
+        <ModalOverlay bg="var(--vl-overlay-bg-strong, rgba(0,0,0,0.7))" backdropFilter="blur(4px)" />
+        <ModalContent bg="var(--vl-color-bg)" borderRadius="lg" border="1px solid var(--vl-border-glass)" mx={4}>
+          <ModalHeader color="var(--vl-color-text-primary)" borderBottom="1px solid var(--vl-border-glass)">
+            {t('chat.limitModal.title', '⏱️ 5-Minute Limit Reached')}
+          </ModalHeader>
+          <ModalCloseButton color="var(--vl-color-text-secondary)" />
+          <ModalBody py={6}>
+            <VStack spacing={4} align="stretch">
+              <Text color="var(--vl-color-text-primary)" fontSize="md">
+                {t('chat.limitModal.message', 'You\'ve used your 5 minutes of anonymous chat.')}
+              </Text>
+              {userDisplayName && (
+                <Box bg="var(--vl-bg-glass)" p={3} borderRadius="md" border="1px solid var(--vl-border-glass)">
+                  <Text fontSize="sm" color="var(--vl-color-text-secondary)">
+                    {t('chat.limitModal.anonUser', 'You were chatting as')} <Text as="span" fontWeight="600" color="var(--vl-color-brand)">{userDisplayName}</Text>
+                  </Text>
+                </Box>
+              )}
+              <Text color="var(--vl-color-text-secondary)" fontSize="sm">
+                {t('chat.limitModal.upgrade', 'Sign in or upgrade to a paid plan to continue your conversation and unlock unlimited chat minutes.')}
+              </Text>
+            </VStack>
+          </ModalBody>
+          <ModalFooter borderTop="1px solid var(--vl-border-glass)">
+            <HStack spacing={3} w="full" justify="flex-end">
+              <Button
+                as={RouterLink}
+                to="/login"
+                variant="outline"
+                color="var(--vl-color-text-primary)"
+                borderColor="var(--vl-border-subtle)"
+                _hover={{ borderColor: 'var(--vl-color-brand)', color: 'var(--vl-color-brand)' }}
+              >
+                {t('auth.signIn', 'Sign in')}
+              </Button>
+              <Button
+                as={RouterLink}
+                to="/pricing"
+                bg="var(--vl-color-brand)"
+                color="white"
+                _hover={{ opacity: 0.9 }}
+              >
+                {t('chat.limitModal.seePlans', 'See Plans')}
+              </Button>
+            </HStack>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

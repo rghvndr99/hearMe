@@ -15,7 +15,7 @@ export const useAuth = () => {
    * Load user from token
    */
   const loadUser = useCallback(async () => {
-    const storedToken = localStorage.getItem('hm-token');
+    const storedToken = localStorage.getItem('vl-token');
     
     if (!storedToken) {
       setLoading(false);
@@ -36,12 +36,12 @@ export const useAuth = () => {
         setUser(data?.user || data);
       } else {
         // Token is invalid
-        localStorage.removeItem('hm-token');
+        localStorage.removeItem('vl-token');
         setToken(null);
       }
     } catch (error) {
       console.error('Error loading user:', error);
-      localStorage.removeItem('hm-token');
+      localStorage.removeItem('vl-token');
       setToken(null);
     } finally {
       setLoading(false);
@@ -52,8 +52,8 @@ export const useAuth = () => {
    * Login user
    */
   const login = useCallback((newToken, userData) => {
-    localStorage.setItem('hm-token', newToken);
-    try { sessionStorage.removeItem('hm-anon-token'); } catch {}
+    localStorage.setItem('vl-token', newToken);
+    try { sessionStorage.removeItem('vl-anon-token'); } catch {}
     setToken(newToken);
     setUser(userData);
   }, []);
@@ -62,10 +62,10 @@ export const useAuth = () => {
    * Logout user
    */
   const logout = useCallback(() => {
-    localStorage.removeItem('hm-token');
-    try { sessionStorage.removeItem('hm-anon-token'); } catch {}
-    try { Object.keys(localStorage).forEach((k) => { if (k && k.startsWith('hm-anon-usedMs-')) localStorage.removeItem(k); }); } catch {}
-    try { window.dispatchEvent(new Event('hm-auth-changed')); } catch {}
+    localStorage.removeItem('vl-token');
+    try { sessionStorage.removeItem('vl-anon-token'); } catch {}
+    try { Object.keys(localStorage).forEach((k) => { if (k && k.startsWith('vl-anon-usedMs-')) localStorage.removeItem(k); }); } catch {}
+    try { window.dispatchEvent(new Event('vl-auth-changed')); } catch {}
     setToken(null);
     setUser(null);
   }, []);

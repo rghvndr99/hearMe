@@ -33,30 +33,30 @@ export default function DeleteConfirmationModal({ isOpen, onClose, voice, onConf
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay backdropFilter="blur(4px)" />
       <ModalContent
-        bg="var(--hm-bg-glass)"
-        borderColor="var(--hm-border-glass)"
+        bg="var(--vl-bg-glass)"
+        borderColor="var(--vl-border-glass)"
         border="1px solid"
         backdropFilter="blur(10px)"
       >
-        <ModalHeader color="var(--hm-color-text-primary)">
+        <ModalHeader color="var(--vl-color-text-primary)">
           {t('voicemate.confirmDelete', 'Delete Voice?')}
         </ModalHeader>
-        <ModalCloseButton color="var(--hm-color-text-muted)" />
+        <ModalCloseButton color="var(--vl-color-text-muted)" />
         <ModalBody>
           <VStack align="start" spacing={3}>
-            <Text color="var(--hm-color-text-secondary)">
+            <Text color="var(--vl-color-text-secondary)">
               {t('voicemate.deleteWarning', 'Are you sure you want to delete this voice? This action cannot be undone.')}
             </Text>
             {voice && (
               <HStack
                 p={3}
-                bg="var(--hm-bg-glass)"
+                bg="var(--vl-bg-glass)"
                 borderRadius="md"
-                border="1px solid var(--hm-border-glass)"
+                border="1px solid var(--vl-border-glass)"
                 w="full"
               >
-                <Icon as={FiStar} color="var(--hm-color-brand)" />
-                <Text fontWeight="600" color="var(--hm-color-text-primary)">
+                <Icon as={FiStar} color="var(--vl-color-brand)" />
+                <Text fontWeight="600" color="var(--vl-color-text-primary)">
                   {voice.name}
                 </Text>
               </HStack>
@@ -68,8 +68,8 @@ export default function DeleteConfirmationModal({ isOpen, onClose, voice, onConf
             <Button
               variant="ghost"
               onClick={onClose}
-              color="var(--hm-color-text-muted)"
-              _hover={{ color: 'var(--hm-color-text-primary)', bg: 'var(--hm-bg-glass)' }}
+              color="var(--vl-color-text-muted)"
+              _hover={{ color: 'var(--vl-color-text-primary)', bg: 'var(--vl-bg-glass)' }}
             >
               {t('voicemate.cancel', 'Cancel')}
             </Button>

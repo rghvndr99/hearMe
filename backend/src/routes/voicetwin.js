@@ -154,10 +154,10 @@ router.get('/mine', auth, async (req, res) => {
 
     // Step 3: Transform user's custom voices from DB
     const customVoices = userCustomVoicesFromDB.map(doc => ({
-      id: doc.voiceId,
+      id: doc._id.toString(), // MongoDB _id for edit/delete operations
       name: doc.name,
       provider: doc.provider || 'elevenlabs',
-      voiceId: doc.voiceId,
+      voiceId: doc.voiceId, // ElevenLabs voice ID for TTS operations
       category: 'cloned', // Mark as custom/cloned for highlighting in UI
       createdAt: doc.createdAt,
     }));

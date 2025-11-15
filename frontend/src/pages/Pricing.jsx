@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { FiCheckCircle, FiShield, FiMic, FiUsers, FiRotateCcw, FiTrendingUp, FiSmartphone } from 'react-icons/fi';
 
 
-// Pricing page aligned with HearMe architecture
+// Pricing page aligned with VoiceLap architecture
 // - Theme-aware via CSS variables and reusable classes (components.css)
 // - i18n with fallbacks
 // - Auth guard: redirects to login if not authenticated
@@ -161,7 +161,7 @@ const docMap = {
     titleKey: 'pricing.featuresDoc.voiceMinutes.title',
     title: 'Voice minutes',
     descKey: 'pricing.featuresDoc.voiceMinutes.desc',
-    desc: 'Talk freely with HearMe — your voice companion. These are the total minutes you can spend talking using either default or your own created voices.'
+    desc: 'Talk freely with VoiceLap — your voice companion. These are the total minutes you can spend talking using either default or your own created voices.'
   },
 
   defaultVoices: {
@@ -169,7 +169,7 @@ const docMap = {
     titleKey: 'pricing.featuresDoc.defaultVoices.title',
     title: 'Default voices',
     descKey: 'pricing.featuresDoc.defaultVoices.desc',
-    desc: 'Beautiful, ready-to-use voices already inside HearMe — calm, warm, or energetic — so you can start speaking and listening without setting up anything.'
+    desc: 'Beautiful, ready-to-use voices already inside VoiceLap — calm, warm, or energetic — so you can start speaking and listening without setting up anything.'
   },
 
   voiceClones: {
@@ -177,7 +177,7 @@ const docMap = {
     titleKey: 'pricing.featuresDoc.voiceClones.title',
     title: 'Voice cloning (VoiceTwins)',
     descKey: 'pricing.featuresDoc.voiceClones.desc',
-    desc: 'Record your own voice or a loved one’s, and HearMe will create a digital “VoiceTwin.” You can even clone voices from family videos or recordings (with consent). It’s like keeping a voice memory alive.'
+    desc: 'Record your own voice or a loved one’s, and VoiceLap will create a digital “VoiceTwin.” You can even clone voices from family videos or recordings (with consent). It’s like keeping a voice memory alive.'
   },
 
   customVoiceMinutes: {
@@ -193,7 +193,7 @@ const docMap = {
     titleKey: 'pricing.featuresDoc.volunteerSupport.title',
     title: 'Human / volunteer support',
     descKey: 'pricing.featuresDoc.volunteerSupport.desc',
-    desc: 'Sometimes, only a real human touch can help. HearMe connects you with kind volunteers — people who listen without judging and speak from the heart.'
+    desc: 'Sometimes, only a real human touch can help. VoiceLap connects you with kind volunteers — people who listen without judging and speak from the heart.'
   },
 
   chatMemory: {
@@ -201,7 +201,7 @@ const docMap = {
     titleKey: 'pricing.featuresDoc.chatMemory.title',
     title: 'Chat memory',
     descKey: 'pricing.featuresDoc.chatMemory.desc',
-    desc: 'HearMe remembers your feelings and important talks — only if you choose. For paid users, this helps our AI and listeners understand your journey better and respond with more care.'
+    desc: 'VoiceLap remembers your feelings and important talks — only if you choose. For paid users, this helps our AI and listeners understand your journey better and respond with more care.'
   },
 
   aiChatText: {
@@ -209,7 +209,7 @@ const docMap = {
     titleKey: 'pricing.featuresDoc.aiChatText.title',
     title: 'Text chat',
     descKey: 'pricing.featuresDoc.aiChatText.desc',
-    desc: 'Unlimited chatting — express your thoughts in words anytime. HearMe listens with patience, whether you write in English or Hindi.'
+    desc: 'Unlimited chatting — express your thoughts in words anytime. VoiceLap listens with patience, whether you write in English or Hindi.'
   },
 
   voiceFromVideo: {
@@ -217,7 +217,7 @@ const docMap = {
     titleKey: 'pricing.featuresDoc.voiceFromVideo.title',
     title: 'Voice from video / audio',
     descKey: 'pricing.featuresDoc.voiceFromVideo.desc',
-    desc: 'Upload a video or an old audio clip, and HearMe can carefully extract and recreate that voice — keeping the memories of your loved ones close forever.'
+    desc: 'Upload a video or an old audio clip, and VoiceLap can carefully extract and recreate that voice — keeping the memories of your loved ones close forever.'
   },
 
   storage: {
@@ -225,7 +225,7 @@ const docMap = {
     titleKey: 'pricing.featuresDoc.storage.title',
     title: 'Storage & retention',
     descKey: 'pricing.featuresDoc.storage.desc',
-    desc: 'HearMe keeps your voice and chat history safe and private. For free users, data is temporary; for subscribers, it’s stored longer so your emotional journey stays preserved.'
+    desc: 'VoiceLap keeps your voice and chat history safe and private. For free users, data is temporary; for subscribers, it’s stored longer so your emotional journey stays preserved.'
   },
 
   supportLevel: {
@@ -292,7 +292,7 @@ const docMap = {
   );
 
   const onSelectPlan = (planId) => {
-    const token = localStorage.getItem('hm-token');
+    const token = localStorage.getItem('vl-token');
     const returnTo = '/pricing';
     if (!token) {
       navigate(`/login?redirect=${encodeURIComponent(returnTo)}`);
@@ -310,14 +310,14 @@ const docMap = {
   };
 
   return (
-    <Box className="hm-page-container hm-cid-pricing-root" data-cid="pricing-root">
-      <Box className="hm-section" textAlign="center">
+    <Box className="vl-page-container vl-cid-pricing-root" data-cid="pricing-root">
+      <Box className="vl-section" textAlign="center">
 
         {/* Hero banner */}
-        <Box border="1px solid var(--hm-border-subtle)" borderRadius="0.75rem" overflow="hidden" mb={6} className="hm-cid-pricing-banner" data-cid="pricing-banner">
+        <Box border="1px solid var(--vl-border-subtle)" borderRadius="0.75rem" overflow="hidden" mb={6} className="vl-cid-pricing-banner" data-cid="pricing-banner">
           <Image
-            src="/images/why-hearMe.png"
-            alt={t('pricing.bannerAlt','Why HearMe — care that listens')}
+            src="/images/why-voicelap.png"
+            alt={t('pricing.bannerAlt','Why VoiceLap — care that listens')}
             w="100%"
             h={{ base: '160px', md: '220px' }}
             objectFit="cover"
@@ -326,79 +326,79 @@ const docMap = {
 
         {/* Benefit tiles */}
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4} mb={8}>
-          <Box className="hm-card" p={4}>
+          <Box className="vl-card" p={4}>
             <HStack align="start" spacing={3}>
-              <Icon as={FiShield} color="var(--hm-color-brand)" mt="3px" />
+              <Icon as={FiShield} color="var(--vl-color-brand)" mt="3px" />
               <VStack align="start" spacing={1}>
-                <Text fontWeight="600" color="var(--hm-color-text-primary)">{t('pricing.benefits.privacyTitle','Private & secure')}</Text>
-                <Text className="hm-text-tertiary">{t('pricing.benefits.privacyDesc','Anonymous, encrypted chats with privacy-first design.')}</Text>
+                <Text fontWeight="600" color="var(--vl-color-text-primary)">{t('pricing.benefits.privacyTitle','Private & secure')}</Text>
+                <Text className="vl-text-tertiary">{t('pricing.benefits.privacyDesc','Anonymous, encrypted chats with privacy-first design.')}</Text>
               </VStack>
             </HStack>
           </Box>
-          <Box className="hm-card" p={4}>
+          <Box className="vl-card" p={4}>
             <HStack align="start" spacing={3}>
-              <Icon as={FiMic} color="var(--hm-color-brand)" mt="3px" />
+              <Icon as={FiMic} color="var(--vl-color-brand)" mt="3px" />
               <VStack align="start" spacing={1}>
-                <Text fontWeight="600" color="var(--hm-color-text-primary)">{t('pricing.benefits.voiceTitle','Your voice matters')}</Text>
-                <Text className="hm-text-tertiary">{t('pricing.benefits.voiceDesc','Realistic voices, VoiceTwins, and emotion-aware responses.')}</Text>
+                <Text fontWeight="600" color="var(--vl-color-text-primary)">{t('pricing.benefits.voiceTitle','Your voice matters')}</Text>
+                <Text className="vl-text-tertiary">{t('pricing.benefits.voiceDesc','Realistic voices, VoiceTwins, and emotion-aware responses.')}</Text>
               </VStack>
             </HStack>
           </Box>
-          <Box className="hm-card" p={4}>
+          <Box className="vl-card" p={4}>
             <HStack align="start" spacing={3}>
-              <Icon as={FiUsers} color="var(--hm-color-brand)" mt="3px" />
+              <Icon as={FiUsers} color="var(--vl-color-brand)" mt="3px" />
               <VStack align="start" spacing={1}>
-                <Text fontWeight="600" color="var(--hm-color-text-primary)">{t('pricing.benefits.supportTitle','Human support when needed')}</Text>
-                <Text className="hm-text-tertiary">{t('pricing.benefits.supportDesc','Volunteer calls and community care beyond chat.')}</Text>
+                <Text fontWeight="600" color="var(--vl-color-text-primary)">{t('pricing.benefits.supportTitle','Human support when needed')}</Text>
+                <Text className="vl-text-tertiary">{t('pricing.benefits.supportDesc','Volunteer calls and community care beyond chat.')}</Text>
               </VStack>
             </HStack>
           </Box>
         </SimpleGrid>
 
-        <Heading as="h1" className="hm-heading-primary" mb={6}>{title}</Heading>
+        <Heading as="h1" className="vl-heading-primary" mb={6}>{title}</Heading>
 
 
         {loading && !remote && (
           <HStack spacing={2} justify="center" mb={3}>
             <Spinner size="sm" />
-            <Text className="hm-text-tertiary">{t('pricing.loading','Loading latest plans...')}</Text>
+            <Text className="vl-text-tertiary">{t('pricing.loading','Loading latest plans...')}</Text>
           </HStack>
         )}
         {supportsAnnual && (
-          <HStack spacing={4} justify="center" mb={8} color="var(--hm-color-text-secondary)">
-            <Text className="hm-text-tertiary">{t('pricing.monthly','Monthly')}</Text>
+          <HStack spacing={4} justify="center" mb={8} color="var(--vl-color-text-secondary)">
+            <Text className="vl-text-tertiary">{t('pricing.monthly','Monthly')}</Text>
             <Switch colorScheme="orange" isChecked={billing==='annual'} onChange={(e)=>setBilling(e.target.checked?'annual':'monthly')} />
             <HStack spacing={2}>
-              <Text className="hm-text-tertiary">{t('pricing.annual','Annual')}</Text>
-              <Text className="hm-text-tertiary" color="var(--hm-color-brand)">{t('pricing.save30', `Save ${discountPercent}%`)}</Text>
+              <Text className="vl-text-tertiary">{t('pricing.annual','Annual')}</Text>
+              <Text className="vl-text-tertiary" color="var(--vl-color-brand)">{t('pricing.save30', `Save ${discountPercent}%`)}</Text>
             </HStack>
           </HStack>
         )}
 
         {/* Plans */}
-        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6} className="hm-cid-pricing-plans" data-cid="pricing-plans">
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6} className="vl-cid-pricing-plans" data-cid="pricing-plans">
           {plans.map((p) => (
-            <Box key={p.id} className="hm-card hm-card-hover" textAlign="left" borderColor={p.featured ? 'var(--hm-color-brand)' : 'var(--hm-border-subtle)'} borderWidth={p.featured ? '2px' : '1px'}>
+            <Box key={p.id} className="vl-card vl-card-hover" textAlign="left" borderColor={p.featured ? 'var(--vl-color-brand)' : 'var(--vl-border-subtle)'} borderWidth={p.featured ? '2px' : '1px'}>
               <VStack align="start" spacing={3}>
                 {p.featured && (
-                  <Text fontSize="xs" color="var(--hm-color-brand)" bg="var(--hm-bg-glass)" px={2} py={1} borderRadius="full">
+                  <Text fontSize="xs" color="var(--vl-color-brand)" bg="var(--vl-bg-glass)" px={2} py={1} borderRadius="full">
                     {p.badge || t('pricing.mostPopular','Most popular')}
                   </Text>
                 )}
 
-                <Heading as="h3" size="md" color="var(--hm-color-text-primary)">{p.name}</Heading>
+                <Heading as="h3" size="md" color="var(--vl-color-text-primary)">{p.name}</Heading>
                 <Box>
-                  <Heading as="div" size="lg" color="var(--hm-color-text-primary)">{currency(p.price)}<Text as="span" fontSize="md" color="var(--hm-color-text-secondary)">{p.cycleDays === 30 ? t('pricing.mo','/mo') : `/${p.cycleDays}d`}</Text></Heading>
+                  <Heading as="div" size="lg" color="var(--vl-color-text-primary)">{currency(p.price)}<Text as="span" fontSize="md" color="var(--vl-color-text-secondary)">{p.cycleDays === 30 ? t('pricing.mo','/mo') : `/${p.cycleDays}d`}</Text></Heading>
                 </Box>
                 <VStack align="start" spacing={2} mt={2}>
                   {p.featuresBullets.map((f, idx) => (
                     <HStack key={idx} align="start" spacing={2}>
-                      <Icon as={FiCheckCircle} color="var(--hm-color-brand)" mt="2px" boxSize={4} />
-                      <Text className="hm-text-secondary">{f}</Text>
+                      <Icon as={FiCheckCircle} color="var(--vl-color-brand)" mt="2px" boxSize={4} />
+                      <Text className="vl-text-secondary">{f}</Text>
                     </HStack>
                   ))}
                 </VStack>
-                <Button className="hm-button-primary" onClick={() => onSelectPlan(p.id)}>{p.ctaText || t('pricing.cta.select','Select plan')}</Button>
+                <Button className="vl-button-primary" onClick={() => onSelectPlan(p.id)}>{p.ctaText || t('pricing.cta.select','Select plan')}</Button>
               </VStack>
             </Box>
           ))}
@@ -407,44 +407,44 @@ const docMap = {
         </SimpleGrid>
 
         {/* Assurances */}
-        <Box mt={6} p={4} border="1px solid var(--hm-border-subtle)" bg="var(--hm-bg-glass)" borderRadius="0.75rem">
+        <Box mt={6} p={4} border="1px solid var(--vl-border-subtle)" bg="var(--vl-bg-glass)" borderRadius="0.75rem">
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4}>
             <HStack align="start" spacing={2}>
-              <Icon as={FiRotateCcw} color="var(--hm-color-brand)" mt="2px" />
-              <Text className="hm-text-secondary">{t('pricing.assurance.cancel','Cancel anytime — your remaining period will be refunded back to you.')}</Text>
+              <Icon as={FiRotateCcw} color="var(--vl-color-brand)" mt="2px" />
+              <Text className="vl-text-secondary">{t('pricing.assurance.cancel','Cancel anytime — your remaining period will be refunded back to you.')}</Text>
             </HStack>
             <HStack align="start" spacing={2}>
-              <Icon as={FiTrendingUp} color="var(--hm-color-brand)" mt="2px" />
-              <Text className="hm-text-secondary">{t('pricing.assurance.upgrade','Upgrade anytime — what you\'ve already paid will be adjusted towards the higher plan.')}</Text>
+              <Icon as={FiTrendingUp} color="var(--vl-color-brand)" mt="2px" />
+              <Text className="vl-text-secondary">{t('pricing.assurance.upgrade','Upgrade anytime — what you\'ve already paid will be adjusted towards the higher plan.')}</Text>
             </HStack>
             <HStack align="start" spacing={2}>
-              <Icon as={FiSmartphone} color="var(--hm-color-brand)" mt="2px" />
-              <Text className="hm-text-secondary">{t('pricing.assurance.upi','UPI secure payments with PhonePe')}</Text>
+              <Icon as={FiSmartphone} color="var(--vl-color-brand)" mt="2px" />
+              <Text className="vl-text-secondary">{t('pricing.assurance.upi','UPI secure payments with PhonePe')}</Text>
             </HStack>
           </SimpleGrid>
         </Box>
 
 
         {/* Promo banner */}
-        <Box mt={8} border="1px solid var(--hm-border-subtle)" borderRadius="0.75rem" p={4} bg="var(--hm-bg-glass)">
+        <Box mt={8} border="1px solid var(--vl-border-subtle)" borderRadius="0.75rem" p={4} bg="var(--vl-bg-glass)">
         {/* Feature explanations */}
         <Box textAlign="center">
-          <Heading as="h2" className="hm-heading-secondary" mb={2}>
+          <Heading as="h2" className="vl-heading-secondary" mb={2}>
             {t('pricing.featuresDoc.title','Understand each feature')}
           </Heading>
-          <Text className="hm-text-secondary" mb={6}>
+          <Text className="vl-text-secondary" mb={6}>
             {t('pricing.featuresDoc.subtitle','What each perk means and how it helps you')}
           </Text>
           <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4} textAlign="left">
             {featureDocs.map(fd => (
-              <Box key={fd.k} className="hm-card" p={4}>
+              <Box key={fd.k} className="vl-card" p={4}>
                 <HStack align="start" spacing={3}>
-                  <Icon as={fd.icon} color="var(--hm-color-brand)" mt="3px" />
+                  <Icon as={fd.icon} color="var(--vl-color-brand)" mt="3px" />
                   <VStack align="start" spacing={1}>
-                    <Text fontWeight="600" color="var(--hm-color-text-primary)">
+                    <Text fontWeight="600" color="var(--vl-color-text-primary)">
                       {t(`pricing.featuresDoc.${fd.k}.title`, fd.title)}
                     </Text>
-                    <Text className="hm-text-tertiary">
+                    <Text className="vl-text-tertiary">
                       {t(`pricing.featuresDoc.${fd.k}.desc`, fd.desc)}
                     </Text>
                   </VStack>
@@ -458,7 +458,7 @@ const docMap = {
 
         {/* FAQ */}
         <Box mt={12} textAlign="center">
-          <Heading as="h2" className="hm-heading-secondary" mb={6}>{t('pricing.faq.title','Frequently Asked Questions')}</Heading>
+          <Heading as="h2" className="vl-heading-secondary" mb={6}>{t('pricing.faq.title','Frequently Asked Questions')}</Heading>
           <VStack spacing={3} align="stretch">
 
             {[
@@ -470,10 +470,10 @@ const docMap = {
               },
               {
                 q: 'Can I talk in Hindi or other languages?',
-                a: 'Yes, HearMe supports Hindi, English, and many regional languages for maximum comfort.',
+                a: 'Yes, VoiceLap supports Hindi, English, and many regional languages for maximum comfort.',
               },
               {
-                q: 'Do I need to pay to use HearMe?',
+                q: 'Do I need to pay to use VoiceLap?',
                 a: 'You can start with the Free plan. Paid plans unlock more voice minutes, features, and volunteer access.',
               },
               {
@@ -485,9 +485,9 @@ const docMap = {
                 a: 'You can easily top up using our wallet recharge options anytime.',
               },
             ].map((item, idx) => (
-              <Box key={idx} className="hm-card" p={3} textAlign="left">
-                <Text fontWeight="600" color="var(--hm-color-text-primary)">{t(`pricing.faq.q${idx+1}`, item.q)}</Text>
-                <Text className="hm-text-tertiary" mt={1}>{t(`pricing.faq.a${idx+1}`, item.a)}</Text>
+              <Box key={idx} className="vl-card" p={3} textAlign="left">
+                <Text fontWeight="600" color="var(--vl-color-text-primary)">{t(`pricing.faq.q${idx+1}`, item.q)}</Text>
+                <Text className="vl-text-tertiary" mt={1}>{t(`pricing.faq.a${idx+1}`, item.a)}</Text>
               </Box>
             ))}
           </VStack>

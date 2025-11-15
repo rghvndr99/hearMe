@@ -77,6 +77,28 @@ async function computeUsage(userId, plan) {
   // Chat minutes used in the current window (week/month/unlimited)
   const chat = await computeChatUsage(userId, plan);
 
+  // In-person sessions (human care) - count bookings in current month
+  const Booking = (await import('../models/Booking.js')).default;
+  const User = (await import('../models/User.js')).default;
+
+  const user = await User.findById(userId).select('trial_human_calls_remaining current_plan_id').lean();
+  const trialRemaining = user?.trial_human_calls_remaining ?? 3;
+
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const bookingsThisMonth = await Booking.countDocuments({
+    user_id: String(userId),
+    createdAt: { $gte: monthStart },
+    status: { $in: ['pending', 'confirmed', 'completed'] }
+  });
+
+  // Get plan-based limit from voicelap_pricing_v2.json structure
+  // For now, use hardcoded values matching the pricing JSON
+  let planSessionsLimit = 0;
+  if (plan === 'care') planSessionsLimit = 10;
+  else if (plan === 'companion') planSessionsLimit = 15;
+  else if (plan === 'family') planSessionsLimit = 20;
+
   return {
     voiceTwins: {
       used: voicesCreated,
@@ -86,6 +108,12 @@ async function computeUsage(userId, plan) {
       used: chat.used,
       limit: chat.limit,
       period: chat.period,
+    },
+    inPersonSessions: {
+      used: bookingsThisMonth,
+      limit: planSessionsLimit,
+      trialRemaining: trialRemaining,
+      period: 'month',
     },
   };
 }

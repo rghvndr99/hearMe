@@ -48,8 +48,8 @@ const ResetPassword = () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg="var(--hm-color-bg)"
-      color="var(--hm-color-text-primary)"
+      bg="var(--vl-color-bg)"
+      color="var(--vl-color-text-primary)"
       position="relative"
       overflow="hidden"
       px={[6, 12]}
@@ -57,8 +57,8 @@ const ResetPassword = () => {
       pb={[12, 20]}
     >
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
-        <Box maxW="500px" mx="auto" w="full" p={6} className="hm-glass-card hm-cid-reset-password-form" data-cid="reset-password-form" borderRadius="2xl">
-          <Heading size="lg" mb={6} color="var(--hm-color-text-primary)">Reset Password</Heading>
+        <Box maxW="500px" mx="auto" w="full" p={6} className="vl-glass-card vl-cid-reset-password-form" data-cid="reset-password-form" borderRadius="2xl">
+          <Heading size="lg" mb={6} color="var(--vl-color-text-primary)">Reset Password</Heading>
           <form onSubmit={submit}>
             <VStack spacing={4} align="stretch">
               <FormControl isRequired>
@@ -69,9 +69,9 @@ const ResetPassword = () => {
                 <FormLabel>Confirm New Password</FormLabel>
                 <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
               </FormControl>
-              <Button type="submit" isLoading={loading} bgGradient="var(--hm-gradient-cta)" color="white">Update password</Button>
+              <Button type="submit" isLoading={loading} bgGradient="var(--vl-gradient-cta)" color="white">Update password</Button>
               {!token && (
-                <Text color="var(--hm-color-text-secondary)" fontSize="sm">No token found in URL. Please use the link from your email or request a new reset link.</Text>
+                <Text color="var(--vl-color-text-secondary)" fontSize="sm">No token found in URL. Please use the link from your email or request a new reset link.</Text>
               )}
             </VStack>
           </form>

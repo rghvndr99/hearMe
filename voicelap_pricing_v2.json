@@ -2,8 +2,8 @@
   "version": "2025-11-07-v2",
   "currency": "INR",
   "meta": {
-    "description": "HearMe growth-first pricing model. Free-first access to chat, themes and basic voices. Monetize human care, custom voice creation and usage.",
-    "author": "HearMe Product",
+    "description": "VoiceLap growth-first pricing model. Free-first access to chat, themes and basic voices. Monetize human care, custom voice creation and usage.",
+    "author": "VoiceLap Product",
     "generated_at": "2025-11-07T00:00:00+05:30"
   },
   "plans": [
@@ -12,7 +12,7 @@
   "anonymous_allowed": true,
   "billing_cycle_days": 7,
   "currency": "INR",
-  "description": "Full access to core HearMe experience: unlimited AI chat, themes, and default voices. Includes 2-3 trial human care sessions to showcase the platform.",
+  "description": "Full access to core VoiceLap experience: unlimited AI chat, themes, and default voices. Includes 2-3 trial human care sessions to showcase the platform.",
   "display_name": "Free",
   "features": {
     "ai_chat_text": "unlimited",
@@ -262,10 +262,10 @@
     }
   ],
   "ui_texts": {
-    "tagline": "HearMe listens. HearMe feels. HearMe connects.",
+    "tagline": "VoiceLap listens. VoiceLap feels. VoiceLap connects.",
     "anonymous_banner": "No account required. Start hearing and being heard — instantly.",
-    "free_call_offer": "New users get 2–3 free scheduled human care trials to feel HearMe.",
-    "upgrade_nudge_after_trials": "You’ve experienced HearMe with trials. Upgrade to keep the same listener and continue your journey.",
+    "free_call_offer": "New users get 2–3 free scheduled human care trials to feel VoiceLap.",
+    "upgrade_nudge_after_trials": "You’ve experienced VoiceLap with trials. Upgrade to keep the same listener and continue your journey.",
     "wallet_cta": "Add minutes (no signup required)"
   },
   "settings": {

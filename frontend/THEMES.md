@@ -1,7 +1,7 @@
-# HearMe Theme System
+# VoiceLap Theme System
 
 ## Overview
-HearMe features a comprehensive theme system with 5 beautiful color schemes designed to support different moods and preferences for mental health and wellness.
+VoiceLap features a comprehensive theme system with 5 beautiful color schemes designed to support different moods and preferences for mental health and wellness.
 
 ## Available Themes
 
@@ -94,12 +94,12 @@ Users can switch themes using the **Theme Toggle** button in the header navigati
 ```javascript
 // Set theme
 document.documentElement.setAttribute('data-theme', 'ocean');
-localStorage.setItem('hm-theme', 'ocean');
+localStorage.setItem('vl-theme', 'ocean');
 ```
 
 #### Get Current Theme
 ```javascript
-const currentTheme = localStorage.getItem('hm-theme') || 'dark';
+const currentTheme = localStorage.getItem('vl-theme') || 'dark';
 ```
 
 #### Available Theme IDs
@@ -117,38 +117,38 @@ All themes use the same CSS variable names, making it easy to maintain consisten
 
 ### Color Variables
 ```css
---hm-color-brand          /* Primary brand color */
---hm-color-bg             /* Main background */
---hm-color-text-primary   /* Primary text color */
---hm-color-text-muted     /* Muted text */
---hm-color-text-secondary /* Secondary text */
---hm-color-text-tertiary  /* Tertiary text */
---hm-color-placeholder    /* Placeholder text */
+--vl-color-brand          /* Primary brand color */
+--vl-color-bg             /* Main background */
+--vl-color-text-primary   /* Primary text color */
+--vl-color-text-muted     /* Muted text */
+--vl-color-text-secondary /* Secondary text */
+--vl-color-text-tertiary  /* Tertiary text */
+--vl-color-placeholder    /* Placeholder text */
 ```
 
 ### Gradient Variables
 ```css
---hm-gradient-cta         /* CTA button gradient */
---hm-gradient-cta-hover   /* CTA hover gradient */
---hm-gradient-bg-pink     /* Background gradient (pink/brand) */
---hm-gradient-bg-blue     /* Background gradient (blue) */
---hm-gradient-bg-orange   /* Background gradient (orange/accent) */
+--vl-gradient-cta         /* CTA button gradient */
+--vl-gradient-cta-hover   /* CTA hover gradient */
+--vl-gradient-bg-pink     /* Background gradient (pink/brand) */
+--vl-gradient-bg-blue     /* Background gradient (blue) */
+--vl-gradient-bg-orange   /* Background gradient (orange/accent) */
 ```
 
 ### Glass Morphism Variables
 ```css
---hm-border-glass         /* Glass border color */
---hm-border-glass-soft    /* Softer glass border */
---hm-bg-glass             /* Glass background */
---hm-bg-glass-light       /* Lighter glass background */
---hm-bg-glass-strong      /* Stronger glass background */
+--vl-border-glass         /* Glass border color */
+--vl-border-glass-soft    /* Softer glass border */
+--vl-bg-glass             /* Glass background */
+--vl-bg-glass-light       /* Lighter glass background */
+--vl-bg-glass-strong      /* Stronger glass background */
 ```
 
 ### Other Variables
 ```css
---hm-header-bg            /* Header background */
---hm-border-outline       /* Outline border color */
---hm-hover-bg             /* Hover background */
+--vl-header-bg            /* Header background */
+--vl-border-outline       /* Outline border color */
+--vl-hover-bg             /* Hover background */
 ```
 
 ---
@@ -157,33 +157,33 @@ All themes use the same CSS variable names, making it easy to maintain consisten
 
 ### Glass Cards
 ```css
-.hm-glass-card        /* Standard glass card with hover */
-.hm-glass-card-light  /* Lighter glass card */
-.hm-glass-card-soft   /* Softer borders, less blur */
+.vl-glass-card        /* Standard glass card with hover */
+.vl-glass-card-light  /* Lighter glass card */
+.vl-glass-card-soft   /* Softer borders, less blur */
 ```
 
 ### Form Inputs
 ```css
-.hm-input             /* Form input with focus states */
+.vl-input             /* Form input with focus states */
 ```
 
 ### Background Gradients
 ```css
-.hm-bg-gradient-pink    /* Pink/brand gradient background */
-.hm-bg-gradient-blue    /* Blue gradient background */
-.hm-bg-gradient-orange  /* Orange/accent gradient background */
+.vl-bg-gradient-pink    /* Pink/brand gradient background */
+.vl-bg-gradient-blue    /* Blue gradient background */
+.vl-bg-gradient-orange  /* Orange/accent gradient background */
 ```
 
 ### Borders & Hover
 ```css
-.hm-border-top        /* Top border with glass effect */
-.hm-border-outline    /* Outline border */
-.hm-hover-bg          /* Hover background effect */
+.vl-border-top        /* Top border with glass effect */
+.vl-border-outline    /* Outline border */
+.vl-hover-bg          /* Hover background effect */
 ```
 
 ### Brand Color
 ```css
-.hm-brand             /* Brand color text */
+.vl-brand             /* Brand color text */
 ```
 
 ---
@@ -195,9 +195,9 @@ To add a new theme, add a new `[data-theme="your-theme"]` block in `frontend/src
 ```css
 [data-theme="your-theme"]{
   /* Brand Colors */
-  --hm-color-brand: #YOUR_COLOR;
-  --hm-color-bg: #YOUR_BG;
-  --hm-color-text-primary: #YOUR_TEXT;
+  --vl-color-brand: #YOUR_COLOR;
+  --vl-color-bg: #YOUR_BG;
+  --vl-color-text-primary: #YOUR_TEXT;
   /* ... add all other variables */
 }
 ```

@@ -1,7 +1,7 @@
 # Voice Features - Interactive Chat
 
 ## Overview
-The HearMe chat now includes full voice interaction capabilities, allowing users to speak their messages and hear AI responses read aloud. This creates a more natural, accessible, and engaging conversation experience.
+The VoiceLap chat now includes full voice interaction capabilities, allowing users to speak their messages and hear AI responses read aloud. This creates a more natural, accessible, and engaging conversation experience.
 
 ---
 
@@ -437,7 +437,7 @@ transition: all 0.2s
 
 ## Summary
 
-The voice features make HearMe chat:
+The voice features make VoiceLap chat:
 - ✅ More accessible
 - ✅ More natural
 - ✅ More engaging

@@ -2,7 +2,7 @@
   Pluggable email service: supports LOG (default), RESEND, SENDGRID, SES
   Configure with env:
     EMAIL_PROVIDER=LOG|RESEND|SENDGRID|SES
-    EMAIL_FROM="HearMe <no-reply@yourdomain>"
+    EMAIL_FROM="VoiceLap <no-reply@yourdomain>"
 
     RESEND_API_KEY=...
 
@@ -14,7 +14,7 @@
 */
 
 const provider = process.env.EMAIL_PROVIDER || 'LOG';
-const from = process.env.EMAIL_FROM || 'HearMe <no-reply@hearme.local>';
+const from = process.env.EMAIL_FROM || 'VoiceLap <no-reply@voicelap.local>';
 
 export async function sendMail({ to, subject, html, text }) {
   if (!to) throw new Error('sendMail: `to` is required');

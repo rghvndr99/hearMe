@@ -18,20 +18,20 @@ if (typeof document !== 'undefined') {
   i18n.on('languageChanged', (lng) => {
     document.documentElement.lang = lng || 'en';
   });
-  // Ensure Chat language (hm-language) is aligned on initial load
+  // Ensure Chat language (vl-language) is aligned on initial load
   try {
     const map = { en: 'en-US', hi: 'hi-IN' };
     const ui = i18n.language || 'en';
-    const chat = localStorage.getItem('hm-language');
+    const chat = localStorage.getItem('vl-language');
     if (map[ui] && chat !== map[ui]) {
-      localStorage.setItem('hm-language', map[ui]);
+      localStorage.setItem('vl-language', map[ui]);
     }
   } catch {}
 
 }
 
 // Initialize theme before app renders (backup in case index.html script didn't run)
-const savedTheme = localStorage.getItem('hm-theme') || 'dark';
+const savedTheme = localStorage.getItem('vl-theme') || 'dark';
 document.documentElement.setAttribute('data-theme', savedTheme);
 const colorScheme = (savedTheme === 'light') ? 'light' : 'dark';
 document.documentElement.style.colorScheme = colorScheme;
@@ -63,80 +63,80 @@ function RouteMetaSetter() {
   useEffect(() => {
     const metaMap = {
       '/': {
-        title: t('meta.home.title', 'HearMe — Support that listens'),
+        title: t('meta.home.title', 'VoiceLap — Support that listens'),
         description: t('meta.home.description', 'Chat or talk in Hindi and English with an empathetic AI and volunteers.'),
       },
       '/chat': {
-        title: t('meta.chat.title', 'Chat — HearMe'),
+        title: t('meta.chat.title', 'Chat — VoiceLap'),
         description: t('meta.chat.description', 'Start a caring conversation in Hindi or English. Talk or type; we listen.'),
       },
       '/stories': {
-        title: t('meta.stories.title', 'Stories — HearMe'),
+        title: t('meta.stories.title', 'Stories — VoiceLap'),
         description: t('meta.stories.description', 'Real stories of resilience and healing from our community.'),
       },
       '/volunteer': {
-        title: t('meta.volunteer.title', 'Volunteer — HearMe'),
+        title: t('meta.volunteer.title', 'Volunteer — VoiceLap'),
         description: t('meta.volunteer.description', 'Join as a caring listener and support people when it matters.'),
       },
       '/resources': {
-        title: t('meta.resources.title', 'Resources — HearMe'),
+        title: t('meta.resources.title', 'Resources — VoiceLap'),
         description: t('meta.resources.description', 'Guides and tools for mental well-being in Hindi and English.'),
       },
       '/about': {
-        title: t('meta.about.title', 'About — HearMe'),
-        description: t('meta.about.description', 'Why we built HearMe and how we support you compassionately.'),
+        title: t('meta.about.title', 'About — VoiceLap'),
+        description: t('meta.about.description', 'Why we built VoiceLap and how we support you compassionately.'),
       },
       '/contact': {
-        title: t('meta.contact.title', 'Contact — HearMe'),
+        title: t('meta.contact.title', 'Contact — VoiceLap'),
         description: t('meta.contact.description', 'Reach our team for questions, feedback, or support.'),
       },
       '/login': {
-        title: t('meta.login.title', 'Login — HearMe'),
+        title: t('meta.login.title', 'Login — VoiceLap'),
         description: t('meta.login.description', 'Sign in to access your conversations, settings, and membership.'),
       },
       '/register': {
-        title: t('meta.register.title', 'Register — HearMe'),
-        description: t('meta.register.description', 'Create your account to start chatting or talking with HearMe.'),
+        title: t('meta.register.title', 'Register — VoiceLap'),
+        description: t('meta.register.description', 'Create your account to start chatting or talking with VoiceLap.'),
       },
       '/profile': {
-        title: t('meta.profile.title', 'Profile — HearMe'),
+        title: t('meta.profile.title', 'Profile — VoiceLap'),
         description: t('meta.profile.description', 'Manage your account, language, and voice preferences.'),
       },
       '/forgot-password': {
-        title: t('meta.forgot.title', 'Forgot Password — HearMe'),
-        description: t('meta.forgot.description', 'Recover access to your HearMe account securely.'),
+        title: t('meta.forgot.title', 'Forgot Password — VoiceLap'),
+        description: t('meta.forgot.description', 'Recover access to your VoiceLap account securely.'),
       },
       '/reset-password': {
-        title: t('meta.reset.title', 'Reset Password — HearMe'),
+        title: t('meta.reset.title', 'Reset Password — VoiceLap'),
         description: t('meta.reset.description', 'Set a new password to protect your account.'),
       },
       '/change-password': {
-        title: t('meta.changePassword.title', 'Change Password — HearMe'),
+        title: t('meta.changePassword.title', 'Change Password — VoiceLap'),
         description: t('meta.changePassword.description', 'Update your account password securely.'),
       },
       '/change-email': {
-        title: t('meta.changeEmail.title', 'Change Email — HearMe'),
+        title: t('meta.changeEmail.title', 'Change Email — VoiceLap'),
         description: t('meta.changeEmail.description', 'Update your email address for sign-in and notifications.'),
       },
       '/pricing': {
-        title: t('meta.pricing.title', 'Pricing — HearMe'),
+        title: t('meta.pricing.title', 'Pricing — VoiceLap'),
         description: t('meta.pricing.description', 'Choose a plan that fits your rhythm: Free, Care, or Companion.'),
       },
       '/payment': {
-        title: t('meta.payment.title', 'Payment — HearMe'),
-        description: t('meta.payment.description', 'Secure UPI payment to activate your HearMe membership.'),
+        title: t('meta.payment.title', 'Payment — VoiceLap'),
+        description: t('meta.payment.description', 'Secure UPI payment to activate your VoiceLap membership.'),
       },
       '/voicemate': {
-        title: t('meta.voicemate.title', 'VoiceMate — HearMe'),
+        title: t('meta.voicemate.title', 'VoiceMate — VoiceLap'),
         description: t('meta.voicemate.description', 'Create and manage your personalized voice for conversations.'),
       },
       '/privacy': {
-        title: t('meta.privacy.title', 'Privacy — HearMe'),
+        title: t('meta.privacy.title', 'Privacy — VoiceLap'),
         description: t('meta.privacy.description', 'Learn how we protect your data and conversations.'),
       },
     };
 
-    const meta = metaMap[pathname] || { title: 'HearMe', description: 'Mental health support in Hindi and English.' };
+    const meta = metaMap[pathname] || { title: 'VoiceLap', description: 'Mental health support in Hindi and English.' };
     try {
       document.title = meta.title;
       let tag = document.querySelector('meta[name="description"]');
@@ -160,40 +160,40 @@ function Loader() {
     <div
       className="flex flex-col items-center justify-center h-screen"
       style={{
-        backgroundColor: 'var(--hm-color-bg)',
-        color: 'var(--hm-color-text-primary)'
+        backgroundColor: 'var(--vl-color-bg)',
+        color: 'var(--vl-color-text-primary)'
       }}
     >
       <div className="relative w-16 h-16">
         <div
           className="absolute inset-0 rounded-full animate-ping opacity-30"
-          style={{ backgroundColor: 'var(--hm-color-brand)' }}
+          style={{ backgroundColor: 'var(--vl-color-brand)' }}
         ></div>
         <div
           className="relative flex items-center justify-center w-full h-full text-2xl rounded-full animate-pulse"
           style={{
-            backgroundColor: 'var(--hm-color-brand)',
-            color: 'var(--hm-color-bg)'
+            backgroundColor: 'var(--vl-color-brand)',
+            color: 'var(--vl-color-bg)'
           }}
         >💜</div>
       </div>
       <div className="flex mt-6 space-x-2">
         <div
           className="w-3 h-3 rounded-full animate-bounce [animation-delay:-0.3s]"
-          style={{ backgroundColor: 'var(--hm-color-accent-purple)' }}
+          style={{ backgroundColor: 'var(--vl-color-accent-purple)' }}
         ></div>
         <div
           className="w-3 h-3 rounded-full animate-bounce [animation-delay:-0.15s]"
-          style={{ backgroundColor: 'var(--hm-color-accent-purple)' }}
+          style={{ backgroundColor: 'var(--vl-color-accent-purple)' }}
         ></div>
         <div
           className="w-3 h-3 rounded-full animate-bounce"
-          style={{ backgroundColor: 'var(--hm-color-accent-purple)' }}
+          style={{ backgroundColor: 'var(--vl-color-accent-purple)' }}
         ></div>
       </div>
       <p
         className="mt-4 font-medium"
-        style={{ color: 'var(--hm-color-text-muted)' }}
+        style={{ color: 'var(--vl-color-text-muted)' }}
       >Preparing a safe space for you...</p>
     </div>
   );

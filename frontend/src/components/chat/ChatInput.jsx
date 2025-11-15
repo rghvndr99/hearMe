@@ -33,7 +33,7 @@ const ChatInput = ({
     <Flex
       direction="column"
       p={{ base: 3 }}
-      className={`hm-glass-card${cid ? ` hm-cid-${cid}` : ''}`}
+      className={`vl-glass-card${cid ? ` vl-cid-${cid}` : ''}`}
       gap={{ base: 2, md: 3 }}
       border="none"
       data-cid={cid}
@@ -47,7 +47,7 @@ const ChatInput = ({
             px={3}
             py={1}
             borderRadius="full"
-            className="hm-recording-indicator"
+            className="vl-recording-indicator"
           >
             <HStack spacing={2}>
               <Box
@@ -78,19 +78,19 @@ const ChatInput = ({
           minH="150px"
           resize="vertical"
           variant="filled"
-          bg="var(--hm-bg-input)"
-          color="var(--hm-color-text-primary)"
-          border="1px solid var(--hm-border-subtle)"
+          bg="var(--vl-bg-input)"
+          color="var(--vl-color-text-primary)"
+          border="1px solid var(--vl-border-subtle)"
           pr="88px"
           pb="56px"
-          _hover={{ borderColor: "var(--hm-color-brand)" }}
+          _hover={{ borderColor: "var(--vl-color-brand)" }}
           _focus={{
-            borderColor: "var(--hm-color-brand)",
-            bg: "var(--hm-bg-input)",
+            borderColor: "var(--vl-color-brand)",
+            bg: "var(--vl-bg-input)",
           }}
-          _placeholder={{ color: "var(--hm-color-text-tertiary)" }}
+          _placeholder={{ color: "var(--vl-color-text-tertiary)" }}
           isDisabled={disabled || isListening}
-          className="hm-input"
+          className="vl-input"
         />
 
         {/* Mobile overlay actions (no extra row space) */}
@@ -116,11 +116,11 @@ const ChatInput = ({
               onClick={onVoiceToggle}
               variant={isListening ? 'solid' : 'ghost'}
               size="md"
-              color={isListening ? 'white' : 'var(--hm-color-text-muted)'}
+              color={isListening ? 'white' : 'var(--vl-color-text-muted)'}
               bg={isListening ? 'red.500' : 'transparent'}
               _hover={{
-                color: isListening ? 'white' : 'var(--hm-color-brand)',
-                bg: isListening ? 'red.600' : 'var(--hm-bg-glass)'
+                color: isListening ? 'white' : 'var(--vl-color-brand)',
+                bg: isListening ? 'red.600' : 'var(--vl-bg-glass)'
               }}
               aria-label={
                 micDisabled
@@ -139,16 +139,16 @@ const ChatInput = ({
               icon={<FiSend />}
               onClick={onSend}
               size="md"
-              bgGradient="var(--hm-gradient-cta)"
+              bgGradient="var(--vl-gradient-cta)"
               color="white"
               _hover={{ opacity: 0.9 }}
               _disabled={{
                 bgGradient: 'none',
-                bg: 'var(--hm-bg-glass)',
-                color: 'var(--hm-color-text-muted)',
+                bg: 'var(--vl-bg-glass)',
+                color: 'var(--vl-color-text-muted)',
                 opacity: 0.5
               }}
-              aria-label={t('chat.aria.send', 'Send your message to HearMe AI')}
+              aria-label={t('chat.aria.send', 'Send your message to VoiceLap AI')}
               isDisabled={disabled || !value.trim() || isListening}
             />
           </Tooltip>
@@ -173,11 +173,11 @@ const ChatInput = ({
             onClick={onVoiceToggle}
             variant={isListening ? "solid" : "ghost"}
             size="lg"
-            color={isListening ? 'white' : 'var(--hm-color-text-muted)'}
+            color={isListening ? 'white' : 'var(--vl-color-text-muted)'}
             bg={isListening ? 'red.500' : 'transparent'}
             _hover={{
-              color: isListening ? 'white' : 'var(--hm-color-brand)',
-              bg: isListening ? 'red.600' : 'var(--hm-bg-glass)'
+              color: isListening ? 'white' : 'var(--vl-color-brand)',
+              bg: isListening ? 'red.600' : 'var(--vl-bg-glass)'
             }}
             aria-label={
               micDisabled
@@ -197,16 +197,16 @@ const ChatInput = ({
             icon={<FiSend />}
             onClick={onSend}
             size="lg"
-            bgGradient="var(--hm-gradient-cta)"
+            bgGradient="var(--vl-gradient-cta)"
             color="white"
             _hover={{ opacity: 0.9 }}
             _disabled={{
               bgGradient: 'none',
-              bg: 'var(--hm-bg-glass)',
-              color: 'var(--hm-color-text-muted)',
+              bg: 'var(--vl-bg-glass)',
+              color: 'var(--vl-color-text-muted)',
               opacity: 0.5
             }}
-            aria-label={t('chat.aria.send', 'Send your message to HearMe AI')}
+            aria-label={t('chat.aria.send', 'Send your message to VoiceLap AI')}
             isDisabled={disabled || !value.trim() || isListening}
           />
         </Tooltip>

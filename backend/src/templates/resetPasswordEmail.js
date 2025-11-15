@@ -1,4 +1,4 @@
-export function buildResetPasswordEmail({ name = 'there', resetUrl, appName = 'HearMe' }) {
+export function buildResetPasswordEmail({ name = 'there', resetUrl, appName = 'VoiceLap' }) {
   const subject = `${appName}: Reset your password`;
   const text = `Hi ${name},\n\nWe received a request to reset your password.\n\nClick the link below to set a new password:\n${resetUrl}\n\nIf you didn't request this, you can ignore this email.\n\n— ${appName} Team`;
 

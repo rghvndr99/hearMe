@@ -17,15 +17,15 @@ const Resources = () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg="var(--hm-color-bg)"
-      color="var(--hm-color-text-primary)"
+      bg="var(--vl-color-bg)"
+      color="var(--vl-color-text-primary)"
       position="relative"
       overflow="hidden"
       px={[6, 12]}
       pt="100px"
       pb={[12, 20]}
       textAlign="center"
-      className="hm-cid-resources-root"
+      className="vl-cid-resources-root"
       data-cid="resources-root"
     >
       {/* === PAGE CONTENT === */}
@@ -34,7 +34,7 @@ const Resources = () => {
           as="h1"
           fontSize={["3xl", "5xl", "6xl"]}
           fontWeight="800"
-          color="var(--hm-color-text-primary)"
+          color="var(--vl-color-text-primary)"
         >
           {t('resources.title')}
         </Heading>
@@ -43,12 +43,12 @@ const Resources = () => {
         <SimpleGrid columns={[1]} spacing={8} w="full">
           {/* If you need urgent help (India) */}
           <Box
-            className="hm-glass-card hm-cid-resources-urgent"
+            className="vl-glass-card vl-cid-resources-urgent"
             borderRadius="xl"
             p={[6, 10]}
             textAlign="left"
             transition="0.3s"
-            _hover={{ borderColor: "var(--hm-color-brand)" }}
+            _hover={{ borderColor: "var(--vl-color-brand)" }}
             data-cid="resources-urgent"
           >
             <Heading
@@ -56,15 +56,15 @@ const Resources = () => {
               fontSize="2xl"
               mb={4}
               fontWeight="700"
-              color="var(--hm-color-text-primary)"
+              color="var(--vl-color-text-primary)"
             >
               {t('resources.urgent.title')}
             </Heading>
 
-            <VStack align="start" spacing={3} color="var(--hm-color-text-tertiary)" fontSize="md">
+            <VStack align="start" spacing={3} color="var(--vl-color-text-tertiary)" fontSize="md">
               <Text>
                 <strong>{t('resources.urgent.emergencyLabel')}</strong>{" "}
-                <Link href="tel:112" color="var(--hm-color-accent-link)" _hover={{ textDecoration: "underline" }}>
+                <Link href="tel:112" color="var(--vl-color-accent-link)" _hover={{ textDecoration: "underline" }}>
                   112
                 </Link>
               </Text>
@@ -82,12 +82,12 @@ const Resources = () => {
 
           {/* Professional Help */}
           <Box
-            className="hm-glass-card hm-cid-resources-professional"
+            className="vl-glass-card vl-cid-resources-professional"
             borderRadius="xl"
             p={[6, 10]}
             textAlign="left"
             transition="0.3s"
-            _hover={{ borderColor: "var(--hm-color-brand)" }}
+            _hover={{ borderColor: "var(--vl-color-brand)" }}
             data-cid="resources-professional"
           >
             <Heading
@@ -95,11 +95,11 @@ const Resources = () => {
               fontSize="2xl"
               mb={4}
               fontWeight="700"
-              color="var(--hm-color-text-primary)"
+              color="var(--vl-color-text-primary)"
             >
               {t('resources.professional.title')}
             </Heading>
-            <VStack align="start" spacing={3} color="var(--hm-color-text-tertiary)" fontSize="md">
+            <VStack align="start" spacing={3} color="var(--vl-color-text-tertiary)" fontSize="md">
               <Text>
                 {t('resources.professional.intro')}
               </Text>

@@ -1,8 +1,8 @@
-# HearMe Refactoring Summary
+# VoiceLap Refactoring Summary
 
 ## Executive Summary
 
-The HearMe codebase has been comprehensively refactored and modularized to improve maintainability, reusability, and code quality. This document summarizes all changes made during the refactoring process.
+The VoiceLap codebase has been comprehensively refactored and modularized to improve maintainability, reusability, and code quality. This document summarizes all changes made during the refactoring process.
 
 ## Objectives Achieved
 
@@ -62,61 +62,61 @@ The HearMe codebase has been comprehensively refactored and modularized to impro
 **40+ Reusable CSS Classes:**
 
 **Layout Classes:**
-- `.hm-page-container` - Page wrapper with theme-aware background
-- `.hm-section` - Content section (max-width: 900px)
-- `.hm-section-wide` - Wide content section (max-width: 1200px)
+- `.vl-page-container` - Page wrapper with theme-aware background
+- `.vl-section` - Content section (max-width: 900px)
+- `.vl-section-wide` - Wide content section (max-width: 1200px)
 
 **Component Classes:**
-- `.hm-card` - Glass-morphism card with backdrop blur
-- `.hm-card-hover` - Card with hover effects
+- `.vl-card` - Glass-morphism card with backdrop blur
+- `.vl-card-hover` - Card with hover effects
 
 **Button Classes:**
-- `.hm-button-primary` - Primary CTA with gradient
-- `.hm-button-secondary` - Outlined secondary button
-- `.hm-button-ghost` - Transparent ghost button
+- `.vl-button-primary` - Primary CTA with gradient
+- `.vl-button-secondary` - Outlined secondary button
+- `.vl-button-ghost` - Transparent ghost button
 
 **Form Classes:**
-- `.hm-input` - Text input with theme support
-- `.hm-textarea` - Textarea with theme support
+- `.vl-input` - Text input with theme support
+- `.vl-textarea` - Textarea with theme support
 
 **Typography Classes:**
-- `.hm-heading-primary` - Main headings (2rem → 2.5rem)
-- `.hm-heading-secondary` - Sub headings (1.5rem → 1.75rem)
-- `.hm-text-primary` - Primary text color
-- `.hm-text-secondary` - Secondary text color
-- `.hm-text-tertiary` - Tertiary text color
+- `.vl-heading-primary` - Main headings (2rem → 2.5rem)
+- `.vl-heading-secondary` - Sub headings (1.5rem → 1.75rem)
+- `.vl-text-primary` - Primary text color
+- `.vl-text-secondary` - Secondary text color
+- `.vl-text-tertiary` - Tertiary text color
 
 **Chat-Specific Classes:**
-- `.hm-chat-container` - Chat page wrapper
-- `.hm-chat-messages` - Messages scrollable area
-- `.hm-chat-bubble` - Base message bubble
-- `.hm-chat-bubble-user` - User message (gradient background)
-- `.hm-chat-bubble-ai` - AI message (glass background)
-- `.hm-chat-input-container` - Input area wrapper
-- `.hm-chat-input` - Input field wrapper
+- `.vl-chat-container` - Chat page wrapper
+- `.vl-chat-messages` - Messages scrollable area
+- `.vl-chat-bubble` - Base message bubble
+- `.vl-chat-bubble-user` - User message (gradient background)
+- `.vl-chat-bubble-ai` - AI message (glass background)
+- `.vl-chat-input-container` - Input area wrapper
+- `.vl-chat-input` - Input field wrapper
 
 **Voice/Recording Classes:**
-- `.hm-recording-indicator` - Recording status badge
-- `.hm-waveform-container` - Waveform visualization wrapper
-- `.hm-voice-btn-active` - Active voice button
-- `.hm-voice-btn-inactive` - Inactive voice button
+- `.vl-recording-indicator` - Recording status badge
+- `.vl-waveform-container` - Waveform visualization wrapper
+- `.vl-voice-btn-active` - Active voice button
+- `.vl-voice-btn-inactive` - Inactive voice button
 
 **Menu Classes:**
-- `.hm-menu-list` - Dropdown menu container
-- `.hm-menu-item` - Menu item
-- `.hm-menu-item-active` - Active menu item
+- `.vl-menu-list` - Dropdown menu container
+- `.vl-menu-item` - Menu item
+- `.vl-menu-item-active` - Active menu item
 
 **Quick Reply Classes:**
-- `.hm-quick-replies` - Quick replies container
-- `.hm-quick-reply-btn` - Individual quick reply button
+- `.vl-quick-replies` - Quick replies container
+- `.vl-quick-reply-btn` - Individual quick reply button
 
 **Theme Support:**
 All classes use CSS variables defined in `styles.css`:
 ```css
-var(--hm-color-bg)
-var(--hm-color-text-primary)
-var(--hm-color-brand)
-var(--hm-gradient-cta)
+var(--vl-color-bg)
+var(--vl-color-text-primary)
+var(--vl-color-brand)
+var(--vl-gradient-cta)
 /* ... and 30+ more */
 ```
 
@@ -308,7 +308,7 @@ backend/src/
 
 ## Conclusion
 
-The refactoring has successfully transformed the HearMe codebase from a monolithic structure to a well-organized, modular architecture. All objectives have been met:
+The refactoring has successfully transformed the VoiceLap codebase from a monolithic structure to a well-organized, modular architecture. All objectives have been met:
 
 ✅ Components are small and focused (< 300 lines)  
 ✅ No inline styles (all use CSS classes)  

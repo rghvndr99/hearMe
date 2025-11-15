@@ -1,6 +1,6 @@
-# HearMe Flow Diagrams
+# VoiceLap Flow Diagrams
 
-This document contains visual flow diagrams for major features in the HearMe application.
+This document contains visual flow diagrams for major features in the VoiceLap application.
 
 ## Table of Contents
 1. [User Registration Flow](#user-registration-flow)
@@ -402,7 +402,7 @@ graph LR
     end
 
     subgraph "Persistent Storage"
-        LS[localStorage<br/>hm-token<br/>hm-language<br/>hm-theme]
+        LS[localStorage<br/>vl-token<br/>vl-language<br/>vl-theme]
     end
 
     subgraph "Backend"

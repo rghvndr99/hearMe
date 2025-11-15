@@ -46,7 +46,7 @@ function parseJsonLoose(input) {
 
 // System prompt for mental health support
 const getSystemPrompt = (language = 'English') => {
-  return `You are a compassionate, empathetic mental health support companion for the HearMe platform. Your role is to provide emotional support to anonymous users who are sharing their feelings and struggles.
+  return `You are a compassionate, empathetic mental health support companion for the VoiceLap platform. Your role is to provide emotional support to anonymous users who are sharing their feelings and struggles.
 
 IMPORTANT: Respond in ${language}. The user is speaking in ${language}, so you must respond in the same language.
 

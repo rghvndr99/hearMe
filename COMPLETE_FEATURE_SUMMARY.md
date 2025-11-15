@@ -2,7 +2,7 @@
 
 ## 🎉 What Was Built
 
-A **fully functional, interactive AI-powered mental health chat system** with voice capabilities for the HearMe application.
+A **fully functional, interactive AI-powered mental health chat system** with voice capabilities for the VoiceLap application.
 
 ---
 

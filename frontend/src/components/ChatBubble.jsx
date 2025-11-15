@@ -33,7 +33,7 @@ const ChatBubble = () => {
         label="Chat with us"
         placement="left"
         hasArrow
-        bg="var(--hm-color-brand)"
+        bg="var(--vl-color-brand)"
         color="white"
         fontSize="sm"
         borderRadius="md"
@@ -43,10 +43,10 @@ const ChatBubble = () => {
           onClick={handleClick}
           size="lg"
           isRound
-          bgGradient="var(--hm-gradient-cta)"
+          bgGradient="var(--vl-gradient-cta)"
           color="white"
           _hover={{
-            bgGradient: "var(--hm-gradient-cta-hover)",
+            bgGradient: "var(--vl-gradient-cta-hover)",
             transform: "scale(1.1)",
           }}
           _active={{
@@ -69,7 +69,7 @@ const ChatBubble = () => {
         h="60px"
         borderRadius="full"
         border="2px solid"
-        borderColor="var(--hm-color-brand)"
+        borderColor="var(--vl-color-brand)"
         opacity={0.6}
         animate={{
           scale: [1, 1.3, 1],

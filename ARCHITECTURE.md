@@ -1,4 +1,4 @@
-# HearMe Architecture Documentation
+# VoiceLap Architecture Documentation
 
 ## Table of Contents
 1. [Overview](#overview)
@@ -13,7 +13,7 @@
 
 ## Overview
 
-HearMe is a fullstack mental health support platform built with:
+VoiceLap is a fullstack mental health support platform built with:
 - **Frontend**: React 18 + Vite + Chakra UI + Tailwind CSS v4
 - **Backend**: Node.js + Express + MongoDB
 - **Real-time**: Socket.IO for live chat
@@ -178,27 +178,27 @@ const {
 #### Theme Variables (styles.css)
 ```css
 :root[data-theme="light"] {
-  --hm-color-bg: #f7fafc;
-  --hm-color-text-primary: #1a202c;
-  --hm-color-brand: #3182ce;
+  --vl-color-bg: #f7fafc;
+  --vl-color-text-primary: #1a202c;
+  --vl-color-brand: #3182ce;
   /* ... */
 }
 
 :root[data-theme="dark"] {
-  --hm-color-bg: #1a202c;
-  --hm-color-text-primary: #f7fafc;
-  --hm-color-brand: #63b3ed;
+  --vl-color-bg: #1a202c;
+  --vl-color-text-primary: #f7fafc;
+  --vl-color-brand: #63b3ed;
   /* ... */
 }
 ```
 
 #### Component Classes (components.css)
 All inline styles have been extracted to reusable CSS classes:
-- `.hm-page-container` - Page wrapper
-- `.hm-card` - Card component
-- `.hm-button-primary` - Primary CTA button
-- `.hm-chat-bubble-user` - User message bubble
-- `.hm-chat-bubble-ai` - AI message bubble
+- `.vl-page-container` - Page wrapper
+- `.vl-card` - Card component
+- `.vl-button-primary` - Primary CTA button
+- `.vl-chat-bubble-user` - User message bubble
+- `.vl-chat-bubble-ai` - AI message bubble
 - And 30+ more...
 
 ## Backend Architecture
@@ -409,7 +409,7 @@ Chat.jsx (Main orchestrator)
      ▼
 ┌──────────────────┐
 │  localStorage    │
-│  'hm-token'      │
+│  'vl-token'      │
 └──────────────────┘
      │
      │ 7. Subsequent requests
@@ -440,7 +440,7 @@ VITE_BACKEND_URL=http://localhost:5001
 #### Backend (.env)
 ```
 PORT=5001
-MONGODB_URI=mongodb://localhost:27017/hearme
+MONGODB_URI=mongodb://localhost:27017/voicelap
 JWT_SECRET=your-secret-key
 OPENAI_API_KEY=sk-...
 ELEVENLABS_API_KEY=...

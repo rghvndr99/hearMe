@@ -163,19 +163,19 @@ The `/chat` page has been redesigned with a modern, clean interface while mainta
 ## Theme Integration
 
 ### CSS Variables Used
-- `--hm-color-bg`: Background color
-- `--hm-color-text-primary`: Main text
-- `--hm-color-text-secondary`: Timestamps
-- `--hm-color-brand`: Accent color (borders, dots)
-- `--hm-bg-glass`: Message backgrounds
-- `--hm-bg-glass-strong`: User message background
-- `--hm-border-glass`: Borders
-- `--hm-border-outline`: Button borders
-- `--hm-hover-bg`: Hover states
-- `--hm-gradient-cta`: Send button gradient
-- `--hm-gradient-cta-hover`: Send button hover
-- `--hm-bg-gradient-pink`: Background animation
-- `--hm-bg-gradient-blue`: Background animation
+- `--vl-color-bg`: Background color
+- `--vl-color-text-primary`: Main text
+- `--vl-color-text-secondary`: Timestamps
+- `--vl-color-brand`: Accent color (borders, dots)
+- `--vl-bg-glass`: Message backgrounds
+- `--vl-bg-glass-strong`: User message background
+- `--vl-border-glass`: Borders
+- `--vl-border-outline`: Button borders
+- `--vl-hover-bg`: Hover states
+- `--vl-gradient-cta`: Send button gradient
+- `--vl-gradient-cta-hover`: Send button hover
+- `--vl-bg-gradient-pink`: Background animation
+- `--vl-bg-gradient-blue`: Background animation
 
 ### Theme Adaptation
 - All colors adapt to selected theme

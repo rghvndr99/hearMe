@@ -22,7 +22,7 @@ The new design follows these principles:
 ### **1. Enhanced Header** ✨
 **Before:**
 - Simple centered header with robot icon
-- Basic "HearMe Support" text
+- Basic "VoiceLap Support" text
 - No status indicators
 
 **After:**

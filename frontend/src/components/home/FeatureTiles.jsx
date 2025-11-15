@@ -24,11 +24,11 @@ export default function FeatureTiles() {
       {TILE_CONFIG.map((tile) => (
         <Box
           key={tile.key}
-          className="hm-glass-card"
+          className="vl-glass-card"
           borderRadius="xl"
           overflow="hidden"
           transition="0.3s"
-          _hover={{ transform: 'translateY(-5px)', borderColor: 'var(--hm-color-brand)' }}
+          _hover={{ transform: 'translateY(-5px)', borderColor: 'var(--vl-color-brand)' }}
         >
           {/* Top image (16:9) */}
           <AspectRatio ratio={16/9} w="full">
@@ -50,7 +50,7 @@ export default function FeatureTiles() {
             <Heading fontSize={["lg","xl"]} fontWeight="700">
               {t(`home.features.${tile.key}.title`)}
             </Heading>
-            <Text color="var(--hm-color-text-secondary)" fontSize={["sm","md"]}>
+            <Text color="var(--vl-color-text-secondary)" fontSize={["sm","md"]}>
               {t(`home.features.${tile.key}.desc`)}
             </Text>
           </VStack>

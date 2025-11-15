@@ -34,30 +34,30 @@ const ForgotPassword = () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg="var(--hm-color-bg)"
-      color="var(--hm-color-text-primary)"
+      bg="var(--vl-color-bg)"
+      color="var(--vl-color-text-primary)"
       position="relative"
       overflow="hidden"
       px={[6, 12]}
       pt="100px"
       pb={[12, 20]}
-      className="hm-cid-forgot-password-root"
+      className="vl-cid-forgot-password-root"
       data-cid="forgot-password-root"
     >
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
-        <Box maxW="500px" mx="auto" w="full" p={6} className="hm-glass-card hm-cid-forgot-password-form" data-cid="forgot-password-form" borderRadius="2xl">
-          <Heading size="lg" mb={6} color="var(--hm-color-text-primary)">Forgot Password</Heading>
+        <Box maxW="500px" mx="auto" w="full" p={6} className="vl-glass-card vl-cid-forgot-password-form" data-cid="forgot-password-form" borderRadius="2xl">
+          <Heading size="lg" mb={6} color="var(--vl-color-text-primary)">Forgot Password</Heading>
           <form onSubmit={submit}>
             <VStack spacing={4} align="stretch">
               <FormControl isRequired>
                 <FormLabel>Username or Email</FormLabel>
                 <Input value={usernameOrEmail} onChange={(e) => setUsernameOrEmail(e.target.value)} placeholder="yourusername or you@example.com" />
               </FormControl>
-              <Button type="submit" isLoading={loading} bgGradient="var(--hm-gradient-cta)" color="white">Send reset link</Button>
+              <Button type="submit" isLoading={loading} bgGradient="var(--vl-gradient-cta)" color="white">Send reset link</Button>
               {resetUrl && (
-                <Text fontSize="sm" color="var(--hm-color-text-secondary)">Dev: Reset link — <Link href={resetUrl} color="var(--hm-color-brand)">{resetUrl}</Link></Text>
+                <Text fontSize="sm" color="var(--vl-color-text-secondary)">Dev: Reset link — <Link href={resetUrl} color="var(--vl-color-brand)">{resetUrl}</Link></Text>
               )}
-              <Text fontSize="sm">Remembered your password? <Link as={RouterLink} to="/login" color="var(--hm-color-brand)">Login</Link></Text>
+              <Text fontSize="sm">Remembered your password? <Link as={RouterLink} to="/login" color="var(--vl-color-brand)">Login</Link></Text>
             </VStack>
           </form>
         </Box>

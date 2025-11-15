@@ -274,5 +274,5 @@ The speaker diarization system is now production-ready with:
 - ✅ Security features
 - ✅ Error handling
 
-Ready for integration with the HearMe application!
+Ready for integration with the VoiceLap application!
 

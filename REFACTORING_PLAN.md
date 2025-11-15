@@ -1,4 +1,4 @@
-# HearMe Codebase Refactoring Plan
+# VoiceLap Codebase Refactoring Plan
 
 ## Overview
 Comprehensive modularization and cleanup to improve maintainability, reusability, and code quality.
@@ -86,27 +86,27 @@ frontend/src/
 **New File:** `frontend/src/styles/components.css`
 
 **Extract inline styles to classes:**
-- `.hm-page-container` - Common page wrapper
-- `.hm-section` - Section wrapper
-- `.hm-card` - Card component
-- `.hm-button-primary` - Primary CTA button
-- `.hm-button-secondary` - Secondary button
-- `.hm-input` - Form input
-- `.hm-heading-primary` - Main headings
-- `.hm-heading-secondary` - Sub headings
-- `.hm-text-primary` - Primary text
-- `.hm-text-secondary` - Secondary text
-- `.hm-chat-bubble-user` - User message bubble
-- `.hm-chat-bubble-ai` - AI message bubble
-- `.hm-waveform-container` - Waveform wrapper
-- `.hm-recording-indicator` - Recording state indicator
+- `.vl-page-container` - Common page wrapper
+- `.vl-section` - Section wrapper
+- `.vl-card` - Card component
+- `.vl-button-primary` - Primary CTA button
+- `.vl-button-secondary` - Secondary button
+- `.vl-input` - Form input
+- `.vl-heading-primary` - Main headings
+- `.vl-heading-secondary` - Sub headings
+- `.vl-text-primary` - Primary text
+- `.vl-text-secondary` - Secondary text
+- `.vl-chat-bubble-user` - User message bubble
+- `.vl-chat-bubble-ai` - AI message bubble
+- `.vl-waveform-container` - Waveform wrapper
+- `.vl-recording-indicator` - Recording state indicator
 
 ### 2.2 Theme Support
 Ensure all CSS classes use CSS variables:
 ```css
-.hm-button-primary {
-  background: var(--hm-gradient-cta);
-  color: var(--hm-color-text-on-brand);
+.vl-button-primary {
+  background: var(--vl-gradient-cta);
+  color: var(--vl-color-text-on-brand);
   /* ... */
 }
 ```

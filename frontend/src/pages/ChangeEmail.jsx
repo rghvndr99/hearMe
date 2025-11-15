@@ -17,7 +17,7 @@ const ChangeEmail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('hm-token');
+    const token = localStorage.getItem('vl-token');
     if (!token) navigate('/login');
   }, []);
 
@@ -25,7 +25,7 @@ const ChangeEmail = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const token = localStorage.getItem('hm-token');
+      const token = localStorage.getItem('vl-token');
       const { data } = await axios.post(`${API_URL}/api/users/change-email`, { newEmail, currentPassword }, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -47,8 +47,8 @@ const ChangeEmail = () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg="var(--hm-color-bg)"
-      color="var(--hm-color-text-primary)"
+      bg="var(--vl-color-bg)"
+      color="var(--vl-color-text-primary)"
       position="relative"
       overflow="hidden"
       px={[6, 12]}
@@ -62,54 +62,54 @@ const ChangeEmail = () => {
             as="h1"
             fontSize={["3xl", "4xl"]}
             fontWeight="800"
-            color="var(--hm-color-text-primary)"
+            color="var(--vl-color-text-primary)"
             lineHeight="1.2"
           >
             {t('changeEmail.title', 'Email Badlo — Update Your Email 💜')}
           </Heading>
-          <Text fontSize="md" color="var(--hm-color-text-secondary)" lineHeight="1.7">
+          <Text fontSize="md" color="var(--vl-color-text-secondary)" lineHeight="1.7">
             {t('changeEmail.intro', 'Apna email address update karna chahte ho? No problem! Bas apna current password confirm karo for security. 💜')}
           </Text>
         </VStack>
 
-        <Box maxW="500px" mx="auto" w="full" p={6} className="hm-glass-card hm-cid-change-email-form" data-cid="change-email-form" borderRadius="2xl">
+        <Box maxW="500px" mx="auto" w="full" p={6} className="vl-glass-card vl-cid-change-email-form" data-cid="change-email-form" borderRadius="2xl">
           <form onSubmit={submit}>
             <VStack spacing={4} align="stretch">
               <FormControl isRequired>
-                <FormLabel color="var(--hm-color-text-primary)">{t('changeEmail.fields.newEmail', 'Naya email address (New email)')}</FormLabel>
+                <FormLabel color="var(--vl-color-text-primary)">{t('changeEmail.fields.newEmail', 'Naya email address (New email)')}</FormLabel>
                 <Input
                   type="email"
                   value={newEmail}
                   onChange={(e) => setNewEmail(e.target.value)}
                   placeholder={t('changeEmail.placeholders.newEmail','you@example.com')}
-                  bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-outline)"
-                  color="var(--hm-color-text-primary)"
-                  _placeholder={{ color: 'var(--hm-color-placeholder)' }}
-                  _hover={{ borderColor: 'var(--hm-border-outline)' }}
-                  _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                  bg="var(--vl-bg-glass)"
+                  borderColor="var(--vl-border-outline)"
+                  color="var(--vl-color-text-primary)"
+                  _placeholder={{ color: 'var(--vl-color-placeholder)' }}
+                  _hover={{ borderColor: 'var(--vl-border-outline)' }}
+                  _focus={{ borderColor: 'var(--vl-color-brand)', boxShadow: '0 0 0 1px var(--vl-color-brand)' }}
                 />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel color="var(--hm-color-text-primary)">{t('changeEmail.fields.currentPassword', 'Current password (security ke liye)')}</FormLabel>
+                <FormLabel color="var(--vl-color-text-primary)">{t('changeEmail.fields.currentPassword', 'Current password (security ke liye)')}</FormLabel>
                 <Input
                   type="password"
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   placeholder={t('changeEmail.placeholders.currentPassword', 'Enter your current password')}
-                  bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-outline)"
-                  color="var(--hm-color-text-primary)"
-                  _placeholder={{ color: 'var(--hm-color-placeholder)' }}
-                  _hover={{ borderColor: 'var(--hm-border-outline)' }}
-                  _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                  bg="var(--vl-bg-glass)"
+                  borderColor="var(--vl-border-outline)"
+                  color="var(--vl-color-text-primary)"
+                  _placeholder={{ color: 'var(--vl-color-placeholder)' }}
+                  _hover={{ borderColor: 'var(--vl-border-outline)' }}
+                  _focus={{ borderColor: 'var(--vl-color-brand)', boxShadow: '0 0 0 1px var(--vl-color-brand)' }}
                 />
               </FormControl>
-              <Button type="submit" isLoading={loading} bgGradient="var(--hm-gradient-cta)" color="white" _hover={{ opacity: 0.9 }} borderRadius="full" py={6} w="full" minH="48px">
+              <Button type="submit" isLoading={loading} bgGradient="var(--vl-gradient-cta)" color="white" _hover={{ opacity: 0.9 }} borderRadius="full" py={6} w="full" minH="48px">
                 {t('changeEmail.button', 'Update Email 💜')}
               </Button>
-              <Box p={3} bg="var(--hm-bg-glass)" borderRadius="md" borderLeft="4px solid var(--hm-color-brand)">
-                <Text color="var(--hm-color-text-secondary)" fontSize="sm" lineHeight="1.7">
+              <Box p={3} bg="var(--vl-bg-glass)" borderRadius="md" borderLeft="4px solid var(--vl-color-brand)">
+                <Text color="var(--vl-color-text-secondary)" fontSize="sm" lineHeight="1.7">
                   {t('changeEmail.securityNote', '🔒 **Security ke liye:** We need your current password to confirm it\'s really you. Your data is safe with us. 💜')}
                 </Text>
               </Box>

@@ -39,7 +39,7 @@ const ChatMessages = ({ messages, isTyping, userDisplayName, isAnonymous }) => {
       p={6}
       pb={6}
       align="stretch"
-      className="hm-chat-messages"
+      className="vl-chat-messages"
       css={{
         '&::-webkit-scrollbar': {
           width: '6px',
@@ -48,7 +48,7 @@ const ChatMessages = ({ messages, isTyping, userDisplayName, isAnonymous }) => {
           background: 'transparent',
         },
         '&::-webkit-scrollbar-thumb': {
-          background: 'var(--hm-border-glass)',
+          background: 'var(--vl-border-glass)',
           borderRadius: '10px',
         },
       }}
@@ -62,24 +62,24 @@ const ChatMessages = ({ messages, isTyping, userDisplayName, isAnonymous }) => {
           alignSelf="flex-start"
           mt={4}
         >
-          <Box className="hm-chat-bubble hm-chat-bubble-ai">
+          <Box className="vl-chat-bubble vl-chat-bubble-ai">
             <VStack spacing={3} align="start">
               <Text fontSize="md" whiteSpace="pre-wrap">
                 {t('chat.welcome.greeting', 'Hi there � I\'m here to listen and support you. This is a safe, anonymous space where you can share whatever\'s on your mind. How are you feeling today?')}
               </Text>
 
               <Box w="full" pt={0}>
-                <Text fontSize="sm" fontWeight="600" color="var(--hm-color-text-primary)" mb={2}>
+                <Text fontSize="sm" fontWeight="600" color="var(--vl-color-text-primary)" mb={2}>
                   {t('chat.welcome.youCanTitle', 'You can:')}
                 </Text>
                 <VStack align="start" spacing={1.5}>
-                  <Text fontSize="sm" color="var(--hm-color-text-secondary)">
+                  <Text fontSize="sm" color="var(--vl-color-text-secondary)">
                     {t('chat.welcome.feature1', '💬 Type in Hindi, English, or Hinglish')}
                   </Text>
-                  <Text fontSize="sm" color="var(--hm-color-text-secondary)">
+                  <Text fontSize="sm" color="var(--vl-color-text-secondary)">
                     {t('chat.welcome.feature2', '🎙️ Speak in your language (click the mic)')}
                   </Text>
-                  <Text fontSize="sm" color="var(--hm-color-text-secondary)">
+                  <Text fontSize="sm" color="var(--vl-color-text-secondary)">
                     {t('chat.welcome.feature3', '🔊 Hear responses in your chosen voice')}
                   </Text>
                 </VStack>
@@ -102,12 +102,12 @@ const ChatMessages = ({ messages, isTyping, userDisplayName, isAnonymous }) => {
             <Box
               className={
                 message.role === "user"
-                  ? "hm-chat-bubble hm-chat-bubble-user"
-                  : "hm-chat-bubble hm-chat-bubble-ai"
+                  ? "vl-chat-bubble vl-chat-bubble-user"
+                  : "vl-chat-bubble vl-chat-bubble-ai"
               }
             >
               {message.role === "user" && isAnonymous && userDisplayName ? (
-                <Text fontSize="xs" fontWeight="600" color="var(--hm-color-text-secondary)" mb={1} textAlign="right">{userDisplayName}</Text>
+                <Text fontSize="xs" fontWeight="600" color="var(--vl-color-text-secondary)" mb={1} textAlign="right">{userDisplayName}</Text>
               ) : null}
               <Text fontSize="md" whiteSpace="pre-wrap">
                 {message.content}
@@ -135,10 +135,10 @@ const ChatMessages = ({ messages, isTyping, userDisplayName, isAnonymous }) => {
           animate={{ opacity: 1, y: 0 }}
           alignSelf="flex-start"
         >
-          <Box className="hm-chat-bubble hm-chat-bubble-ai">
+          <Box className="vl-chat-bubble vl-chat-bubble-ai">
             <HStack spacing={2}>
-              <Spinner size="sm" color="var(--hm-color-brand)" />
-              <Text fontSize="sm" color="var(--hm-color-text-secondary)">
+              <Spinner size="sm" color="var(--vl-color-brand)" />
+              <Text fontSize="sm" color="var(--vl-color-text-secondary)">
                 {t('chat.typing', 'Thinking... give us a moment 💭')}
               </Text>
             </HStack>

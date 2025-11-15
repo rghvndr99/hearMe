@@ -2,7 +2,7 @@
 
 ## Overview
 
-Your HearMe application now has an **intelligent intent detection system** that intercepts user messages BEFORE sending them to OpenAI. This allows you to provide instant, custom responses for specific user intents like "I want to talk to a human" without consuming OpenAI API credits.
+Your VoiceLap application now has an **intelligent intent detection system** that intercepts user messages BEFORE sending them to OpenAI. This allows you to provide instant, custom responses for specific user intents like "I want to talk to a human" without consuming OpenAI API credits.
 
 ---
 
@@ -70,7 +70,7 @@ export const CONTACT_INFO = {
   helplinePhoneNumeric: '1-800-968-7686',
   
   crisisTextNumber: '741741',
-  crisisTextKeyword: 'HEARME',
+  crisisTextKeyword: 'VOICELAP',
   
   emergencyNumber: '911',
   suicidePreventionLine: '988',
@@ -101,14 +101,14 @@ talkToHuman: {
       'English': `I understand you'd like to speak with a human counselor.
 
 📞 **Call:** ${helplinePhone} (${helplinePhoneNumeric})
-💬 **Text:** 'HEARME' to 741741
+💬 **Text:** 'VOICELAP' to 741741
 
 Our trained counselors are available to help you.`,
       
       'Spanish': `Entiendo que te gustaría hablar con un consejero humano.
 
 📞 **Llama:** ${helplinePhone} (${helplinePhoneNumeric})
-💬 **Texto:** 'HEARME' al 741741`,
+💬 **Texto:** 'VOICELAP' al 741741`,
       
       // Add more languages...
     };
@@ -160,7 +160,7 @@ appointment: {
 
 ### **3. Pricing**
 **Triggers:** "how much", "cost", "price", "is it free"  
-**Response:** Explains that HearMe is free
+**Response:** Explains that VoiceLap is free
 
 ### **4. Hours**
 **Triggers:** "hours", "open", "available", "24/7"  
@@ -403,7 +403,7 @@ const detectedIntent = detectIntent(message, userLanguage);
 ✅ **Works in 20+ languages**  
 ✅ **Crisis detection provides immediate help**  
 
-**Your HearMe app now intelligently handles common questions without calling OpenAI, while still using AI for complex emotional support!** 🎉
+**Your VoiceLap app now intelligently handles common questions without calling OpenAI, while still using AI for complex emotional support!** 🎉
 
 ---
 

@@ -23,13 +23,13 @@ const Login = () => {
     try {
       setLoading(true);
       const { data } = await axios.post(`${API_URL}/api/users/login`, form);
-      localStorage.setItem('hm-token', data.token);
-      try { window.dispatchEvent(new Event('hm-auth-changed')); } catch {}
+      localStorage.setItem('vl-token', data.token);
+      try { window.dispatchEvent(new Event('vl-auth-changed')); } catch {}
       toast({ title: t('login.messages.welcomeBack', '✅ Khush aamdeed! Welcome back to your safe space. 💜'), status: 'success', duration: 2000, isClosable: true });
       // Post-login return logic
       try {
         const params = new URLSearchParams(location.search);
-        let redirect = params.get('redirect') || localStorage.getItem('hm-last-route') || '/';
+        let redirect = params.get('redirect') || localStorage.getItem('vl-last-route') || '/';
         // Basic sanitization: only allow in-app paths
         if (typeof redirect !== 'string' || !redirect.startsWith('/')) {
           redirect = '/';
@@ -52,14 +52,14 @@ const Login = () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg="var(--hm-color-bg)"
-      color="var(--hm-color-text-primary)"
+      bg="var(--vl-color-bg)"
+      color="var(--vl-color-text-primary)"
       position="relative"
       overflow="hidden"
       px={[6, 12]}
       pt="100px"
       pb={[12, 20]}
-      className="hm-cid-login-root"
+      className="vl-cid-login-root"
       data-cid="login-root"
     >
       <VStack spacing={8} zIndex={1} w="full" maxW="900px">
@@ -69,62 +69,62 @@ const Login = () => {
             as="h1"
             fontSize={["3xl", "4xl", "5xl"]}
             fontWeight="800"
-            color="var(--hm-color-text-primary)"
+            color="var(--vl-color-text-primary)"
             lineHeight="1.2"
           >
             {t('login.pageTitle', 'Phir Se Swagat Hai! — Welcome Back 💜')}
           </Heading>
-          <Text fontSize="md" color="var(--hm-color-text-secondary)" lineHeight="1.7">
+          <Text fontSize="md" color="var(--vl-color-text-secondary)" lineHeight="1.7">
             {t('login.pageIntro', 'Your safe space awaits. Login karo aur apni journey continue karo. We\'re here for you, always. 💜')}
           </Text>
         </VStack>
 
-        <Box mx="auto" w="full" p={6} className="hm-glass-card hm-cid-login-form" data-cid="login-form" borderRadius="2xl">
-          <Heading size="md" mb={6} color="var(--hm-color-text-primary)">{t('login.formTitle','Login Karo — Sign In 💜')}</Heading>
+        <Box mx="auto" w="full" p={6} className="vl-glass-card vl-cid-login-form" data-cid="login-form" borderRadius="2xl">
+          <Heading size="md" mb={6} color="var(--vl-color-text-primary)">{t('login.formTitle','Login Karo — Sign In 💜')}</Heading>
           <form onSubmit={submit}>
             <VStack spacing={4} align="stretch">
               <FormControl isRequired>
-                <FormLabel color="var(--hm-color-text-primary)">{t('login.fields.usernameOrEmail','Username ya Email (Your username or email)')}</FormLabel>
+                <FormLabel color="var(--vl-color-text-primary)">{t('login.fields.usernameOrEmail','Username ya Email (Your username or email)')}</FormLabel>
                 <Input
                   name="usernameOrEmail"
                   value={form.usernameOrEmail}
                   onChange={onChange}
                   placeholder={t('login.placeholders.usernameOrEmail','yourusername or you@example.com')}
-                  bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-outline)"
-                  color="var(--hm-color-text-primary)"
-                  _placeholder={{ color: 'var(--hm-color-placeholder)' }}
-                  _hover={{ borderColor: 'var(--hm-border-outline)' }}
-                  _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                  bg="var(--vl-bg-glass)"
+                  borderColor="var(--vl-border-outline)"
+                  color="var(--vl-color-text-primary)"
+                  _placeholder={{ color: 'var(--vl-color-placeholder)' }}
+                  _hover={{ borderColor: 'var(--vl-border-outline)' }}
+                  _focus={{ borderColor: 'var(--vl-color-brand)', boxShadow: '0 0 0 1px var(--vl-color-brand)' }}
                 />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel color="var(--hm-color-text-primary)">{t('login.fields.password','Password (Aapka password)')}</FormLabel>
+                <FormLabel color="var(--vl-color-text-primary)">{t('login.fields.password','Password (Aapka password)')}</FormLabel>
                 <Input
                   type="password"
                   name="password"
                   value={form.password}
                   onChange={onChange}
                   placeholder={t('login.placeholders.password','Enter your password')}
-                  bg="var(--hm-bg-glass)"
-                  borderColor="var(--hm-border-outline)"
-                  color="var(--hm-color-text-primary)"
-                  _placeholder={{ color: 'var(--hm-color-placeholder)' }}
-                  _hover={{ borderColor: 'var(--hm-border-outline)' }}
-                  _focus={{ borderColor: 'var(--hm-color-brand)', boxShadow: '0 0 0 1px var(--hm-color-brand)' }}
+                  bg="var(--vl-bg-glass)"
+                  borderColor="var(--vl-border-outline)"
+                  color="var(--vl-color-text-primary)"
+                  _placeholder={{ color: 'var(--vl-color-placeholder)' }}
+                  _hover={{ borderColor: 'var(--vl-border-outline)' }}
+                  _focus={{ borderColor: 'var(--vl-color-brand)', boxShadow: '0 0 0 1px var(--vl-color-brand)' }}
                 />
               </FormControl>
-              <Button type="submit" isLoading={loading} bgGradient="var(--hm-gradient-cta)" color="white" _hover={{ opacity: 0.9 }} borderRadius="full" py={6}>
+              <Button type="submit" isLoading={loading} bgGradient="var(--vl-gradient-cta)" color="white" _hover={{ opacity: 0.9 }} borderRadius="full" py={6}>
                 {t('login.button','Login Karo (Sign In) 💜')}
               </Button>
-              <Text fontSize="sm" color="var(--hm-color-text-primary)" textAlign="center">
-                <Link as={RouterLink} to="/forgot-password" color="var(--hm-color-brand)" _hover={{ textDecoration: 'underline' }}>
+              <Text fontSize="sm" color="var(--vl-color-text-primary)" textAlign="center">
+                <Link as={RouterLink} to="/forgot-password" color="var(--vl-color-brand)" _hover={{ textDecoration: 'underline' }}>
                   {t('login.forgotPassword','Password bhool gaye? (Forgot password?)')}
                 </Link>
               </Text>
-              <Text fontSize="sm" color="var(--hm-color-text-secondary)" textAlign="center" pt={2}>
+              <Text fontSize="sm" color="var(--vl-color-text-secondary)" textAlign="center" pt={2}>
                 {t('login.newUser','Naye ho? (New here?)')}{' '}
-                <Link as={RouterLink} to="/register" color="var(--hm-color-brand)" fontWeight="600" _hover={{ textDecoration: 'underline' }}>
+                <Link as={RouterLink} to="/register" color="var(--vl-color-brand)" fontWeight="600" _hover={{ textDecoration: 'underline' }}>
                   {t('login.signupLink','Sign Up Karo (Create Account)')}
                 </Link>
               </Text>
@@ -132,8 +132,8 @@ const Login = () => {
           </form>
 
           {/* Security Note */}
-          <Box mt={6} p={3} bg="var(--hm-bg-glass)" borderRadius="md" borderLeft="4px solid var(--hm-color-brand)">
-            <Text fontSize="xs" color="var(--hm-color-text-secondary)" lineHeight="1.7">
+          <Box mt={6} p={3} bg="var(--vl-bg-glass)" borderRadius="md" borderLeft="4px solid var(--vl-color-brand)">
+            <Text fontSize="xs" color="var(--vl-color-text-secondary)" lineHeight="1.7">
               {t('login.securityNote', '🔒 **Your Privacy Is Our Promise:** Your data is encrypted end-to-end. We never share your information with anyone. You\'re safe here. 💜')}
             </Text>
           </Box>

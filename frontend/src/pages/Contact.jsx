@@ -47,14 +47,14 @@ const Contact = () => {
       align="center"
       justify="center"
       minH="100vh"
-      bg="var(--hm-color-bg)"
+      bg="var(--vl-color-bg)"
       position="relative"
       overflow="hidden"
-      color="var(--hm-color-text-primary)"
+      color="var(--vl-color-text-primary)"
       px={6}
       pt="100px"
       pb={12}
-      className="hm-cid-contact-root"
+      className="vl-cid-contact-root"
       data-cid="contact-root"
     >
       {/* Background gradients - Neo Expressionist */}
@@ -63,33 +63,33 @@ const Contact = () => {
       <VStack
         spacing={8}
         w={["100%"]}
-        className="hm-glass-card-light hm-cid-contact-form"
+        className="vl-glass-card-light vl-cid-contact-form"
         borderRadius="xl"
         p={[6, 10]}
         zIndex={1}
         data-cid="contact-form"
       >
         <VStack spacing={4} textAlign="center">
-          <Heading fontSize={["3xl", "4xl"]} fontWeight="700" color="var(--hm-color-text-primary)">
+          <Heading fontSize={["3xl", "4xl"]} fontWeight="700" color="var(--vl-color-text-primary)">
             {t('contact.title', 'Hum Hain Na — We\'re Here 💜')}
           </Heading>
 
-          <Text color="var(--hm-color-text-secondary)" fontSize="md">
+          <Text color="var(--vl-color-text-secondary)" fontSize="md">
             {t('contact.intro1', 'Have feedback? Want to partner with us? Have a non-urgent question? We\'d love to hear from you. 💜')}
           </Text>
-          <Text color="var(--hm-color-text-secondary)" fontSize="sm" fontWeight="600">
+          <Text color="var(--vl-color-text-secondary)" fontSize="sm" fontWeight="600">
             {t('contact.intro2', '**Important:** This form is for general inquiries only. If you need emotional support, please visit our Chat page. If you\'re in crisis, call 112 (India) or see our Resources page.')}
           </Text>
 
           <VStack spacing={1} pt={2}>
-            <Text color="var(--hm-color-text-secondary)" fontSize="sm">
+            <Text color="var(--vl-color-text-secondary)" fontSize="sm">
               {t('contact.contactInfo.phone', '📞 Call us: +91 8105568665 (Mon-Fri, 10 AM - 6 PM IST)')}
             </Text>
-            <Text color="var(--hm-color-text-secondary)" fontSize="sm">
+            <Text color="var(--vl-color-text-secondary)" fontSize="sm">
               {t('contact.contactInfo.email', '📧 Email us: rghvndr99@gmail.com (We reply within 24-48 hours)')}
             </Text>
-            <Text color="var(--hm-color-text-secondary)" fontSize="sm">
-              {t('contact.contactInfo.website', '🌐 Visit: hearme.com')}
+            <Text color="var(--vl-color-text-secondary)" fontSize="sm">
+              {t('contact.contactInfo.website', '🌐 Visit: voicelap.com')}
             </Text>
           </VStack>
         </VStack>
@@ -101,10 +101,10 @@ const Contact = () => {
             onChange={handleInputChange}
             placeholder={t('contact.name', 'Aapka naam (Your name)')}
             variant="outline"
-            border="1px solid var(--hm-border-outline)"
-            bg="var(--hm-color-bg)"
-            _focus={{ borderColor: "var(--hm-color-brand)" }}
-            _placeholder={{ color: "var(--hm-color-placeholder)" }}
+            border="1px solid var(--vl-border-outline)"
+            bg="var(--vl-color-bg)"
+            _focus={{ borderColor: "var(--vl-color-brand)" }}
+            _placeholder={{ color: "var(--vl-color-placeholder)" }}
             borderRadius="md"
             p={4}
           />
@@ -115,10 +115,10 @@ const Contact = () => {
             onChange={handleInputChange}
             placeholder={t('contact.email', 'Aapka email (Your email)')}
             variant="outline"
-            border="1px solid var(--hm-border-outline)"
-            bg="var(--hm-color-bg)"
-            _focus={{ borderColor: "var(--hm-color-brand)" }}
-            _placeholder={{ color: "var(--hm-color-placeholder)" }}
+            border="1px solid var(--vl-border-outline)"
+            bg="var(--vl-color-bg)"
+            _focus={{ borderColor: "var(--vl-color-brand)" }}
+            _placeholder={{ color: "var(--vl-color-placeholder)" }}
             borderRadius="md"
             p={4}
           />
@@ -128,10 +128,10 @@ const Contact = () => {
             onChange={handleInputChange}
             placeholder={t('contact.message', 'Kya baat karni hai? (What would you like to share?)')}
             variant="outline"
-            border="1px solid var(--hm-border-outline)"
-            bg="var(--hm-color-bg)"
-            _focus={{ borderColor: "var(--hm-color-brand)" }}
-            _placeholder={{ color: "var(--hm-color-placeholder)" }}
+            border="1px solid var(--vl-border-outline)"
+            bg="var(--vl-color-bg)"
+            _focus={{ borderColor: "var(--vl-color-brand)" }}
+            _placeholder={{ color: "var(--vl-color-placeholder)" }}
             borderRadius="md"
             rows={5}
             p={4}
@@ -142,8 +142,8 @@ const Contact = () => {
           onClick={handleSubmit}
           w="100%"
           size="lg"
-          bgGradient="var(--hm-gradient-cta)"
-          _hover={{ bgGradient: "var(--hm-gradient-cta-hover)" }}
+          bgGradient="var(--vl-gradient-cta)"
+          _hover={{ bgGradient: "var(--vl-gradient-cta-hover)" }}
           color="white"
           fontWeight="600"
           borderRadius="full"

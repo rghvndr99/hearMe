@@ -67,6 +67,9 @@ function publicUser(u) {
     isAnonymous: !!u.is_anonymous,
     nickname: u.nickname || null,
     displayName,
+    // In-person session data
+    trialHumanCallsRemaining: u.trial_human_calls_remaining ?? 3,
+    currentPlanId: u.current_plan_id || 'free',
   };
 }
 // POST /api/users/anonymous  -> create ephemeral anonymous account and issue JWT
@@ -253,7 +256,7 @@ router.post('/forgot-password', forgotPasswordLimiter, async (req, res) => {
 
     // Send reset email (provider configured via EMAIL_PROVIDER)
     try {
-      const { subject, html, text } = buildResetPasswordEmail({ name: user.name || user.username, resetUrl, appName: process.env.APP_NAME || 'HearMe' });
+      const { subject, html, text } = buildResetPasswordEmail({ name: user.name || user.username, resetUrl, appName: process.env.APP_NAME || 'VoiceLap' });
       await sendMail({ to: user.email, subject, html, text });
     } catch (mailErr) {
       console.error('sendMail error:', mailErr?.message || mailErr);

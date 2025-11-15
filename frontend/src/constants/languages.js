@@ -51,7 +51,7 @@ export const detectUserLanguage = () => {
  * @returns {Object} Language object
  */
 export const getInitialLanguage = () => {
-  const savedLang = localStorage.getItem('hm-language');
+  const savedLang = localStorage.getItem('vl-language');
   if (savedLang) {
     const found = LANGUAGES.find(lang => lang.code === savedLang);
     if (found) return found;

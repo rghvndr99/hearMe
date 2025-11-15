@@ -16,7 +16,7 @@ export const CONTACT_INFO = {
   
   // Crisis text line
   crisisTextNumber: '741741',
-  crisisTextKeyword: 'HEARME',
+  crisisTextKeyword: 'VOICELAP',
   
   // Emergency services
   emergencyNumber: '911',
@@ -28,10 +28,10 @@ export const CONTACT_INFO = {
   crisisHours: '24/7',
   
   // Website and email (optional)
-  website: 'https://hearme.com',
+  website: 'https://voicelap.com',
   email: 'rghvndr999@gmail.com',
   // Preferred trigger phrase a user can send to request human help
-  supportTriggerPhrase: 'HearMe: Need support',
+  supportTriggerPhrase: 'VoiceLap: Need support',
 };
 
 // ========================================
@@ -154,7 +154,7 @@ Si estás en peligro inmediato, por favor:
     // 👇 CUSTOMIZE YOUR PRICING RESPONSE HERE
     getResponse: (lang) => {
       const responses = {
-        'English': `HearMe is completely **free** to use! 🎉
+        'English': `VoiceLap is completely **free** to use! 🎉
 
 ✅ AI support available 24/7 at no cost
 ✅ No credit card required
@@ -165,7 +165,7 @@ We believe mental health support should be accessible to everyone. If you need a
 
 How can I support you today?`,
 
-        'Spanish': `¡HearMe es completamente **gratuito**! 🎉
+        'Spanish': `¡VoiceLap es completamente **gratuito**! 🎉
 
 ✅ Soporte de IA disponible 24/7 sin costo
 ✅ No se requiere tarjeta de crédito
@@ -272,7 +272,7 @@ Puedes compartir libremente y de forma segura. Todo lo que me digas queda entre 
 };
 
 // Provide a dynamic, plan-aware response for the "talk to human" intent
-export function buildTalkToHumanResponse(lang = 'English', { isPaid = false, supportTriggerPhrase = 'HearMe: Need support' } = {}) {
+export function buildTalkToHumanResponse(lang = 'English', { isPaid = false, supportTriggerPhrase = 'VoiceLap: Need support' } = {}) {
   const baseLang = (lang || 'English').split('(')[0].trim();
 
   if (baseLang === 'Hindi') {
