@@ -24,7 +24,6 @@
     "multer": "^2.0.2",
     "openai": "^6.3.0",
     "resend": "^6.1.3",
-    "socket.io": "^4.7.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

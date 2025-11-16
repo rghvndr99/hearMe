@@ -24,7 +24,7 @@
 
 **Tech Stack:**
 - **Frontend:** React, Chakra UI, Vite, i18next
-- **Backend:** Node.js, Express, Socket.IO
+- **Backend:** Node.js, Express
 - **Database:** MongoDB (Mongoose)
 - **APIs:** OpenAI, ElevenLabs, Google Calendar, Deepgram
 - **Authentication:** JWT
