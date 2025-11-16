@@ -17,6 +17,8 @@ function toPublic(sub) {
         method: sub.method,
         status: sub.status,
         upiId: sub.upiId || null,
+        transactionId: sub.transactionId || null,
+        verifiedAt: sub.verifiedAt || null,
         activatedAt: sub.activatedAt,
         cancelledAt: sub.cancelledAt || null,
         createdAt: sub.createdAt,
@@ -124,9 +126,32 @@ router.post('/', auth, async (req, res) => {
     const userId = req.user?.sub || req.user?.id;
     if (!userId) return res.status(401).json({ error: 'Unauthorized' });
 
-    const { plan, billing, price, method, upiId, metadata } = req.body || {};
+    const { plan, billing, price, method, upiId, transactionId, metadata } = req.body || {};
     if (!plan || !billing || typeof price !== 'number' || !method) {
       return res.status(400).json({ error: 'plan, billing, price and method are required' });
+    }
+
+    // Validate transaction ID for UPI payments (except free plan)
+    if (method === 'upi' && plan !== 'free') {
+      if (!transactionId || transactionId.trim().length < 12) {
+        return res.status(400).json({
+          error: 'Transaction ID is required',
+          message: 'Please enter your UPI transaction ID (minimum 12 characters)'
+        });
+      }
+
+      // Check if transaction ID already used in active/pending subscriptions (prevent duplicate submissions)
+      // Only check active and pending_verification subscriptions, not cancelled ones
+      const existingTxn = await Subscription.findOne({
+        transactionId: transactionId.trim(),
+        status: { $in: ['active', 'pending_verification', 'pending'] }
+      });
+      if (existingTxn) {
+        return res.status(400).json({
+          error: 'Transaction ID already used',
+          message: 'This transaction ID has already been submitted. If you believe this is an error, please contact support.'
+        });
+      }
     }
 
     // End any existing active subscription
@@ -135,6 +160,9 @@ router.post('/', auth, async (req, res) => {
       { $set: { status: 'cancelled', cancelledAt: new Date() } }
     );
 
+    // For paid plans with UPI, set status to pending_verification
+    const subscriptionStatus = (method === 'upi' && plan !== 'free') ? 'pending_verification' : 'active';
+
     const sub = await Subscription.create({
       userId,
       plan,
@@ -142,15 +170,24 @@ router.post('/', auth, async (req, res) => {
       price,
       method,
       upiId: upiId || null,
-      status: 'active',
+      transactionId: transactionId?.trim() || null,
+      status: subscriptionStatus,
       metadata: metadata || {},
-      activatedAt: new Date(),
+      activatedAt: subscriptionStatus === 'active' ? new Date() : null,
     });
 
     const usage = await computeUsage(userId, plan);
     const config = getPlanConfig(plan);
 
-    res.status(201).json({ subscription: toPublic(sub), config, usage, flags: FEATURE_FLAGS });
+    res.status(201).json({
+      subscription: toPublic(sub),
+      config,
+      usage,
+      flags: FEATURE_FLAGS,
+      message: subscriptionStatus === 'pending_verification'
+        ? 'Payment submitted for verification. You will be notified within 24 hours.'
+        : 'Subscription activated successfully'
+    });
   } catch (err) {
     console.error('Create subscription error:', err);
     res.status(500).json({ error: 'Failed to create subscription' });
@@ -163,9 +200,14 @@ router.get('/me', auth, async (req, res) => {
     const userId = req.user?.sub || req.user?.id;
     if (!userId) return res.status(401).json({ error: 'Unauthorized' });
 
-    const sub = await Subscription.findOne({ userId, status: 'active' }).sort({ createdAt: -1 });
+    // Get active subscription OR pending_verification subscription (most recent)
+    const sub = await Subscription.findOne({
+      userId,
+      status: { $in: ['active', 'pending_verification'] }
+    }).sort({ createdAt: -1 });
 
-    const plan = sub?.plan || 'free';
+    // For usage calculation, use 'free' plan if subscription is pending verification
+    const plan = (sub?.status === 'pending_verification') ? 'free' : (sub?.plan || 'free');
     const config = getPlanConfig(plan);
     const usage = await computeUsage(userId, plan);
 

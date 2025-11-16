@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Box, Heading, Text, VStack, HStack, Button, RadioGroup, Radio, Stack, Divider, Icon, useToast, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Center, Spinner, Image } from '@chakra-ui/react';
+import { Box, Heading, Text, VStack, HStack, Button, RadioGroup, Radio, Stack, Divider, Icon, useToast, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Center, Spinner, Image, Input, FormControl, FormLabel, FormHelperText, FormErrorMessage } from '@chakra-ui/react';
 import { useNavigate, useLocation, Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FiCheckCircle, FiAlertTriangle, FiXCircle, FiUser, FiMessageCircle, FiHome, FiArrowRight, FiTrendingUp, FiRotateCcw } from 'react-icons/fi';
@@ -38,6 +38,8 @@ export default function Payment() {
   const [countdown, setCountdown] = useState(8);
   const [qrLoaded, setQrLoaded] = useState(false);
   const [price, setPrice] = useState(initialPrice);
+  const [transactionId, setTransactionId] = useState('');
+  const [transactionIdError, setTransactionIdError] = useState('');
 
 
   const upiPayUrl = useMemo(() => {
@@ -128,22 +130,89 @@ export default function Payment() {
   };
 
   const handleMarkPaid = async () => {
+    // Validate transaction ID
+    const trimmedTxnId = transactionId.trim();
+
+    if (!trimmedTxnId) {
+      setTransactionIdError(t('payment.upi.transactionIdRequired', 'Transaction ID is required'));
+      return;
+    }
+
+    if (trimmedTxnId.length < 12) {
+      setTransactionIdError(t('payment.upi.transactionIdInvalid', 'Please enter a valid transaction ID (minimum 12 characters)'));
+      return;
+    }
+
+    setTransactionIdError('');
+
     const token = localStorage.getItem('vl-token');
     try {
-      const payload = { plan, billing, price: price, method: 'upi', upiId: UPI_ID };
+      const payload = {
+        plan,
+        billing,
+        price: price,
+        method: 'upi',
+        upiId: UPI_ID,
+        transactionId: trimmedTxnId
+      };
+
       if (token) {
-        await axios.post(`${API_URL}/api/subscriptions`, payload, { headers: { Authorization: `Bearer ${token}` } });
+        const response = await axios.post(`${API_URL}/api/subscriptions`, payload, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        const subscriptionStatus = response.data?.subscription?.status;
+
+        if (subscriptionStatus === 'pending_verification') {
+          // Payment submitted for verification
+          window.dispatchEvent(new Event('vl-subscription-changed'));
+          upiModal.onClose();
+          setStatus('pending');
+          toast({
+            title: t('payment.upi.verificationPending', 'Payment verification pending'),
+            description: t('payment.upi.verificationDesc', 'Your payment will be verified within 24 hours. You\'ll receive an email once activated.'),
+            status: 'info',
+            duration: 5000,
+            isClosable: true
+          });
+          // Redirect to profile after 3 seconds
+          setTimeout(() => navigate('/profile'), 3000);
+        } else {
+          // Instant activation (for free plan or already verified)
+          window.dispatchEvent(new Event('vl-subscription-changed'));
+          upiModal.onClose();
+          setStatus('success');
+          toast({
+            title: t('payment.toast.success', 'Payment successful'),
+            status: 'success',
+            duration: 1500
+          });
+        }
       } else {
         // Fallback to local storage if somehow not logged in
-        localStorage.setItem('vl-subscription', JSON.stringify({ ...payload, activatedAt: new Date().toISOString() }));
+        localStorage.setItem('vl-subscription', JSON.stringify({
+          ...payload,
+          activatedAt: new Date().toISOString()
+        }));
+        window.dispatchEvent(new Event('vl-subscription-changed'));
+        upiModal.onClose();
+        setStatus('success');
+        toast({
+          title: t('payment.toast.success', 'Payment successful'),
+          status: 'success',
+          duration: 1500
+        });
       }
-      window.dispatchEvent(new Event('vl-subscription-changed'));
-      upiModal.onClose();
-      setStatus('success');
-      toast({ title: t('payment.toast.success', 'Payment successful'), status: 'success', duration: 1500 });
     } catch (err) {
       console.error('Save subscription error', err);
-      toast({ title: t('errors.updateFailed', 'Failed to update profile'), status: 'error', duration: 2000 });
+      const errorMessage = err.response?.data?.message || err.response?.data?.error || t('errors.updateFailed', 'Failed to update profile');
+      toast({
+        title: t('errors.updateFailed', 'Failed to submit payment'),
+        description: errorMessage,
+        status: 'error',
+        duration: 4000,
+        isClosable: true
+      });
     }
   };
 
@@ -255,42 +324,82 @@ export default function Payment() {
                 </RadioGroup>
             {/* UPI Modal */}
             <Modal isOpen={upiModal.isOpen} onClose={upiModal.onClose} isCentered>
-              <ModalOverlay bg="rgba(0,0,0,0.72)" backdropFilter="blur(2px)" />
+              <ModalOverlay bg="rgba(0,0,0,0.85)" backdropFilter="blur(12px)" />
               <ModalContent bg="var(--vl-bg-glass-strong)" borderColor="var(--vl-border-glass)" borderWidth="1px">
                 <ModalHeader color="var(--vl-color-text-primary)">{t('payment.upi.title','Pay via UPI')}</ModalHeader>
                 <ModalBody>
-                  <VStack spacing={4} align="center">
+                  <VStack spacing={4} align="stretch">
                     <Text className="vl-text-secondary" textAlign="center">{t('payment.upi.scan','Scan this QR in your UPI app')}</Text>
-                    <Box p={3} border="1px solid var(--vl-border-outline)" borderRadius="md" bg="var(--vl-color-bg)">
-                      <Box position="relative" w="240px" h="240px">
-                        {!qrLoaded && (
-                          <Center position="absolute" inset={0}>
-                            <Spinner thickness="3px" speed="0.6s" color="var(--vl-color-brand)" size="lg" />
-                          </Center>
-                        )}
-                        <img
-                          src={upiQrUrl}
-                          alt="UPI QR"
-                          width={240}
-                          height={240}
-                          style={{ display: 'block', opacity: qrLoaded ? 1 : 0 }}
-                          onLoad={() => setQrLoaded(true)}
-                          onError={(e) => {
-                            // Fallback QR generator if the primary fails
-                            e.currentTarget.src = `https://quickchart.io/qr?size=240&text=${encodeURIComponent(upiPayUrl)}`;
-                          }}
-                        />
+                    <Center>
+                      <Box p={3} border="1px solid var(--vl-border-outline)" borderRadius="md" bg="var(--vl-color-bg)">
+                        <Box position="relative" w="240px" h="240px">
+                          {!qrLoaded && (
+                            <Center position="absolute" inset={0}>
+                              <Spinner thickness="3px" speed="0.6s" color="var(--vl-color-brand)" size="lg" />
+                            </Center>
+                          )}
+                          <img
+                            src={upiQrUrl}
+                            alt="UPI QR"
+                            width={240}
+                            height={240}
+                            style={{ display: 'block', opacity: qrLoaded ? 1 : 0 }}
+                            onLoad={() => setQrLoaded(true)}
+                            onError={(e) => {
+                              // Fallback QR generator if the primary fails
+                              e.currentTarget.src = `https://quickchart.io/qr?size=240&text=${encodeURIComponent(upiPayUrl)}`;
+                            }}
+                          />
+                        </Box>
                       </Box>
-                    </Box>
-                    <HStack spacing={2}>
+                    </Center>
+                    <Center>
                       <Button size="sm" variant="outline" borderColor="var(--vl-border-outline)" color="var(--vl-color-text-primary)" _hover={{ bg: 'var(--vl-hover-bg)', color: 'var(--vl-color-brand)' }} onClick={async () => {
                         try { await navigator.clipboard?.writeText(UPI_ID); toast({ title: t('payment.upi.copyId','Copy UPI ID') + ' ✓', status: 'success', duration: 1200 }); } catch {}
                       }}>{t('payment.upi.copyId','Copy UPI ID')}</Button>
-                    </HStack>
-                    <HStack spacing={3}>
+                    </Center>
+                    <Center>
                       <Button className="vl-button-primary" onClick={handleOpenUpi}>{t('payment.upi.openApp','Open in UPI app')}</Button>
-                      <Button variant="outline" borderColor="var(--vl-border-outline)" color="var(--vl-color-text-primary)" _hover={{ bg: 'var(--vl-hover-bg)', color: 'var(--vl-color-brand)' }} onClick={handleMarkPaid}>{t('payment.upi.markPaid',"I've completed the payment")}</Button>
-                    </HStack>
+                    </Center>
+
+                    <Divider my={2} borderColor="var(--vl-border-subtle)" />
+
+                    <Text className="vl-text-secondary" fontSize="sm" fontWeight="600" textAlign="center">
+                      {t('payment.upi.transactionId', 'UPI Transaction ID')}
+                    </Text>
+
+                    <FormControl isInvalid={!!transactionIdError}>
+                      <Input
+                        placeholder={t('payment.upi.transactionIdPlaceholder', 'Enter 12-digit transaction ID')}
+                        value={transactionId}
+                        onChange={(e) => {
+                          setTransactionId(e.target.value);
+                          setTransactionIdError('');
+                        }}
+                        bg="var(--vl-color-bg)"
+                        borderColor="var(--vl-border-outline)"
+                        color="var(--vl-color-text-primary)"
+                        _hover={{ borderColor: 'var(--vl-color-brand)' }}
+                        _focus={{ borderColor: 'var(--vl-color-brand)', boxShadow: '0 0 0 1px var(--vl-color-brand)' }}
+                        size="md"
+                      />
+                      {transactionIdError ? (
+                        <FormErrorMessage>{transactionIdError}</FormErrorMessage>
+                      ) : (
+                        <FormHelperText color="var(--vl-color-text-tertiary)" fontSize="xs">
+                          {t('payment.upi.transactionIdHelp', 'Find this in your UPI app\'s payment history (e.g., 123456789012)')}
+                        </FormHelperText>
+                      )}
+                    </FormControl>
+
+                    <Button
+                      className="vl-button-primary"
+                      onClick={handleMarkPaid}
+                      isDisabled={!transactionId.trim() || transactionId.trim().length < 12}
+                      w="full"
+                    >
+                      {t('payment.upi.markPaid', 'Submit Payment')}
+                    </Button>
                   </VStack>
                 </ModalBody>
                 <ModalFooter>

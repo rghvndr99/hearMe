@@ -5,6 +5,7 @@ import auth from '../middleware/auth.js';
 import VoiceTwin from '../models/VoiceTwin.js';
 import Subscription from '../models/Subscription.js';
 import { getPlanConfig, FEATURE_FLAGS } from '../config/memberships.js';
+import { deleteVoiceClone } from '../services/voiceCleanup.js';
 
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 15 * 1024 * 1024 } }); // 15MB in-memory
@@ -239,14 +240,27 @@ router.patch('/:id', auth, async (req, res) => {
 });
 
 // DELETE /api/voicetwin/:id - delete voice (own resource)
+// Now also deletes from ElevenLabs API
 router.delete('/:id', auth, async (req, res) => {
   try {
     const userId = req.user?.sub || req.user?.id;
     if (!userId) return res.status(401).json({ error: 'Unauthorized' });
     const id = req.params.id;
-    const doc = await VoiceTwin.findOneAndDelete({ _id: id, userId });
-    if (!doc) return res.status(404).json({ error: 'Not found' });
-    return res.json({ success: true });
+
+    // Use the cleanup service to delete from both DB and ElevenLabs
+    const result = await deleteVoiceClone(id, userId);
+
+    if (!result.success) {
+      return res.status(404).json({ error: result.error || 'Not found' });
+    }
+
+    // Invalidate cache for this user
+    voicesCache.delete(userId);
+
+    return res.json({
+      success: true,
+      deletedFromElevenLabs: result.deletedFromElevenLabs
+    });
   } catch (err) {
     console.error('VoiceTwin delete error:', err);
     return res.status(500).json({ error: 'Failed to delete voice' });

@@ -28,7 +28,13 @@
     "username": "Username",
     "register": "Register",
     "registrationSuccess": "Registration successful",
-    "confirmPassword": "Confirm Password"
+    "confirmPassword": "Confirm Password",
+    "registerPage": {
+      "heading": "Join VoiceLap — private, judgment-free support in your language"
+    },
+    "privacyRequired": "Privacy Policy not accepted",
+    "privacyRequiredDesc": "Please read and accept the Privacy Policy to continue.",
+    "acceptPrivacyPrefix": "I have read and agree to the"
   },
   "errors": {
     "loginFailed": "Login failed",
@@ -663,7 +669,29 @@
       "cancelled": "Membership cancelled",
       "usageTitle": "Your usage",
       "none": "You are on the Free plan. Upgrade anytime from Pricing.",
-      "since": "Active since"
+      "since": "Active since",
+      "status": "Status",
+      "statusActive": "Active",
+      "statusPendingVerification": "Pending Verification",
+      "statusCancelled": "Cancelled",
+      "verificationPending": "Payment Verification Pending",
+      "verificationDesc": "Thank you for your payment! We are verifying your transaction. This usually takes a few hours. You will receive an email confirmation once your subscription is activated.",
+      "verificationPendingTitle": "⏳ Payment Verification in Progress",
+      "verificationSubtitle": "Your payment is being verified by our team",
+      "currentPlan": "Current Plan",
+      "freePlanMessage": "You are currently on the Free plan. Once your payment is verified, you will be upgraded to your selected plan.",
+      "pendingUpgrade": "Pending Upgrade",
+      "verificationTimeframe": "Verification usually takes 2-6 hours. You will receive an email once your subscription is activated.",
+      "helpText": "Need help? Contact us if verification takes longer than 24 hours.",
+      "transactionId": "Transaction ID",
+      "nextBilling": "Next billing",
+      "unlimited": "Unlimited",
+      "resetsOn": "Resets on",
+      "resetsWeekly": "Resets on a rolling weekly window",
+      "inPersonSessions": "In-person sessions",
+      "thisMonth": "(this month)",
+      "trialRemaining": "trial slots remaining",
+      "noSessions": "Not available"
     },
     "contact": {
       "title": "Contact Information",
@@ -924,7 +952,14 @@
       "openApp": "Open in UPI app",
       "copyId": "Copy UPI ID",
       "idLabel": "PhonePe ID",
-      "markPaid": "I've completed the payment"
+      "markPaid": "Submit Payment",
+      "transactionId": "UPI Transaction ID",
+      "transactionIdPlaceholder": "Enter 12-digit transaction ID",
+      "transactionIdRequired": "Transaction ID is required",
+      "transactionIdInvalid": "Please enter a valid transaction ID (minimum 12 characters)",
+      "transactionIdHelp": "Find this in your UPI app's payment history (e.g., 123456789012)",
+      "verificationPending": "Payment verification pending",
+      "verificationDesc": "Your payment will be verified within 24 hours. You'll receive an email once activated."
     }
   },
   "themes": {

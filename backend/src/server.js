@@ -21,6 +21,8 @@ import subscriptionsRouter from './routes/subscriptions.js';
 import pricingRouter from './routes/pricing.js';
 import walletRouter from './routes/wallet.js';
 import bookingsRouter from './routes/bookings.js';
+import adminRouter from './routes/admin.js';
+import { startScheduledJobs } from './jobs/scheduler.js';
 
 // Get directory name in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -58,9 +60,18 @@ app.use('/api/subscriptions', subscriptionsRouter);
 app.use('/api', pricingRouter);
 app.use('/api', walletRouter);
 app.use('/api', bookingsRouter);
+app.use('/api/admin', adminRouter);
 
 const PORT = process.env.PORT || 5001;
 mongoose
   .connect(process.env.MONGO_URI || 'mongodb://localhost:27017/voicelap')
-  .then(() => app.listen(PORT))
-  .catch(() => {});
+  .then(() => {
+    app.listen(PORT);
+    console.log(`✅ Server running on port ${PORT}`);
+
+    // Start scheduled jobs after server is ready
+    startScheduledJobs();
+  })
+  .catch((err) => {
+    console.error('Failed to connect to MongoDB:', err);
+  });

@@ -54,6 +54,8 @@ const ChangeEmail = lazy(() => import('./pages/ChangeEmail'));
 const VoiceMate = lazy(() => import('./pages/VoiceMate'));
 const Pricing = lazy(() => import('./pages/Pricing'));
 const Payment = lazy(() => import('./pages/Payment'));
+const AdminLogin = lazy(() => import('./pages/AdminLogin'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 
 
 function RouteMetaSetter() {
@@ -227,6 +229,10 @@ function App() {
 
               <Route path="/voicemate" element={<VoiceMate />} />
               <Route path="/privacy" element={<Privacy />} />
+
+              {/* Admin Routes */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
             </Routes>
           </Box>

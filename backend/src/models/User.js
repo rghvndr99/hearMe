@@ -22,6 +22,9 @@ const UserSchema = new mongoose.Schema(
     passwordResetTokenHash: { type: String, required: false },
     passwordResetTokenExpires: { type: Date, required: false },
 
+    // Admin role
+    isAdmin: { type: Boolean, default: false, index: true },
+
     // Pricing/membership
     current_plan_id: { type: String, default: 'free' },
 

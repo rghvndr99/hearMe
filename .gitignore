@@ -7,16 +7,25 @@ frontend/dist
 .DS_Store
 
 # Environment files (do not commit secrets)
-.env*
-frontend/.env*
-backend/.env*
+.env
+.env.local
+frontend/.env
+frontend/.env.local
+backend/.env
+backend/.env.local
+
+# Keep environment templates for reference
+!.env.development
+!.env.staging
+!.env.production
+!.env.example
 
 # Runtime/uploads (generated at runtime)
 backend/uploads/
 
 
-# Local scripts (ignore per request)
-backend/scripts/
+# Keep scripts now (they're useful)
+# backend/scripts/
 
 # Local backup/scratch files
 frontend/src/pages/Chat.backup.jsx

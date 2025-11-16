@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Flex, Heading, Text, VStack, HStack, Stack, Button, useToast, FormControl, FormLabel, Input, Select, Progress, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalCloseButton, Badge, Icon, Tabs, TabList, TabPanels, Tab, TabPanel, Spinner } from '@chakra-ui/react';
-import { FiVideo, FiClock, FiCheckCircle } from 'react-icons/fi';
+import { FiVideo, FiAlertCircle } from 'react-icons/fi';
 import axios from 'axios';
 
 import { useTranslation } from 'react-i18next';
@@ -395,11 +395,128 @@ const Profile = () => {
             </VStack>
 
             {subscription ? (
-              <VStack align="stretch" spacing={3}>
-                <HStack justify="space-between"><Text className="vl-text-secondary">{t('payment.labels.plan','Plan')}</Text><Text color="var(--vl-color-text-primary)" fontWeight="600">{t(`pricing.plans.${subscription.plan}`, subscription.plan)}</Text></HStack>
+              <VStack align="stretch" spacing={4}>
+                {/* Permanent Verification Pending Banner */}
+                {subscription.status === 'pending_verification' && (
+                  <Box
+                    p={5}
+                    bg="linear-gradient(135deg, rgba(138, 43, 226, 0.1) 0%, rgba(75, 0, 130, 0.1) 100%)"
+                    borderWidth="2px"
+                    borderColor="var(--vl-color-brand)"
+                    borderRadius="xl"
+                    position="relative"
+                    overflow="hidden"
+                  >
+                    {/* Animated background effect */}
+                    <Box
+                      position="absolute"
+                      top="0"
+                      left="0"
+                      right="0"
+                      bottom="0"
+                      bg="var(--vl-color-brand)"
+                      opacity="0.05"
+                      pointerEvents="none"
+                    />
+
+                    <VStack align="stretch" spacing={4} position="relative">
+                      {/* Header */}
+                      <HStack spacing={3}>
+                        <Icon as={FiAlertCircle} color="var(--vl-color-brand)" boxSize={6} />
+                        <VStack align="start" spacing={0} flex="1">
+                          <Text color="var(--vl-color-text-primary)" fontSize="lg" fontWeight="700">
+                            {t('profile.subscription.verificationPendingTitle', '⏳ Payment Verification in Progress')}
+                          </Text>
+                          <Text className="vl-text-secondary" fontSize="sm">
+                            {t('profile.subscription.verificationSubtitle', 'Your payment is being verified by our team')}
+                          </Text>
+                        </VStack>
+                      </HStack>
+
+                      {/* Current Status */}
+                      <Box p={4} bg="var(--vl-color-bg)" borderRadius="lg" borderWidth="1px" borderColor="var(--vl-border-outline)">
+                        <HStack spacing={3} mb={3}>
+                          <Badge colorScheme="green" fontSize="sm" px={3} py={1} borderRadius="full">
+                            {t('profile.subscription.currentPlan', 'Current Plan')}
+                          </Badge>
+                          <Text color="var(--vl-color-text-primary)" fontSize="lg" fontWeight="700">
+                            {t('pricing.plans.free', 'Free Plan')}
+                          </Text>
+                        </HStack>
+                        <Text className="vl-text-secondary" fontSize="sm">
+                          {t('profile.subscription.freePlanMessage', 'You are currently on the Free plan. Once your payment is verified, you will be upgraded to your selected plan.')}
+                        </Text>
+                      </Box>
+
+                      {/* Pending Upgrade Info */}
+                      <Box p={4} bg="rgba(138, 43, 226, 0.1)" borderRadius="lg" borderWidth="1px" borderColor="var(--vl-color-brand)">
+                        <HStack spacing={3} mb={3}>
+                          <Badge colorScheme="purple" fontSize="sm" px={3} py={1} borderRadius="full">
+                            {t('profile.subscription.pendingUpgrade', 'Pending Upgrade')}
+                          </Badge>
+                          <Text color="var(--vl-color-text-primary)" fontSize="lg" fontWeight="700">
+                            {t(`pricing.plans.${subscription.plan}`, subscription.plan)} - ₹{subscription.price}/{t(`pricing.${subscription.billing}`, subscription.billing)}
+                          </Text>
+                        </HStack>
+                        <Text className="vl-text-secondary" fontSize="sm" mb={3}>
+                          {t('profile.subscription.verificationTimeframe', 'Verification usually takes 2-6 hours. You will receive an email once your subscription is activated.')}
+                        </Text>
+
+                        {/* Transaction ID */}
+                        {subscription.transactionId && (
+                          <Box mt={3} p={3} bg="var(--vl-color-bg)" borderRadius="md">
+                            <Text className="vl-text-tertiary" fontSize="xs" mb={1} fontWeight="600">
+                              {t('profile.subscription.transactionId', 'Transaction ID')}
+                            </Text>
+                            <Text color="var(--vl-color-text-primary)" fontWeight="600" fontFamily="monospace" fontSize="sm">
+                              {subscription.transactionId}
+                            </Text>
+                          </Box>
+                        )}
+                      </Box>
+
+                      {/* Help Text */}
+                      <HStack spacing={2} p={3} bg="var(--vl-bg-glass)" borderRadius="md">
+                        <Text className="vl-text-tertiary" fontSize="xs">
+                          💡 {t('profile.subscription.helpText', 'Need help? Contact us if verification takes longer than 24 hours.')}
+                        </Text>
+                      </HStack>
+                    </VStack>
+                  </Box>
+                )}
+
+                {/* Only show subscription details if active */}
+                {subscription.status === 'active' && (
+                  <>
+                    <HStack justify="space-between"><Text className="vl-text-secondary">{t('payment.labels.plan','Plan')}</Text><Text color="var(--vl-color-text-primary)" fontWeight="600">{t(`pricing.plans.${subscription.plan}`, subscription.plan)}</Text></HStack>
                 <HStack justify="space-between"><Text className="vl-text-secondary">{t('payment.labels.billing','Billing')}</Text><Text color="var(--vl-color-text-primary)" fontWeight="600">{t(`pricing.${subscription.billing}`, subscription.billing)}</Text></HStack>
                 <HStack justify="space-between"><Text className="vl-text-secondary">{t('payment.labels.amount','Amount')}</Text><Text color="var(--vl-color-text-primary)" fontWeight="700">₹{subscription.price}</Text></HStack>
-                <HStack justify="space-between"><Text className="vl-text-secondary">{t('profile.subscription.status','Status')}</Text><Text color="var(--vl-color-text-primary)" fontWeight="600">{subscription.status}</Text></HStack>
+                <HStack justify="space-between">
+                  <Text className="vl-text-secondary">{t('profile.subscription.status','Status')}</Text>
+                  <HStack spacing={2}>
+                    <Badge
+                      colorScheme={
+                        subscription.status === 'active' ? 'green' :
+                        subscription.status === 'pending_verification' ? 'orange' :
+                        subscription.status === 'cancelled' ? 'red' :
+                        'gray'
+                      }
+                      fontSize="xs"
+                      px={2}
+                      py={1}
+                      borderRadius="md"
+                    >
+                      {subscription.status === 'pending_verification'
+                        ? t('profile.subscription.statusPendingVerification', 'Pending Verification')
+                        : subscription.status === 'active'
+                        ? t('profile.subscription.statusActive', 'Active')
+                        : subscription.status === 'cancelled'
+                        ? t('profile.subscription.statusCancelled', 'Cancelled')
+                        : subscription.status
+                      }
+                    </Badge>
+                  </HStack>
+                </HStack>
                 <HStack justify="space-between"><Text className="vl-text-secondary">{t('profile.subscription.nextBilling','Next billing')}</Text><Text color="var(--vl-color-text-primary)">{(() => { const d = computeNextBilling(subscription.activatedAt, subscription.billing); return d ? d.toLocaleString() : '-'; })()}</Text></HStack>
 
                 <HStack justify="space-between"><Text className="vl-text-secondary">{t('profile.subscription.since','Active since')}</Text><Text color="var(--vl-color-text-primary)">{new Date(subscription.activatedAt).toLocaleString()}</Text></HStack>
@@ -487,6 +604,8 @@ const Profile = () => {
                       </>
                     )}
                   </Box>
+                )}
+                  </>
                 )}
               </VStack>
             ) : (
