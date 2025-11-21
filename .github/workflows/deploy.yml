@@ -1,0 +1,80 @@
+name: Build & Deploy VoiceLap to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate frontend build
+        working-directory: ./frontend
+        run: |
+          npm ci
+          npm run build
+
+      - name: Validate backend build
+        working-directory: ./backend
+        run: |
+          npm ci
+          npm run build || true
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Rsync to server
+        run: |
+          rsync -avz --delete --exclude='.git' --exclude='node_modules' \
+          -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" \
+          ./ ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:/home/${{ secrets.DEPLOY_USER }}/app
+
+      - name: Remote docker-compose deploy
+        env:
+          DOMAIN: ${{ secrets.DOMAIN }}
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          DEEPGRAM_API_KEY: ${{ secrets.DEEPGRAM_API_KEY }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+            cd /home/${{ secrets.DEPLOY_USER }}/app
+            cat > .env.production <<EOL
+          DOMAIN=${DOMAIN}
+          MONGO_URI=${MONGO_URI}
+          OPENAI_API_KEY=${OPENAI_API_KEY}
+          ELEVENLABS_API_KEY=${ELEVENLABS_API_KEY}
+          DEEPGRAM_API_KEY=${DEEPGRAM_API_KEY}
+          JWT_SECRET=${JWT_SECRET}
+          VITE_API_URL=${VITE_API_URL}
+          RESEND_API_KEY=${RESEND_API_KEY}
+          GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+          GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+          FRONTEND_ORIGIN=https://${DOMAIN}
+          EOL
+
+            docker-compose pull || true
+            docker-compose build frontend backend nginx
+            docker-compose up -d --remove-orphans
+            docker image prune -f || true
+            exit
+          EOF

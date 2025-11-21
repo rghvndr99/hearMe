@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: voicelap_backend:latest
+    env_file:
+      - .env.production
+    environment:
+      - NODE_ENV=production
+      - PORT=5001
+    restart: always
+    expose:
+      - '5001'
+    networks:
+      - voicelap_net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: voicelap_frontend:latest
+    env_file:
+      - .env.production
+    restart: 'no'
+    networks:
+      - voicelap_net
+    depends_on:
+      - backend
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+      args:
+        NGINX_SERVER_NAME: ${DOMAIN:-voicelap.com}
+    image: voicelap_nginx:latest
+    ports:
+      - '80:80'
+      - '443:443'
+    depends_on:
+      - backend
+      - frontend
+    volumes:
+      - ./nginx/certs:/etc/letsencrypt:rw
+    restart: always
+    networks:
+      - voicelap_net
+
+networks:
+  voicelap_net:
+    driver: bridge
+
